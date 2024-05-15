@@ -27,12 +27,12 @@ public class Event_6 {
     
     public static final List<BXH_DoiQua> list_halloween = new ArrayList<>();
     
-//    public static void LeaveItemMap(Map map, MainObject focus, MainObject objAtk)throws IOException{
-//        if(!objAtk.isPlayer())return;
-//
-//        Player p = (Player)objAtk;
-//        LeaveItemMap.leave_item_by_type4(map, (short)306,p,focus.index);
-//    }
+    public static void LeaveItemMap(Map map, MainObject focus, MainObject objAtk)throws IOException{
+        if(!objAtk.isPlayer())return;
+        
+        Player p = (Player)objAtk;
+        LeaveItemMap.leave_item_by_type4(map, (short)306,p,focus.index);
+    }
     
     public static class BXH_DoiQua {
 

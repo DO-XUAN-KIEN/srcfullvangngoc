@@ -21,7 +21,6 @@ public class Wedding {
 	public String name_2;
 	public Item3 it;
 	public long exp;
-	public Player p;
 
 	@SuppressWarnings("unchecked")
 	public synchronized static void add_new(int quant, Player p, Player p0) throws IOException {
@@ -40,21 +39,21 @@ public class Wedding {
 		temp.it.tier = 0;
 		temp.it.islock = true;
 		temp.it.op = new ArrayList<>();
-		int[] dame = new int[] {250, 500, 750, 1000};
-		int[] dame_per = new int[] {1000, 1500, 2000, 2500};
-		int[] point = new int[] {100, 200, 300, 400};
-		int[] resis = new int[] {1000, 1500, 2000, 2500};
+		int[] dame = new int[] {150, 200, 550, 500}; // sát thương
+		int[] dame_per = new int[] {500, 700, 1000, 1000}; // st %
+		int[] point = new int[] {100, 200, 300, 200}; // điểm tiềm năng
+		int[] resis = new int[] {500, 700, 1000, 1000}; // kháng
 		for (int i = 0; i < 5; i++) {
-			temp.it.op.add(new Option(i, Util.random(10, dame[temp.it.color])));
+			temp.it.op.add(new Option(i,dame[temp.it.color]));
 		}
 		for (int i = 7; i < 12; i++) {
-			temp.it.op.add(new Option(i, Util.random(500, dame_per[temp.it.color])));
+			temp.it.op.add(new Option(i,dame_per[temp.it.color]));
 		}
 		for (int i = 23; i < 27; i++) {
-			temp.it.op.add(new Option(i, Util.random(50, point[temp.it.color])));
+			temp.it.op.add(new Option(i,point[temp.it.color]));
 		}
 		for (int i = 16; i < 21; i++) {
-			temp.it.op.add(new Option(i, Util.random(500, resis[temp.it.color])));
+			temp.it.op.add(new Option(i,resis[temp.it.color]));
 		}
 		temp.it.time_use = 0;
 		temp.exp = 0;
@@ -78,7 +77,7 @@ public class Wedding {
 			}
 			js2.add(js22);
 			st.execute(String.format(query, "'" + js.toJSONString() + "'", "'" + js2.toJSONString() + "'"));
-			connection.commit();
+                        connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			p.conn.close();

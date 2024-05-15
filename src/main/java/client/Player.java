@@ -37,7 +37,6 @@ public class Player extends Body2 {
     public final Session conn;
     //    public final int index;
     public boolean already_setup;
-    public boolean nhan = true;
     //    public String name;
     public Map map;
     public boolean is_changemap;
@@ -48,11 +47,11 @@ public class Player extends Body2 {
     public Date date;
     public byte diemdanh;
     public byte chucphuc;
-    public int banclone;
-    public long chuyensinh;
-    public int day_cs;
     // public int hieuchien;
     public int dibuon;
+    public int dicuop;
+    public long danhvong;
+    public int doiqua;
     public byte type_exp;
     //    public byte clazz;
 //    public short level;
@@ -168,6 +167,7 @@ public class Player extends Body2 {
     public long time_die;
     public byte type_armor_create = -1;
     public byte id_armor_create = -1;
+    public List<NpcTemplate> npcs;
 
     public void datatx() {
         if (this.tai == true) {
@@ -273,11 +273,6 @@ public class Player extends Body2 {
             if (skill_point[i] <= 0) {
                 continue;
             }
-            if(chuyensinh > 0){
-                kynang = 0;
-                skill_point = new byte[]{1, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10};
-                return;
-            }
             LvSkill temp = skills[i].mLvSkill[skill_point[i] - 1];
             while (skill_point[i] > 0 && temp.LvRe > level) {
                 temp = skills[i].mLvSkill[(--skill_point[i]) - 1];
@@ -346,12 +341,12 @@ public class Player extends Body2 {
                 diemdanh = rs.getByte("diemdanh");
                 chucphuc = rs.getByte("chucphuc");
                 hieuchien = rs.getInt("hieuchien");
-                banclone = rs.getInt("banclone");
                 dibuon = rs.getInt("dibuon");
+                dicuop = rs.getInt("dicuop");
+                danhvong = rs.getLong("danhvong");
+                doiqua = rs.getInt("doiqua");
                 chuyencan = rs.getInt("chuyencan");
                 diemsukien = rs.getInt("diemsukien");
-                chuyensinh = rs.getLong("chuyensinh");
-                day_cs = rs.getInt("day_cs");
                 type_exp = rs.getByte("typeexp");
                 clazz = rs.getByte("clazz");
                 level = rs.getShort("level");
@@ -880,14 +875,7 @@ public class Player extends Body2 {
     public synchronized int get_ngoc() {
         return this.kimcuong;
     }
-    public synchronized int get_day_cs() {
-        return this.day_cs;
-    }
 
-
-    public synchronized long get_chuyensinh() {
-        return this.chuyensinh;
-    }
     public synchronized void update_vang(long i) {
         if ((i + vang) > 2__000_000_000_000_000L) {
             vang = 2__000_000_000_000_000L;
@@ -1249,13 +1237,13 @@ public class Player extends Body2 {
                 a += ",`kynang` = " + kynang;
                 a += ",`diemdanh` = " + diemdanh;
                 a += ",`chucphuc` = " + chucphuc;
-                a += ",`banclone` = " + banclone;
                 a += ",`hieuchien` = " + hieuchien;
                 a += ",`dibuon` = " + dibuon;
+                a += ",`dicuop` = " + dicuop;
+                a += ",`danhvong` = " + danhvong;
+                a += ",`doiqua` = " + doiqua;
                 a += ",`chuyencan` = " + chuyencan;
                 a += ",`diemsukien` = " + diemsukien;
-                a += ",`chuyensinh` = " + chuyensinh;
-                a += ",`day_cs` = " + day_cs;
                 a += ",`typeexp` = " + type_exp;
                 a += ",`date` = '" + date.toString() + "'";
                 a += ",`point1` = " + point1;
@@ -1423,7 +1411,6 @@ public class Player extends Body2 {
             chucphuc = 1;
             point_active[0] = 10;
             point_active[1] = 0;
-            day_cs = 3;
             quest_daily = new int[]{-1, -1, 0, 0, 20};
             date = Date.from(Instant.now());
         }
@@ -1476,10 +1463,10 @@ public class Player extends Body2 {
     }
 
     public void change_map(Player p, Vgo vgo) throws IOException {
-//        if (vgo.id_map_go == 50 && this.level < 40) {
-//            Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
-//            return;
-//        }
+        if ((vgo.id_map_go == 36 || vgo.id_map_go == 50) && this.level < 40) {
+            Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
+            return;
+        }
         if (map.map_id == 0) {
             Message m = new Message(55);
             m.writer().writeByte(1);
@@ -1605,7 +1592,7 @@ public class Player extends Body2 {
             while (exp >= Level.entrys.get(level - 1).exp && level < Manager.gI().lvmax) {
                 exp -= Level.entrys.get(level - 1).exp;
                 level++;
-                if ((tiemnang + point1 + point2 + point3 + point4) < 2_000_000) {
+                if ((tiemnang + point1 + point2 + point3 + point4) < 32000) {
                     point1++;
                     point2++;
                     point3++;
@@ -1667,19 +1654,6 @@ public class Player extends Body2 {
             }
         }
     }
-    public synchronized int checkcoin() throws IOException {
-        int result = 0;
-        String query = "SELECT `coin` FROM `account` WHERE `user` = '" + conn.user + "' LIMIT 1;";
-        try ( Connection connection = SQL.gI().getConnection();  Statement ps = connection.createStatement();  ResultSet rs = ps.executeQuery(query)) {
-            rs.next();
-            result = rs.getInt("coin");
-        } catch (SQLException e) {
-            result = 0;
-        }
-        return result;
-    }
-
-
 
     public synchronized boolean update_coin(int coin_exchange) throws IOException {
         String query = "SELECT `coin` FROM `account` WHERE `user` = '" + conn.user + "' LIMIT 1;";
@@ -1700,6 +1674,17 @@ public class Player extends Body2 {
             Service.send_notice_box(conn, "Đã xảy ra lỗi");
         }
         return true;
+    }
+    public synchronized int checkcoin() {
+        int result = 0;
+        String query = "SELECT `coin` FROM `account` WHERE `user` = '" + conn.user + "' LIMIT 1;";
+        try ( Connection connection = SQL.gI().getConnection();  Statement ps = connection.createStatement();  ResultSet rs = ps.executeQuery(query)) {
+            rs.next();
+            result = rs.getInt("coin");
+        } catch (SQLException e) {
+            result = 0;
+        }
+        return result;
     }
 
     public synchronized boolean history_coin(int coin_exchange, String log) throws IOException {
@@ -2095,28 +2080,28 @@ public class Player extends Body2 {
             if (tiemnang >= value) {
                 switch (index) {
                     case 0: {
-                        if ((point1 + value) <= 2_000_000) {
+                        if ((point1 + value) <= 32000) {
                             point1 += value;
                             tiemnang -= value;
                         }
                         break;
                     }
                     case 1: {
-                        if ((point2 + value) <= 2_000_000) {
+                        if ((point2 + value) <= 32000) {
                             point2 += value;
                             tiemnang -= value;
                         }
                         break;
                     }
                     case 2: {
-                        if ((point3 + value) <= 2_000_000) {
+                        if ((point3 + value) <= 32000) {
                             point3 += value;
                             tiemnang -= value;
                         }
                         break;
                     }
                     case 3: {
-                        if ((point4 + value) <= 2_000_000) {
+                        if ((point4 + value) <= 32000) {
                             point4 += value;
                             tiemnang -= value;
                         }
@@ -2139,7 +2124,7 @@ public class Player extends Body2 {
                     return;
                 }
                 this.id_index_temp = (byte) (index - 19);
-                MenuController.send_menu_select(conn, -128, new String[]{"Nâng cấp bằng sách", "Nâng cấp bằng sách ghép"});
+                MenuController.send_menu_select(conn, 999, new String[]{"Nâng cấp bằng sách", "Nâng cấp bằng sách ghép"});
             }
         }
     }
@@ -2414,6 +2399,7 @@ public class Player extends Body2 {
         item.char_inventory(3);
         item.char_chest(3);
 
+        npcs = new ArrayList<>();
         isOwner = true;
         owner = this;
         squire = new Squire(this.conn, this.index);
@@ -2421,22 +2407,7 @@ public class Player extends Body2 {
         Log.gI().add_log(this.name,
                 "Login : [Vàng] : " + Util.number_format(this.vang) + " : [Ngọc] : " + Util.number_format(this.kimcuong));
     }
-    public synchronized void update_cs(long i){
-        chuyensinh += i;
-        try {
-            Message m = new Message(16);
-            m.writer().writeByte(0);
-            m.writer().writeByte(5);
-            m.writer().writeLong(this.get_vang());
-            m.writer().writeInt(this.get_ngoc());
-            m.writer().writeByte(5);
-            m.writer().writeByte(0);
-            conn.addmsg(m);
-            m.cleanup();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     public void update_wings_time() throws IOException {
         boolean check = false;
         for (int i = 0; i < item.bag3.length; i++) {
@@ -2574,4 +2545,13 @@ public class Player extends Body2 {
         vgo.y_new = 318;
         conn.p.change_map(conn.p, vgo);
     }
+    
+//    public NpcTemplate findNPC(byte id) {
+//        for (NpcTemplate npc : npcs) {
+//            if (npc.id == id && Math.abs(npc.x - this.x) < 150 && Math.abs(npc.y - this.y) < 150) {
+//                return npc;
+//            }
+//        }
+//        return null;
+//    }
 }

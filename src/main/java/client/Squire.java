@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Squire extends Player {
+
     private long delay_move;
     private long delay_chat;
 
@@ -55,6 +56,7 @@ public class Squire extends Player {
             this.x = owner.x;
             this.y = owner.y;
             this.map = owner.map;
+            this.npcs = new ArrayList<>();
             conn.p = this;
             this.owner = owner;
             this.squire = this;
@@ -744,9 +746,9 @@ public class Squire extends Player {
         if (focus.isMob() && focus.template.mob_id == 152 && !ChiemThanhManager.isDameTruChinh(map)) {
             return;
         }
-//        if (focus.isMob() && focus.isBoss() && Math.abs(focus.level - ObjAtk.level) > 5) {
-//            return;
-//        }
+        if (focus.isMob() && focus.isBoss() && Math.abs(focus.level - ObjAtk.level) > 5) {
+            return;
+        }
         if (ObjAtk.isStunes(true)) {
             return;
         }
@@ -772,7 +774,7 @@ public class Squire extends Player {
         }
         if (focus.get_Miss(false) > Util.random(10_000)) {
             if (ObjAtk.isPlayer()) {
-                MapService.Fire_Player(map, ((Player) ObjAtk).conn, idxSkill, focus.index, 0, focus.hp, new ArrayList<>());
+                MapService.Fire_Player(map, ((Player) ObjAtk).conn, idxSkill, focus.index, 0, focus.hp, new ArrayList<>(), (byte) 11, 0);
             }
             return;
         }
@@ -857,7 +859,6 @@ public class Squire extends Player {
         }
 
         //</editor-fold>
-
         List<Float> giamdame = new ArrayList<>();
         ef = ObjAtk.get_EffDefault(3);
         if (ef != null) {
@@ -1188,10 +1189,10 @@ public class Squire extends Player {
 
     public static void create(Player p) throws IOException {
         try (Connection connnect = SQL.gI().getConnection(); PreparedStatement ps = connnect.prepareStatement(
-                "INSERT INTO `squire` (`name`, `body`, `clazz`, `site`, `tiemnang`, `kynang`, " +
-                        "`point1`, `point2`, `point3`, `point4`, `itemwear`, `rms_save`, `date`, " +
-                        "`skill`, `typeexp`, `medal_create_material`,`count_dungeon`, `id`, `friend`, `eff`, `enemies`, `pet`) " +
-                        "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
+                "INSERT INTO `squire` (`name`, `body`, `clazz`, `site`, `tiemnang`, `kynang`, "
+                + "`point1`, `point2`, `point3`, `point4`, `itemwear`, `rms_save`, `date`, "
+                + "`skill`, `typeexp`, `medal_create_material`,`count_dungeon`, `id`, `friend`, `eff`, `enemies`, `pet`) "
+                + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);")) {
             ps.setNString(1, p.name);
             byte clazz = (byte) Util.random(4);
             byte[] body = randomBody(clazz);
@@ -1285,4 +1286,3 @@ public class Squire extends Player {
         Squire.squireEnterMap(conn.p);
     }
 }
-

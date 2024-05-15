@@ -7,31 +7,31 @@ import io.Message;
 import io.Session;
 
 public class Npc {
+
     public static String CHAT_MR_BALLARD = "Chiến trường bắt đầu vào 21h30 phút hàng ngày";
-    public static String CHAT_MR_BANANA = "Tao là để đổi quà trang bị 2";
     public static String CHAT_TOP = "Cám ơn các bạn đã like cho mình,hihi!";
-    public static String CHAT_PHO_CHI_HUY = "Tao là để đi phó bản kiếm nguyên liệu tinh tú\n" +
-            "Và còn chiếm thành bang hội nữa nhé";
-    public static String CHAT_PHAP_SU = "Tao là để cường hóa trang bị, khảm ngọc\n" +
-            "Tạo mề đay và nâng cấp mề đay";
-    public static String CHAT_ZORO = "Tao là để lập bang hội\n" +
-            "Cày bang hội cho vip mà cưỡi sư tử";
-    public static String CHAT_AMAN = "Tao là để tạo acc khi lên level 10\n" +
-            "Hoặc là Chuyển sinh và cất đồ vào rương";
-    public static String CHAT_ODA = "Tao là để đi lôi đài pk với nhau\n" +
-            "Muốn để tử thì kiếm tao nhé";
-    public static String CHAT_LISA ="Tao là để bán vật phẩm nhiều thứ linh tinh\n" +
-            "Chắc chắn là rất cần thiết với mày";
-    public static String CHAT_SOPHIA ="Tao là để làm sự kiện nếu có\n" +
-            "Còn không có thì đừng gặp Tao";
-    public static String CHAT_HAMMER = "Tao là để chế tạo đồ, nâng cấp tinh tú và giáp siêu nhân\n" +
-            "Nâng skill 110 nữa nhé cu";
-    public static String CHAT_ZULU = "Tao là để làm nhiệm vụ hàng ngày\n" +
-            "Muốn cuộc sống kiếm thêm nhiều thứ thì gặp";
-    public static String CHAT_DOUBA = "Tao là để tìm boss cho chúng mày đấy\n" +
-            "Đéo có gì hơn ngoài check boss";
-    public static String CHAT_ANNA = "Tao là để nhập gift code nhé\n" +
-            "Muốn cởi cái gì thì gặp tao";
+    public static String CHAT_PHO_CHI_HUY = "Và cứ thế mỗi ngày thêm một tý\n"
+            + "Ta yêu nhau cho mãi tới muôn đời.";
+    public static String CHAT_PHAP_SU = "Ở đâu trăng có nhớ người\n"
+            + "Ở đây đang có một người nhớ trăng..";
+    public static String CHAT_ZORO = "Nắng mưa là chuyện của trời\n"
+            + "Tương tư là chuyện của tôi yêu nàng.";
+    public static String CHAT_AMAN = "Ôi hạnh phúc anh thấy mình nhỏ bé\n"
+            + "Chép tình yêu trong trang giấy thơ ngây.";
+    public static String CHAT_ODA = "Nửa sự thật không còn là sự thật\n"
+            + "Và tình yêu không một nửa bao giờ...";
+    public static String CHAT_LISA = "Với em dù lắm chua cay\n"
+            + "Tình yêu trước gió càng lay càng bền.";
+    public static String CHAT_SOPHIA = "Em là sóng nhưng xin đừng như sóng\n"
+            + "Dội vào bờ xin chớ ngược ra khơi.";
+    public static String CHAT_HAMMER = "Từ nay tôi đã có người\n"
+            + "Có em đi đứng bên đời líu lo.";
+    public static String CHAT_ZULU = "Chỉ mình em thôi và chỉ một\n"
+            + "Mình em ngự trị trái tim anh.";
+    public static String CHAT_DOUBA = "Nếu đã hẹn biển cứ nằm im nhé!\n"
+            + "Sóng ra khơi rồi sóng lại quay về.";
+    public static String CHAT_ANNA = "Khi say một chén cũng say\n"
+            + "Khi nên tình nghĩa một ngày cũng nên.";
     public static String CHAT_BXH = Manager.gI().thongbao;
 
     public static void chat(Map map, String txt, int id) throws IOException {

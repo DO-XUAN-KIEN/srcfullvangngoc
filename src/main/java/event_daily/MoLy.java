@@ -76,7 +76,7 @@ public class MoLy {
             case 2: {
                 if (p.id_select_mo_ly != -1) {
                     p.item.remove(4, 52, 1);
-                    if (MoLy.item_mo_ly_percent[p.id_select_mo_ly] > Util.random(250)) {
+                    if (MoLy.item_mo_ly_percent[p.id_select_mo_ly] > Util.random(300)) {
                         Message m = new Message(-91);
                         m.writer().writeByte(2);
                         m.writer().writeByte(1); // win

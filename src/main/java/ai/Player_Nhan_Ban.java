@@ -14,10 +14,10 @@ import template.EffTemplate;
 public class Player_Nhan_Ban {
 
     public static short[][] LOCATION = new short[][]{ //
-            new short[]{318, 528, 516, 612}, // 2
-            new short[]{416, 552, 120, 200}, // 3
-            new short[]{424, 552, 304, 416}, // 4
-            new short[]{235, 411, 493, 573} // 5
+        new short[]{318, 528, 516, 612}, // 2
+        new short[]{416, 552, 120, 200}, // 3
+        new short[]{424, 552, 304, 416}, // 4
+        new short[]{235, 411, 493, 573} // 5
     };
     public int id;
     public short x, y;
@@ -38,7 +38,7 @@ public class Player_Nhan_Ban {
         int size5 = Map.get_map_by_id(54)[0].maxzone;
         int i = -2;
         List<Player_Nhan_Ban> result = new ArrayList<>();
-
+        
         int size_linh_canh = 10;
         for (int j = 0; j < size2; j++) {
             for (int j2 = 0; j2 < size_linh_canh; j2++) { // 20 linh canh
@@ -121,7 +121,7 @@ public class Player_Nhan_Ban {
     }
 
     private static void atk(Map map, Player_Nhan_Ban temp, Player p0) throws IOException {
-        int dame = (temp.dame *10000) / 100;
+        int dame = (temp.dame * 1000) / 10;
         Message m = new Message(6);
         m.writer().writeShort(temp.id);
         m.writer().writeByte(0); // indexskill

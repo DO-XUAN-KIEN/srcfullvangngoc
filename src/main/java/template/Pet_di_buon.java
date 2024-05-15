@@ -12,7 +12,7 @@ import map.MapService;
 
 public class Pet_di_buon extends MainObject {
 
-    public Player playerForPetDiBuon;
+    public Player p;
     public short type;
     public List<Short> item;
     public int id_map;
@@ -35,7 +35,7 @@ public class Pet_di_buon extends MainObject {
         this.time_skill = System.currentTimeMillis() + 15_000L;
         this.speed = 1;
         this.level = p.level;
-        this.playerForPetDiBuon = p;
+        this.p = p;
     }
 
     public synchronized void update_hp(Player p, int hp) throws IOException {
@@ -64,7 +64,7 @@ public class Pet_di_buon extends MainObject {
         }
         if (this.time_skill < System.currentTimeMillis()) {
             this.time_skill = System.currentTimeMillis() + 10_000L;
-            this.speed = 4;
+            this.speed = 2;
             countSpeed++;
             this.update_all(p);
             p.update_ngoc(-5);
@@ -108,29 +108,18 @@ public class Pet_di_buon extends MainObject {
                 this.isDie = true;
                 this.hp = 0;
                 Pet_di_buon_manager.remove(this.name);
-                this.playerForPetDiBuon.pet_di_buon = null;
+                this.p.pet_di_buon = null;
                 for (int j = 0; j < this.item.size(); j++) {
                     ItemMap it_leave = new ItemMap();
                     it_leave.id_item = (short) this.item.get(j);
                     it_leave.color = (byte) 0;
                     it_leave.quantity = 1;
                     it_leave.category = 3;
-
-                    Player concac = null;
-                    for(Player pl : map.players){
-                        if(!pl.equals(playerForPetDiBuon) && pl.zone_id == playerForPetDiBuon.zone_id){
-                            concac = pl;
-                        }
-                    }
-                    assert concac != null;
-                    it_leave.idmaster = (short) concac.index;
-
-
-                    it_leave.idmaster = (short) this.playerForPetDiBuon.index;
+                    it_leave.idmaster = (short) mainAtk.index;
                     it_leave.op = new ArrayList<>();
                     it_leave.time_exist = System.currentTimeMillis() + 60_000L;
                     it_leave.time_pick = System.currentTimeMillis() + 1_500L;
-                    map.add_item_map_leave(map, (Player)this.playerForPetDiBuon, it_leave, this.index);
+                    map.add_item_map_leave(map, (Player)this.p, it_leave, this.index);
                 }
             }
         } catch (Exception e) {

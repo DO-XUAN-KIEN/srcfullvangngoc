@@ -82,7 +82,7 @@ public class ChiemMo {
         setRunning(false);
         for (Mob_MoTaiNguyen mob_MoTaiNguyen : list_mo_tai_nguyen) {
             mob_MoTaiNguyen.is_atk = false;
-            mob_MoTaiNguyen.Set_hpMax(4_000_000);
+            mob_MoTaiNguyen.Set_hpMax(10_000_000);
             mob_MoTaiNguyen.hp = mob_MoTaiNguyen.get_HpMax();
             //
             MainObject.upHP(mob_MoTaiNguyen.map, mob_MoTaiNguyen, 0);

@@ -6,11 +6,10 @@ package ai;
 
 import client.Player;
 import io.Message;
-import io.Session;
+
 import java.io.IOException;
 import java.util.List;
 import map.Map;
-import map.MapService;
 import map.Mob_in_map;
 import template.MainObject;
 import template.Mob;
@@ -22,7 +21,7 @@ import template.Part_player;
  */
 public class MobAi extends Mob_in_map{
     public long timeATK;
-
+    
     public List<Part_player> part_p;//
     private byte head;//
     private byte eye;//
@@ -48,8 +47,8 @@ public class MobAi extends Mob_in_map{
     public int crit;
     public long time_hp_buff;
     public int pierce;
-
-
+    
+    
     public MobAi(int map_id, int zone_id, int id_temp_mob, int index, int x, int y, int clazz, int head, int eye, int hair, int lv, int hp, int pk, int dame, int def, int crit,List<Part_player> part, int id_img_mob){
         Mob temp = Mob.entrys.get(id_temp_mob);
         this.map_id = (byte)map_id;
@@ -77,7 +76,7 @@ public class MobAi extends Mob_in_map{
     public boolean isMobCTruong(){
         return true;
     }
-
+    
     public MobAi(int map_id, int zone_id, int id_temp_mob,String name, int index, int x, int y, int clazz, int head, int eye, int hair, int lv, int hp, int pk, int dame, int def, int crit,List<Part_player> part, int id_img_mob){
         Mob temp = Mob.entrys.get(id_temp_mob);
         this.map_id = (byte)map_id;
@@ -101,7 +100,7 @@ public class MobAi extends Mob_in_map{
         this.template = temp;
         this.time_refresh = 11;
     }
-
+    
     public void send_in4(Player p)throws IOException{
         Message m = new Message(5);
         m.writer().writeShort(this.index);
@@ -140,7 +139,11 @@ public class MobAi extends Mob_in_map{
         m.writer().writeByte(-1); // pet
         m.writer().writeByte(this.fashion.length);
         for (int i = 0; i < this.fashion.length; i++) {
-            m.writer().writeByte(this.fashion[i]);
+            if (p.conn.version >= 280) {
+                m.writer().writeShort(this.fashion[i]);
+            } else {
+                m.writer().writeByte(this.fashion[i]);
+            }
         }
         //
         m.writer().writeShort(id_img_mob);//id_img_mob
@@ -161,12 +164,12 @@ public class MobAi extends Mob_in_map{
         p.conn.addmsg(m);
         m.cleanup();
     }
-
+    
     @Override
     public int get_TypeObj(){
         return 0;
     }
-
+    
     @Override
     public void SetDie(Map map, MainObject mainAtk){
         try{

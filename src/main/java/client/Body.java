@@ -1,13 +1,10 @@
 package client;
 
 import core.Manager;
-import core.Service;
 import template.EffTemplate;
 import template.Item3;
 import template.Option;
 import template.Option_pet;
-
-import java.security.Provider;
 
 public class Body {
 

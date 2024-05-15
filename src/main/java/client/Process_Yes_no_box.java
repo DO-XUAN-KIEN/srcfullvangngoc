@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import event_daily.ChiemThanhManager;
 import event_daily.Wedding;
@@ -21,13 +19,14 @@ import map.MapService;
 import template.*;
 
 public class Process_Yes_no_box {
+
     public static void process(Session conn, Message m) throws IOException {
         short id = m.reader().readShort(); // id
         if (id != conn.p.index) {
             return;
         
         }
-        int type = m.reader().readByte(); // type
+        byte type = m.reader().readByte(); // type
         byte value = m.reader().readByte(); // value
         if (value != 1) {
             switch (type) {
@@ -37,581 +36,7 @@ public class Process_Yes_no_box {
 					conn.p.in4_wedding = null;
 					break;
 				}
-                //vip 1
-                case -100: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,111)< 100){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,111,100);
-                    short iditem = 1000;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    break;
-                }
-                case -101: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 100){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,100);
-                    short iditem = 4819;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    break;
-                }
-                case -102: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 100){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,100);
-                    short iditem = 4822;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    break;
-                }
-                case -103: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 100){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,100);
-                    short iditem = 4823;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    break;
-                }
-                case -104: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 100){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,100);
-                    short iditem = 4824;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    break;
-                }
-                case -105: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 100){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,100);
-                    short iditem = 4827;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    break;
-                }
-                case -106: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 100){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,100);
-                    short iditem = 4830;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    break;
-                }
-                // vip 2
-                case -150: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 300){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,300);
-                    short iditem = 4817;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    Manager.gI().chatKTGprocess("Chúc mừng "+ conn.p.name + " đổi thành công " + itbag.name);
-                    break;
-                }
-                case -151: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 300){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,300);
-                    short iditem = 4820;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    Manager.gI().chatKTGprocess("Chúc mừng "+ conn.p.name + " đổi thành công " + itbag.name);
-                    break;
-                }
-                case -152: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 300){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,300);
-                    short iditem = 4825;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    Manager.gI().chatKTGprocess("Chúc mừng "+ conn.p.name + " đổi thành công " + itbag.name);
-                    break;
-                }
-                case -153: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 300){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,300);
-                    short iditem = 4828;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    Manager.gI().chatKTGprocess("Chúc mừng "+ conn.p.name + " đổi thành công " + itbag.name);
-                    break;
-                }
-                case -154: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 300){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,300);
-                    short iditem = 4831;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    Manager.gI().chatKTGprocess("Chúc mừng "+ conn.p.name + " đổi thành công " + itbag.name);
-                    break;
-                }
-                //vip 3
-                case -200: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 500){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,500);
-                    short iditem = 4816;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    Manager.gI().chatKTGprocess("Chúc mừng "+ conn.p.name + " đổi thành công " + itbag.name);
-                    break;
-                }
-                case -201: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 500){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,500);
-                    short iditem = 4821;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    Manager.gI().chatKTGprocess("Chúc mừng "+ conn.p.name + " đổi thành công " + itbag.name);
-                    break;
-                }
-                case -202: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 500){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,500);
-                    short iditem = 4826;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    Manager.gI().chatKTGprocess("Chúc mừng "+ conn.p.name + " đổi thành công " + itbag.name);
-                    break;
-                }
-                case -203: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 500){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,500);
-                    short iditem = 4829;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    Manager.gI().chatKTGprocess("Chúc mừng "+ conn.p.name + " đổi thành công " + itbag.name);
-                    break;
-                }
-                case -204: {
-                    if(conn.p.item.get_bag_able()< 1){
-                        Service.send_notice_box(conn,"Hành trang đầy!!!");
-                        return;
-                    }
-                    if(conn.p.item.total_item_by_id(7,495)< 500){
-                        Service.send_notice_box(conn,"Không đủ số lượng!!");
-                        return;
-                    }
-                    conn.p.item.remove(7,495,500);
-                    short iditem = 4832;
-                    Item3 itbag = new Item3();
-                    itbag.id = iditem;
-                    itbag.name = ItemTemplate3.item.get(iditem).getName();
-                    itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                    itbag.type = ItemTemplate3.item.get(iditem).getType();
-                    itbag.level = ItemTemplate3.item.get(iditem).getLevel();
-                    itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
-                    itbag.op = new ArrayList<>();
-                    itbag.op.addAll(ItemTemplate3.item.get(iditem).getOp());
-                    itbag.color = ItemTemplate3.item.get(iditem).getColor();
-                    itbag.part = ItemTemplate3.item.get(iditem).getPart();
-                    itbag.tier = 0;
-                    itbag.islock = true;
-                    itbag.time_use = 0;
-                    conn.p.item.add_item_bag3(itbag);
-                    conn.p.item.char_inventory(5);
-                    conn.p.item.char_inventory(7);
-                    List<box_item_template> ids = new ArrayList<>();
-                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
-                    Manager.gI().chatKTGprocess("Chúc mừng "+ conn.p.name + " đổi thành công " + itbag.name);
-                    break;
-                }
-                //
+                
                 case 115: {
                     conn.p.id_remove_time_use = -1;
                     break;
@@ -640,19 +65,19 @@ public class Process_Yes_no_box {
                     if (!conn.p.isOwner) {
                         return;
                     }
-                    if (conn.p.get_ngoc() < 1) {
-                        Service.send_notice_box(conn, "1 ngọc còn dell có thì làm ăn được gì");
+                    if (conn.coin < 100000) {
+                        Service.send_notice_box(conn, "Khong du coin");
                         return;
                     }
-                    if (conn.p.level < 30) {
-                        Service.send_notice_box(conn, "Yêu cầu level 30");
+                    if (conn.p.level < 10) {
+                        Service.send_notice_box(conn, "Yêu cầu level 10");
                         return;
                     }
                     if (conn.p.squire == null) {
                         Squire.create(conn.p);
                         conn.p.squire = new Squire(conn, conn.p.index);
                         conn.p.squire.load();
-                        conn.p.update_ngoc(-1);
+                        conn.p.update_coin(-100_000);
                         Service.send_notice_box(conn, "Nhận thành công đệ tử");
                         Squire.callSquire(conn);
                     }
@@ -876,8 +301,8 @@ public class Process_Yes_no_box {
                         Service.send_notice_box(conn, "chưa đủ 100% exp!");
                         return;
                     }
-                    long vang_req = (3 * (temp.it.tier + 1)) * 5_000_000L;
-                    int ngoc_req = (3 * (temp.it.tier + 1)) * 5000;
+                    long vang_req = (3 * (temp.it.tier + 1)) * 10_000_000L;
+                    int ngoc_req = (3 * (temp.it.tier + 1)) * 10_000;
                     if (conn.p.get_vang() < vang_req) {
                         Service.send_notice_box(conn, "chưa đủ " + vang_req + " vàng!");
                         return;
@@ -887,6 +312,7 @@ public class Process_Yes_no_box {
                         return;
                     }
                     conn.p.update_vang(-vang_req);
+                    Log.gI().add_log(conn.p.name, "Trừ " + vang_req + " nâng nhẫn cưới");
                     conn.p.update_ngoc(-ngoc_req);
                     conn.p.item.char_inventory(5);
                     boolean suc = 80 > Util.random(100);
@@ -1267,11 +693,11 @@ public class Process_Yes_no_box {
 //                    break;
 //                }
                 case 122: { // chuyển hoá
-//                    if((conn.p.item.bag3[conn.p.item_replace].id >= 4587 && conn.p.item.bag3[conn.p.item_replace].id<= 4590) ||
+//                    if((conn.p.item.bag3[conn.p.item_replace].id >= 4587 && conn.p.item.bag3[conn.p.item_replace].id<= 4590) || 
 //                            (conn.p.item.bag3[conn.p.item_replace2].id >= 4587 && conn.p.item.bag3[conn.p.item_replace2].id<= 4590))
 //                    {
 //                        Service.send_notice_box(conn, "Trang bị không phù hợp!");
-//                        return;
+//                        return;a
 //                    }
                     int fee = 50 * conn.p.item.bag3[conn.p.item_replace].tier;
                     if (conn.p.get_ngoc() < fee) {

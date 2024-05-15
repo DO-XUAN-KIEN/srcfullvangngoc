@@ -122,8 +122,6 @@ public class DailyQuest {
             short id_yellow = (short) Util.random(226, 236);
             short id_violet = (short) Util.random(236, 246);
             short id_ngocrong = (short) Util.random(464,470);
-            short id_vp = 262;
-            short id_tb2 = 495;
             int vang = Util.random(70, 120) * (p.quest_daily[1] + 1) * p.quest_daily[2];
             int ngoc = p.quest_daily[1] == 3 ? Util.random(800, 1000)
                     : (p.quest_daily[1] == 2 ? Util.random(400, 500)
@@ -137,27 +135,27 @@ public class DailyQuest {
             if (p.quest_daily[1] == 1) {
                 if (((p.item.get_bag_able() > 0) || (p.item.total_item_by_id(7, id_blue) > 0))) {
                     Item47 itbag = new Item47();
-                    itbag.id = id_vp;
-                    itbag.quantity = (short) Util.random(1, 5);
-                    itbag.category = 4;
-                    p.item.add_item_bag47(4, itbag);
+                    itbag.id = id_blue;
+                    itbag.quantity = (short) Util.random(0, 2);
+                    itbag.category = 7;
+                    p.item.add_item_bag47(7, itbag);
                 }
             } else if (p.quest_daily[1] == 2) {
                 if (((p.item.get_bag_able() > 0) || (p.item.total_item_by_id(7, id_yellow) > 0))) {
                     Item47 itbag = new Item47();
-                    itbag.id = id_vp;
-                    itbag.quantity = (short) Util.random(1, 10);
-                    itbag.category = 4;
-                    p.item.add_item_bag47(4, itbag);
-                }
-            } else if (p.quest_daily[1] == 3) {
-                if (((p.item.get_bag_able() > 0) || (p.item.total_item_by_id(7, id_violet) > 0))) {
-                    Item47 itbag = new Item47();
-                    itbag.id =  id_tb2;
-                    itbag.quantity = (short) Util.random(1, 5);
+                    itbag.id = id_yellow;
+                    itbag.quantity = (short) Util.random(0, 2);
                     itbag.category = 7;
                     p.item.add_item_bag47(7, itbag);
                 }
+            } else if (p.quest_daily[1] == 3) {
+                if (((p.item.get_bag_able() > 5))) {
+                    Item47 itbag = new Item47();
+                    itbag.id = id_ngocrong;
+                    itbag.quantity = 1;
+                    itbag.category = 7;
+                    p.item.add_item_bag47(7, itbag);
+                    }
             }
             p.item.char_inventory(3);
             p.item.char_inventory(4);

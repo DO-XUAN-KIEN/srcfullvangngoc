@@ -22,18 +22,18 @@ import template.Player_store;
 
 public class GameSrc {
 
-    public static byte[] percent = new byte[]{95, 90, 85, 80, 75, 70, 65, 50, 45, 40, 20, 10, 8, 6, 4, 2};
+    public static byte[] percent = new byte[]{95, 90, 80, 70, 60, 50, 45, 35, 25, 15, 10, 5, 4, 3, 2, 1};
     public static short[] wing_upgrade_material_long_khuc_xuong = new short[]{10, 12, 15, 19, 24, 30, 37, 45, 54, 64,
-            75, 87, 100, 114, 129, 145, 162, 180, 199, 219, 240, 262, 285, 309, 334, 360, 387, 415, 444, 474};
+        75, 87, 100, 114, 129, 145, 162, 180, 199, 219, 240, 262, 285, 309, 334, 360, 387, 415, 444, 474};
     public static short[] wing_upgrade_material_kim_loai = new short[]{20, 22, 25, 29, 34, 40, 47, 55, 64, 74, 85, 97,
-            110, 124, 139, 155, 172, 190, 209, 229, 250, 272, 295, 319, 344, 370, 397, 425, 454, 484};
+        110, 124, 139, 155, 172, 190, 209, 229, 250, 272, 295, 319, 344, 370, 397, 425, 454, 484};
     public static short[] wing_upgrade_material_da_cuong_hoa = new short[]{50, 54, 60, 68, 78, 90, 104, 120, 138, 158,
-            180, 204, 230, 258, 288, 320, 354, 390, 428, 468, 510, 554, 600, 648, 698, 750, 804, 860, 918, 978};
+        180, 204, 230, 258, 288, 320, 354, 390, 428, 468, 510, 554, 600, 648, 698, 750, 804, 860, 918, 978};
     public static int[] wing_upgrade_material_gold = new int[]{50000, 52000, 55000, 59000, 64000, 70000, 77000, 85000,
-            94000, 104000, 115000, 127000, 140000, 154000, 169000, 185000, 202000, 220000, 239000, 259000, 280000, 302000,
-            325000, 349000, 374000, 400000, 427000, 455000, 484000, 514000};
+        94000, 104000, 115000, 127000, 140000, 154000, 169000, 185000, 202000, 220000, 239000, 259000, 280000, 302000,
+        325000, 349000, 374000, 400000, 427000, 455000, 484000, 514000};
     public static int[] wing_upgrade_material_time = new int[]{2, 4, 6, 8, 12, 15, 20, 30, 45, 60, 100, 130, 150,
-            180, 220, 242, 286, 322, 340, 380, 422, 456, 502, 550, 600, 652, 706, 742, 770, 830};
+        180, 220, 242, 286, 322, 340, 380, 422, 456, 502, 550, 600, 652, 706, 742, 770, 830};
 
     public static void rebuild_item(Session conn, Message m2) throws IOException {
         byte type = m2.reader().readByte();
@@ -87,7 +87,7 @@ public class GameSrc {
             if (type == 2 && !checkmaterial(conn, conn.p.id_item_rebuild, tem) && !next) {
                 m.writer().writeByte(3);
                 if (conn.p.get_vang() < 10_000 || conn.p.get_ngoc() < 10) {
-                    m.writer().writeUTF("Vàng trên 10k và ngọc trên 10k mới có thể tiếp tục ");
+                    m.writer().writeUTF("Vàng trên 10k và ngọc trên 10 mới có thể tiếp tục ");
                 } else {
                     m.writer().writeUTF("Mi còn thiếu nguyên liệu...");
                 }
@@ -158,9 +158,9 @@ public class GameSrc {
                         if (it_upgrade.tier < 7) {
                             get_percent += 30;
                         }
-                        if (conn.ac_admin > 3 && Manager.BuffAdmin)
+                        if (conn.ac_admin > 3 && Manager.BuffAdmin) {
                             percent = true;
-                        else if (conn.p.is_use_mayman && (conn.p.id_use_mayman == 14 || conn.p.id_use_mayman == 13)) {
+                        } else if (conn.p.is_use_mayman && (conn.p.id_use_mayman == 14 || conn.p.id_use_mayman == 13)) {
                             percent = (get_percent + 15) > Util.random(0, 106); //cũ là 120
                         } else {
                             percent = get_percent > Util.random(0, 106);
@@ -207,21 +207,17 @@ public class GameSrc {
                         String per = GameSrc.percent[it_upgrade.tier] + "%";
                         if (tem == 0) { // vang
                             if (!percent) {
-                                conn.p.update_vang(-10000);
                                 m.writer().writeByte(4);
                                 m.writer().writeUTF("Ta rất tiếc, quá trình cường hóa đã thất bại.");
                             } else {
-                                conn.p.update_vang(-10000);
                                 m.writer().writeByte(3);
                                 m.writer().writeUTF("Mi đã cường hóa thành công " + it_upgrade.name + "!");
                             }
                         } else if (tem == 1) { // ngoc
                             if (!percent) {
-                                conn.p.update_ngoc(-1000);
                                 m.writer().writeByte(4);
                                 m.writer().writeUTF("Ta rất tiếc, quá trình cường hóa đã thất bại.");
                             } else {
-                                conn.p.update_ngoc(-1000);
                                 m.writer().writeByte(3);
                                 m.writer().writeUTF("Mi đã cường hóa thành công " + it_upgrade.name + "!");
                             }
@@ -259,18 +255,18 @@ public class GameSrc {
             case 4: // ring
             case 5: // chain
             case 6: // shoes
-                // case 7: // wing
-                //case 15: // fashion
+            // case 7: // wing
+            //case 15: // fashion
             case 8:
             case 9:
             case 10:
             case 16:
-                //case 21:
-                //case 22:
-                //case 23:
-                //case 24:
-                //case 25:
-                //case 26:
+            //case 21:
+            //case 22:
+            //case 23:
+            //case 24:
+            //case 25:
+            //case 26:
             case 11: {
                 return true;
             }
@@ -866,7 +862,6 @@ public class GameSrc {
 
     public static void Create_Medal(Session conn, Message m2) throws IOException {
 
-
         byte type = m2.reader().readByte();
         short id = -1;
         byte tem = -1;
@@ -1002,13 +997,13 @@ public class GameSrc {
                     byte color_ = 0;
                     if (conn.ac_admin > 3 && Manager.BuffAdmin) {
                         color_ = 4;
-                    } else if (ran_ <= 5) {
+                    } else if (ran_ <= 7) {
                         color_ = 4;
-                    } else if (ran_ < 20) {
+                    } else if (ran_ < 25) {
                         color_ = 3;
-                    } else if (ran_ <= 50) {
+                    } else if (ran_ <= 45) {
                         color_ = 2;
-                    } else if (ran_ <= 80) {
+                    } else if (ran_ <= 75) {
                         color_ = 1;
                     } else {
                         color_ = 0;
@@ -1103,22 +1098,23 @@ public class GameSrc {
                 Item3 it_temp = conn.p.item.bag3[id];
                 if (it_temp != null && it_temp.id >= 4587 && it_temp.id <= 4590 && it_temp.tier < 15) {
                     conn.p.id_Upgrade_Medal_Star = id;
-                    if (it_temp.tier < 6){
+                    if (it_temp.tier < 6) {
                         UpgradeMedal(conn, (byte) 0);
-                    }else{
-                        MenuController.send_menu_select(conn,-101,new String[]{"Không = " + (Ratio_Upgrade_Medal[it_temp.tier] / 100) + "%",
-                            "Đá krypton cấp 1 = " + ((Ratio_Upgrade_Medal[it_temp.tier] + Ratio_Upgrade_Medal[it_temp.tier] * 0.05) / 100) + "%",
-                            "Đá krypton cấp 2 = " + ((Ratio_Upgrade_Medal[it_temp.tier] + Ratio_Upgrade_Medal[it_temp.tier] * 0.1) / 100) + "%",
-                            "Đá krypton cấp 3 = " + ((Ratio_Upgrade_Medal[it_temp.tier] + Ratio_Upgrade_Medal[it_temp.tier] * 0.3) / 100) + "%"},(byte)0);
+                    } else {
+                        MenuController.send_menu_select(conn, 998, new String[]{"Không",
+                            "Đá krypton cấp 1",
+                            "Đá krypton cấp 2",
+                            "Đá krypton cấp 3"}, (byte) 0);
                     }
-                } else
+                } else {
                     Service.send_notice_box(conn, "Trang bị không phù hợp hoặc đã đạt cấp tối đa!");
+                }
                 break;
             }
         }
     }
 
-    public static short[] Ratio_Upgrade_Medal = new short[]{10000, 10000, 10000, 10000, 10000, 10000, 5000, 5000, 3000, 2000, 1000, 800, 600, 500, 300, 50};
+    public static short[] Ratio_Upgrade_Medal = new short[]{10000, 9500, 9000, 8500, 8000, 7500, 5500, 4500, 2900, 2700, 2500, 2300, 2000, 1500, 1000, 500};
 
     public static void UpgradeMedal(Session conn, byte index) throws IOException {
         if (index > 3) {
@@ -1152,9 +1148,8 @@ public class GameSrc {
                 Service.send_notice_box(conn, "Chưa đủ " + ngoc_req + " ngọc");
                 return;
             }
-            if(index >0 && conn.p.item.total_item_by_id(7,348 + index) < 1)
-            {
-                Service.send_notice_box(conn, "Bạn không đủ Đá krypton cấp "+index);
+            if (index > 0 && conn.p.item.total_item_by_id(7, 348 + index) < 1) {
+                Service.send_notice_box(conn, "Bạn không đủ Đá krypton cấp " + index);
                 return;
             }
             conn.p.update_ngoc(-ngoc_req);
@@ -1164,14 +1159,14 @@ public class GameSrc {
                 conn.p.item.remove(7, id_item_upgr, quant_item_upgr);
             }
             conn.p.time_speed_rebuild = System.currentTimeMillis() + 2000;
-            if (index > 0)
+            if (index > 0) {
                 conn.p.item.remove(7, 348 + index, 1);
-
+            }
 
             float[] plus_rate = new float[]{(float) 0, (float) 0.5, (float) 0.1, (float) 0.3};
 //            boolean suc = (it_temp.tier < 6) ? true : (100 > Util.random(100 + it_temp.tier * 28));//cũ là 25
             boolean suc = (it_temp.tier < 2) ? true : ((Ratio_Upgrade_Medal[it_temp.tier] + Ratio_Upgrade_Medal[it_temp.tier] * plus_rate[index]) > Util.random(10000));
-            if (conn.ac_admin > 3 && Manager.BuffAdmin) {
+            if (conn.ac_admin > 3) {
                 suc = true;
             }
 
@@ -1303,8 +1298,6 @@ public class GameSrc {
                         _st = Util.random(400, 600);
                     } else if (color_ == 4) {
                         _st = Util.random(600, 800);
-                    } else if(color_ == 5){
-                        _st = 5000;
                     }
                     it_temp.op.set(i, new Option(Util.random(0, 5), _st, it_temp.id));
                     Service.send_wear(conn.p);
@@ -1345,8 +1338,6 @@ public class GameSrc {
                         param_add = Util.randomNext(253, 300, lastpr);
                     } else if (it_temp.color == 4) {
                         param_add = Util.randomNext(300, 347, lastpr);
-                    } else if (it_temp.color == 5) {
-                        param_add = Util.randomNext(400, 500, lastpr);
                     }
                 }
                 ops.add(id_add);
@@ -1455,10 +1446,10 @@ public class GameSrc {
             }
             op_new.add(new Option(41,
                     ((3 > Util.random(0, 150)) ? 4 : ((10 > Util.random(0, 150)) ? 3 : ((45 > Util.random(0, 120)) ? 2 : 1)))
-                            * 100, itbag.id));
+                    * 100, itbag.id));
             op_new.add(new Option(42,
                     ((3 > Util.random(0, 150)) ? 8 : ((10 > Util.random(0, 150)) ? 7 : ((45 > Util.random(0, 120)) ? 6 : 5)))
-                            * 1000, itbag.id));
+                    * 1000, itbag.id));
             //
             itbag.op.addAll(op_new);
             //
@@ -1482,7 +1473,7 @@ public class GameSrc {
                     break;
                 }
             }
-         //   Log.gI().add_log(conn.p.name, "Tạo cánh " + temp.getName());
+            Log.gI().add_log(conn.p.name, "Tạo cánh " + temp.getName());
         } else if (type == 2) {
             if (!conn.p.is_create_wing) {
                 Item3 it = conn.p.item.bag3[id];
@@ -1893,15 +1884,16 @@ public class GameSrc {
                             }
                             Item3 itTrade = p0.item.bag3[p0.my_store.get(i).it_id];
                             conn.p.update_vang(-vang_trade);
-                        //    Log.gI().add_log(conn.p.name, "Trừ " + vang_trade + " mua đồ của " + p0.name + " khu mua bán");
+                            Log.gI().add_log(conn.p.name, "Trừ " + vang_trade + " mua đồ của " + p0.name + " khu mua bán");
                             long thue = (vang_trade / 100) * Manager.thue;
-                            if (Manager.ClanThue != null)
+                            if (Manager.ClanThue != null) {
                                 Manager.ClanThue.update_vang(thue);
+                            }
 //                                Manager.ClanThue.update_vang((vang_trade * Manager.thue) / 100);
                             vang_trade -= thue;
 
                             p0.update_vang(vang_trade);
-                          //  Log.gI().add_log(conn.p.name, "Nhận" + vang_trade + " bán đồ cho " + conn.p.name + " khu mua bán");
+                            Log.gI().add_log(conn.p.name, "Nhận" + vang_trade + " bán đồ cho " + conn.p.name + " khu mua bán");
 
                             hist.tem3 = itTrade;
                             hist.UpdateGold(p0.get_vang(), conn.p.get_vang());
@@ -1929,20 +1921,21 @@ public class GameSrc {
                                         Service.send_notice_box(conn, "Không đủ " + vang_trade + " vàng!");
                                         return;
                                     }
-                                    if (conn.p.item.total_item_by_id(idType, iditem) + p0.my_store.get(i).it_quant > 30_000 ||
-                                            (conn.p.item.total_item_by_id(idType, iditem) == 0 && conn.p.item.get_bag_able() < 1)) {
+                                    if (conn.p.item.total_item_by_id(idType, iditem) + p0.my_store.get(i).it_quant > 30_000
+                                            || (conn.p.item.total_item_by_id(idType, iditem) == 0 && conn.p.item.get_bag_able() < 1)) {
                                         Service.send_notice_box(conn, "Hành trang đầy!");
                                         return;
                                     }
                                     conn.p.update_vang(-vang_trade);
-                                 //   Log.gI().add_log(conn.p.name, "Trừ " + vang_trade + " mua đồ của " + p0.name + " khu mua bán");
+                                    Log.gI().add_log(conn.p.name, "Trừ " + vang_trade + " mua đồ của " + p0.name + " khu mua bán");
                                     long thue = (vang_trade / 100) * Manager.thue;
-                                    if (Manager.ClanThue != null)
+                                    if (Manager.ClanThue != null) {
                                         Manager.ClanThue.update_vang(thue);
+                                    }
                                     //                                Manager.ClanThue.update_vang((vang_trade * Manager.thue) / 100);
                                     vang_trade -= thue;
                                     p0.update_vang(vang_trade);
-                                 //   Log.gI().add_log(conn.p.name, "Nhận" + vang_trade + " bán đồ cho " + conn.p.name + " khu mua bán");
+                                    Log.gI().add_log(conn.p.name, "Nhận" + vang_trade + " bán đồ cho " + conn.p.name + " khu mua bán");
                                     Item47 it_b_add = new Item47();
                                     it_b_add.category = idType;
                                     it_b_add.id = iditem;
@@ -2154,7 +2147,7 @@ public class GameSrc {
                     return;
                 }
                 Message m = new Message(-100);
-                if (20 > Util.random(100) || (p.conn.ac_admin > 3 && Manager.BuffAdmin)) {
+                if (40 > Util.random(100) || (p.conn.ac_admin > 3 && Manager.BuffAdmin)) {
                     if (!Helps.Kham_Item.KhamNgoc(id_g1, it3)) {
                         Service.send_notice_box(p.conn, "Không thể khảm!");
                         return;
@@ -2177,7 +2170,7 @@ public class GameSrc {
                 m.cleanup();
                 //
                 p.update_vang(-vang_total);
-              //  Log.gI().add_log(p.name, "Trừ " + vang_total + " khảm ngọc");
+                Log.gI().add_log(p.name, "Trừ " + vang_total + " khảm ngọc");
                 p.item.remove(7, id_g1, 1);
                 p.item.char_inventory(4);
                 p.item.char_inventory(7);
@@ -2186,9 +2179,9 @@ public class GameSrc {
                 break;
             }
             case 1: {
-                if (p.item.get_bag_able() < 1)
+                if (p.item.get_bag_able() < 1) {
                     Service.send_notice_box(p.conn, "Hành trang đầy!");
-                else if (GameSrc.get_vang_hopngoc(id_item) <= 200_000) {
+                } else if (GameSrc.get_vang_hopngoc(id_item) <= 200_000) {
                     p.id_hop_ngoc = id_item;
                     Service.send_box_input_text(p.conn, 15, "Nhập số lượng", new String[]{"Nhập số lượng"});
                 } else {
@@ -2240,7 +2233,7 @@ public class GameSrc {
                         return;
                     }
                     p.update_vang(-((index_ngoc_kham_vao + 1) * 1_000_000L));
-                  //  Log.gI().add_log(p.name, "Trừ " + ((index_ngoc_kham_vao + 1) * 1_000_000) + " đục lỗ");
+                    Log.gI().add_log(p.name, "Trừ " + ((index_ngoc_kham_vao + 1) * 1_000_000) + " đục lỗ");
                     p.item.remove(7, id_g1, 1);
                     if (p.conn.ac_admin > 3 && Manager.BuffAdmin) {
                         suc = true;
@@ -2269,7 +2262,7 @@ public class GameSrc {
 
     private static boolean check_item_kham_ngoc_type(short id_g1, Item3 it3) {
         boolean check = false;
-        if ((it3.type >= 8 && it3.type <= 11) && id_g1 >= 352 && id_g1 <= 361) {
+        if ((it3.type >= 8 && it3.type <= 11) && ((id_g1 >= 352 && id_g1 <= 361) || (id_g1 >= 23 && id_g1 <= 32))) {
             check = true;
         }
         if ((it3.type == 0 || it3.type == 1 || it3.type == 2 || it3.type == 3 || it3.type == 6) && id_g1 >= 362
@@ -2277,6 +2270,9 @@ public class GameSrc {
             check = true;
         }
         if ((it3.type == 4 || it3.type == 5) && id_g1 >= 372 && id_g1 <= 381) {
+            check = true;
+        }
+        if (it3.type == 16 && id_g1 >= 412 && id_g1 <= 416) {
             check = true;
         }
         //
@@ -2304,7 +2300,7 @@ public class GameSrc {
         }
     }
 
-    public static short[] Ratio_UpgradeItemStar = new short[]{4000, 3500, 3000, 2500, 2000, 1500, 1200, 900, 600};
+    public static short[] Ratio_UpgradeItemStar = new short[]{5500, 4500, 4000, 3500, 3000, 2500, 1800, 1200, 500};
 
     public static void ActionsItemStar(Session conn, Message m) {
         try {
@@ -2343,8 +2339,9 @@ public class GameSrc {
                         Message m_send = new Message(-105);
                         m_send.writer().writeByte(4);
                         m_send.writer().writeByte(5);
-                        if (conn.p.MaterialItemStar == null || conn.p.MaterialItemStar.length < 5)
+                        if (conn.p.MaterialItemStar == null || conn.p.MaterialItemStar.length < 5) {
                             conn.p.SetMaterialItemStar();
+                        }
                         for (int i = conn.p.TypeItemStarCreate * 5; i < conn.p.TypeItemStarCreate * 5 + 5; i++) {
                             m_send.writer().writeShort(conn.p.MaterialItemStar[i]);
                             if (conn.version >= 270) {
@@ -2383,16 +2380,21 @@ public class GameSrc {
                         conn.p.ChangeMaterialItemStar(conn.p.TypeItemStarCreate);
                         int ran = Util.random(100);
                         byte color = 0;
-                        if ((conn.ac_admin > 4 && Manager.BuffAdmin) || ran < 5)
+                        if ((conn.ac_admin > 4 && Manager.BuffAdmin) || ran >= 95) {
                             color = 5;
-                        else if (ran < 20)//8
+                        } else if (ran >= 85)//8
+                        {
                             color = 4;
-                        else if (ran < 40)//15%
+                        } else if (ran >= 75)//15%
+                        {
                             color = 3;
-                        else if (ran >= 63)//19%
+                        } else if (ran >= 55)//19%
+                        {
                             color = 2;
-                        else if (ran >= 89)//24%
+                        } else if (ran >= 30)//24%
+                        {
                             color = 1;
+                        }
                         Item3 itbag = new Item3();
                         itbag.id = id_item;
                         itbag.name = ItemTemplate3.item.get(id_item).getName();
@@ -2403,13 +2405,14 @@ public class GameSrc {
                         itbag.op = new ArrayList<>();
                         for (Option o : ops) {
                             int pr = o.getParam(0);
-                            int pr1 = (int) (pr * color * 0.5);
-                            if ((o.id >= 58 && o.id <= 60) || (o.id >= 100 && o.id <= 107))
+                            int pr1 = (int) (pr * color * 0.25);
+                            if ((o.id >= 58 && o.id <= 60) || (o.id >= 100 && o.id <= 107)) {
                                 itbag.op.add(new Option(o.id, pr, itbag.id));
-                            else if (o.id == 37 || o.id == 38) {
+                            } else if (o.id == 37 || o.id == 38) {
                                 itbag.op.add(new Option(o.id, 2, itbag.id));
-                            } else
+                            } else {
                                 itbag.op.add(new Option(o.id, pr1, itbag.id));
+                            }
                         }
                         int[] opAo = {-111, -110, -109, -108, -107};
                         int[] opNon = {-102, -113, -105};
@@ -2690,6 +2693,10 @@ public class GameSrc {
                                 }
                             }
                         }
+                        if (color >= 3) {
+                            itbag.op.add(Option.createOpItemStar(129, itbag.id));
+                            itbag.op.add(Option.createOpItemStar(130, itbag.id));
+                        }
 
                         itbag.color = color;
                         itbag.part = ItemTemplate3.item.get(id_item).getPart();
@@ -2740,21 +2747,23 @@ public class GameSrc {
                     }
                     Item3 temp = conn.p.item.bag3[id];
                     if (temp != null && temp.id >= 4656 && temp.id <= 4675 && temp.tierStar < 9) {
+                        if (temp.getParamOption((byte) 129) == 0) {
+                            Service.send_notice_box(conn, "Trang bị đã hết độ bền không thể nâng");
+                            return;
+                        }
                         conn.p.id_Upgrade_Medal_Star = id;
-                        MenuController.send_menu_select(conn, -101, new String[]{"Không = " + (Ratio_UpgradeItemStar[temp.tierStar] / 100) + "%",
-                                "Đá hỏa tinh = " + ((Ratio_UpgradeItemStar[temp.tierStar] + 500) / 100) + "%"}, (byte) 1);
+                        MenuController.send_menu_select(conn, 998, new String[]{"Không", "Đá hỏa tinh"}, (byte) 1);
                     } else {
                         Service.send_notice_box(conn, "Trang bị không phù hợp hoặc đã đạt cấp tối đa!");
-                        return;
                     }
                     break;
                 }
                 default: {
                     Service.send_notice_box(conn, "Chưa có chức năng!");
-                    return;
                 }
+
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -2771,10 +2780,10 @@ public class GameSrc {
             Service.send_notice_box(conn, "Trang bị không phù hợp!");
             return;
         }
-
+        int material = temp.tierStar + 1;
         for (int i = conn.p.TypeItemStarCreate * 5; i < conn.p.TypeItemStarCreate * 5 + 5; i++) {
-            if (conn.p.item.total_item_by_id(7, conn.p.MaterialItemStar[i]) < (temp.tierStar + 1)
-                    && (conn.ac_admin < 4 || !Manager.BuffAdminMaterial)) {
+            if (conn.p.item.total_item_by_id(7, conn.p.MaterialItemStar[i]) < material
+                    && conn.ac_admin < 4) {
                 Service.send_notice_box(conn, "Thiếu nguyên liệu!");
                 return;
             }
@@ -2788,7 +2797,11 @@ public class GameSrc {
             Service.send_notice_box(conn, "Bạn không đủ đá hỏa tinh!");
             return;
         }
-        boolean suc = Ratio_UpgradeItemStar[temp.tierStar] + (index == 1 ? 500 : 0) > Util.random(10000) || (conn.ac_admin > 3 && Manager.BuffAdmin);
+        boolean suc = Ratio_UpgradeItemStar[temp.tierStar] + (index == 1 ? 500 : 0) + temp.getParamOption((byte) 130)
+                > Util.random(10000);
+        if (conn.ac_admin > 3) {
+            suc = true;
+        }
         if (suc) {
             List<Option> ops = Helps.ItemStar.GetOpsItemStarUpgrade(temp.clazz, temp.type, temp.id, temp.tierStar + 1, temp.op);
             if (ops == null || ops.isEmpty()) {
@@ -2802,12 +2815,14 @@ public class GameSrc {
             temp.UpdateName();
             for (Option o : ops) {
                 int pr = o.getParam(0);
-                if ((o.id >= 58 && o.id <= 60) || (o.id >= 100 && o.id <= 107))
+                if ((o.id >= 58 && o.id <= 60) || (o.id >= 100 && o.id <= 107)) {
                     temp.op.add(new Option(o.id, pr, temp.id));
-                else if (o.id == 37 || o.id == 38) {
-                        temp.op.add(new Option(o.id, 2, temp.id));
-                    } else if (o.id == -115 || o.id == -103 || o.id == -88 || o.id == -87) {
-                        temp.op.add(new Option(o.id, pr - 3000, temp.id));
+                } else if (o.id == 37 || o.id == 38) {
+                    temp.op.add(new Option(o.id, 2, temp.id));
+                } else if (o.id == -115 || o.id == -103 || o.id == -88 || o.id == -87) {
+                    temp.op.add(new Option(o.id, pr - 3000, temp.id));
+                } else if (o.id == -127 || o.id == -126) {
+                    temp.op.add(new Option(o.id, pr, temp.id));
                 } else if (o.id < -70) {
                     int pr1 = (int) (pr + (int) temp.color * 5.067);
                     int pr2 = (int) (pr + (int) temp.color * 5.767);
@@ -2817,14 +2832,25 @@ public class GameSrc {
                     temp.op.add(new Option(o.id, pr1, temp.id));
                 }
             }
+        } else {
+            if (index == 0) {
+                for (Option o : temp.op) {
+                    if (o.id == (byte) 129) {
+                        o.param -= 100;
+                    }
+                }
+            }
         }
         // xóa nl
-        for (int i = conn.p.TypeItemStarCreate * 5; i < conn.p.TypeItemStarCreate * 5 + 5; i++)
-            conn.p.item.remove(7, conn.p.MaterialItemStar[i], temp.tierStar);
-        if (index == 1)
+        for (int i = conn.p.TypeItemStarCreate * 5; i < conn.p.TypeItemStarCreate * 5 + 5; i++) {
+            conn.p.item.remove(7, conn.p.MaterialItemStar[i], material);
+        }
+        if (index == 1) {
             conn.p.item.remove(7, 471, 1);
-        if (suc && (temp.tierStar + 1) % 3 == 0)
+        }
+        if (suc && (temp.tierStar + 1) % 3 == 0) {
             conn.p.ChangeMaterialItemStar(conn.p.TypeItemStarCreate);
+        }
         conn.p.item.char_inventory(4);
         conn.p.item.char_inventory(7);
         conn.p.item.char_inventory(3);
@@ -2901,7 +2927,9 @@ public class GameSrc {
                 id = m.reader().readShort();
                 cat = m.reader().readByte();
             } else {
-                if (conn.p.type_armor_create == -1 || conn.p.id_armor_create == -1) return;
+                if (conn.p.type_armor_create == -1 || conn.p.id_armor_create == -1) {
+                    return;
+                }
             }
             switch (type) {
                 case 0: {
@@ -2921,7 +2949,11 @@ public class GameSrc {
                                 m_send.writer().writeByte(1);
                                 short id_material = (short) (material_update_armor[item.tier] + item.id - 4784);
                                 m_send.writer().writeShort(id_material);
-                                m_send.writer().writeByte(quantity_update_armor[item.tier]);
+                                if (conn.version >= 270) {
+                                    m_send.writer().writeShort(quantity_update_armor[item.tier]);
+                                } else {
+                                    m_send.writer().writeByte(quantity_update_armor[item.tier]);
+                                }
                                 conn.addmsg(m_send);
                                 m_send.cleanup();
                             } else {
@@ -2936,7 +2968,7 @@ public class GameSrc {
                     break;
                 }
                 case 3: {
-                    int id_material = 418 + conn.p.id_armor_create;
+                    int id_material = 481 + conn.p.id_armor_create;
                     if (conn.p.item.total_item_by_id(7, id_material) < 500) {
                         conn.p.type_armor_create = -1;
                         conn.p.id_armor_create = -1;

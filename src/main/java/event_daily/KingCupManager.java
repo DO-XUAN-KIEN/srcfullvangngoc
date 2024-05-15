@@ -195,41 +195,41 @@ public class KingCupManager {
 
         switch (p.type_reward_king_cup) {
             case 1, 5, 9, 13 -> {
-                id_reward_7 = new short[]{(short) Util.random(8, 10), 11, 351, 471, 495};
-                quantity_reward_7 = new short[]{10, 1, 1, 3, 150};
-                id_reward_4 = new short[]{262};
-                quantity_reward_4 = new short[]{150};
+                id_reward_7 = new short[]{14, (short) Util.random(8, 10), 11, 349};
+                quantity_reward_7 = new short[]{3, 10, 10, 1};
+                id_reward_4 = new short[]{53, 54};
+                quantity_reward_4 = new short[]{1, 1};
             }
             case 17, 21, 25 -> {
-                id_reward_7 = new short[]{(short) Util.random(8, 10), 11, 351, 471, 495};
-                quantity_reward_7 = new short[]{10, 3, 3, 5, 200};
-                id_reward_4 = new short[]{262};
-                quantity_reward_4 = new short[]{200};
+                id_reward_7 = new short[]{14, (short) Util.random(8, 10), 11, 349};
+                quantity_reward_7 = new short[]{3, 10, 10, 1};
+                id_reward_4 = new short[]{10, 53, 54};
+                quantity_reward_4 = new short[]{1, 1, 1};
                 isHaveBook = true;
             }
             case 2, 6, 10, 14 -> {
-                id_reward_7 = new short[]{(short) Util.random(8, 10), 11, 350, 471, 495};
-                quantity_reward_7 = new short[]{10, 1,1, 2, 100};
-                id_reward_4 = new short[]{262};
-                quantity_reward_4 = new short[]{100};
+                id_reward_7 = new short[]{(short) Util.random(8, 10), 11};
+                quantity_reward_7 = new short[]{5, 5};
+                id_reward_4 = new short[]{53, 54};
+                quantity_reward_4 = new short[]{1, 1};
             }
             case 18, 22, 26 -> {
-                id_reward_7 = new short[]{(short) Util.random(8, 10), 11, 350, 471, 495};
-                quantity_reward_7 = new short[]{10, 2, 2, 3, 150};
-                id_reward_4 = new short[]{262};
-                quantity_reward_4 = new short[]{150};
+                id_reward_7 = new short[]{14};
+                quantity_reward_7 = new short[]{2};
+                id_reward_4 = new short[]{10, 53, 54};
+                quantity_reward_4 = new short[]{1, 1, 1};
             }
             case 3, 7, 11, 15 -> {
-                id_reward_7 = new short[]{(short) Util.random(8, 10), 11, 349, 471, 495};
-                quantity_reward_7 = new short[]{10, 1, 1, 1, 70};
-                id_reward_4 = new short[]{262};
-                quantity_reward_4 = new short[]{70};
+                id_reward_7 = new short[]{(short) Util.random(8, 10), 11};
+                quantity_reward_7 = new short[]{3, 3};
+                id_reward_4 = new short[]{53};
+                quantity_reward_4 = new short[]{1};
             }
             case 19, 23, 27 -> {
-                id_reward_7 = new short[]{(short) Util.random(8, 10), 11, 349, 471, 495};
-                quantity_reward_7 = new short[]{10, 1, 1, 2, 100};
-                id_reward_4 = new short[]{262};
-                quantity_reward_4 = new short[]{100};
+                id_reward_7 = new short[]{14};
+                quantity_reward_7 = new short[]{1};
+                id_reward_4 = new short[]{10, 53, 54};
+                quantity_reward_4 = new short[]{1, 1, 1};
             }
             default -> {
                 return;

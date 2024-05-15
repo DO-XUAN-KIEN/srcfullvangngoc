@@ -215,4 +215,13 @@ public class Item3 {
         }
         return false;
     }
+    
+    public int getParamOption(int id) {
+        for (Option o : op) {
+            if (o.id == id) {
+                return o.param;
+            }
+        }
+        return 0;
+    }
 }

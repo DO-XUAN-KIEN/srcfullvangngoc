@@ -413,13 +413,13 @@ public class MainObject {
             }
             if (p != null && p.getEffTinhTu(EffTemplate.MU_MAT) != null) {
                 Service.send_notice_nobox_white(p.conn, "Bạn đang bị mù mắt");
-                MapService.Fire_Player(map, ((Player) ObjAtk).conn, idxSkill, focus.index, 0, focus.hp, new ArrayList<>());
+                MapService.Fire_Player(map, ((Player) ObjAtk).conn, idxSkill, focus.index, 0, focus.hp, new ArrayList<>(), (byte) 11, 0);
                 return;
             }
             boolean giam_ne = p != null && p.isEffTinhTu(99);
             if (focus.get_Miss(giam_ne) > Util.random(10_000)) {
                 if (ObjAtk.isPlayer()) {
-                    MapService.Fire_Player(map, ((Player) ObjAtk).conn, idxSkill, focus.index, 0, focus.hp, new ArrayList<>());
+                    MapService.Fire_Player(map, ((Player) ObjAtk).conn, idxSkill, focus.index, 0, focus.hp, new ArrayList<>(), (byte) 11, 0);
                 }
                 return;
             }
@@ -590,9 +590,9 @@ public class MainObject {
                             mw.writer().writeByte(30);
                             byte[] id__ = new byte[]{7, 8, 9, 10, 11, 15, 0, 1, 2, 3, 4, 14};
                             int[] par__ = new int[]{3000, 3000, 3000, 3000, 3000, 3000,
-                                    3 * (ObjAtk.get_param_view_in4(0) / 10), 3 * (ObjAtk.get_param_view_in4(1) / 10),
-                                    3 * (ObjAtk.get_param_view_in4(2) / 10), 3 * (ObjAtk.get_param_view_in4(3) / 10),
-                                    3 * (ObjAtk.get_param_view_in4(4) / 10), 33 * (ObjAtk.get_param_view_in4(14) / 10)};
+                                3 * (ObjAtk.get_param_view_in4(0) / 10), 3 * (ObjAtk.get_param_view_in4(1) / 10),
+                                3 * (ObjAtk.get_param_view_in4(2) / 10), 3 * (ObjAtk.get_param_view_in4(3) / 10),
+                                3 * (ObjAtk.get_param_view_in4(4) / 10), 33 * (ObjAtk.get_param_view_in4(14) / 10)};
                             mw.writer().writeByte(id__.length);
                             //
                             for (int i = 0; i < id__.length; i++) {
@@ -608,7 +608,6 @@ public class MainObject {
             }
 
             //</editor-fold>
-
             ef = ObjAtk.get_EffDefault(53);
             int hpmax = ObjAtk.get_HpMax();
             int HoiHP = 0;
@@ -731,10 +730,10 @@ public class MainObject {
                     }
                 }
                 boolean check = dame < 0
-                        || (focus.isBoss() && Math.abs(focus.level - ObjAtk.level) >= 5 && focus.level < 120 && focus.template.mob_id != 174 && !Map.is_map_cant_save_site(focus.map_id))
-                        || (focus.isBoss() && focus.template.mob_id == 174 && map.zone_id == 0 && ObjAtk.level > 89)
-                        || (focus.isBoss() && focus.template.mob_id == 174 && map.zone_id == 2 && !(ObjAtk.level >= 90 && ObjAtk.level < 110))
-                        || (focus.isBoss() && focus.template.mob_id == 174 && map.zone_id == 3 && ObjAtk.level < 110);
+                        || (focus.isBoss() && Math.abs(focus.level - ObjAtk.level) >= 5 && focus.level < 139 && focus.template.mob_id != 178 && !Map.is_map_cant_save_site(focus.map_id))
+                        || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 0 && ObjAtk.level > 89)
+                        || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 2 && !(ObjAtk.level >= 90 && ObjAtk.level < 110))
+                        || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 3 && ObjAtk.level < 110);
                 if (check) {
                     dame = 0;
                 }
@@ -813,7 +812,6 @@ public class MainObject {
             //</editor-fold> Phản Dame
 
             //</editor-fold>    hiệu ứng crit vv
-
             //<editor-fold defaultstate="collapsed" desc="Set hp       ...">
             // xả item chiến trường
             long time = System.currentTimeMillis();
@@ -952,10 +950,10 @@ public class MainObject {
                     mw.writer().writeByte(30);
                     byte[] id__ = new byte[]{7, 8, 9, 10, 11, 15, 0, 1, 2, 3, 4, 16, 17, 18, 19, 20};
                     int[] par__ = new int[]{4000, 4000, 4000, 4000, 4000, 4000,
-                            4 * (ObjAtk.get_param_view_in4(0) / 10), 4 * (ObjAtk.get_param_view_in4(1) / 10),
-                            4 * (ObjAtk.get_param_view_in4(2) / 10), 4 * (ObjAtk.get_param_view_in4(3) / 10),
-                            4 * (ObjAtk.get_param_view_in4(4) / 10), 4 * (ObjAtk.get_param_view_in4(14) / 10),
-                            4000, 4000, 4000, 4000, 4000};
+                        4 * (ObjAtk.get_param_view_in4(0) / 10), 4 * (ObjAtk.get_param_view_in4(1) / 10),
+                        4 * (ObjAtk.get_param_view_in4(2) / 10), 4 * (ObjAtk.get_param_view_in4(3) / 10),
+                        4 * (ObjAtk.get_param_view_in4(4) / 10), 4 * (ObjAtk.get_param_view_in4(14) / 10),
+                        4000, 4000, 4000, 4000, 4000};
                     mw.writer().writeByte(id__.length);
                     //
                     for (int i = 0; i < id__.length; i++) {
@@ -968,7 +966,7 @@ public class MainObject {
                 }
             }
 
-            if (ObjAtk.isPlayer() && Util.random(100) < 10 && p.type_use_mount == 10) {
+            if (ObjAtk.isPlayer() && Util.random(100) < 10 && p != null && p.type_use_mount == 10) {
                 List<MainObject> objects = new ArrayList<>();
                 objects.add(p);
                 Service.send_eff_auto(p.conn, objects, 80);
@@ -977,38 +975,44 @@ public class MainObject {
 
             Mob_in_map mob = focus.isMob() ? (Mob_in_map) focus : null;
             if (ObjAtk.isPlayer() && noitai != -1) {
-                if (noitai == 0) {
-                    if (focus.isPlayer()) {
-                        ((Player) focus).add_EffDefault(StrucEff.NOI_TAI_VAT_LY, 10, 10000);
-                    } else if (focus.isMob() && mob != null) {
-                        mob.add_Eff(StrucEff.NOI_TAI_VAT_LY, 10, 10000);
+                switch (noitai) {
+                    case 0 -> {
+                        if (focus.isPlayer()) {
+                            ((Player) focus).add_EffDefault(StrucEff.NOI_TAI_VAT_LY, 10, 10000);
+                        } else if (focus.isMob() && mob != null) {
+                            mob.add_Eff(StrucEff.NOI_TAI_VAT_LY, 10, 10000);
+                        }
                     }
-                } else if (noitai == 2) {
-                    if (focus.isPlayer()) {
-                        ((Player) focus).add_EffDefault(StrucEff.NOI_TAI_LUA, 10, 10000);
-                    } else if (focus.isMob() && mob != null) {
-                        mob.add_Eff(StrucEff.NOI_TAI_LUA, 10, 10000);
+                    case 2 -> {
+                        if (focus.isPlayer()) {
+                            ((Player) focus).add_EffDefault(StrucEff.NOI_TAI_LUA, 10, 10000);
+                        } else if (focus.isMob() && mob != null) {
+                            mob.add_Eff(StrucEff.NOI_TAI_LUA, 10, 10000);
+                        }
                     }
-                } else if (noitai == 4) {
-                    if (focus.isPlayer()) {
-                        ((Player) focus).add_EffDefault(StrucEff.NOI_TAI_DOC, (int) (dame / 25 * 4), 10000);
-                    } else if (focus.isMob()&& mob != null) {
-                        mob.add_Eff(StrucEff.NOI_TAI_DOC, (int) (dame / 25 * 4), 10000);
+                    case 4 -> {
+                        if (focus.isPlayer()) {
+                            ((Player) focus).add_EffDefault(StrucEff.NOI_TAI_DOC, (int) (dame / 25 * 4), 10000);
+                        } else if (focus.isMob() && mob != null) {
+                            mob.add_Eff(StrucEff.NOI_TAI_DOC, (int) (dame / 25 * 4), 10000);
+                        }
                     }
-                } else if (noitai == 1) {
-                    if (focus.isPlayer()) {
-                        ((Player) focus).add_EffDefault(StrucEff.NOI_TAI_BANG, 10, 10000);
-                        MapService.send_in4_other_char(map, p, ((Player) focus));
-                        Service.send_char_main_in4((Player) focus);
-                    } else if (focus.isMob() && mob != null) {
-                        mob.add_Eff(StrucEff.NOI_TAI_BANG, 10, 10000);
-                        Service.mob_in4(p, focus.index);
+                    case 1 -> {
+                        if (focus.isPlayer()) {
+                            ((Player) focus).add_EffDefault(StrucEff.NOI_TAI_BANG, 10, 10000);
+                            MapService.send_in4_other_char(map, p, ((Player) focus));
+                            Service.send_char_main_in4((Player) focus);
+                        } else if (focus.isMob() && mob != null) {
+                            mob.add_Eff(StrucEff.NOI_TAI_BANG, 10, 10000);
+                            Service.mob_in4(p, focus.index);
+                        }
                     }
-                } else {
-                    if (focus.isPlayer()) {
-                        ((Player) focus).add_EffDefault(StrucEff.NOI_TAI_DIEN, 10, 10000);
-                    } else if (focus.isMob() && mob != null) {
-                        mob.add_Eff(StrucEff.NOI_TAI_DIEN, 10, 10000);
+                    default -> {
+                        if (focus.isPlayer()) {
+                            ((Player) focus).add_EffDefault(StrucEff.NOI_TAI_DIEN, 10, 10000);
+                        } else if (focus.isMob() && mob != null) {
+                            mob.add_Eff(StrucEff.NOI_TAI_DIEN, 10, 10000);
+                        }
                     }
                 }
                 Service.send_eff_intrinsic(map, focus, noitai, 10);
@@ -1017,20 +1021,32 @@ public class MainObject {
                 dame = Util.random(focus.hp / 10, focus.hp / 8);
             }
             if (focus.isMobDiBuon()) {
-                dame = focus.hp_max * 5 / 100;
+                dame = focus.get_HpMax() * 5L / 100;
             }
+
+            byte type_spec = 11;
+            int dame_spec = 0;
+            if (ObjAtk.isPlayer() && p != null) {
+                if (p.total_item_param(5) > 0) {
+                    dame_spec = p.total_item_param(5);
+                } else if (p.total_item_param(6) > 0) {
+                    type_spec = 10;
+                    dame_spec = p.total_item_param(6);
+                }
+            }
+
+            Player p_focus = focus.isPlayer() ? (Player) focus : null;
             if (focus.isPlayer() && p != null && p.total_item_param((byte) 185) > Util.nextInt(10000)) {
-                Player p_focus = (Player) focus;
                 focus.hp -= p_focus.hp_max * (Util.nextInt(10, 15) / 100);
                 Service.send_notice_nobox_white(p.conn, "Áp đảo");
             }
-            if (p!= null && focus.isPlayer() && p.total_item_param((byte) 186) > Util.nextInt(10000)) {
-                Player p_focus = (Player) focus;
+            if (p != null && focus.isPlayer() && p_focus.total_item_param((byte) 186) > Util.nextInt(10000)) {
                 p.hp -= ((Player) p).hp_max * (Util.nextInt(3, 5) / 100);
                 focus.hp += p_focus.hp_max * (Util.nextInt(20, 25) / 100);
                 Service.send_notice_nobox_white(p_focus.conn, "Giáp cốt");
             }
-            focus.hp -= dame;
+
+            focus.hp -= (dame + dame_spec);
             if (focus.isBoss() && mob != null && ObjAtk.isPlayer()) {
                 if (!mob.top_dame.containsKey(p.name)) {
                     mob.top_dame.put(p.name, dame);
@@ -1053,8 +1069,8 @@ public class MainObject {
                         ChienTruong.Obj_Die(map, ObjAtk, focus);
                     }
                     focus.SetDie(map, ObjAtk);
-                    if (focus != null && focus.template != null
-                            && !focus.isMobDiBuon() && !focus.isPlayer() && !focus.isBot() && focus.template.mob_id >= 89 && focus.template.mob_id <= 92) { // house chien truong
+                    if (!focus.isPlayer() && !focus.isBot() && !focus.isMobDiBuon() && focus.template != null 
+                            && focus.template.mob_id >= 89 && focus.template.mob_id <= 92) { // house chien truong
                         p.update_point_arena(20);
                         Manager.gI().chatKTGprocess("@Server : " + p.name + " đã đánh sập " + focus.template.name);
                         ChienTruong.gI().update_house_die(focus.template.mob_id);
@@ -1070,7 +1086,7 @@ public class MainObject {
             }
 
             if (ObjAtk.isPlayer() && (focus.isPlayer() || focus.get_TypeObj() == 0)) {
-                MapService.Fire_Player(map, p.conn, idxSkill, focus.index, (int) dame, focus.hp, ListEf);
+                MapService.Fire_Player(map, p.conn, idxSkill, focus.index, (int) dame, focus.hp, ListEf, type_spec, dame_spec);
             } else if (ObjAtk.isPlayer() && focus.get_TypeObj() == 1) {
                 if (map.isMapChienTruong()) {
                     switch (focus.template.mob_id) {
@@ -1100,10 +1116,10 @@ public class MainObject {
                         }
 
                     }
-                    MapService.Fire_Mob(map, p.conn, idxSkill, focus.index, (int) dame, focus.hp, ListEf, focus.template.mob_id);
+                    MapService.Fire_Mob(map, p.conn, idxSkill, focus.index, (int) dame, focus.hp, ListEf, focus.template.mob_id, type_spec, dame_spec);
 
                 } else {
-                    MapService.Fire_Mob(map, p.conn, idxSkill, focus.index, (int) dame, focus.hp, ListEf, 0);
+                    MapService.Fire_Mob(map, p.conn, idxSkill, focus.index, (int) dame, focus.hp, ListEf, 0, type_spec, dame_spec);
 
                 }
             } else if (ObjAtk.get_TypeObj() == 1 && focus.isPlayer()) {
@@ -1238,12 +1254,10 @@ public class MainObject {
                                 Service.send_notice_nobox_white(p.conn, "+ " + vangjoin + " vàng");
                             }
                             if (focus.isPlayer() && my_pet.get_id() == 4614 && Util.nextInt(100) < 5) {
-                                Player p_focus = (Player) focus;
                                 p_focus.add_EffDefault(StrucEff.VET_THUONG_SAU, 1, 5000);
                                 Service.send_notice_nobox_white(p_focus.conn, "Bạn bị vết thương sâu");
                             }
                             if (focus.isPlayer() && my_pet.get_id() == 4626 && Util.nextInt(100) < 5) {
-                                Player p_focus = (Player) focus;
                                 p_focus.add_EffDefault(StrucEff.TE_CONG, 1, 5000);
                                 Service.send_notice_nobox_white(p_focus.conn, "Bạn bị tê cóng");
                             }

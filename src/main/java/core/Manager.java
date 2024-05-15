@@ -49,7 +49,6 @@ public class Manager {
 
     public int size_mob;
     private static Manager instance;
-    public List<String> LIST_IP_BAN = new ArrayList<>();
     public final HashMap<String, Integer> ip_create_char = new HashMap<>();
     public final HashMap<String, Long> time_login_client = new HashMap<>();
     public final byte[] msg_25_new;
@@ -108,7 +107,7 @@ public class Manager {
      public static String BXH_level = "";
    
 
-    public static byte thue = 0;
+    public static byte thue = 5;
     public static String nameClanThue;
     public static Clan ClanThue;
     public static final List<String> PlayersWinCThanh = new ArrayList<>();
@@ -133,7 +132,7 @@ public class Manager {
     public static void ResetCThanh() {
         PlayersWinCThanh.clear();
         nameClanThue = null;
-        thue = 0;
+        thue = 5;
         ClanThue = null;
     }
 
@@ -249,21 +248,8 @@ public class Manager {
             System.exit(0);
         }
     }
-    public void initBan() {
-        try (Connection connection = SQL.gI().getConnection();
-             Statement st = connection.createStatement();
-             ResultSet rs = st.executeQuery("SELECT `ip` FROM `list_ip_ban` ;")) {
-            while (rs.next()) {
-                String ip = rs.getString("ip");
-                LIST_IP_BAN.add(ip);
-            }
-            System.out.println("add ip ban thành công :" + LIST_IP_BAN.size());
-        }catch (Exception e){
 
-        }
-    }
     private boolean load_database() throws SQLException {
-        initBan();
         // load item3
         Connection conn = SQL.gI().getConnection();
         Statement ps = conn.createStatement();
@@ -416,7 +402,6 @@ public class Manager {
             temp.setSell(rs.getByte("sell"));
             temp.setValue(rs.getShort("value"));
             temp.setTrade(rs.getByte("trade"));
-
             temp.setColor(rs.getByte("setcolorname"));
             ItemTemplate7.item.add(temp);
         }
@@ -585,22 +570,22 @@ public class Manager {
                             itemsell3[i + jsar.size()].option.addAll(temp.getOp());
                             itemsell3[i + jsar.size()].pricetype = 1;
                         }
-//                    } else if (Manager.gI().event == 2 && type >= 5 && type <= 8) {
-//                        short[] id_ = new short[]{4716, 4717, 4718, 4719};
-//                        for (int i = 0; i < id_.length; i++) {
-//                            ItemTemplate3 temp = ItemTemplate3.item.get(id_[i]);
-//                            itemsell3[i + jsar.size()] = new ItemSell3();
-//                            itemsell3[i + jsar.size()].id = id_[i];
-//                            item_sell.get(Service.SHOP_ITEM).add(itemsell3[i + jsar.size()].id);
-//                            itemsell3[i + jsar.size()].clazz = temp.getClazz();
-//                            itemsell3[i + jsar.size()].type = temp.getType();
-//                            itemsell3[i + jsar.size()].price = 50;
-//                            itemsell3[i + jsar.size()].level = temp.getLevel();
-//                            itemsell3[i + jsar.size()].color = temp.getColor();
-//                            itemsell3[i + jsar.size()].option = new ArrayList<>();
-//                            itemsell3[i + jsar.size()].option.addAll(temp.getOp());
-//                            itemsell3[i + jsar.size()].pricetype = 1;
-//                        }
+                    } else if (Manager.gI().event == 2 && type >= 5 && type <= 8) {
+                        short[] id_ = new short[]{4716, 4717, 4718, 4719};
+                        for (int i = 0; i < id_.length; i++) {
+                            ItemTemplate3 temp = ItemTemplate3.item.get(id_[i]);
+                            itemsell3[i + jsar.size()] = new ItemSell3();
+                            itemsell3[i + jsar.size()].id = id_[i];
+                            item_sell.get(Service.SHOP_ITEM).add(itemsell3[i + jsar.size()].id);
+                            itemsell3[i + jsar.size()].clazz = temp.getClazz();
+                            itemsell3[i + jsar.size()].type = temp.getType();
+                            itemsell3[i + jsar.size()].price = 50;
+                            itemsell3[i + jsar.size()].level = temp.getLevel();
+                            itemsell3[i + jsar.size()].color = temp.getColor();
+                            itemsell3[i + jsar.size()].option = new ArrayList<>();
+                            itemsell3[i + jsar.size()].option.addAll(temp.getOp());
+                            itemsell3[i + jsar.size()].pricetype = 1;
+                        }
                     }
 
                     itemsellTB.add(itemsell3);
@@ -679,8 +664,8 @@ public class Manager {
                 JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i).toString());
                 Mob_in_map mob = new Mob_in_map();
                 short id = Short.parseShort(jsar2.get(0).toString());
-                if (id == 101 || id == 84 || id == 83 || id == 103 || id == 104 || id == 105 || id == 106 || id == 149 || id == 155 || id == 173 || id == 174 || id == 190 || id == 195 || id == 196 || id == 197
-                        || id == 186 || id == 187 || id == 188){
+                if (id == 101 || id == 84 || id == 83 || id == 103 || id == 104 || id == 105 || id == 106 || id == 149 || id == 155 || id == 173 || id == 195 || id == 194 || id == 196 || id == 197
+                        || id == 186 || id == 187 || id == 188 || id == 189 || id == 190 || id == 191 || id == 192 || id == 193 || id == 178) {
                     continue;
                 }
                 mob.template = Mob.entrys.get(id);

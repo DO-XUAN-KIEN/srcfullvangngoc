@@ -21,11 +21,14 @@ import template.Level;
 import template.Part_player;
 
 public class BXH {
-
+    public static final List<Memin4> BXH_Danhvong = new ArrayList<>();
     public static final List<Memin4> BXH_level = new ArrayList<>();
     public static final List<Memin4> BXH_Ctr = new ArrayList<>();
     public static final List<Memin4> BXH_Buon = new ArrayList<>();
+    public static final List<Memin4> BXH_Cuop = new ArrayList<>();
     public static final List<Memin4> BXH_ds = new ArrayList<>();
+    public static final List<Memin4> BXH_ld = new ArrayList<>();
+    public static final List<Memin4> BXH_doiqua = new ArrayList<>();
     public static final List<Clan> BXH_clan = new ArrayList<>();
     public static List<Memin4> entry0 = new ArrayList<>();
 
@@ -34,7 +37,58 @@ public class BXH {
             case 0: {
                 Message m = new Message(56);
                 m.writer().writeByte(1);
-                m.writer().writeUTF("BXH LEVEL");
+                m.writer().writeUTF("BXH Danh Vọng");
+                m.writer().writeByte(99); // page
+                m.writer().writeInt(0); // my index in bxh
+                m.writer().writeByte(BXH.BXH_Danhvong.size()); // num2
+                for (int i = 0; i < BXH.BXH_Danhvong.size(); i++) {
+                    Memin4 temp = BXH.BXH_Danhvong.get(i);
+                    Player p0 = Map.get_player_by_name(temp.name);
+                    if (p0 != null) {
+                        temp.head = p0.head;
+                        temp.eye = p0.eye;
+                        temp.hair = p0.hair;
+                        temp.level = p0.level;
+                        temp.itemwear.clear();
+                        for (int i1 = 0; i1 < p0.item.wear.length; i1++) {
+                            Item3 it = p0.item.wear[i1];
+                            if (it != null && (i1 == 0 || i1 == 1 || i1 == 6 || i1 == 7 || i1 == 10)) {
+                                Part_player part = new Part_player();
+                                part.type = it.type;
+                                part.part = it.part;
+                                temp.itemwear.add(part);
+                            }
+                        }
+                        temp.clan = p0.myclan;
+                    }
+                    m.writer().writeUTF(temp.name);
+                    m.writer().writeByte(temp.head);
+                    m.writer().writeByte(temp.eye);
+                    m.writer().writeByte(temp.hair);
+                    m.writer().writeShort(temp.level);
+                    m.writer().writeByte(temp.itemwear.size());
+                    for (Part_player it : temp.itemwear) {
+                        m.writer().writeByte(it.part);
+                        m.writer().writeByte(it.type);
+                    }
+                    m.writer().writeByte((p0 != null) ? (byte) 1 : (byte) 0); // type online
+                    m.writer().writeUTF(temp.info);
+                    if (temp.clan != null) {
+                        m.writer().writeShort(temp.clan.icon);
+                        m.writer().writeUTF(temp.clan.name_clan_shorted);
+                        m.writer().writeByte(temp.clan.get_mem_type(temp.name));
+                    } else {
+                        m.writer().writeShort(-1);
+                    }
+                }
+                conn.addmsg(m);
+                m.cleanup();
+                break;
+            }
+            case 1: {
+                Message m = new Message(56);
+                m.writer().writeByte(1);
+                m.writer().writeUTF("BXH Cao Thủ");
                 m.writer().writeByte(99); // page
                 m.writer().writeInt(0); // my index in bxh
                 m.writer().writeByte(BXH.BXH_level.size()); // num2
@@ -137,6 +191,57 @@ public class BXH {
                 m.cleanup();
                 break;
             }
+            case 1: {
+                Message m = new Message(56);
+                m.writer().writeByte(1);
+                m.writer().writeUTF("BXH Đổi Quà");
+                m.writer().writeByte(99); // page
+                m.writer().writeInt(0); // my index in bxh
+                m.writer().writeByte(BXH.BXH_doiqua.size()); // num2
+                for (int i = 0; i < BXH.BXH_doiqua.size(); i++) {
+                    Memin4 temp = BXH.BXH_doiqua.get(i);
+                    Player p0 = Map.get_player_by_name(temp.name);
+                    if (p0 != null) {
+                        temp.head = p0.head;
+                        temp.eye = p0.eye;
+                        temp.hair = p0.hair;
+                        temp.level = p0.level;
+                        temp.itemwear.clear();
+                        for (int i1 = 0; i1 < p0.item.wear.length; i1++) {
+                            Item3 it = p0.item.wear[i1];
+                            if (it != null && (i1 == 0 || i1 == 1 || i1 == 6 || i1 == 7 || i1 == 10)) {
+                                Part_player part = new Part_player();
+                                part.type = it.type;
+                                part.part = it.part;
+                                temp.itemwear.add(part);
+                            }
+                        }
+                        temp.clan = p0.myclan;
+                    }
+                    m.writer().writeUTF(temp.name);
+                    m.writer().writeByte(temp.head);
+                    m.writer().writeByte(temp.eye);
+                    m.writer().writeByte(temp.hair);
+                    m.writer().writeShort(temp.level);
+                    m.writer().writeByte(temp.itemwear.size());
+                    for (Part_player it : temp.itemwear) {
+                        m.writer().writeByte(it.part);
+                        m.writer().writeByte(it.type);
+                    }
+                    m.writer().writeByte((p0 != null) ? (byte) 1 : (byte) 0); // type online
+                    m.writer().writeUTF(temp.info);
+                    if (temp.clan != null) {
+                        m.writer().writeShort(temp.clan.icon);
+                        m.writer().writeUTF(temp.clan.name_clan_shorted);
+                        m.writer().writeByte(temp.clan.get_mem_type(temp.name));
+                    } else {
+                        m.writer().writeShort(-1);
+                    }
+                }
+                conn.addmsg(m);
+                m.cleanup();
+                break;
+            }
         }
     }
     public static void send2(Session conn, int b) throws IOException {
@@ -192,6 +297,57 @@ public class BXH {
                 m.cleanup();
                 break;
             }
+            case 1: {
+                Message m = new Message(56);
+                m.writer().writeByte(1);
+                m.writer().writeUTF("BXH Đi Cướp");
+                m.writer().writeByte(99); // page
+                m.writer().writeInt(0); // my index in bxh
+                m.writer().writeByte(BXH.BXH_Cuop.size()); // num2
+                for (int i = 0; i < BXH.BXH_Cuop.size(); i++) {
+                    Memin4 temp = BXH.BXH_Cuop.get(i);
+                    Player p0 = Map.get_player_by_name(temp.name);
+                    if (p0 != null) {
+                        temp.head = p0.head;
+                        temp.eye = p0.eye;
+                        temp.hair = p0.hair;
+                        temp.level = p0.level;
+                        temp.itemwear.clear();
+                        for (int i1 = 0; i1 < p0.item.wear.length; i1++) {
+                            Item3 it = p0.item.wear[i1];
+                            if (it != null && (i1 == 0 || i1 == 1 || i1 == 6 || i1 == 7 || i1 == 10)) {
+                                Part_player part = new Part_player();
+                                part.type = it.type;
+                                part.part = it.part;
+                                temp.itemwear.add(part);
+                            }
+                        }
+                        temp.clan = p0.myclan;
+                    }
+                    m.writer().writeUTF(temp.name);
+                    m.writer().writeByte(temp.head);
+                    m.writer().writeByte(temp.eye);
+                    m.writer().writeByte(temp.hair);
+                    m.writer().writeShort(temp.level);
+                    m.writer().writeByte(temp.itemwear.size());
+                    for (Part_player it : temp.itemwear) {
+                        m.writer().writeByte(it.part);
+                        m.writer().writeByte(it.type);
+                    }
+                    m.writer().writeByte((p0 != null) ? (byte) 1 : (byte) 0); // type online
+                    m.writer().writeUTF(temp.info);
+                    if (temp.clan != null) {
+                        m.writer().writeShort(temp.clan.icon);
+                        m.writer().writeUTF(temp.clan.name_clan_shorted);
+                        m.writer().writeByte(temp.clan.get_mem_type(temp.name));
+                    } else {
+                        m.writer().writeShort(-1);
+                    }
+                }
+                conn.addmsg(m);
+                m.cleanup();
+                break;
+            }
         }
     }
     public static void send3(Session conn, int b) throws IOException {
@@ -205,6 +361,57 @@ public class BXH {
                 m.writer().writeByte(BXH.BXH_ds.size()); // num2
                 for (int i = 0; i < BXH.BXH_ds.size(); i++) {
                     Memin4 temp = BXH.BXH_ds.get(i);
+                    Player p0 = Map.get_player_by_name(temp.name);
+                    if (p0 != null) {
+                        temp.head = p0.head;
+                        temp.eye = p0.eye;
+                        temp.hair = p0.hair;
+                        temp.level = p0.level;
+                        temp.itemwear.clear();
+                        for (int i1 = 0; i1 < p0.item.wear.length; i1++) {
+                            Item3 it = p0.item.wear[i1];
+                            if (it != null && (i1 == 0 || i1 == 1 || i1 == 6 || i1 == 7 || i1 == 10)) {
+                                Part_player part = new Part_player();
+                                part.type = it.type;
+                                part.part = it.part;
+                                temp.itemwear.add(part);
+                            }
+                        }
+                        temp.clan = p0.myclan;
+                    }
+                    m.writer().writeUTF(temp.name);
+                    m.writer().writeByte(temp.head);
+                    m.writer().writeByte(temp.eye);
+                    m.writer().writeByte(temp.hair);
+                    m.writer().writeShort(temp.level);
+                    m.writer().writeByte(temp.itemwear.size());
+                    for (Part_player it : temp.itemwear) {
+                        m.writer().writeByte(it.part);
+                        m.writer().writeByte(it.type);
+                    }
+                    m.writer().writeByte((p0 != null) ? (byte) 1 : (byte) 0); // type online
+                    m.writer().writeUTF(temp.info);
+                    if (temp.clan != null) {
+                        m.writer().writeShort(temp.clan.icon);
+                        m.writer().writeUTF(temp.clan.name_clan_shorted);
+                        m.writer().writeByte(temp.clan.get_mem_type(temp.name));
+                    } else {
+                        m.writer().writeShort(-1);
+                    }
+                }
+                conn.addmsg(m);
+                m.cleanup();
+                break;
+            }
+            case 1: {
+                Message m = new Message(56);
+                m.writer().writeByte(1);
+                m.writer().writeUTF("BXH Lôi Đài");
+                m.writer().writeByte(99); // page
+                m.writer().writeInt(0); // my index in bxh
+                m.writer().writeByte(BXH.BXH_ld.size()); // num2
+                for (int i = 0; i < BXH.BXH_ld.size(); i++) {
+                    Memin4 temp = BXH.BXH_ld.get(i);
                     Player p0 = Map.get_player_by_name(temp.name);
                     if (p0 != null) {
                         temp.head = p0.head;
@@ -359,8 +566,12 @@ public class BXH {
         public long exp;
         public String name;
         public int point_arena;
+        public int point_king_cup;
+        public int doiqua;
+        public long danhvong;
         public int hieuchien;
-         public int dibuon;
+        public int dibuon;
+        public int dicuop;
         public byte head;
         public byte eye;
         public byte hair;
@@ -369,5 +580,4 @@ public class BXH {
         public String info;
         public short id;
     }
-
 }

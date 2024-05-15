@@ -25,6 +25,8 @@ import event_daily.UseItemArena;
 import event_daily.ChienTruong;
 import io.Message;
 import io.Session;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -35,6 +37,7 @@ import template.ItemTemplate4;
 import template.ItemTemplate7;
 import template.MainObject;
 import template.Mob_MoTaiNguyen;
+import template.NpcTemplate;
 import template.Option_pet;
 import template.StrucEff;
 
@@ -82,7 +85,7 @@ public class Map implements Runnable {
     public KingCup kingCupMap;
 
     public Map(int id, int zone, String[] npc_name, String name, byte typemap, boolean ismaplang, boolean showhs,
-               int maxplayer, int maxzone, List<Vgo> vgo) throws IOException {
+            int maxplayer, int maxzone, List<Vgo> vgo) throws IOException {
         this.map_id = (short) id;
         this.zone_id = (byte) zone;
         this.npc_name_data = npc_name;
@@ -187,19 +190,18 @@ public class Map implements Runnable {
                     break;
                 }
                 case 1: {
-                    Npc.chat(this, Npc.CHAT_TOP, -49);
-                    Npc.chat(this, Npc.CHAT_MR_BANANA, -1);
-                    Npc.chat(this, Npc.CHAT_PHO_CHI_HUY, -37);
-                    Npc.chat(this, Npc.CHAT_PHAP_SU, -36);
-                    Npc.chat(this, Npc.CHAT_ZORO, -2);
-                    Npc.chat(this, Npc.CHAT_AMAN, -7);
-                    Npc.chat(this, Npc.CHAT_ODA, -81);
-                    Npc.chat(this, Npc.CHAT_LISA, -3);
-                    Npc.chat(this, Npc.CHAT_SOPHIA, -69);
-                    Npc.chat(this, Npc.CHAT_HAMMER, -5);
-                    Npc.chat(this, Npc.CHAT_ZULU, -8);
-                    Npc.chat(this, Npc.CHAT_DOUBA, -4);
-                    Npc.chat(this, Npc.CHAT_ANNA, -44);
+//                    Npc.chat(this, Npc.CHAT_TOP, -49);
+//                    Npc.chat(this, Npc.CHAT_PHO_CHI_HUY, -37);
+//                    Npc.chat(this, Npc.CHAT_PHAP_SU, -36);
+//                    Npc.chat(this, Npc.CHAT_ZORO, -2);
+//                    Npc.chat(this, Npc.CHAT_AMAN, -7);
+//                    Npc.chat(this, Npc.CHAT_ODA, -81);
+//                    Npc.chat(this, Npc.CHAT_LISA, -3);
+//                    Npc.chat(this, Npc.CHAT_SOPHIA, -69);
+//                    Npc.chat(this, Npc.CHAT_HAMMER, -5);
+//                    Npc.chat(this, Npc.CHAT_ZULU, -8);
+//                    Npc.chat(this, Npc.CHAT_DOUBA, -4);
+//                    Npc.chat(this, Npc.CHAT_ANNA, -44);
                     Npc.chat(this, Npc.CHAT_BXH, -49);
                     break;
                 }
@@ -588,9 +590,9 @@ public class Map implements Runnable {
                                 default: { // 4587
                                     byte eff_ = 3;
                                     if (it.tier == 15) {
-                                        eff_ = 30;
+                                        eff_ = 78;
                                     } else if (it.tier >= 12) {
-                                        eff_ = 29;
+                                        eff_ = 30;
                                     } else if (it.tier >= 9) {
                                         eff_ = 5;
                                     } else if (it.tier >= 6) {
@@ -667,50 +669,50 @@ public class Map implements Runnable {
                             MapService.send_msg_player_inside(this, p, m, true);
                             m.cleanup();
                         }
-//                        it = p.item.wear[19];
-//                        if (it != null && p.time_eff_wear < System.currentTimeMillis()) {
-//                            p.time_eff_wear = System.currentTimeMillis() + 5000L;
-//                            Message m = new Message(-49);
-//                            m.writer().writeByte(2);
-//                            m.writer().writeShort(0);
-//                            m.writer().writeByte(0);
-//                            m.writer().writeByte(0);
-//                            switch (it.id) {
-//                                case 4776:
-//                                case 4777:
-//                                case 4778:
-//                                case 4779:
-//                                case 4780:
-//                                case 4781:
-//                                case 4782:
-//                                case 4783:
-//
-//                                case 4775: {
-//                                    byte eff_ = 37;
-//                                    if (it.tier == 15) {
-//                                        eff_ = 37;
-//                                    }
-//                                    m.writer().writeByte(eff_);
-//                                    break;
-//
-//                                }
-//                                default: {
-//                                    byte eff_ = 51;
-//                                    if (it.tier == 15) {
-//                                        eff_ = 51;
-//                                    }
-//                                    m.writer().writeByte(eff_);
-//                                    break;
-//                                }
-//                            }
-//                            m.writer().writeShort(p.index);
-//                            m.writer().writeByte(0);
-//                            m.writer().writeByte(0);
-//                            m.writer().writeInt(5000);
-//                            MapService.send_msg_player_inside(this, p, m, true);
-//                            m.cleanup();
-//
-//                        }
+                        it = p.item.wear[19];
+                        if (it != null && p.time_eff_wear < System.currentTimeMillis()) {
+                            p.time_eff_wear = System.currentTimeMillis() + 5000L;
+                            Message m = new Message(-49);
+                            m.writer().writeByte(2);
+                            m.writer().writeShort(0);
+                            m.writer().writeByte(0);
+                            m.writer().writeByte(0);
+                            switch (it.id) {
+                                case 4776:
+                                case 4777:
+                                case 4778:
+                                case 4779:
+                                case 4780:
+                                case 4781:
+                                case 4782:
+                                case 4783:
+
+                                case 4775: {
+                                    byte eff_ = 37;
+                                    if (it.tier == 15) {
+                                        eff_ = 37;
+                                    }
+                                    m.writer().writeByte(eff_);
+                                    break;
+
+                                }
+                                default: {
+                                    byte eff_ = 51;
+                                    if (it.tier == 15) {
+                                        eff_ = 51;
+                                    }
+                                    m.writer().writeByte(eff_);
+                                    break;
+                                }
+                            }
+                            m.writer().writeShort(p.index);
+                            m.writer().writeByte(0);
+                            m.writer().writeByte(0);
+                            m.writer().writeInt(5000);
+                            MapService.send_msg_player_inside(this, p, m, true);
+                            m.cleanup();
+
+                        }
                     }
                 } catch (Exception eee) {
                 }
@@ -785,6 +787,7 @@ public class Map implements Runnable {
             p.change_map(p, vgo);
             return;
         }
+        p.npcs.clear();
         Message m = new Message(12);
         m.writer().writeShort(this.map_id);
         m.writer().writeShort((short) (p.x / 24));
@@ -812,11 +815,37 @@ public class Map implements Runnable {
         if (isMapLangPhuSuong() || map_id == 135) {
             path = "data/npc/langphusuong/";
         }
-        for (int i = 0; i < this.npc_name_data.length; i++) {
+        for (String npc_name_data1 : this.npc_name_data) {
+            byte[] data = Util.loadfile(path + npc_name_data1);
             m = new Message(-50);
-            m.writer().write(Util.loadfile(path + this.npc_name_data[i]));
+            m.writer().write(data);
             p.conn.addmsg(m);
             m.cleanup();
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(data);
+            DataInputStream dis = new DataInputStream(bais);
+            try {
+                byte size = dis.readByte();
+                for (int i = 0; i < size; i++) {
+                    NpcTemplate npc = new NpcTemplate();
+                    npc.name = dis.readUTF();
+                    dis.readUTF();
+                    npc.id = dis.readByte();
+                    dis.readByte();
+                    npc.x = dis.readShort();
+                    npc.y = dis.readShort();
+                    dis.readByte();
+                    dis.readByte();
+                    dis.readByte();
+                    dis.readByte();
+                    dis.readUTF();
+                    dis.readByte();
+                    dis.readByte();
+                    p.npcs.add(npc);
+                }
+            } catch (IOException e) {
+                System.err.println("ERROR " + this.map_id);
+            }
         }
         // mob mo tai nguyen
         if (Map.is_map_chiem_mo(p.map, true)) {
@@ -858,62 +887,14 @@ public class Map implements Runnable {
             m.writer().writeByte(0);
             p.conn.addmsg(m);
             m.cleanup();
+            NpcTemplate npc = new NpcTemplate();
+            npc.name = "Mr Dylan";
+            npc.id = -57;
+            npc.x = 384;
+            npc.y = 432;
+            p.npcs.add(npc);
         }
-        if (this.map_id == 1) {
-            m = new Message(-50);
-            m.writer().writeByte(1);
-            m.writer().writeUTF("Ms Phó gài");
-            m.writer().writeUTF("Giao Tiếp");
-            m.writer().writeByte(-1);// id npc
-            m.writer().writeByte(55);   // icon
-            m.writer().writeShort(690); // x
-            m.writer().writeShort(360); // y
-            m.writer().writeByte(1);
-            m.writer().writeByte(1);
-            m.writer().writeByte(2);
-            m.writer().writeByte(47); // icon 2
-            m.writer().writeUTF("thích gì có đó");
-            m.writer().writeByte(1);
-            m.writer().writeByte(0);
-            p.conn.addmsg(m);
-            m.cleanup();
-        }
-        if (this.map_id == 1) {
-            m = new Message(-63);
-            m.writer().writeShort(288);
-            m.writer().writeShort(312);
-            m.writer().writeShort(264);
-            m.writer().writeShort(288);
-            m.writer().writeByte(3);
-            m.writer().writeByte(1);
-            m.writer().writeByte(-1);
-            m.writer().writeByte(-25);
-            m.writer().writeByte(1);
-            m.writer().writeUTF("Đài vinh danh");
-            m.writer().writeUTF(Map.name_mo);
-            m.writer().writeByte(-49);
-            m.writer().writeByte(15);
-            //
-            m.writer().writeShort(Map.weapon); // weapon
-            m.writer().writeShort(Map.body); // body
-            m.writer().writeShort(-1);
-            m.writer().writeShort(-1);
-            m.writer().writeShort(-1);
-            m.writer().writeShort(3); // pet
-            m.writer().writeShort(Map.hat); // hat
-            m.writer().writeShort(Map.leg); // leg
-            m.writer().writeShort(-1);
-            m.writer().writeShort(-1);
-            m.writer().writeShort(Map.wing); // wing
-            m.writer().writeShort(-1);
-            m.writer().writeShort(Map.head); // head
-            m.writer().writeShort(Map.eye); // eye
-            m.writer().writeShort(Map.hair); // hair
-            //
-            m.writer().write(Util.loadfile("data/msg/msg_-96_x" + p.conn.zoomlv));
-            p.conn.addmsg(m);
-            m.cleanup();
-        }
+
         // monument
         if (this.map_id == 1) {
             m = new Message(-96);
@@ -1041,7 +1022,6 @@ public class Map implements Runnable {
         }
     }
 
-
     public static Map get_map_dungeon(int id) {
         for (Map[] temp : entrys) {
             if (temp[0].map_id == id) {
@@ -1052,8 +1032,8 @@ public class Map implements Runnable {
     }
 
     public synchronized void drop_item(Player p, byte type, short id) throws IOException {
-//        His_DelItem hist = new His_DelItem(p.name);
-//        hist.Logger = "Vứt";
+        His_DelItem hist = new His_DelItem(p.name);
+        hist.Logger = "Vứt";
         switch (type) {
             case 3: {
                 Item3 temp = p.item.bag3[id];
@@ -1062,19 +1042,19 @@ public class Map implements Runnable {
                         Service.send_notice_box(p.conn, "Vật phẩm đã khóa");
                         return;
                     }
-//                    hist.tem3 = temp;
-//                    hist.Flus();
+                    hist.tem3 = temp;
+                    hist.Flus();
                     p.item.remove(3, id, 1);
                 }
                 break;
             }
             case 4:
             case 7: {
-//                hist.tem47 = new Item47();
-//                hist.tem47.id = id;
-//                hist.tem47.category = type;
-//                hist.tem47.quantity = (short) p.item.total_item_by_id(type, id);
-//                hist.Flus();
+                hist.tem47 = new Item47();
+                hist.tem47.id = id;
+                hist.tem47.category = type;
+                hist.tem47.quantity = (short) p.item.total_item_by_id(type, id);
+                hist.Flus();
                 p.item.remove(type, id, p.item.total_item_by_id(type, id));
                 break;
             }
@@ -1445,4 +1425,5 @@ public class Map implements Runnable {
     public boolean isMapLangPhuSuong() {
         return map_id == 125 || map_id == 127 || map_id == 129 || map_id == 132;
     }
+
 }

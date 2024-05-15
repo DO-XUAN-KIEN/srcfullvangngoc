@@ -53,7 +53,7 @@ public class Log implements Runnable {
                 }
             }
             try {
-                Thread.sleep(5000L);
+                Thread.sleep(20000L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

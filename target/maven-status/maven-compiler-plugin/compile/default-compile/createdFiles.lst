@@ -40,6 +40,7 @@ template\Pet_di_buon.class
 event_daily\Wedding.class
 event_daily\KingCup.class
 ai\MobAi.class
+BotTelegram.class
 core\CheckDDOS.class
 event\EventManager.class
 template\Eff_TextFire.class
@@ -51,6 +52,7 @@ client\Pet.class
 Helps\medal.class
 client\Friend.class
 ev_he\Event_3$1.class
+BotTelegram$1.class
 ev_he\Event_6.class
 core\MenuController.class
 event_daily\ChiemMo.class
@@ -70,6 +72,7 @@ client\Party.class
 core\BXH.class
 client\Clan.class
 ev_he\Event_6$1.class
+template\NpcTemplate.class
 Helps\ItemStar.class
 template\Medal_Material.class
 ev_he\Event_5.class
@@ -80,6 +83,7 @@ map\Map.class
 template\Item47.class
 ev_he\Event_2$1.class
 ev_he\Event_2.class
+Tools.class
 map\Npc.class
 ShopNPC\item_template.class
 core\ServerManager.class

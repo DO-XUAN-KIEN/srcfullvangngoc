@@ -30,7 +30,7 @@ public class Event_3 {
         if(!objAtk.isPlayer())return;
         
         Player p = (Player)objAtk;
-       // LeaveItemMap.leave_item_by_type4(map, (short)306,p,focus.index);
+        LeaveItemMap.leave_item_by_type4(map, (short)306,p,focus.index);
     }
     
     public static class BXH_DoiQua {

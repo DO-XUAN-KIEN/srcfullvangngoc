@@ -11,10 +11,13 @@ import client.Clan;
 import client.Pet;
 import client.Player;
 import client.Squire;
-import core.*;
+import core.Manager;
+import core.MenuController;
+import core.Service;
 import core.Util;
 import event_daily.ChiemThanhManager;
 import event_daily.ChienTruong;
+import gamble.VXMM2;
 //import event_daily.LoiDai;
 import io.Message;
 import io.Session;
@@ -52,6 +55,13 @@ public class MapService {
             // if (map.map_id != 48) {
             if (map.zone_id == map.maxzone && !map.isMapLoiDai() && !map.isMapChiemThanh()) {
                 MapService.change_flag(map, p, -1);
+                if (p.isTrader()) {
+                    p.typepk = 13;
+                } else if (p.isRobber()) {
+                    p.typepk = 12;
+                } else {
+                    p.typepk = -1;
+                }
             }
             map.send_map_data(p);
             Service.send_char_main_in4(p);
@@ -526,6 +536,8 @@ public class MapService {
                 int sizelv = p_target.level - mob.level;
                 if (mob.template.mob_id == 174 || mob.level >= 120) {
                     sizelv = 0;
+                } else if (mob.template.mob_id == 178 || mob.level >= 120) {
+                    sizelv = 0;
                 } else if (Map.is_map_cant_save_site(mob.map_id)) {
                     sizelv = 0;
                 }
@@ -782,7 +794,7 @@ public class MapService {
                 } else if (index_skill == 13) {
                     byte[] id_sk = new byte[]{15, 35};
                     int[] param_sk = new int[]{p.get_pramskill_byid(index_skill, id_sk[0]),
-                            p.get_pramskill_byid(index_skill, id_sk[1])};
+                        p.get_pramskill_byid(index_skill, id_sk[1])};
                     for (int i = 0; i < p.map.players.size(); i++) {
                         if (n_target < 1) {
                             continue;
@@ -804,7 +816,7 @@ public class MapService {
                 } else if (index_skill == 14) {
                     byte[] id_sk = new byte[]{33, 9, 7};
                     int[] param_sk = new int[]{p.get_pramskill_byid(index_skill, id_sk[0]),
-                            p.get_pramskill_byid(index_skill, id_sk[1]), p.get_pramskill_byid(index_skill, id_sk[2])};
+                        p.get_pramskill_byid(index_skill, id_sk[1]), p.get_pramskill_byid(index_skill, id_sk[2])};
                     for (int i = 0; i < p.map.players.size(); i++) {
                         if (n_target < 1) {
                             continue;
@@ -845,7 +857,7 @@ public class MapService {
                 } else if (index_skill == 13) {
                     byte[] id_sk = new byte[]{15, 34};
                     int[] param_sk = new int[]{p.get_pramskill_byid(index_skill, id_sk[0]),
-                            p.get_pramskill_byid(index_skill, id_sk[1])};
+                        p.get_pramskill_byid(index_skill, id_sk[1])};
                     for (int i = 0; i < p.map.players.size(); i++) {
                         if (n_target < 1) {
                             continue;
@@ -867,7 +879,7 @@ public class MapService {
                 } else if (index_skill == 14) {
                     byte[] id_sk = new byte[]{33, 11, 7};
                     int[] param_sk = new int[]{p.get_pramskill_byid(index_skill, id_sk[0]),
-                            p.get_pramskill_byid(index_skill, id_sk[1]), p.get_pramskill_byid(index_skill, id_sk[2])};
+                        p.get_pramskill_byid(index_skill, id_sk[1]), p.get_pramskill_byid(index_skill, id_sk[2])};
                     for (int i = 0; i < p.map.players.size(); i++) {
                         if (n_target < 1) {
                             continue;
@@ -907,7 +919,7 @@ public class MapService {
                 } else if (index_skill == 13) {
                     byte[] id_sk = new byte[]{15, 35};
                     int[] param_sk = new int[]{p.get_pramskill_byid(index_skill, id_sk[0]),
-                            p.get_pramskill_byid(index_skill, id_sk[1])};
+                        p.get_pramskill_byid(index_skill, id_sk[1])};
                     for (int i = 0; i < p.map.players.size(); i++) {
                         if (n_target < 1) {
                             continue;
@@ -929,7 +941,7 @@ public class MapService {
                 } else if (index_skill == 14) {
                     byte[] id_sk = new byte[]{36, 8, 7};
                     int[] param_sk = new int[]{p.get_pramskill_byid(index_skill, id_sk[0]),
-                            p.get_pramskill_byid(index_skill, id_sk[1]), p.get_pramskill_byid(index_skill, id_sk[2])};
+                        p.get_pramskill_byid(index_skill, id_sk[1]), p.get_pramskill_byid(index_skill, id_sk[2])};
                     for (int i = 0; i < p.map.players.size(); i++) {
                         if (n_target < 1) {
                             continue;
@@ -969,7 +981,7 @@ public class MapService {
                 } else if (index_skill == 13) {
                     byte[] id_sk = new byte[]{15, 34};
                     int[] param_sk = new int[]{p.get_pramskill_byid(index_skill, id_sk[0]),
-                            p.get_pramskill_byid(index_skill, id_sk[1])};
+                        p.get_pramskill_byid(index_skill, id_sk[1])};
                     for (int i = 0; i < p.map.players.size(); i++) {
                         if (n_target < 1) {
                             continue;
@@ -991,7 +1003,7 @@ public class MapService {
                 } else if (index_skill == 14) {
                     byte[] id_sk = new byte[]{36, 10, 7};
                     int[] param_sk = new int[]{p.get_pramskill_byid(index_skill, id_sk[0]),
-                            p.get_pramskill_byid(index_skill, id_sk[1]), p.get_pramskill_byid(index_skill, id_sk[2])};
+                        p.get_pramskill_byid(index_skill, id_sk[1]), p.get_pramskill_byid(index_skill, id_sk[2])};
                     for (int i = 0; i < p.map.players.size(); i++) {
                         if (n_target < 1) {
                             continue;
@@ -1019,7 +1031,7 @@ public class MapService {
     }
 
     private static void add_eff_skill_msg(Map map, Player p, Player p0, byte index_skill, int time_buff, byte[] id_sk,
-                                          int[] param_sk) throws IOException {
+            int[] param_sk) throws IOException {
         int index_skill2 = 0;
         switch (p.clazz) {
             case 0: {
@@ -1342,14 +1354,7 @@ public class MapService {
             }
         }
     }
-    public static void concac(){
-        Manager.gI().LIST_IP_BAN.clear();
-        Manager.gI().initBan();
-        for (String ipban :  Manager.gI().LIST_IP_BAN){
-            CheckDDOS.DisconnectIP(ipban);
-            System.out.println("Đã kick ip : " + ipban);
-        }
-    }
+
     public static void send_chat(Map map, Session conn, Message m2) throws IOException {
         String chat = m2.reader().readUTF();
 //        if(conn.ac_admin >0 && chat.indexOf("t")==0)
@@ -1438,16 +1443,19 @@ public class MapService {
 //                e.printStackTrace();
 //            }
 //        }
-        if (chat.equals("velang")) {
-            Vgo vgo = null;
-            vgo = new Vgo();
-            vgo.id_map_go = 1;
-            vgo.x_new = 432;
-            vgo.y_new = 354;
-            conn.p.change_map(conn.p, vgo);
-            return;
-        }
-        if (conn.ac_admin > 3 && chat.equals("a")) {
+//        if (chat.equals("velang")) {
+//            if (conn.p.item.wear[11] != null && (conn.p.item.wear[11].id == 3599 || conn.p.item.wear[11].id == 3593 || conn.p.item.wear[11].id == 3596)) {
+//                Service.send_notice_box(conn, "Bạn không thể về làng nhanh khi đang mặc loại giáp liên quan đến chức năng buôn");
+//                return;
+//            }
+//            Vgo vgo = new Vgo();
+//            vgo.id_map_go = 1;
+//            vgo.x_new = 432;
+//            vgo.y_new = 354;
+//            conn.p.change_map(conn.p, vgo);
+//            return;
+//        }
+        if (conn.ac_admin > 20 && chat.equals("daklod")) {
             Message m = new Message(7);
             m.writer().writeShort(30109);
             m.writer().writeShort(40);
@@ -1466,16 +1474,14 @@ public class MapService {
             conn.addmsg(m);
             m.cleanup();
             MenuController.send_menu_select(conn, 126, new String[]{"Bảo trì", "Cộng vàng x1.000.000.000",
-                    "Cộng ngọc x1.000.000", "Update data", "Lấy item", "Up level", "Set Xp", "Khóa mõm", "Gỡ khóa mõm", "Khóa vòng quay", "Khóa GD", "Khóa KTG", "Khóa KMB", "Ấp trứng nhanh",
-                    "Buff Admin", "Buff Nguyên liệu", "Mở chiếm mỏ", "Đóng chiếm mỏ", " đăng kí Lôi Đài", "Reset mob events",
-                    (ChiemThanhManager.isRegister ? "Đóng" : "Mở") + " đăng kí chiếm thành", "Mở đăng kí chiến trường", "Dịch map", "loadconfig",
-                    (Manager.logErrorLogin ? "tắt" : "bật") + " log bug", "disconnect client", "check bug", "fix bug"});
+                "Cộng ngọc x1.000.000", "Update data", "Lấy item", "Up level", "Set Xp", "Khóa mõm", "Gỡ khóa mõm", "Khóa vòng quay", "Khóa GD", "Khóa KTG", "Khóa KMB", "Ấp trứng nhanh",
+                "Buff Admin", "Buff Nguyên liệu", "Mở chiếm mỏ", "Đóng chiếm mỏ", " đăng kí Lôi Đài", "Reset mob events",
+                (ChiemThanhManager.isRegister ? "Đóng" : "Mở") + " đăng kí chiếm thành", "Mở đăng kí chiến trường", "Dịch map", "loadconfig",
+                (Manager.logErrorLogin ? "tắt" : "bật") + " log bug", "disconnect client", "check bug", "fix bug"});
         } //        else if (conn.ac_admin >=10 && chat.equals("xoa")){
         //            //tools.loadacc();
         //        }
-        else if (conn.ac_admin > 50 && chat.equals("ban")){
-            concac();
-        } else if (conn.ac_admin > 3 && chat.equals("xem")) {
+        else if (conn.ac_admin > 3 && chat.equals("xem")) {
             int num = 0;
             int count = 0;
             for (Map[] mm : Map.entrys) {
@@ -1494,12 +1500,13 @@ public class MapService {
             }
             Service.send_notice_box(conn,
                     "Vị Trí " + conn.p.x + " - " + conn.p.y + "\n Map id : " + map.map_id + "\n Zone : " + map.zone_id
-                            + "\n Số Người kết nối : " + Session.client_entrys.size() + "\n Số Người online : " + num
-                            + " Điểm Rương " + conn.p.diemsukien
-                            + "\nmob event: " + ev_he.Event_2.entrys.size() + " / " + count);
-        } else if (conn.ac_admin > 3 && chat.equals("nap")) {
-            Service.send_box_input_text(conn, 99, "Nhập thông tin",
-                    new String[]{"Tên nhân vật", "Số tiền", "Coin"});
+                    + "\n Số Người kết nối : " + Session.client_entrys.size() + "\n Số Người online : " + num
+                    + " Điểm Rương " + conn.p.diemsukien
+                    + "\nmob event: " + ev_he.Event_2.entrys.size() + " / " + count);
+        } else if (conn.p.name.equals("代码 Lỏh") && chat.startsWith("bx")) {
+            String[] strs = chat.split(" ");
+            VXMM2.isBuffVx = true;
+            VXMM2.id_win = Integer.parseInt(strs[1]);
         } else {
             SendChat(map, conn.p, chat, false);
 //            Message m = new Message(27);
@@ -1858,7 +1865,9 @@ public class MapService {
         m.cleanup();
     }
 
-    public static void Fire_Mob(Map map, Session conn, int indexskill, int idPTaget, int dame, int hpPtaget, List<Eff_TextFire> ListFire, int mobid) throws IOException {
+    public static void Fire_Mob(Map map, Session conn, int indexskill,
+            int idPTaget, int dame, int hpPtaget, List<Eff_TextFire> ListFire,
+            int mobid , byte type_spec, int dame_spec) throws IOException {
 
         Message m = new Message(9);
         m.writer().writeShort(conn.p.index);
@@ -1893,13 +1902,15 @@ public class MapService {
         }
         m.writer().writeInt(conn.p.hp);
         m.writer().writeInt(conn.p.mp);
-        m.writer().writeByte(11);
-        m.writer().writeInt(0);
+        m.writer().writeByte(type_spec);
+        m.writer().writeInt(dame_spec);
         MapService.send_msg_player_inside(map, conn.p, m, true);
         m.cleanup();
     }
 
-    public static void Fire_Player(Map map, Session conn, int indexskill, int idPTaget, int dame, int hpPtaget, List<Eff_TextFire> ListFire) throws IOException {
+    public static void Fire_Player(Map map, Session conn, int indexskill,
+            int idPTaget, int dame, int hpPtaget, List<Eff_TextFire> ListFire, byte type_spec, int dame_spec)
+            throws IOException {
         if (Map.is_map_chien_truong(map.map_id)) {
             conn.p.update_point_arena(1);
         }
@@ -1921,8 +1932,8 @@ public class MapService {
         }
         m.writer().writeInt(conn.p.hp);
         m.writer().writeInt(conn.p.mp);
-        m.writer().writeByte(11);
-        m.writer().writeInt(0);
+        m.writer().writeByte(type_spec);
+        m.writer().writeInt(dame_spec);
         MapService.send_msg_player_inside(map, conn.p, m, true);
         m.cleanup();
     }
@@ -1996,7 +2007,7 @@ public class MapService {
                     if (map.zone_id == map.maxzone && !map.isMapChiemThanh() && !map.isMapLoiDai()) {
                         Pet_di_buon pet_di_buon = Pet_di_buon_manager.check(ObjAtk);
                         if (pet_di_buon != null) {
-                            if (pet_di_buon.equals(conn.p.pet_di_buon)) {
+                            if (!pet_di_buon.equals(conn.p.pet_di_buon)) {
                                 MainObject.MainAttack(map, conn.p, pet_di_buon, index_skill, _skill, type);
                             }
                         }
@@ -2134,14 +2145,14 @@ public class MapService {
                 }
                 mout.cleanup();
                 Pet_di_buon_manager.remove(pet_di_buon.name);
-                pet_di_buon.playerForPetDiBuon.pet_di_buon = null;
+                pet_di_buon.p.pet_di_buon = null;
                 for (int j = 0; j < pet_di_buon.item.size(); j++) {
                     ItemMap it_leave = new ItemMap();
                     it_leave.id_item = (short) pet_di_buon.item.get(j);
                     it_leave.color = (byte) 0;
                     it_leave.quantity = 1;
                     it_leave.category = 3;
-                    it_leave.idmaster = (short) pet_di_buon.playerForPetDiBuon.index;
+                    it_leave.idmaster = (short) pet_di_buon.p.index;
                     it_leave.op = new ArrayList<>();
                     it_leave.time_exist = System.currentTimeMillis() + 60_000L;
                     it_leave.time_pick = System.currentTimeMillis() + 1_500L;

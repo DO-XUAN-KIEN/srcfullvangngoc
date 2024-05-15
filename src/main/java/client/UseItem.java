@@ -14,7 +14,18 @@ import map.LeaveItemMap;
 import map.MapService;
 import map.Vgo;
 import map.Map;
-import template.*;
+import template.EffTemplate;
+import template.Item3;
+import template.Item47;
+import template.ItemTemplate3;
+import template.ItemTemplate4;
+import template.ItemTemplate7;
+import template.Level;
+import template.Option;
+import template.Pet_di_buon;
+import template.Pet_di_buon_manager;
+import template.StrucEff;
+import template.box_item_template;
 
 public class UseItem {
 
@@ -234,10 +245,10 @@ public class UseItem {
                 break;
             }
             case 69: {
-//                if (conn.p.level < 40) {
-//                    Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
-//                    return;
-//                }
+                if (conn.p.level < 40) {
+                    Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
+                    return;
+                }
                 if (conn.p.pet_follow == -1) {
                     Service.send_notice_nobox_white(conn, "Chưa mang theo pet!");
                     return;
@@ -690,7 +701,7 @@ public class UseItem {
                 conn.p.item.add_item_bag47(7, itbag2);
                 //
                 conn.p.update_vang(quant3_);
-             //   Log.gI().add_log(conn.p.name, "Nhận " + quant3_ + " từ rương vàng");
+                Log.gI().add_log(conn.p.name, "Nhận " + quant3_ + " từ rương vàng");
                 //
                 conn.p.item.char_inventory(7);
                 conn.p.item.remove(4, id_potion, 1);
@@ -747,7 +758,7 @@ public class UseItem {
                 conn.p.item.add_item_bag47(7, itbag2);
                 //
                 conn.p.update_vang(quant3_);
-              //  Log.gI().add_log(conn.p.name, "Nhận " + quant3_ + " từ rương boss phe");
+                Log.gI().add_log(conn.p.name, "Nhận " + quant3_ + " từ rương boss phe");
                 //
                 conn.p.item.char_inventory(7);
                 conn.p.item.remove(4, id_potion, 1);
@@ -814,10 +825,6 @@ public class UseItem {
             case 261: {
                 if (conn.p.level < 10 || conn.p.level == 20 || conn.p.level == 30 || conn.p.level == 40) {
                     Service.send_notice_nobox_white(conn, "level không phù hợp");
-                    return;
-                }
-                if(conn.p.chuyensinh > 0){
-                    Service.send_notice_box(conn,"Đã chuyển sinh thì không dùng được thuốc");
                     return;
                 }
                 conn.p.item.remove(4, id_potion, 1);

@@ -30,7 +30,7 @@ public class NhanBan extends MainObject{
     private short[] fashion;//
     private short mat_na;//
     private short phi_phong;//
-    private short danh_hieu;
+	private short danh_hieu;
     private short weapon;//
     private short id_horse;//
     private short id_hair;//
@@ -41,7 +41,7 @@ public class NhanBan extends MainObject{
     public boolean is_move;//
     public Player p_target;
     public int p_skill_id;//
-
+    
     public long timeATK;
     public long time_hp_buff;
     private int pierce;
@@ -51,7 +51,7 @@ public class NhanBan extends MainObject{
     }
 
     public NhanBan(int mapid, int id, String name, int x, int y, int clzz, int head, int eye, int hair, int lv, int hpMax, int pk, short[] fashions, int mount, int matna,
-                   int phiphong, int weapon, int id_horse, int id_hair, int id_wing, int danhhieu, int dame, int def, int crit, List<Part_player> part_p, int id_img_mob) {
+            int phiphong, int weapon, int id_horse, int id_hair, int id_wing, int danhhieu, int dame, int def, int crit, List<Part_player> part_p, int id_img_mob) {
         this.map_id = map_id;
         this.index = id;
         this.name = name;
@@ -83,7 +83,7 @@ public class NhanBan extends MainObject{
         clan_name_clan_shorted = "";
         this.part_p = part_p;
         this.id_img_mob = (short)id_img_mob;
-
+        
     }
 
     public NhanBan(JSONArray jar) {
@@ -308,7 +308,11 @@ public class NhanBan extends MainObject{
         m.writer().writeByte(-1); // pet
         m.writer().writeByte(this.fashion.length);
         for (int i = 0; i < this.fashion.length; i++) {
-            m.writer().writeByte(this.fashion[i]);
+            if (p.conn.version >= 280) {
+                m.writer().writeShort(this.fashion[i]);
+            } else {
+                m.writer().writeByte(this.fashion[i]);
+            }
         }
         //
         m.writer().writeShort(id_img_mob);//id_img_mob
@@ -329,17 +333,17 @@ public class NhanBan extends MainObject{
         p.conn.addmsg(m);
         m.cleanup();
     }
-
+    
     @Override
     public int get_TypeObj(){
         return 0;
     }
-
+    
     @Override
     public int get_DefBase(){
         return def;
     }
-
+    
     @Override
     public void SetDie(Map map, MainObject mainAtk){
         try{

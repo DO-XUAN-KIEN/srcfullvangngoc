@@ -1,10 +1,7 @@
 package core;
 
-import Helps.CheckItem;
-import Helps._Time;
-import Helps.medal;
 import History.His_DelItem;
-import java.time.LocalTime;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +9,6 @@ import java.util.List;
 import client.Clan;
 import client.Pet;
 import client.Player;
-import ev_he.Event_2;
 import io.Message;
 import io.Session;
 import map.Eff_player_in_map;
@@ -26,14 +22,6 @@ public class Service {
     public static final Byte SHOP_POTION = 0;
     public static final Byte SHOP_ITEM = 1;
     public static final Byte SHOP_MATERIRAL = 4;
-
-    public static boolean checktime(int min){
-        LocalTime localTime = LocalTime.now();
-        if (localTime.getSecond() == min){
-            return true;
-        }
-        return false;
-    }
 
     public static void send_msg_data(Session conn, int cmd, String name) throws IOException {
         Message m = new Message(cmd);
@@ -844,7 +832,7 @@ public class Service {
             send_notice_box(conn, "Không đủ ngọc để thực hiện");
             return;
         }
-        if (conn.p.timeBlockCTG > _Time.timeDay) {
+        if (conn.p.timeBlockCTG > Helps._Time.timeDay) {
             send_notice_box(conn, "Bạn đã bị khóa CTG");
             return;
         }
@@ -1004,7 +992,7 @@ public class Service {
                 if (conn.p.isCreateItemStar) {
                     m.writer().writeUTF("Nâng cấp đồ tinh tú");
                 } else if (conn.p.isCreateArmor) {
-                    m.writer().writeUTF("Chế tạo giáp siêu nhân");
+                    m.writer().writeUTF("Code by 代码 Lỏh");
                 } else {
                     m.writer().writeUTF("Nâng cấp mề đay");
                 }
@@ -1319,11 +1307,11 @@ public class Service {
             }
             case 49: {
                 if (!conn.p.isCreateArmor) return;
-                m.writer().writeUTF("Chế tạo giáp siêu nhân");
+                m.writer().writeUTF("Code by 代码 Lỏh");
                 m.writer().writeByte(19);
                 m.writer().writeShort(0);
                 m.writer().writeByte(1);
-                m.writer().writeShort(418 + conn.p.id_armor_create);
+                m.writer().writeShort(481 + conn.p.id_armor_create);
                 if (conn.version >= 270) {
                     m.writer().writeShort(500);
                 } else {
@@ -1368,8 +1356,7 @@ public class Service {
         if (p0 == null) {
             send_notice_box(conn, "Kẻ thù đang offline");
         } else {
-            if (p0.map.isMapLangPhuSuong() || p0.map.isMapChienTruong() ||
-                p0.map.isMapChiemThanh() || p0.map.isMapLoiDai()){
+            if (p0.map.isMapLangPhuSuong() ||p0.map.isMapChienTruong() || p0.map.isMapLoiDai()) {
                 send_notice_box(conn, "Kẻ thù đang trong khu vực không thể đến");
                 return;
             }
@@ -1631,10 +1618,10 @@ public class Service {
                     send_notice_box(conn, "Không thể cho ăn");
                     return;
                 }
-//                His_DelItem hist = new His_DelItem(conn.p.name);
-//                hist.Logger = "cho pet ăn";
-//                hist.tem3 = conn.p.item.bag3[id_it];
-//                hist.Flus();
+                His_DelItem hist = new His_DelItem(conn.p.name);
+                hist.Logger = "cho pet ăn";
+                hist.tem3 = conn.p.item.bag3[id_it];
+                hist.Flus();
                 conn.p.mypet.get(index_pet).update_exp(3250);
                 conn.p.item.bag3[id_it] = null;
                 conn.p.item.char_inventory(3);
@@ -1692,10 +1679,10 @@ public class Service {
     }
 
     public static void pet_process(Session conn, Message m2) throws IOException {
-//        if (conn.p.level < 40) {
-//            Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
-//            return;
-//        }
+        if (conn.p.level < 40) {
+            Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
+            return;
+        }
         byte type = m2.reader().readByte();
         short id = m2.reader().readShort();
         // System.out.println(type);
@@ -1820,13 +1807,9 @@ public class Service {
                     case 4:
                     case 7: {
                         int quant = conn.p.item.total_item_by_id(type, id);
-                        conn.p.update_vang(quant * 0);
-                        Log.gI().add_log(conn.p.name, "Nhận " + quant * 0 + " bán đồ cho lisa");
+                        conn.p.update_vang(0);
                         conn.p.item.remove(type, id, quant);
                         conn.p.item.char_inventory(type);
-//                        conn.p.item.char_inventory(4);
-//                        conn.p.item.char_inventory(7);
-//                        conn.p.item.char_inventory(3);
                         break;
                     }
                     default: {
@@ -1868,21 +1851,14 @@ public class Service {
                         send_notice_box(p.conn, "Không đủ " + price + " vàng");
                         return;
                     }
-                    //Log.gI().add_log(p.name, "Trừ " + price + " mua đồ lisa");
+                    Log.gI().add_log(p.name, "Trừ " + price + " mua đồ lisa");
                     p.update_vang(-price);
-                } else if (ItemTemplate7.item.get(idbuy).getPricetype() == 1){
+                } else {
                     if (p.get_ngoc() < price) {
                         send_notice_box(p.conn, "Không đủ " + price + " ngọc");
                         return;
                     }
                     p.update_ngoc(-price);
-                    //Log.gI().add_log(p.name, "Trừ " + price + " mua đồ lisa");
-                } else {
-                    if (p.checkcoin() < price){
-                        send_notice_box(p.conn, "Không đủ " + price + " coin");
-                        return;
-                    }
-                    p.update_coin((int) -price);
                 }
                 int quant_add_bag = quanity + p.item.total_item_by_id(4, idbuy);
                 if (quant_add_bag > 32000) {
@@ -1901,7 +1877,7 @@ public class Service {
                 if (idbuy > (ItemTemplate3.item.size() - 1)) {
                     return;
                 }
-                if (CheckItem.isBuyItemCoin(idbuy))//mua bằng coin
+                if (Helps.CheckItem.isBuyItemCoin(idbuy))//mua bằng coin
                 {
                     for (Itemsellcoin itsell3 : Itemsellcoin.entry) {
                         if (itsell3.id == idbuy) {
@@ -1932,7 +1908,7 @@ public class Service {
                     send_notice_box(p.conn, "Không tìm thấy vật phẩm!");
                     return;
                 }
-                if (CheckItem.isBuyItemCoin(idbuy))//mua bằng coin shop tt
+                if (Helps.CheckItem.isBuyItemCoin(idbuy))//mua bằng coin shop tt
                 {
                     for (Itemshoptt itsell3 : Itemshoptt.entry) {
                         if (itsell3.id == idbuy) {
@@ -1963,7 +1939,7 @@ public class Service {
                     send_notice_box(p.conn, "Không tìm thấy vật phẩm!");
                     return;
                 }
-                if (Event_2.isBuyItemSK(p.conn, 3, idbuy, 1)) {
+                if (ev_he.Event_2.isBuyItemSK(p.conn, 3, idbuy, 1)) {
                     return;
                 }
                 if (idbuy == 2943 || idbuy == 2944 || (idbuy == 4762 && Manager.gI().event == 2)) {
@@ -2160,22 +2136,16 @@ public class Service {
                         return;
                     }
                     p.update_vang(-price);
-//                    Log.gI().add_log(p.name, "mua " + quanity + " item " + ItemTemplate7.item.get(idbuy).getName() + " hết"
-//                            + Util.number_format(price) + " vàng");
-                } else if (ItemTemplate7.item.get(idbuy).getPricetype() == 1){
+                    Log.gI().add_log(p.name, "mua " + quanity + " item " + ItemTemplate7.item.get(idbuy).getName() + " hết"
+                            + Util.number_format(price) + " vàng");
+                } else {
                     if (p.get_ngoc() < price) {
                         send_notice_box(p.conn, "Không đủ " + price + " ngọc");
                         return;
                     }
                     p.update_ngoc(-price);
-//                    Log.gI().add_log(p.name, "mua " + quanity + " item " + ItemTemplate7.item.get(idbuy).getName() + " hết"
-//                            + Util.number_format(price) + " ngọc");
-                } else {
-                    if (p.checkcoin() < price){
-                        send_notice_box(p.conn, "Không đủ " + price + " coin");
-                        return;
-                    }
-                    p.update_coin((int) -price);
+                    Log.gI().add_log(p.name, "mua " + quanity + " item " + ItemTemplate7.item.get(idbuy).getName() + " hết"
+                            + Util.number_format(price) + " ngọc");
                 }
                 int quant_add_bag = quanity + p.item.total_item_by_id(7, idbuy);
                 if (quant_add_bag > 32000) {
@@ -2323,38 +2293,6 @@ public class Service {
                         } else {
                             send_notice_box(conn, "Tối thiểu 5 ngọc!");
                         }
-                    }else if ((it.type >= 21 && it.type <= 28) || it.type == 55 || it.type == 102) {
-                        try {
-                            if (conn.p.item.total_item_by_id(4, 262) < 100) {
-                                Service.send_notice_box(conn, "Không đủ vật phẩm nâng cấp");
-                                return;
-                            }
-                            if (it.tier >= 100) {
-                                Service.send_notice_box(conn, "Vật phẩm đã được nâng cấp tối đa");
-                                return;
-                            }
-                            conn.p.item.remove(4, 262, 100);
-                            it.tier++;
-                            if (it != null) {
-                                for (int i = 0; i < it.op.size(); i++) {
-                                    Option op =it.op.get(i);
-                                    if (op != null && ((op.id >= 7 && op.id <= 13) || op.id == 15 || op.id == 27 || op.id == 28)) {
-                                        op.setParam(op.getParam(0)+100);
-                                    }
-                                    if (op != null && ((op.id >=29 && op.id <= 36) || (op.id >= 16 && op.id <= 22) || op.id == 41)) {
-                                        op.setParam(op.getParam(0)+200);
-                                    }
-                                    if (op != null && (op.id >=23 && op.id <= 26)) {
-                                        op.setParam(op.getParam(0)+2);
-                                    }
-                                }
-                            }
-                            conn.p.item.char_inventory(4);
-                            conn.p.item.char_inventory(3);
-                            Service.send_notice_box(conn, "Nâng cấp thành công " + it.name);
-                        } catch (Exception e) {}
-                    }else {
-                        Service.send_notice_box(conn,"Vật phẩm nâng cấp không phù hợp");
                     }
                     break;
                 }

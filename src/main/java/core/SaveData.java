@@ -303,7 +303,126 @@ public class SaveData {
                 BXH.BXH_Ctr.add(temp);
             }
             rp.close();
-            
+            BXH.BXH_doiqua.clear();
+            ps = conn.prepareStatement(
+                    "SELECT `id`, `level`, `name`, `body`, `itemwear`, `doiqua` FROM `player` WHERE `doiqua` > 1 ORDER BY  doiqua DESC LIMIT 20;");
+            ResultSet ri = ps.executeQuery();
+            while (ri.next()) {
+                Memin4 temp = new Memin4();
+                temp.level = ri.getShort("level");
+                temp.doiqua= ri.getInt("doiqua");
+                temp.name = ri.getString("name");
+                JSONArray jsar = (JSONArray) JSONValue.parse(ri.getString("body"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.head = Byte.parseByte(jsar.get(0).toString());
+                temp.hair = Byte.parseByte(jsar.get(2).toString());
+                temp.eye = Byte.parseByte(jsar.get(1).toString());
+                jsar.clear();
+                jsar = (JSONArray) JSONValue.parse(ri.getString("itemwear"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.itemwear = new ArrayList<>();
+                for (int i3 = 0; i3 < jsar.size(); i3++) {
+                    JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i3).toString());
+                    byte index_wear = Byte.parseByte(jsar2.get(9).toString());
+                    if (index_wear != 0 && index_wear != 1 && index_wear != 6 && index_wear != 7 && index_wear != 10) {
+                        continue;
+                    }
+                    Part_player temp2 = new Part_player();
+                    temp2.type = Byte.parseByte(jsar2.get(2).toString());
+                    temp2.part = Byte.parseByte(jsar2.get(6).toString());
+                    temp.itemwear.add(temp2);
+                }
+                temp.clan = Clan.get_clan_of_player(temp.name);
+                String percents
+                        = String.format("%.0f", (((float) temp.doiqua)));
+                temp.info = "Level : " + (temp.level) + "\t-\t" + percents +" ";
+                BXH.BXH_doiqua.add(temp);
+            }
+            ri.close();
+            BXH.BXH_Danhvong.clear();
+            ps = conn.prepareStatement(
+                    "SELECT `id`, `level`, `name`, `body`, `itemwear`, `danhvong` FROM `player` WHERE `danhvong` > 1 ORDER BY  danhvong DESC LIMIT 20;");
+            ResultSet rt= ps.executeQuery();
+            while (rt.next()) {
+                Memin4 temp = new Memin4();
+                temp.level = rt.getShort("level");
+                temp.danhvong= rt.getInt("danhvong");
+                temp.name = rt.getString("name");
+                JSONArray jsar = (JSONArray) JSONValue.parse(rt.getString("body"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.head = Byte.parseByte(jsar.get(0).toString());
+                temp.hair = Byte.parseByte(jsar.get(2).toString());
+                temp.eye = Byte.parseByte(jsar.get(1).toString());
+                jsar.clear();
+                jsar = (JSONArray) JSONValue.parse(rt.getString("itemwear"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.itemwear = new ArrayList<>();
+                for (int i3 = 0; i3 < jsar.size(); i3++) {
+                    JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i3).toString());
+                    byte index_wear = Byte.parseByte(jsar2.get(9).toString());
+                    if (index_wear != 0 && index_wear != 1 && index_wear != 6 && index_wear != 7 && index_wear != 10) {
+                        continue;
+                    }
+                    Part_player temp2 = new Part_player();
+                    temp2.type = Byte.parseByte(jsar2.get(2).toString());
+                    temp2.part = Byte.parseByte(jsar2.get(6).toString());
+                    temp.itemwear.add(temp2);
+                }
+                temp.clan = Clan.get_clan_of_player(temp.name);
+                String percents
+                        = String.format("%.0f", (((float) temp.danhvong)));
+                temp.info = "Level : " + (temp.level) + "\t-\t" + percents +" ";
+                BXH.BXH_Danhvong.add(temp);
+            }
+            rt.close();
+            BXH.BXH_Cuop.clear();
+            ps = conn.prepareStatement(
+                    "SELECT `id`, `level`, `name`, `body`, `itemwear`, `dicuop` FROM `player` WHERE `dicuop` > 1 ORDER BY  dicuop DESC LIMIT 20;");
+            ResultSet rq = ps.executeQuery();
+            while (rq.next()) {
+                Memin4 temp = new Memin4();
+                temp.level = rq.getShort("level");
+                temp.dicuop= rq.getInt("dicuop");
+                temp.name = rq.getString("name");
+                JSONArray jsar = (JSONArray) JSONValue.parse(rq.getString("body"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.head = Byte.parseByte(jsar.get(0).toString());
+                temp.hair = Byte.parseByte(jsar.get(2).toString());
+                temp.eye = Byte.parseByte(jsar.get(1).toString());
+                jsar.clear();
+                jsar = (JSONArray) JSONValue.parse(rq.getString("itemwear"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.itemwear = new ArrayList<>();
+                for (int i3 = 0; i3 < jsar.size(); i3++) {
+                    JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i3).toString());
+                    byte index_wear = Byte.parseByte(jsar2.get(9).toString());
+                    if (index_wear != 0 && index_wear != 1 && index_wear != 6 && index_wear != 7 && index_wear != 10) {
+                        continue;
+                    }
+                    Part_player temp2 = new Part_player();
+                    temp2.type = Byte.parseByte(jsar2.get(2).toString());
+                    temp2.part = Byte.parseByte(jsar2.get(6).toString());
+                    temp.itemwear.add(temp2);
+                }
+                temp.clan = Clan.get_clan_of_player(temp.name);
+                String percents
+                        = String.format("%.0f", (((float) temp.dicuop)));
+                temp.info = "Level : " + (temp.level) + " - Điểm: " + percents +" ";
+                BXH.BXH_Cuop.add(temp);
+            }
+            rq.close();
             BXH.BXH_Buon.clear();
             ps = conn.prepareStatement(
                     "SELECT `id`, `level`, `name`, `body`, `itemwear`, `dibuon` FROM `player` WHERE `dibuon` > 10 ORDER BY  dibuon DESC LIMIT 20;");
@@ -386,6 +505,46 @@ public class SaveData {
                 temp.info = "Level : " + (temp.level) + "\t-\t" + percents +" ";
                 BXH.BXH_ds.add(temp);
             }
+            BXH.BXH_ld.clear();
+            ps = conn.prepareStatement(
+                    "SELECT `id`, `level`, `name`, `body`, `itemwear`, `point_king_cup` FROM `player` WHERE `point_king_cup` > 1 ORDER BY  point_king_cup DESC LIMIT 20;");
+            ResultSet rc = ps.executeQuery();
+            while (rc.next()) {
+                Memin4 temp = new Memin4();
+                temp.level = rc.getShort("level");
+                temp.point_king_cup= rc.getInt("point_king_cup");
+                temp.name = rc.getString("name");
+                JSONArray jsar = (JSONArray) JSONValue.parse(rc.getString("body"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.head = Byte.parseByte(jsar.get(0).toString());
+                temp.hair = Byte.parseByte(jsar.get(2).toString());
+                temp.eye = Byte.parseByte(jsar.get(1).toString());
+                jsar.clear();
+                jsar = (JSONArray) JSONValue.parse(rc.getString("itemwear"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.itemwear = new ArrayList<>();
+                for (int i3 = 0; i3 < jsar.size(); i3++) {
+                    JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i3).toString());
+                    byte index_wear = Byte.parseByte(jsar2.get(9).toString());
+                    if (index_wear != 0 && index_wear != 1 && index_wear != 6 && index_wear != 7 && index_wear != 10) {
+                        continue;
+                    }
+                    Part_player temp2 = new Part_player();
+                    temp2.type = Byte.parseByte(jsar2.get(2).toString());
+                    temp2.part = Byte.parseByte(jsar2.get(6).toString());
+                    temp.itemwear.add(temp2);
+                }
+                temp.clan = Clan.get_clan_of_player(temp.name);
+                String percents
+                        = String.format("%.0f", (((float) temp.point_king_cup)));
+                temp.info = "Level : " + (temp.level) + "\t-\t" + percents +" ";
+                BXH.BXH_ld.add(temp);
+            }
+            rc.close();
             rw.close();
             //
 

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package BossHDL;
 
 import client.Player;
@@ -28,8 +24,8 @@ public class BossManager {
 //            case 194: return  0;
 //            case 196: return  0;
 //            case 197: return  0;
-//            case 186: return  3;
-//            case 187: return  3;
+////            case 186: return  3;
+////            case 187: return  3;
 //            case 188: return  3;
 //            case 189: return  3;
 //            case 190: return  3;
@@ -55,6 +51,7 @@ public class BossManager {
             case 186: return 109;
             case 187: return 110;
             case 188: return 111;
+            case 178: return 36;
             default:
                 throw new AssertionError();
         }
@@ -91,28 +88,32 @@ public class BossManager {
             case 186: return new short[]{ 450,432};
             case 187: return new short[]{ 450,432};
             case 188: return new short[]{ 450,432};
+            case 178: return new short[]{ 450,384};
             default:
                 throw new AssertionError();
         }
     }
     public static void init(){
         int idx = 10_000;
-        int[] ids = new int[]{101 , 84 , 83 ,103 ,104 ,105 , 106, 149 , 155, 174, 173, 195, 196, 197, 186, 187, 188};
+        int[] ids = new int[]{101 , 84 , 83 ,103 ,104 ,105 , 106, 149 , 155, 174, 173, 195, 196, 197, 186, 187, 188,178};
         for(int id : ids){
             for(int i=0; i<5;i++){
-                if(id == 174){
-                    if(i == 1 || i == 4 || Manager.gI().event != 2) continue;
+//                if(id == 174){
+//                    if(i == 1 || i == 4 || Manager.gI().event != 2) continue;
+//                }
+                if(id == 178){
+                    if(i == 1 || i == 4) continue;
                 }
                 Mob m = Mob.entrys.get(id);
                 Mob_in_map temp = new Mob_in_map();
                 temp.template = m;
                 temp.x = GetSite(id)[0];
                 temp.y = GetSite(id)[1];
-                temp.level = id == 174? 150: m.level;
+                temp.level = id == 178? 150: m.level;
                 temp.Set_isBoss(true);
-                temp.hp = temp.Set_hpMax(id == 174? (500_000_000 * (i+1)) : m.hpmax );
-                if(id == 174)
-                    temp.timeBossRecive = 1000 * 60 * 60 * 4;
+                temp.hp = temp.Set_hpMax(id == 178? (600_000_000 + (i*200_000_000)) : m.hpmax );
+                if(id == 178)
+                    temp.timeBossRecive = 1000 * 60 * 60 * 6;
                 else
                     temp.timeBossRecive = 1000 * 60 * 60 * 6;
                 temp.map_id = GetIdMap(id);

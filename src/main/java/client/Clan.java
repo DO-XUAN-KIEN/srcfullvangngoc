@@ -166,24 +166,16 @@ public class Clan {
                 break;
             }
             case 6: {
-                if (this.vang > 0) {
-                    Service.send_notice_box(conn, "Không thể góp vàng vào bang");
-                    return;
-                }
                 long value = m2.reader().readInt();
-                if (value < 0 || value > 10_000_000 || ((value + this.vang) > 2_000_000_000L)
+                if (value < 0 || value > 2_000_000_000 || ((value + this.vang) > 2_000_000_000L)
                         || value > conn.p.get_vang()) {
-                    Service.send_notice_box(conn, "Số nhập vào không hợp lệ(góp tối đa đc 10m và chỉ có 1 lần duy nhất để góp)");
+                    Service.send_notice_box(conn, "Số nhập vào không hợp lệ");
                     return;
                 }
                 this.member_contribute_vang(conn, value);
                 break;
             }
             case 7: {
-                if (conn.lock != 1) {
-                    Service.send_notice_box(conn, "Không thể góp ngọc vào bang");
-                    return;
-                }
                 long value = m2.reader().readInt();
                 if (value < 0 || value > 2_000_000_000L || ((value + this.kimcuong) > 2_000_000_000L)
                         || value > conn.p.get_ngoc()) {
@@ -289,7 +281,7 @@ public class Clan {
 
     public void member_contribute_ngoc(Session conn, long value) throws IOException {
         conn.p.update_ngoc(-value);
-      //  Log.gI().add_log(conn.p.name, "Góp " + Util.number_format(value) + " ngọc bang " + this.name_clan);
+        Log.gI().add_log(conn.p.name, "Góp " + Util.number_format(value) + " ngọc bang " + this.name_clan);
         conn.p.item.char_inventory(5);
         this.kimcuong += value;
         this.update_in4_clan_box_notice(conn, 7);
@@ -299,7 +291,7 @@ public class Clan {
 
     public void member_contribute_vang(Session conn, long value) throws IOException {
         conn.p.update_vang(-value);
-      //  Log.gI().add_log(conn.p.name, "Góp " + Util.number_format(value) + " vàng bang " + this.name_clan);
+        Log.gI().add_log(conn.p.name, "Góp " + Util.number_format(value) + " vàng bang " + this.name_clan);
         conn.p.item.char_inventory(5);
         this.vang += value;
         this.update_in4_clan_box_notice(conn, 6);

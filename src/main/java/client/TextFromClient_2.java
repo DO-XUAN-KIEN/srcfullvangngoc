@@ -38,7 +38,7 @@ public class TextFromClient_2 {
                     }
                     if (Clan.create_clan(conn, value[0], value[1])) {
                         conn.p.update_ngoc(-20000);
-                      //  Log.gI().add_log(conn.p.name, "Tạo bang mất 20000 ngọc");
+                        Log.gI().add_log(conn.p.name, "Tạo bang mất 20000 ngọc");
                         conn.p.item.char_inventory(5);
                         Service.send_box_UI(conn, 20);
                         Service.send_notice_box(conn, "Hãy chọn một icon bất kỳ đặt làm biểu tượng");

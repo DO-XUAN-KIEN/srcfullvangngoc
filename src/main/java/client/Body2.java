@@ -27,10 +27,13 @@ import template.StrucEff;
  * @author chien
  */
 public class Body2 extends MainObject {
+
     private Player p;
 
     protected void SetPlayer(Player p) {
-        if (this.p != null) return;
+        if (this.p != null) {
+            return;
+        }
         this.p = p;
         kham = new Kham_template();
         MainEff = new ArrayList<>();
@@ -48,7 +51,6 @@ public class Body2 extends MainObject {
         switch (i) {
             case 1: {
                 point += p.point1 + get_plus_point(23);
-                //+(p.get_chuyensinh()*100)
                 break;
             }
             case 2: {
@@ -144,7 +146,9 @@ public class Body2 extends MainObject {
         for (int i = 0; i < p.item.wear.length; i++) {
             Item3 temp = p.item.wear[i];
             if (temp != null) {
-                if (p.level < temp.level) continue;
+                if (p.level < temp.level) {
+                    continue;
+                }
                 for (Option op : temp.op) {
                     if (op.id == id) {
                         param += op.getParam(temp.tier);
@@ -244,7 +248,6 @@ public class Body2 extends MainObject {
         return (int) mpm;
     }
 
-
     @Override
     public int total_skill_param(int id) {
         int param = 0;
@@ -273,11 +276,7 @@ public class Body2 extends MainObject {
         if (eff_ve_binh != null) {
             pie = pie / 10;
         }
-        int tt = (int)(pie / 2.1);
-        if (tt > 15000)
-            tt = 15000;
-        return tt;
-        //return (int) (pie / 2.1);
+        return (int) (pie / 2.1);
     }
 
     @Override
@@ -292,11 +291,7 @@ public class Body2 extends MainObject {
         if (eff_thien_su != null) {
             param = param / 10;
         }
-        int phan = (int)(param / 2.1);
-        if (phan > 7000)
-            phan = 7000;
-        return phan;
-        //return (int) (param / 2.1);
+        return (int) (param / 2.1);
     }
 
     @Override
@@ -310,11 +305,7 @@ public class Body2 extends MainObject {
         if (giam_ne) {
             param = param / 10 * 9;
         }
-        int tile_ne = (int)(param / 1.5);
-        if (tile_ne > 7000)
-            tile_ne = 7000;
-        return tile_ne;
-       // return (int) (param / 1.8);
+        return (int) (param / 1.8);
     }
 
     @Override
@@ -322,17 +313,14 @@ public class Body2 extends MainObject {
         int crit = total_item_param(33) + total_skill_param(33);
         crit += get_point(1) * 2;
         EffTemplate ef = get_EffDefault(33);
-        if (ef != null)
+        if (ef != null) {
             crit += ef.param;
+        }
         EffTemplate eff_bach_kim = getEffTinhTu(EffTemplate.GIAP_BACH_KIM);
         if (eff_bach_kim != null) {
             crit = crit / 10;
         }
-        int cm = (int)(crit / 2.1);
-        if (cm > 15000)
-            cm = 15000;
-        return cm;
-        //return (int) (crit / 2.1);
+        return (int) (crit / 2.1);
     }
 
     public int get_skill_point(int i) {
@@ -366,7 +354,9 @@ public class Body2 extends MainObject {
         if (p.get_EffDefault(StrucEff.NOI_TAI_LUA) != null) {
             def -= 2000;
         }
-        if (def < 0) def = 0;
+        if (def < 0) {
+            def = 0;
+        }
         return def;
     }
 
@@ -429,8 +419,9 @@ public class Body2 extends MainObject {
                 }
             }
             EffTemplate eff = get_EffDefault(StrucEff.BuffSTVL);
-            if (eff != null)
+            if (eff != null) {
                 percent += eff.param;
+            }
             if (p.getEffTinhTu(EffTemplate.SPECIAL) != null) {
                 percent += 4000;
             }
@@ -456,8 +447,9 @@ public class Body2 extends MainObject {
                     }
                 }
                 EffTemplate eff = get_EffDefault(StrucEff.BuffSTLua);
-                if (eff != null)
+                if (eff != null) {
                     perct += eff.param;
+                }
                 break;
             }
             case 1: {
@@ -474,8 +466,9 @@ public class Body2 extends MainObject {
                     }
                 }
                 EffTemplate eff = get_EffDefault(StrucEff.BuffSTDoc);
-                if (eff != null)
+                if (eff != null) {
                     perct += eff.param;
+                }
                 break;
             }
             case 2: {
@@ -492,8 +485,9 @@ public class Body2 extends MainObject {
                     }
                 }
                 EffTemplate eff = get_EffDefault(StrucEff.BuffSTBang);
-                if (eff != null)
+                if (eff != null) {
                     perct += eff.param;
+                }
                 break;
             }
             case 3: {
@@ -510,8 +504,9 @@ public class Body2 extends MainObject {
                     }
                 }
                 EffTemplate eff = get_EffDefault(StrucEff.BuffSTDien);
-                if (eff != null)
+                if (eff != null) {
                     perct += eff.param;
+                }
                 break;
             }
         }
@@ -524,7 +519,6 @@ public class Body2 extends MainObject {
         }
         return perct;
     }
-
 
     @Override
     public int get_DameBase() {
@@ -589,7 +583,6 @@ public class Body2 extends MainObject {
         return (int) dprop;
     }
 
-
     public int get_skill_point_plus(int i) {
         int par = 0;
         if (i >= 1 && i <= 8 || i == 19 || i == 20 || i == 17) {
@@ -617,15 +610,17 @@ public class Body2 extends MainObject {
         if (p.get_EffDefault(StrucEff.NOI_TAI_VAT_LY) != null) {
             param -= 1000;
         }
-        if (param < 0) param = 0;
+        if (param < 0) {
+            param = 0;
+        }
         return param;
     }
 
-
     @Override
     public void SetDie(Map map, MainObject mainAtk) throws IOException {
-        if (map.map_id == 87)
+        if (map.map_id == 87) {
             ChiemThanhManager.PlayerDie(p);
+        }
         if (map.map_id == 102 && map.kingCupMap != null && map.kingCupMap.timeWait < System.currentTimeMillis()) {
             Player p0 = (Player) mainAtk;
             map.kingCupMap.end_round();
@@ -640,14 +635,15 @@ public class Body2 extends MainObject {
             p.type_use_mount = -1;
             map.send_mount(p);
         }
-        p.type_use_mount = -1;
         Player pATK = mainAtk.isPlayer() ? (Player) mainAtk : null;
         if (p.isLiveSquire) {
             Squire.squireLeaveMap(p);
             p.isLiveSquire = false;
         }
         if (map.isMapLangPhuSuong()) {
-            pATK.langPhuSuong();
+            if (pATK!= null && pATK.isPlayer()) {
+                pATK.langPhuSuong();
+            }
             p.langPhuSuong();
         }
         if (pATK != null) {
@@ -662,6 +658,10 @@ public class Body2 extends MainObject {
                     }
                 }
                 MapService.SendChat(map, p, "Thằng ranh con này tí bố online bố sút cho không trượt phát nào ><", true);
+            }
+            if (pATK.total_item_param(116) > Util.nextInt(10000)) {
+                p.veLang();
+                Service.send_notice_nobox_white(pATK.conn, "Bạn đã đánh đối thủ đăng xuất");
             }
         }
     }
@@ -682,8 +682,10 @@ public class Body2 extends MainObject {
     @Override
     public void update(Map map) {
         try {
-            if (isDie) return;
-            //<editor-fold defaultstate="collapsed" desc="auto +hp,mp       ...">
+            if (isDie) {
+                return;
+            }
+            //<editor-fold defaultstate="collapsed" desc="auto +hp,mp       ..."> 
             EffTemplate vet_thuong_sau = p.get_EffDefault(StrucEff.VET_THUONG_SAU);
             EffTemplate te_cong = p.get_EffDefault(StrucEff.TE_CONG);
             int percent = p.body.total_skill_param(29) + p.body.total_item_param(29);
@@ -710,8 +712,9 @@ public class Body2 extends MainObject {
             if (get_EffMe_Kham(StrucEff.BongLua) != null && !p.isDie) {
                 Service.usepotion(p, 0, (int) -(p.hp * Util.random(5, 10) * 0.01));
 //                p.hp -= (int) (p.hp * Util.random(5, 10) * 0.01);
-                if (p.hp <= 0)
+                if (p.hp <= 0) {
                     p.hp = 1;
+                }
 //                Service.send_char_main_in4(p);
             }
             if (get_EffMe_Kham(StrucEff.BongLanh) != null) {
@@ -721,8 +724,9 @@ public class Body2 extends MainObject {
             }
             if (getEffTinhTu(EffTemplate.THIEU_CHAY) != null) {
                 Service.usepotion(p, 0, -1500);
-                if (p.hp <= 0)
+                if (p.hp <= 0) {
                     p.hp = 1;
+                }
             }
             EffTemplate eff = get_EffDefault(StrucEff.NOI_TAI_DOC);
             if (eff != null) {

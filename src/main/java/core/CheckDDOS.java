@@ -22,7 +22,7 @@ public class CheckDDOS {
     static private Map<String, Byte> ipErrorCount = new HashMap<>();
 
     static private Map<String, Long> ipLastAccessTime = new HashMap<>();
-    private static volatile Set<String> ips = new HashSet<>();
+    public static volatile Set<String> ips = new HashSet<>();
     private static final Lock lock = new ReentrantLock();
 
     public static void blockIP(String ipAddress, String logger) {
@@ -82,7 +82,7 @@ public class CheckDDOS {
             return true;
         } else if (errorCount >= 20) {
             //System.out.println("core.CheckDDOS.canAccess()-----"+errorCount+"---------"+(currentTime - lastAccessTime));
-            //blockIP(ipAddress, "" + (currentTime - lastAccessTime));
+            blockIP(ipAddress, "" + (currentTime - lastAccessTime));
 
             ipErrorCount.remove(ipAddress);
             ipLastAccessTime.remove(ipAddress);

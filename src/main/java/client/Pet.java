@@ -15,12 +15,12 @@ import template.Option_pet;
 public class Pet {
 
     public static String[] name_template = new String[]{"Cú", "Dơi", "Sói", "Đại Bàng", "Khỉ", "Rồng lửa", "Thỏ",
-            "Phượng hoàng băng", "Zabivaka", "Bóng ma", "Dê con", "Yêu tinh", "Thiên thần", "Sao la", "Mèo"};
+        "Phượng hoàng băng", "Zabivaka", "Bóng ma", "Dê con", "Yêu tinh", "Thiên thần", "Sao la", "Mèo"};
     static short[] id_template = new short[]{2944,2943,2939,3269,3616,4614,4622,4626,4631,4699,4708,4761,4762,4768,4788};
     public static byte[] type_template = new byte[]{41,8, 13, 10, 11, 11, 11, 12, 12, 12, 9, 7, 7, 7, 6, 5, 5, 5, 4, 4, 4,
-            3, 3, 3, 2, 2, 2, 1, 1, 1, 0, 0, 0};
+        3, 3, 3, 2, 2, 2, 1, 1, 1, 0, 0, 0};
     public static byte[] icon_template = new byte[]{26, 41, 32, 33, 34, 35, 36, 37, 38, 29, 21, 22, 23, 20, 15, 16, 17,
-            12, 13, 14, 9, 10, 11, 6, 7, 8, 0, 1, 2, 3, 4, 5};
+        12, 13, 14, 9, 10, 11, 6, 7, 8, 0, 1, 2, 3, 4, 5};
     public List<Option_pet> op;
     public String name;
     public short level;
@@ -211,7 +211,7 @@ public class Pet {
                 maxdam_ = new int[]{0, 0, 0, 0, 10000};
                 break;
             }
-            case 4788: {//mèo
+             case 4788: {//mèo
                 temp.icon = 40;
                 temp.type = 14;
                 id_ = new short[]{23, 24, 25, 26, 48, 80, 85, 86, 114, 1}; // chir so
@@ -298,7 +298,7 @@ public class Pet {
                 o.param += par_plus;
                 o.maxdam += par_plus;
             }
-
+            
         }
 //        for (int j = 0; j < op.size(); j++) {
 //            

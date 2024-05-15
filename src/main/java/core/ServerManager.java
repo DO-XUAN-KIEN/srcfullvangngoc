@@ -15,7 +15,6 @@ import event_daily.KingCupManager;
 import io.Session;
 import java.io.File;
 import java.io.FileOutputStream;
-import map.MapService;
 
 import map.Map;
 
@@ -101,15 +100,15 @@ public class ServerManager implements Runnable {
 
     public void running() {
         Calendar now;
-        int hour, min, sec, millis, DayOfWeek;
+        int min, sec, millis;
         while (ServerManager.gI().running) {
             try {
                 now = Calendar.getInstance();
-                hour = now.get(Calendar.HOUR_OF_DAY);
+                now.get(Calendar.HOUR_OF_DAY);
                 min = now.get(Calendar.MINUTE);
                 sec = now.get(Calendar.SECOND);
                 millis = now.get(Calendar.MILLISECOND);
-                DayOfWeek = now.get(Calendar.DAY_OF_WEEK);
+                now.get(Calendar.DAY_OF_WEEK);
                 if (min % 1 == 0 && sec == 10) { // update BXH + luu data
                     try {
                         SaveData.process();
@@ -233,7 +232,7 @@ public class ServerManager implements Runnable {
                     //
                     checkError = 2;
                     if (min % 5 == 0 && sec == 0) {
-                        Manager.gI().chatKTGprocess("Bạn Đang Chơi Server" + " Hiệp Sĩ Khổng Lồ " + "Chúc Bạn Chơi Game Vui Vẻ.");
+                        Manager.gI().chatKTGprocess("Bạn Đang Chơi Server" + " Hiệp Sĩ Mèo Béo " + "Chúc Bạn Chơi Game Vui Vẻ.");
                     }
                     checkError = 5;
                     if (min % 4 == 0 && sec == 0) {
@@ -299,10 +298,7 @@ public class ServerManager implements Runnable {
                             Event_1.sort_bxh();
                         }
                     }
-                    if (Service.checktime(0)){
-                        MapService.concac();
-                    }
-                    if (hour == 21 && min ==00 && sec == 0) {
+                    if (DayOfWeek % 2 !=0 && hour == 20 && min ==45 && sec == 0) {
                         ChienTruong.gI().open_register();
                          Manager.gI().chatKTGprocess("Chiến Trường Đã Bắt Đầu Nhanh Tay Lẹ Chân Lên");
                     }

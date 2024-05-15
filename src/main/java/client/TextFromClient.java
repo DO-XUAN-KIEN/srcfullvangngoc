@@ -94,40 +94,16 @@ public class TextFromClient {
                         return;
                     }
                     switch (quant) {
-                        case 1: {
-                            if (conn.p.get_vang() < 5_000_000_000L) {
-                                Service.send_notice_box(conn, "Không đủ 5 tỷ vàng");
-                                return;
-                            }
-                            conn.p.update_vang(-5_000_000_000L);
-                            break;
-                        }
-                        case 2: {
-                            if (conn.p.get_ngoc() < 800_000) {
-                                Service.send_notice_box(conn, "Không đủ 800k ngọc");
-                                return;
-                            }
-                            conn.p.update_ngoc(-800_000);
-                            break;
-                        }
-                        case 3: {
-                            if (conn.p.get_ngoc() < 1_000_000) {
-                                Service.send_notice_box(conn, "Không đủ 1tr ngọc");
-                                return;
-                            }
-                            conn.p.update_ngoc(-1_000_000);
-                            break;
-                        }
                         case 4: {
-                            if (conn.p.get_ngoc() < 2_000_000) {
-                                Service.send_notice_box(conn, "Không đủ 2tr ngọc");
+                            if (conn.p.get_ngoc() < 500_000) {
+                                Service.send_notice_box(conn, "Không đủ 500k ngọc");
                                 return;
                             }
-                            conn.p.update_ngoc(-2_000_000);
+                            conn.p.update_ngoc(-500_000);
                             break;
                         }
                         default: {
-                            Service.send_notice_box(conn, "Chọn nhẫn 1-4 thôi!");
+                            Service.send_notice_box(conn, "Chọn nhẫn 4 thôi!");
                             return;
                         }
                     }
@@ -169,7 +145,7 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_vang(-vang_required);
-             //   Log.gI().add_log(conn.p.name, "Trừ " + vang_required + " tinh luyện ngọc");
+                Log.gI().add_log(conn.p.name, "Trừ " + vang_required + " tinh luyện ngọc");
                 Item47 it = new Item47();
                 it.id = (short) (conn.p.id_ngoc_tinh_luyen + 30);
                 it.quantity = (short) quant;
@@ -207,10 +183,10 @@ public class TextFromClient {
                 }
                 for (String txt : conn.p.giftcode) {
                     txt = txt.toLowerCase();
-//                    if (txt.equals((text)) && conn.ac_admin < 4) {
-//                        Service.send_notice_box(conn, "Bạn đã nhập giftcode này rồi");
-//                        return;
-//                    }
+                    if (txt.equals((text)) && conn.ac_admin < 4) {
+                        Service.send_notice_box(conn, "Bạn đã nhập giftcode này rồi");
+                        return;
+                    }
                 }
                 try (Connection connection = SQL.gI().getConnection(); Statement st = connection.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM `giftcode` WHERE `giftname` = '" + text + "';")) {
                     byte empty_box = (byte) 0;
@@ -222,8 +198,11 @@ public class TextFromClient {
                         List<Short> Types = new ArrayList<>();
                         empty_box = rs.getByte("empty_box");
                         int limit = rs.getInt("limit");
+                        String giftfor = rs.getString("giftfor");
                         if (limit < 1 && conn.ac_admin < 4) {
                             Service.send_notice_box(conn, "Đã hết lượt dùng giftcode này");
+                        } else if (!giftfor.equals("0") && !giftfor.equals(conn.p.name)) {
+                            Service.send_notice_box(conn, "You may not use this gift code");
                         } else if (conn.p.item.get_bag_able() >= empty_box) {
                             conn.p.giftcode.add(text);
                             JSONArray jsar = (JSONArray) JSONValue.parse(rs.getString("item3"));
@@ -331,10 +310,10 @@ public class TextFromClient {
                                 Quants.add((int) (ngoc_up > 2_000_000_000 ? 2_000_000_000 : ngoc_up));
                                 Types.add((short) 4);
                             }
-//                            Log.gI().add_log(conn.p.name,
-//                                    "Nhận giftcode " + text + " : " + Util.number_format(vang_up) + " vàng");
-//                            Log.gI().add_log(conn.p.name,
-//                                    "Nhận giftcode " + text + " : " + Util.number_format(ngoc_up) + " ngọc");
+                            Log.gI().add_log(conn.p.name,
+                                    "Nhận giftcode " + text + " : " + Util.number_format(vang_up) + " vàng");
+                            Log.gI().add_log(conn.p.name,
+                                    "Nhận giftcode " + text + " : " + Util.number_format(ngoc_up) + " ngọc");
 //                            conn.p.item.char_inventory(3);
 //                            conn.p.item.char_inventory(4);
 //                            conn.p.item.char_inventory(7);
@@ -348,6 +327,9 @@ public class TextFromClient {
                             }
                             Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ar_id, ar_quant, ar_type);
                             //Service.send_notice_box(conn, "Nhận thành công giftcode");
+                            if (!giftfor.equals("0")) {
+                                st.executeUpdate("DELETE FROM `giftcode` WHERE `giftname` = '" + text + "';");
+                            }
                         } else {
                             Service.send_notice_box(conn, "Hành trang phải trống " + empty_box + " ô trở lên!");
                         }
@@ -493,8 +475,8 @@ public class TextFromClient {
                     Service.send_notice_box(conn, "vàng không đủ!");
                     return;
                 }
-                if (vang_join_vxmm > 200_000_000) {
-                    Service.send_notice_box(conn, "tối đa 200tr vàng!");
+                if (vang_join_vxmm > 50_000_000) {
+                    Service.send_notice_box(conn, "tối đa 50tr vàng!");
                     return;
                 }
                 Manager.gI().vxmm.join_vxmm(conn.p, vang_join_vxmm);
@@ -624,7 +606,7 @@ public class TextFromClient {
                     }
 
                     conn.p.update_vang(-(quant * 5000));
-                 //   Log.gI().add_log(conn.p.name, "Trừ " + (quant * 5000) + " tinh hợp nguyên liệu");
+                    Log.gI().add_log(conn.p.name, "Trừ " + (quant * 5000) + " tinh hợp nguyên liệu");
                     conn.p.item.remove(7, conn.p.fusion_material_medal_id, (quant * 5));
                     Item47 it = new Item47();
                     it.id = id_next_material;
@@ -677,7 +659,7 @@ public class TextFromClient {
                     return;
                 }
                 int quant = Integer.parseInt(value);
-                if (quant > 10_000_000 || quant <= 0) {
+                if (quant > 2_000_000_000 || quant <= 0) {
                     Service.send_notice_box(conn, "Số lượng không hợp lệ!");
                     return;
                 }
@@ -724,7 +706,7 @@ public class TextFromClient {
                         }
                     }
                     conn.p.update_vang(-(quant * 20_000));
-                 ///   Log.gI().add_log(conn.p.name, "Trừ " + (quant * 20000) + " đổi hộp đồ chơi");
+                    Log.gI().add_log(conn.p.name, "Trừ " + (quant * 20000) + " đổi hộp đồ chơi");
                     for (short item : id) {
                         conn.p.item.remove(4, item, quant * 50);
                     }
@@ -851,7 +833,7 @@ public class TextFromClient {
                     return;
                 }
                 if (conn.p.update_coin(-coin_exchange)) {
-                //    Log.gI().add_log(conn.p.name, "Nhận " + ((coin_exchange * 1_000) * Manager.gI().giakmgold) + " từ đổi coin ra vàng");
+                    Log.gI().add_log(conn.p.name, "Nhận " + ((coin_exchange * 1_000) * Manager.gI().giakmgold) + " từ đổi coin ra vàng");
                     conn.p.update_vang((long) ((coin_exchange * 1_000) * Manager.gI().giakmgold));
                     conn.p.item.char_inventory(5);
                     Service.send_notice_box(conn, "Đổi thành công" + (coin_exchange * 1_000) * Manager.gI().giakmgold + "vàng");
@@ -891,7 +873,7 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_vang(-vang_required);
-             //   Log.gI().add_log(conn.p.name, "Trừ " + vang_required + " hợp ngọc");
+                Log.gI().add_log(conn.p.name, "Trừ " + vang_required + " hợp ngọc");
                 conn.p.item.remove(7, conn.p.id_hop_ngoc, (quant * 5));
                 Item47 itbag = new Item47();
                 itbag.id = (short) (conn.p.id_hop_ngoc + 1);
@@ -1042,7 +1024,7 @@ public class TextFromClient {
                     }
                     if (Clan.create_clan(conn, value[0], value[1])) {
                         conn.p.update_ngoc(-20000);
-                 //       Log.gI().add_log(conn.p.name, "Tạo bang mất 20000 ngọc");
+                        Log.gI().add_log(conn.p.name, "Tạo bang mất 20000 ngọc");
                         conn.p.item.char_inventory(5);
                         Service.send_box_UI(conn, 20);
                         Service.send_notice_box(conn, "Hãy chọn một icon bất kỳ đặt làm biểu tượng");
@@ -1150,7 +1132,7 @@ public class TextFromClient {
                     conn.p.update_ngoc(-(vag));
                 } else {
                     conn.p.update_vang(-(vag));
-                //    Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi bó sen");
+                    Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi bó sen");
                 }
                 Item47 itbag = new Item47();
                 itbag.id = id_moi;
@@ -1357,7 +1339,7 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_vang(-(vag));
-              //  Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi bánh trưng");
+                Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi bánh trưng");
                 Item47 itbag = new Item47();
                 itbag.id = id_banhtrung;
                 itbag.quantity = (short) quant;
@@ -1499,7 +1481,7 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_vang(-(vag));
-              //  Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi bánh dày");
+                Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi bánh dày");
                 Item47 itbag = new Item47();
                 itbag.id = id_banhday;
                 itbag.quantity = (short) quant;
@@ -1607,7 +1589,7 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_vang(-(vag));
-               // Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi hộp quà lộc");
+                Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi hộp quà lộc");
                 Item47 itbag = new Item47();
                 itbag.id = id_hopqualoc;
                 itbag.quantity = (short) quant;
@@ -1671,7 +1653,7 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_vang(-(vag));
-              //   Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi pháo hoa");
+                 Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi pháo hoa");
                 Item47 itbag = new Item47();
                 itbag.id = id_phaohoa;
                 itbag.quantity = (short) quant;
@@ -1730,7 +1712,7 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_vang(-(vag));
-              //  Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi lồng đèn");
+                Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi lồng đèn");
                 Item47 itbag = new Item47();
                 itbag.id = id_longden;
                 itbag.quantity = (short) quant;
@@ -1971,7 +1953,7 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_vang(-(vag));
-             //   Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi rương huyền bí");
+                Log.gI().add_log(conn.p.name, "Trừ " + vag + " đổi rương huyền bí");
                 Item47 itbag = new Item47();
                 itbag.id = id_ruonghuyenbi;
                 itbag.quantity = (short) quant;

@@ -21,7 +21,7 @@ public class SessionManager {
         int errorCount = BandWidthSizes.getOrDefault(ipAddress, 0);
         if(errorCount>2_000_000_000)
         {
-            //CheckDDOS.blockIP(ipAddress,"Max Size BandWidth");
+            CheckDDOS.blockIP(ipAddress,"Max Size BandWidth");
             return;
         }
         long currentTime = System.currentTimeMillis();

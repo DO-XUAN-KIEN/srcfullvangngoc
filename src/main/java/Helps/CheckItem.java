@@ -20,6 +20,10 @@ public class CheckItem {
         return false;
     }
     
+    public static boolean isTT(short id) {
+        return (id >= 3732 && id <= 3736) || id >= 3807 && id <= 3811 || id >= 3897 && id <= 3901 || id >= 4656 && id <= 4675;
+    }
+    
     public static boolean item4CanTrade(short id)
     {
         List<Short> cantrade = new ArrayList<>(java.util.Arrays.asList((short)101,(short)205,(short)206,(short)207,(short)224,(short)249,(short)273,(short)274));

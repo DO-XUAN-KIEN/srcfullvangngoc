@@ -82,7 +82,7 @@ public class Mob_MoTaiNguyen extends MainObject{
             MapService.send_msg_player_inside(map, this, m12, true);
             m12.cleanup();
             
-            this.hp = this.hp_max = 4_000_000;
+            this.hp = this.hp_max = 10_000_000;
             //
             Message mm = new Message(7);
             mm.writer().writeShort(this.index);

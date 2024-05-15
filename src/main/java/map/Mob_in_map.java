@@ -116,7 +116,6 @@ public class Mob_in_map extends MainObject {
                 p.quest_daily[2] += 1;
                 Service.send_notice_nobox_white(p.conn, "Nhiệm vụ hàng ngày " + p.quest_daily[2] + "/" + p.quest_daily[3]);
             }
-            p.diemsukien += 1;
             boolean check_mob_roi_ngoc_kham = mob.template.mob_id >= 167 && mob.template.mob_id <= 172;
             if (mob.isBoss()) {
                 map.BossDie(mob);
@@ -244,12 +243,6 @@ public class Mob_in_map extends MainObject {
                 }
             }
             if (!this.isDie && this.isATK && this.time_fight < System.currentTimeMillis()) {
-//                this.updateEff();
-//                EffTemplate eff = get_EffDefault(StrucEff.NOI_TAI_DOC);
-//                if (!isDie && eff != null) {
-//                    this.hp -= eff.param;
-//                    upHP(map, this, -eff.param);
-//                }
                 if ((this.template.mob_id == 151 || this.template.mob_id == 152 || this.template.mob_id == 154)) {
                     for (Player p0 : this.list_fight) {
                         if (p0 != null && !p0.isDie && p0.map.map_id == this.map_id && p0.map.zone_id == this.zone_id

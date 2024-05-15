@@ -106,8 +106,8 @@ public class KingCup implements Runnable {
                 if (count < 10 && NEXT_MATCHES < System.currentTimeMillis()) {
                     count += 1;
                     idBase = -1;
-                    NEXT_MATCHES = System.currentTimeMillis() + TIME_WAR + TIME_BETWEEN_MATCH;
-
+                    NEXT_MATCHES = System.currentTimeMillis() + TIME_WAR + TIME_BETWEEN_MATCH; 
+                    
                     ArrayList<Player> gr_65_74 = KingCupManager.setGroup(KingCupManager.group_65_74);
                     ArrayList<Player> gr_75_84 = KingCupManager.setGroup(KingCupManager.group_75_84);
                     ArrayList<Player> gr_85_94 = KingCupManager.setGroup(KingCupManager.group_85_94);
