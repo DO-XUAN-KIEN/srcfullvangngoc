@@ -198,7 +198,7 @@ public class Event_2 {
         }
     }
     public static boolean isBuyItemSK(Session conn,int cat, int idbuy, int quant)throws IOException{
-        List<Integer> it3 = new ArrayList<>(java.util.Arrays.asList(4714,4715,4769,4770,4771,4772,4716,4717,4718,4719));
+        List<Integer> it3 = new ArrayList<>(java.util.Arrays.asList(4714,4715,4769,4770,4771,4772));
         //System.out.println("ev_he.Event_2.isBuyItemSK()"+idbuy);
         if(cat == 3 && it3.contains(idbuy)){
             if(conn.p.item.get_bag_able()<1){

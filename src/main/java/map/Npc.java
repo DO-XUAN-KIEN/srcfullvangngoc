@@ -32,6 +32,7 @@ public class Npc {
             + "Sóng ra khơi rồi sóng lại quay về.";
     public static String CHAT_ANNA = "Khi say một chén cũng say\n"
             + "Khi nên tình nghĩa một ngày cũng nên.";
+    public static String CHAT_PHO = "Ta chuyên bán vật phẩm bằng coin";
     public static String CHAT_BXH = Manager.gI().thongbao;
 
     public static void chat(Map map, String txt, int id) throws IOException {

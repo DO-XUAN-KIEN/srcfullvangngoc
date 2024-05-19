@@ -1679,10 +1679,10 @@ public class Service {
     }
 
     public static void pet_process(Session conn, Message m2) throws IOException {
-        if (conn.p.level < 40) {
-            Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
-            return;
-        }
+//        if (conn.p.level < 40) {
+//            Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
+//            return;
+//        }
         byte type = m2.reader().readByte();
         short id = m2.reader().readShort();
         // System.out.println(type);

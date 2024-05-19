@@ -153,6 +153,7 @@ public class Player extends Body2 {
     public Squire squire;
     public Player owner;
     public boolean isOwner = true;
+    public boolean ngu = false;
     public boolean isSquire;
     public boolean isLiveSquire;
     public String taixiu = "Bạn chưa đặt cược.";
@@ -1463,10 +1464,10 @@ public class Player extends Body2 {
     }
 
     public void change_map(Player p, Vgo vgo) throws IOException {
-        if ((vgo.id_map_go == 36 || vgo.id_map_go == 50) && this.level < 40) {
-            Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
-            return;
-        }
+//        if ((vgo.id_map_go == 36 || vgo.id_map_go == 50) && this.level < 40) {
+//            Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
+//            return;
+//        }
         if (map.map_id == 0) {
             Message m = new Message(55);
             m.writer().writeByte(1);

@@ -65,8 +65,8 @@ public class Process_Yes_no_box {
                     if (!conn.p.isOwner) {
                         return;
                     }
-                    if (conn.coin < 100000) {
-                        Service.send_notice_box(conn, "Khong du coin");
+                    if (conn.p.checkcoin() < 100000) {
+                        Service.send_notice_box(conn, "Không đủ coin");
                         return;
                     }
                     if (conn.p.level < 10) {

@@ -61,6 +61,14 @@ public class MenuController {
                     "Đóng"};
                 break;
             }
+            case -1: { // admin
+                menu = new String[]{"Bảo trì", "Cộng vàng x1.000.000.000",
+                        "Cộng ngọc x1.000.000", "Update data", "Lấy item", "Up level", "Set Xp", "Khóa mõm", "Gỡ khóa mõm", "Khóa vòng quay", "Khóa GD", "Khóa KTG", "Khóa KMB", "Ấp trứng nhanh",
+                        "Buff Admin", "Buff Nguyên liệu", "Mở chiếm mỏ", "Đóng chiếm mỏ", " đăng kí Lôi Đài", "Reset mob events",
+                        (ChiemThanhManager.isRegister ? "Đóng" : "Mở") + " đăng kí chiếm thành", "Mở đăng kí chiến trường", "Dịch map", "loadconfig",
+                        (Manager.logErrorLogin ? "tắt" : "bật") + " log bug", "disconnect client", "check bug", "fix bug"};
+                break;
+            }
 //              case -20: { // Lisa
 //                menu = new String[]{"Mua bán", "Mở ly", "Thuế", "Nhận quà chiến trường",
 //                    "Đóng"};
@@ -352,6 +360,10 @@ public class MenuController {
             }
             case -81: {
                 Menu_Mrs_Oda(conn, index, idmenu);
+                break;
+            }
+            case -1: {
+                Menu_Admin(conn, index);
                 break;
             }
             case -82: {
@@ -728,7 +740,7 @@ public class MenuController {
                     }
                     case 2: {
                         if (conn.p.pointarena < 6000) {
-                            Service.send_notice_box(conn, "Phải cần tối thiểu 5000 điểm tích lũy chiến trường để có thể đổi trứng đại bàng.");
+                            Service.send_notice_box(conn, "Phải cần tối thiểu 6000 điểm tích lũy chiến trường để có thể đổi trứng đại bàng.");
                         } else if (conn.p.item.get_bag_able() < 1) {
                             Service.send_notice_box(conn, "Cần tối thiểu 1 ô trống để có thể đổi.");
                         } else {
@@ -832,7 +844,7 @@ public class MenuController {
                             short quant = (short) Util.random(2, 5);
                             ids.add(new box_item_template(id, quant, (byte) 7));
                             conn.p.item.add_item_bag47(id, quant, (byte) 7);
-                        } else if (ran < 2) {
+                        } else if (ran < 2) {// sách
                             short idsach = (short) Util.random(4577, 4585);
                             ids.add(new box_item_template(idsach, (short) 1, (byte) 3));
                             conn.p.item.add_item_bag3_default(idsach, 0, false);
@@ -5038,7 +5050,6 @@ public class MenuController {
             }
         }
     }
-
     private static void Menu_Lisa(Session conn, byte index) throws IOException {
         switch (index) {
             case 0: { // cua hang potion

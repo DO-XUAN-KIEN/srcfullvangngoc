@@ -142,6 +142,8 @@ public class Mob_in_map extends MainObject {
                 }
             } else {
                 mob.time_back = System.currentTimeMillis() + mob.time_refresh * 1000L - 1000L;
+                p.danhvong += 1;
+                p.item.char_inventory(5);
                 if (mainAtk.isPlayer()) {
                     if (Math.abs(mob.level - mainAtk.level) <= 10 && !check_mob_roi_ngoc_kham) {
                         if (map.isMapLangPhuSuong()) {

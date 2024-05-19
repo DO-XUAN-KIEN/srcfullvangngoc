@@ -245,10 +245,10 @@ public class UseItem {
                 break;
             }
             case 69: {
-                if (conn.p.level < 40) {
-                    Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
-                    return;
-                }
+//                if (conn.p.level < 40) {
+//                    Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
+//                    return;
+//                }
                 if (conn.p.pet_follow == -1) {
                     Service.send_notice_nobox_white(conn, "Chưa mang theo pet!");
                     return;

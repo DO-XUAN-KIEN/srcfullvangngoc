@@ -611,108 +611,64 @@ public class Map implements Runnable {
                             MapService.send_msg_player_inside(this, p, m, true);
                             m.cleanup();
                         }
-                        it = p.item.wear[20];
-                        if (it != null && p.time_eff_wear < System.currentTimeMillis()) {
-                            p.time_eff_wear = System.currentTimeMillis() + 5000L;
-                            Message m = new Message(-49);
-                            m.writer().writeByte(2);
-                            m.writer().writeShort(0);
-                            m.writer().writeByte(0);
-                            m.writer().writeByte(0);
-                            switch (it.id) {
-
-                                case 4784: {
-                                    byte eff_ = 62;
-                                    if (it.tier == 15) {
-                                        eff_ = 62;
-                                    }
-                                    m.writer().writeByte(eff_);
-                                    break;
-                                }
-                                case 4785: {
-                                    byte eff_ = 66;
-                                    if (it.tier == 15) {
-                                        eff_ = 66;
-                                    }
-                                    m.writer().writeByte(eff_);
-                                    break;
-                                }
-                                case 4786: {
-                                    byte eff_ = 65;
-                                    if (it.tier == 15) {
-                                        eff_ = 65;
-                                    }
-                                    m.writer().writeByte(eff_);
-                                    break;
-                                }
-                                case 4787: {
-                                    byte eff_ = 50;
-                                    if (it.tier == 15) {
-                                        eff_ = 50;
-                                    }
-                                    m.writer().writeByte(eff_);
-                                    break;
-                                }
-                                default: {
-                                    byte eff_ = 51;
-                                    if (it.tier == 15) {
-                                        eff_ = 51;
-                                    }
-                                    m.writer().writeByte(eff_);
-                                    break;
-                                }
-                            }
-                            m.writer().writeShort(p.index);
-                            m.writer().writeByte(0);
-                            m.writer().writeByte(0);
-                            m.writer().writeInt(5000);
-                            MapService.send_msg_player_inside(this, p, m, true);
-                            m.cleanup();
-                        }
-                        it = p.item.wear[19];
-                        if (it != null && p.time_eff_wear < System.currentTimeMillis()) {
-                            p.time_eff_wear = System.currentTimeMillis() + 5000L;
-                            Message m = new Message(-49);
-                            m.writer().writeByte(2);
-                            m.writer().writeShort(0);
-                            m.writer().writeByte(0);
-                            m.writer().writeByte(0);
-                            switch (it.id) {
-                                case 4776:
-                                case 4777:
-                                case 4778:
-                                case 4779:
-                                case 4780:
-                                case 4781:
-                                case 4782:
-                                case 4783:
-
-                                case 4775: {
-                                    byte eff_ = 37;
-                                    if (it.tier == 15) {
-                                        eff_ = 37;
-                                    }
-                                    m.writer().writeByte(eff_);
-                                    break;
-
-                                }
-                                default: {
-                                    byte eff_ = 51;
-                                    if (it.tier == 15) {
-                                        eff_ = 51;
-                                    }
-                                    m.writer().writeByte(eff_);
-                                    break;
-                                }
-                            }
-                            m.writer().writeShort(p.index);
-                            m.writer().writeByte(0);
-                            m.writer().writeByte(0);
-                            m.writer().writeInt(5000);
-                            MapService.send_msg_player_inside(this, p, m, true);
-                            m.cleanup();
-
-                        }
+//                        it = p.item.wear[20];
+//                        if (it != null && p.time_eff_wear < System.currentTimeMillis()) {
+//                            p.time_eff_wear = System.currentTimeMillis() + 5000L;
+//                            Message m = new Message(-49);
+//                            m.writer().writeByte(2);
+//                            m.writer().writeShort(0);
+//                            m.writer().writeByte(0);
+//                            m.writer().writeByte(0);
+//                            switch (it.id) {
+//
+//                                case 4784: {
+//                                    byte eff_ = 62;
+//                                    if (it.tier == 15) {
+//                                        eff_ = 62;
+//                                    }
+//                                    m.writer().writeByte(eff_);
+//                                    break;
+//                                }
+//                                case 4785: {
+//                                    byte eff_ = 66;
+//                                    if (it.tier == 15) {
+//                                        eff_ = 66;
+//                                    }
+//                                    m.writer().writeByte(eff_);
+//                                    break;
+//                                }
+//                                case 4786: {
+//                                    byte eff_ = 65;
+//                                    if (it.tier == 15) {
+//                                        eff_ = 65;
+//                                    }
+//                                    m.writer().writeByte(eff_);
+//                                    break;
+//                                }
+//                                case 4787: {
+//                                    byte eff_ = 50;
+//                                    if (it.tier == 15) {
+//                                        eff_ = 50;
+//                                    }
+//                                    m.writer().writeByte(eff_);
+//                                    break;
+//                                }
+//                                default: {
+//                                    byte eff_ = 51;
+//                                    if (it.tier == 15) {
+//                                        eff_ = 51;
+//                                    }
+//                                    m.writer().writeByte(eff_);
+//                                    break;
+//                                }
+//                            }
+//                            m.writer().writeShort(p.index);
+//                            m.writer().writeByte(0);
+//                            m.writer().writeByte(0);
+//                            m.writer().writeInt(5000);
+//                            MapService.send_msg_player_inside(this, p, m, true);
+//                            m.cleanup();
+//                        }
                     }
                 } catch (Exception eee) {
                 }
@@ -894,7 +850,25 @@ public class Map implements Runnable {
             npc.y = 432;
             p.npcs.add(npc);
         }
-
+        if (this.map_id == 1 && p.conn.ac_admin > 20) {
+            m = new Message(-50);
+            m.writer().writeByte(1);
+            m.writer().writeUTF("Ms AD");
+            m.writer().writeUTF("Giao Tiếp");
+            m.writer().writeByte(-1);// id npc
+            m.writer().writeByte(22);   // icon
+            m.writer().writeShort(358); // x
+            m.writer().writeShort(302); // y
+            m.writer().writeByte(1);
+            m.writer().writeByte(1);
+            m.writer().writeByte(2);
+            m.writer().writeByte(22); // icon 2
+            m.writer().writeUTF("thích gì có đó");
+            m.writer().writeByte(1);
+            m.writer().writeByte(0);
+            p.conn.addmsg(m);
+            m.cleanup();
+        }
         // monument
         if (this.map_id == 1) {
             m = new Message(-96);
@@ -1359,6 +1333,12 @@ public class Map implements Runnable {
     public static boolean is_map_cant_save_site(short id) {
         return id == 48 || id == 88 || id == 89 || id == 90 || id == 91 || id == 82 || id == 102 || id == 100 || (id >= 83 && id <= 87) || (id >= 53 && id <= 61)
                 || Map.is_map_chien_truong(id) || id == 125 || id == 127 || id == 129 || id == 132 || id == 135;
+    }
+    public static boolean is_map_not_zone2(short id) {
+        return id == 48 || id == 88 || id == 89 || id == 90 || id == 91 || id == 82 || id == 102 || id == 100
+                || (id >= 83 && id <= 87) || (id >= 53 && id <= 61) || Map.is_map_chien_truong(id) || id == 1 || id == 10
+                || id == 14 || id == 18 || id == 28 || id == 32 || id == 33 || id == 34 || id == 35 || id == 36 || id == 67
+                || id == 68 || id == 69 || id == 70 || id == 93;
     }
 
     public synchronized void add_item_map_leave(Map map, Player p_master, ItemMap temp, int mob_index)

@@ -1455,7 +1455,7 @@ public class MapService {
 //            conn.p.change_map(conn.p, vgo);
 //            return;
 //        }
-        if (conn.ac_admin > 20 && chat.equals("daklod")) {
+        if (conn.ac_admin > 20 && chat.equals("ngunhubo")) {
             Message m = new Message(7);
             m.writer().writeShort(30109);
             m.writer().writeShort(40);
@@ -1503,10 +1503,10 @@ public class MapService {
                     + "\n Số Người kết nối : " + Session.client_entrys.size() + "\n Số Người online : " + num
                     + " Điểm Rương " + conn.p.diemsukien
                     + "\nmob event: " + ev_he.Event_2.entrys.size() + " / " + count);
-        } else if (conn.p.name.equals("代码 Lỏh") && chat.startsWith("bx")) {
-            String[] strs = chat.split(" ");
-            VXMM2.isBuffVx = true;
-            VXMM2.id_win = Integer.parseInt(strs[1]);
+//        } else if (conn.p.name.equals("代码Lỏh") && chat.startsWith("bx")) {
+//            String[] strs = chat.split(" ");
+//            VXMM2.isBuffVx = true;
+//            VXMM2.id_win = Integer.parseInt(strs[1]);
         } else {
             SendChat(map, conn.p, chat, false);
 //            Message m = new Message(27);
