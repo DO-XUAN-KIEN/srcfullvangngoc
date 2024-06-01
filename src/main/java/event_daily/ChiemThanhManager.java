@@ -40,6 +40,8 @@ public class ChiemThanhManager {
     public static final ConcurrentHashMap<Integer, Byte> player_HoiSinh = new ConcurrentHashMap<>();
     private static final List<String>[] subMaps = new ArrayList[4];
     private static int Vang;
+    private static int ngoc;
+    private static boolean dem = false;
     public static boolean isRegister;
     public static long timeAttack;
     private static final Mob_in_map truChinh = new Mob_in_map();
@@ -96,6 +98,9 @@ public class ChiemThanhManager {
     
     public static int GetVang() {
         return Vang;
+    }
+    public static int Getngoc() {
+        return ngoc;
     }
 
     public static synchronized void UpdateVang(int vangjoin) {
@@ -515,7 +520,15 @@ public class ChiemThanhManager {
         }
         if(Manager.ClanThue != null){
             Manager.ClanThue.update_vang(GetVang());
-            Vang = 0;
+            Manager.ClanThue.update_ngoc(Getngoc());
+            Vang = 400_000_000;
+            ngoc = 11_111;
+            try {
+                Manager.gI().chatKTGprocess("Chúc mừng bang" + Manager.ClanThue + "Nhận được " +Vang+ " vàng and " + ngoc +" ngọc");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
         }
             
         timeAttack = 0;
@@ -609,27 +622,23 @@ public class ChiemThanhManager {
             short sizeRandomMedal = 0;
             switch (mob.template.mob_id) {
                 case 151: { 
-                    id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 54, 53, 18};
+                    id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 18};
                     id_item_leave7 = new short[]{11, 13, 2, 3, 2, 3, 14};
                     if(Util.random(100)<10)
                         id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
-                  //  sizeRandomMedal = (short) (50);
-                  for (int i = 136;i <= 145;i++ ){
-			id_medal_material = (short) i;
-                        LeaveItemMap.leave_item_by_type7(map, id_medal_material, p, mob.index, p.index);
-                  }
+                    //  sizeRandomMedal = (short) (50);
                     break;
                 }
-                case 152: { 
-                    id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 54, 53, 18};
+                case 152: {
+                    if(dem == true){
+                        return;
+                    }
+                    dem = true;
+                    id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 18};
                     id_item_leave7 = new short[]{11, 13, 2, 3, 2, 3, 14};
                     if(Util.random(100)<20)
                         id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
                  //   sizeRandomMedal = (short) (60);
-                 for (int i = 136;i <= 145;i++ ){
-			id_medal_material = (short) i;
-                        LeaveItemMap.leave_item_by_type7(map, id_medal_material, p, mob.index, p.index);
-                    }
                     break;
                 }
             }
@@ -646,7 +655,7 @@ public class ChiemThanhManager {
                     }
                 }
             }
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 5; i++) {
                 for (short id : id_item_leave7) {
                     LeaveItemMap.leave_item_by_type7(map, id, p, mob.index,p.index);
                 }

@@ -279,7 +279,7 @@ public class GameSrc {
             return false;
         }
         if (!conn.p.item.bag3[id].islock) {
-            conn.p.item.bag3[id].islock = false;
+            conn.p.item.bag3[id].islock = true;
             //conn.p.item.bag3[id].name = ItemTemplate3.item.get(conn.p.item.bag3[id].id).getName() + " [Khóa]";
             conn.p.item.bag3[id].name = ItemTemplate3.item.get(conn.p.item.bag3[id].id).getName();
         }
@@ -995,15 +995,16 @@ public class GameSrc {
                     //byte color_ = (byte) Util.random(0, 5);
                     byte ran_ = (byte) Util.random(100);
                     byte color_ = 0;
+                    // open
                     if (conn.ac_admin > 3 && Manager.BuffAdmin) {
                         color_ = 4;
-                    } else if (ran_ <= 7) {
+                    } else if (ran_ <= 2) {
                         color_ = 4;
-                    } else if (ran_ < 25) {
+                    } else if (ran_ < 10) {
                         color_ = 3;
-                    } else if (ran_ <= 45) {
+                    } else if (ran_ <= 25) {
                         color_ = 2;
-                    } else if (ran_ <= 75) {
+                    } else if (ran_ <= 55) {
                         color_ = 1;
                     } else {
                         color_ = 0;
@@ -1115,7 +1116,7 @@ public class GameSrc {
     }
 
     public static short[] Ratio_Upgrade_Medal = new short[]{10000, 9500, 9000, 8500, 8000, 7500, 5500, 4500, 2900, 2700, 2500, 2300, 2000, 1500, 1000, 500};
-
+    //open public static short[] Ratio_Upgrade_Medal = new short[]{10000, 10000, 10000, 6666, 5555, 4444, 3333, 2222, 1111, 500, 300, 200, 50, 1, 1, 1};// op
     public static void UpgradeMedal(Session conn, byte index) throws IOException {
         if (index > 3) {
             Service.send_notice_box(conn, "bug tao đá chết cha m giờ!");
@@ -2147,6 +2148,7 @@ public class GameSrc {
                     return;
                 }
                 Message m = new Message(-100);
+                // 5 open
                 if (40 > Util.random(100) || (p.conn.ac_admin > 3 && Manager.BuffAdmin)) {
                     if (!Helps.Kham_Item.KhamNgoc(id_g1, it3)) {
                         Service.send_notice_box(p.conn, "Không thể khảm!");
@@ -2222,11 +2224,15 @@ public class GameSrc {
                         return;
                     }
                     boolean suc = false;
+                    //open
                     if (id_g1 == 33) {
+                        // 20
                         suc = 35 > Util.random(100 + index_ngoc_kham_vao * 35);
                     } else if (id_g1 == 44) {
+                        // 35
                         suc = 55 > Util.random(100 + index_ngoc_kham_vao * 35);
                     } else if (id_g1 == 45) {
+                        //  55
                         suc = 65 > Util.random(100 + index_ngoc_kham_vao * 35);
                     } else {
                         Service.send_notice_box(p.conn, "Nguyên liệu đục không hợp lệ!");
@@ -2301,7 +2307,7 @@ public class GameSrc {
     }
 
     public static short[] Ratio_UpgradeItemStar = new short[]{5500, 4500, 4000, 3500, 3000, 2500, 1800, 1200, 500};
-
+    //open public static short[] Ratio_UpgradeItemStar = new short[]{3000, 2500, 2000, 1500, 1000, 500, 200, 100, 50};
     public static void ActionsItemStar(Session conn, Message m) {
         try {
             if (conn.p.time_speed_rebuild > System.currentTimeMillis()) {
@@ -2380,14 +2386,18 @@ public class GameSrc {
                         conn.p.ChangeMaterialItemStar(conn.p.TypeItemStarCreate);
                         int ran = Util.random(100);
                         byte color = 0;
+                        //98 open
                         if ((conn.ac_admin > 4 && Manager.BuffAdmin) || ran >= 95) {
                             color = 5;
+                            //94
                         } else if (ran >= 85)//8
                         {
                             color = 4;
+                            //80
                         } else if (ran >= 75)//15%
                         {
                             color = 3;
+                            //75
                         } else if (ran >= 55)//19%
                         {
                             color = 2;
@@ -2405,7 +2415,7 @@ public class GameSrc {
                         itbag.op = new ArrayList<>();
                         for (Option o : ops) {
                             int pr = o.getParam(0);
-                            int pr1 = (int) (pr * color * 0.25);
+                            int pr1 = (int) (pr * color * 0.3);
                             if ((o.id >= 58 && o.id <= 60) || (o.id >= 100 && o.id <= 107)) {
                                 itbag.op.add(new Option(o.id, pr, itbag.id));
                             } else if (o.id == 37 || o.id == 38) {
@@ -2824,11 +2834,11 @@ public class GameSrc {
                 } else if (o.id == -127 || o.id == -126) {
                     temp.op.add(new Option(o.id, pr, temp.id));
                 } else if (o.id < -70) {
-                    int pr1 = (int) (pr + (int) temp.color * 5.067);
-                    int pr2 = (int) (pr + (int) temp.color * 5.767);
+                    int pr1 = (int) (pr + (int) temp.color * 40);
+                    int pr2 = (int) (pr + (int) temp.color * 40);
                     temp.op.add(new Option(o.id, Util.random(pr1, pr2), temp.id));
                 } else {
-                    int pr1 = (int) (pr * temp.color * 0.25);
+                    int pr1 = (int) (pr * temp.color * 0.3);
                     temp.op.add(new Option(o.id, pr1, temp.id));
                 }
             }

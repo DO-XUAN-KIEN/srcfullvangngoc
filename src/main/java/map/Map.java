@@ -214,6 +214,10 @@ public class Map implements Runnable {
     public boolean isMapChiemThanh() {
         return map_id >= 83 && map_id <= 87;
     }
+    public boolean is_map_buon() {
+        return map_id == 8 || map_id == 7 || (map_id >= 15 && map_id <= 18) || (map_id >= 20 && map_id <= 25) || map_id == 33
+                || map_id == 34 || (map_id >= 37 && map_id <= 39) || (map_id >= 42 && map_id <= 45) || map_id == 52;
+    }
 
     public boolean isMapLoiDai() {
         return map_id == 100 || map_id == 102;
@@ -864,6 +868,25 @@ public class Map implements Runnable {
             m.writer().writeByte(2);
             m.writer().writeByte(22); // icon 2
             m.writer().writeUTF("thích gì có đó");
+            m.writer().writeByte(1);
+            m.writer().writeByte(0);
+            p.conn.addmsg(m);
+            m.cleanup();
+        }
+        if (this.map_id == 1) {
+            m = new Message(-50);
+            m.writer().writeByte(1);
+            m.writer().writeUTF("Ms mango");
+            m.writer().writeUTF("Giao Tiếp");
+            m.writer().writeByte(-99);// id npc
+            m.writer().writeByte(56);   // icon
+            m.writer().writeShort(423); // x
+            m.writer().writeShort(234); // y
+            m.writer().writeByte(1);
+            m.writer().writeByte(1);
+            m.writer().writeByte(2);
+            m.writer().writeByte(48); // icon 2
+            m.writer().writeUTF("Có money có tất cả");
             m.writer().writeByte(1);
             m.writer().writeByte(0);
             p.conn.addmsg(m);

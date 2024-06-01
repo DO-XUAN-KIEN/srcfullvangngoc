@@ -772,11 +772,9 @@ public class Clan {
     public synchronized void update_vang(long quant) {
         this.vang += quant;
     }
-
     public synchronized void update_ngoc(int quant) {
         this.kimcuong += quant;
     }
-
     public boolean check_id(short id) {
         for (Item47 it : this.item_clan) {
             if (it.id == id && it.quantity > 0) {

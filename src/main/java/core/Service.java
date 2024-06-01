@@ -74,6 +74,7 @@ public class Service {
                 m.writer().writeShort(temp.getValue());
                 m.writer().writeByte(temp.getTrade());
                 m.writer().writeByte(temp.getColor());
+                //m.writer().writeByte(temp.getLamcoin());
             }
         } else {
             m.writer().writeShort(0);
@@ -200,8 +201,13 @@ public class Service {
         } else {
             m.writer().writeShort(-1); // clan
         }
-        m.writer().writeUTF("k2: ");
-        m.writer().writeLong(0);
+        m.writer().writeUTF("Vĩnh lỏh-Khu 2: ");
+        if (p.get_EffDefault(-127) != null) {
+            long time = p.get_EffDefault(-127).time;
+            m.writer().writeLong(time);
+        } else {
+            m.writer().writeLong(0);
+        }
         m.writer().writeByte(p.fashion.length);
         for (int i = 0; i < p.fashion.length; i++) {
             if (p.conn.version >= 280) {
@@ -992,7 +998,7 @@ public class Service {
                 if (conn.p.isCreateItemStar) {
                     m.writer().writeUTF("Nâng cấp đồ tinh tú");
                 } else if (conn.p.isCreateArmor) {
-                    m.writer().writeUTF("Code by 代码 Lỏh");
+                    m.writer().writeUTF("Code by Vĩnh Lỏh");
                 } else {
                     m.writer().writeUTF("Nâng cấp mề đay");
                 }
@@ -1260,6 +1266,15 @@ public class Service {
                 }
                 break;
             }
+            case 99: {
+                m.writer().writeUTF("Code by Vĩnh Lỏh");
+                m.writer().writeByte(4);
+                m.writer().writeShort(Manager.gI().item7sell1.length);
+                for (int i = 0; i < Manager.gI().item7sell1.length; i++) {
+                    m.writer().writeShort(Manager.gI().item7sell1[i]);
+                }
+                break;
+            }
             case 40:
             case 41:
             case 42:
@@ -1307,7 +1322,7 @@ public class Service {
             }
             case 49: {
                 if (!conn.p.isCreateArmor) return;
-                m.writer().writeUTF("Code by 代码 Lỏh");
+                m.writer().writeUTF("Code by Vĩnh Lỏh");
                 m.writer().writeByte(19);
                 m.writer().writeShort(0);
                 m.writer().writeByte(1);
@@ -1331,7 +1346,7 @@ public class Service {
 
     public static void revenge(Session conn, byte index) throws IOException {
         if (conn.p.get_ngoc() < 2) {
-            send_notice_box(conn, "2 ngọc còn không có nổi thì có mà báo đời à???");
+            send_notice_box(conn, "Không đủ ngọc");
             return;
         }
         String name = conn.p.list_enemies.get(conn.p.list_enemies.size() - index - 1);
@@ -1354,16 +1369,18 @@ public class Service {
             }
         }
         if (p0 == null) {
-            send_notice_box(conn, "Kẻ thù đang offline");
         } else {
-            if (p0.map.isMapLangPhuSuong() ||p0.map.isMapChienTruong() || p0.map.isMapLoiDai()) {
+            EffTemplate ef = p0.get_EffDefault(-125);
+            if (p0.map.zone_id == 1 && !Map.is_map_not_zone2(p0.map_id)) {
                 send_notice_box(conn, "Kẻ thù đang trong khu vực không thể đến");
                 return;
             }
-            EffTemplate ef = p0.get_EffDefault(-125);
-            if (p0.map.map_id != 0 && !p0.map.ismaplang) {
+            if (p0.map.isMapLangPhuSuong() || p0.map.isMapChienTruong() || p0.map.isMapChiemThanh() || p0.map.isMapLoiDai()) {
+                send_notice_box(conn, "Kẻ thù đang trong khu vực không thể đến");
+                return;
+            }
+            if (ef == null && p0.map.map_id != 0 && !p0.map.ismaplang) {
                 conn.p.update_ngoc(-2);
-                conn.p.item.char_inventory(5);
                 conn.p.is_changemap = false;
                 Map mbuffer2 = p0.map;
                 if (mbuffer2 != null) {
@@ -1398,7 +1415,7 @@ public class Service {
                     send_notice_box(conn, "Có lỗi xảy ra khi chuyển map");
                 }
             } else {
-                send_notice_box(conn, "Kẻ thù đang trong khu vực không thể pk");
+                send_notice_box(conn, "Kẻ thù đang trong khu vực không thể đến");
             }
         }
     }
@@ -1459,6 +1476,7 @@ public class Service {
         m.writer().writeShort(it7.getValue());
         m.writer().writeByte(it7.getTrade());
         m.writer().writeByte(it7.getColor());
+        //m.writer().writeByte(it7.getLamcoin());
         p.conn.addmsg(m);
         m.cleanup();
     }
@@ -1908,7 +1926,7 @@ public class Service {
                     send_notice_box(p.conn, "Không tìm thấy vật phẩm!");
                     return;
                 }
-                if (Helps.CheckItem.isBuyItemCoin(idbuy))//mua bằng coin shop tt
+                if (idbuy >= 4831 && idbuy <= 4873)//mua bằng coin shop tt
                 {
                     for (Itemshoptt itsell3 : Itemshoptt.entry) {
                         if (itsell3.id == idbuy) {
@@ -1920,13 +1938,13 @@ public class Service {
                             itbag.id = idbuy;
                             itbag.clazz = ItemTemplate3.item.get(idbuy).getClazz();
                             itbag.type = ItemTemplate3.item.get(idbuy).getType();
-                            itbag.level = 10;
+                            itbag.level = 1;
                             itbag.icon = ItemTemplate3.item.get(idbuy).getIcon();
                             itbag.color = itsell3.color;
                             itbag.part = ItemTemplate3.item.get(idbuy).getPart();
                             itbag.islock = true;
                             itbag.name = ItemTemplate3.item.get(idbuy).getName();
-                            itbag.tier = 0;
+                            itbag.tier = 15;
                             itbag.op = new ArrayList<>();
                             itbag.op.addAll(itsell3.op);
                             itbag.time_use = 0;
@@ -2043,13 +2061,13 @@ public class Service {
                                     itbag.id = idbuy;
                                     itbag.clazz = ItemTemplate3.item.get(idbuy).getClazz();
                                     itbag.type = ItemTemplate3.item.get(idbuy).getType();
-                                    itbag.level = 10;
+                                    itbag.level = 1;
                                     itbag.icon = ItemTemplate3.item.get(idbuy).getIcon();
                                     itbag.color = itemshoptt.color;
                                     itbag.part = ItemTemplate3.item.get(idbuy).getPart();
                                     itbag.islock = true;
                                     itbag.name = ItemTemplate3.item.get(idbuy).getName();
-                                    itbag.tier = 0;
+                                    itbag.tier = 15;
                                     itbag.op = new ArrayList<>();
                                     for (int i = 0; i < itemshoptt.op.size(); i++) {
                                         itbag.op.add(new Option(itemshoptt.op.get(i).id, itemshoptt.op.get(i).getParam(0)));
@@ -2138,6 +2156,12 @@ public class Service {
                     p.update_vang(-price);
                     Log.gI().add_log(p.name, "mua " + quanity + " item " + ItemTemplate7.item.get(idbuy).getName() + " hết"
                             + Util.number_format(price) + " vàng");
+                }else if(ItemTemplate7.item.get(idbuy).getPricetype() == 1 && ((idbuy >= 246 && idbuy <= 345) || (idbuy >= 384 && idbuy <= 409))){
+                    if (p.checkcoin() < price){
+                        send_notice_box(p.conn, "Không đủ " + price + " coin.");
+                        return;
+                    }
+                    p.update_coin((int) -price);
                 } else {
                     if (p.get_ngoc() < price) {
                         send_notice_box(p.conn, "Không đủ " + price + " ngọc");
@@ -2337,7 +2361,6 @@ public class Service {
                     if (id[i] == -1) {
                         m.writer().writeUTF("Vàng"); // name
                         m.writer().writeShort(0); // icon
-                        p.update_vang(Util.random(50, 150));
                     } else {
                         m.writer().writeUTF(ItemTemplate4.item.get(id[i]).getName()); // name
                         m.writer().writeShort(ItemTemplate4.item.get(id[i]).getIcon()); // icon

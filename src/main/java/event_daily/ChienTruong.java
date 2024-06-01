@@ -393,7 +393,9 @@ public class ChienTruong {
 			temp.village = 0;
 			temp.received = false;
 			this.list.put(p.name, temp);
-			Service.send_notice_box(p.conn, "Đăng ký thành công");
+			int coin_ = Util.random(1_000,10_000);
+			p.update_coin(coin_);
+			Service.send_notice_box(p.conn, "Đăng ký thành công và nhận được " +coin_+ " coin.");
 		}
 	}
 
@@ -402,7 +404,7 @@ public class ChienTruong {
 
 		//	Manager.gI().chatKTGprocess("Chiến trường mở đăng ký");
 			this.status = 1;
-			this.time = 60*45;
+			this.time = 60*44;
 		}
 	}
 
@@ -519,11 +521,10 @@ public class ChienTruong {
 			//short id_medal_material = -1;
 			short sizeRandomMedal = 0;
 			switch (mob.template.mob_id) {
-				case 93: {
+				case 93, 94, 95, 96, 97, 98, 99, 100: {
 					if(Util.random(100)>90){
-                                            id_item_leave7 =new short[]{(short) Util.random(126, 136)};
-                                        
-                                        }
+						id_item_leave7 =new short[]{(short) Util.random(126, 136)};
+					}
 					if(Util.random(10000) < 1 ){
 						id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
 					}
@@ -531,87 +532,12 @@ public class ChienTruong {
 					p.item.char_inventory(5);
 					break;
 				}
-				case 94: {
-					if(Util.random(100)>90){
-                                            id_item_leave7 =new short[]{(short) Util.random(126, 136)};
-                                        
-                                        }
-					if(Util.random(10000) < 1 ){
+				case 89,90,91,92: {
+					id_item_leave7 = new short[]{(short) Util.random(126, 146)};
+					if(Util.random(5000) < 1){
 						id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
 					}
-					p.update_point_arena(1);
-					p.item.char_inventory(5);
-					break;
-				}
-				case 95: {
-					if(Util.random(100)>90){
-                                            id_item_leave7 =new short[]{(short) Util.random(126, 136)};
-                                        
-                                        }
-					if(Util.random(10000) < 1 ){
-						id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
-					}
-					p.update_point_arena(1);
-					p.item.char_inventory(5);
-					break;
-				}
-				case 96: {
-					if(Util.random(100)>90){
-                                            id_item_leave7 =new short[]{(short) Util.random(126, 136)};
-                                        
-                                        }
-					if(Util.random(10000) < 1 ){
-						id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
-					}
-					p.update_point_arena(1);
-					p.item.char_inventory(5);
-					break;
-				}
-				case 97: {
-					if(Util.random(100)>90){
-                                            id_item_leave7 =new short[]{(short) Util.random(126, 136)};
-                                        
-                                        }
-					if(Util.random(10000) < 1 ){
-						id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
-					}
-					p.update_point_arena(1);
-					p.item.char_inventory(5);
-					break;
-				}
-				case 98: {
-                                        if(Util.random(100)>90){
-                                            id_item_leave7 =new short[]{(short) Util.random(126, 136)};
-                                        
-                                        }
-					if(Util.random(10000) < 1 ){
-						id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
-					}
-					p.update_point_arena(1);
-					p.item.char_inventory(5);
-					break;
-				}
-				case 99: {
-					if(Util.random(100)>90){
-                                            id_item_leave7 =new short[]{(short) Util.random(126, 136)};
-                                        
-                                        }
-					if(Util.random(10000) < 1 ){
-						id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
-					}
-					p.update_point_arena(1);
-					p.item.char_inventory(5);
-					break;
-				}
-				case 100: {
-					if(Util.random(100)>90){
-                                            id_item_leave7 =new short[]{(short) Util.random(126, 136)};
-                                        
-                                        }
-					if(Util.random(10000) < 1 ){
-						id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
-					}
-					p.update_point_arena(1);
+					p.update_point_arena(5);
 					p.item.char_inventory(5);
 					break;
 				}
@@ -629,11 +555,11 @@ public class ChienTruong {
 					}
 				}
 			}
-			for (int i = 0; i < 1; i++) {
-                            for (short id : id_item_leave7) {
-                                LeaveItemMap.leave_item_by_type7(map, id, p, mob.index, p.index);
-                            }
-                        }
+			for (int i = 0; i < 5; i++) {
+				for (short id : id_item_leave7) {
+					LeaveItemMap.leave_item_by_type7(map, id, p, mob.index, p.index);
+				}
+			}
 			for (int l = 0; l < sizeRandomMedal; l++) {
 				LeaveItemMap.leave_item_by_type7(map, (short) Util.random(136, 146), p, mob.index,p.index);
 			}

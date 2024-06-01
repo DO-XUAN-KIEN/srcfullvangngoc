@@ -262,7 +262,7 @@ public class SaveData {
                 BXH.BXH_level.add(temp);
             }
             rs.close();
-            
+            // bxh chiến trường
             BXH.BXH_Ctr.clear();
             ps = conn.prepareStatement(
                     "SELECT `id`, `level`, `name`, `body`, `itemwear`, `point_arena` FROM `player` WHERE `point_arena` > 10 ORDER BY  point_arena DESC LIMIT 20;");
@@ -303,6 +303,7 @@ public class SaveData {
                 BXH.BXH_Ctr.add(temp);
             }
             rp.close();
+            // bxh đổi quà ngọc rồng
             BXH.BXH_doiqua.clear();
             ps = conn.prepareStatement(
                     "SELECT `id`, `level`, `name`, `body`, `itemwear`, `doiqua` FROM `player` WHERE `doiqua` > 1 ORDER BY  doiqua DESC LIMIT 20;");
@@ -343,6 +344,7 @@ public class SaveData {
                 BXH.BXH_doiqua.add(temp);
             }
             ri.close();
+            // bxh danh vọng
             BXH.BXH_Danhvong.clear();
             ps = conn.prepareStatement(
                     "SELECT `id`, `level`, `name`, `body`, `itemwear`, `danhvong` FROM `player` WHERE `danhvong` > 1 ORDER BY  danhvong DESC LIMIT 20;");
@@ -383,6 +385,89 @@ public class SaveData {
                 BXH.BXH_Danhvong.add(temp);
             }
             rt.close();
+            // bxh phó bản
+            BXH.BXH_phoban.clear();
+            ps = conn.prepareStatement(
+                    "SELECT `id`, `level`, `name`, `body`, `itemwear`, `phoban` FROM `player` WHERE `phoban` > 1 ORDER BY  phoban DESC LIMIT 20;");
+            ResultSet qw= ps.executeQuery();
+            while (qw.next()) {
+                Memin4 temp = new Memin4();
+                temp.level = qw.getShort("level");
+                temp.phoban= qw.getInt("phoban");
+                temp.name = qw.getString("name");
+                JSONArray jsar = (JSONArray) JSONValue.parse(qw.getString("body"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.head = Byte.parseByte(jsar.get(0).toString());
+                temp.hair = Byte.parseByte(jsar.get(2).toString());
+                temp.eye = Byte.parseByte(jsar.get(1).toString());
+                jsar.clear();
+                jsar = (JSONArray) JSONValue.parse(qw.getString("itemwear"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.itemwear = new ArrayList<>();
+                for (int i3 = 0; i3 < jsar.size(); i3++) {
+                    JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i3).toString());
+                    byte index_wear = Byte.parseByte(jsar2.get(9).toString());
+                    if (index_wear != 0 && index_wear != 1 && index_wear != 6 && index_wear != 7 && index_wear != 10) {
+                        continue;
+                    }
+                    Part_player temp2 = new Part_player();
+                    temp2.type = Byte.parseByte(jsar2.get(2).toString());
+                    temp2.part = Byte.parseByte(jsar2.get(6).toString());
+                    temp.itemwear.add(temp2);
+                }
+                temp.clan = Clan.get_clan_of_player(temp.name);
+                String percents
+                        = String.format("%.0f", (((float) temp.phoban)));
+                temp.info = "Level : " + (temp.level) + "\t-\t" + percents +" ";
+                BXH.BXH_phoban.add(temp);
+            }
+            qw.close();
+            // bxh boss
+            BXH.BXH_boss.clear();
+            ps = conn.prepareStatement(
+                    "SELECT `id`, `level`, `name`, `body`, `itemwear`, `boss` FROM `player` WHERE `boss` > 1 ORDER BY  boss DESC LIMIT 20;");
+            ResultSet qt= ps.executeQuery();
+            while (qt.next()) {
+                Memin4 temp = new Memin4();
+                temp.level = qt.getShort("level");
+                temp.boss= qt.getInt("boss");
+                temp.name = qt.getString("name");
+                JSONArray jsar = (JSONArray) JSONValue.parse(qt.getString("body"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.head = Byte.parseByte(jsar.get(0).toString());
+                temp.hair = Byte.parseByte(jsar.get(2).toString());
+                temp.eye = Byte.parseByte(jsar.get(1).toString());
+                jsar.clear();
+                jsar = (JSONArray) JSONValue.parse(qt.getString("itemwear"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.itemwear = new ArrayList<>();
+                for (int i3 = 0; i3 < jsar.size(); i3++) {
+                    JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i3).toString());
+                    byte index_wear = Byte.parseByte(jsar2.get(9).toString());
+                    if (index_wear != 0 && index_wear != 1 && index_wear != 6 && index_wear != 7 && index_wear != 10) {
+                        continue;
+                    }
+                    Part_player temp2 = new Part_player();
+                    temp2.type = Byte.parseByte(jsar2.get(2).toString());
+                    temp2.part = Byte.parseByte(jsar2.get(6).toString());
+                    temp.itemwear.add(temp2);
+                }
+                temp.clan = Clan.get_clan_of_player(temp.name);
+                String percents
+                        = String.format("%.0f", (((float) temp.boss)));
+                temp.info = "Level : " + (temp.level) + "\t-\t" + percents +" ";
+                BXH.BXH_boss.add(temp);
+            }
+            qt.close();
+            // bxh cướp
             BXH.BXH_Cuop.clear();
             ps = conn.prepareStatement(
                     "SELECT `id`, `level`, `name`, `body`, `itemwear`, `dicuop` FROM `player` WHERE `dicuop` > 1 ORDER BY  dicuop DESC LIMIT 20;");
@@ -423,6 +508,7 @@ public class SaveData {
                 BXH.BXH_Cuop.add(temp);
             }
             rq.close();
+            // bxh buôn
             BXH.BXH_Buon.clear();
             ps = conn.prepareStatement(
                     "SELECT `id`, `level`, `name`, `body`, `itemwear`, `dibuon` FROM `player` WHERE `dibuon` > 10 ORDER BY  dibuon DESC LIMIT 20;");
@@ -465,7 +551,7 @@ public class SaveData {
                 BXH.BXH_Buon.add(temp);
             }
             ro.close();
-//            
+//          // bxh đồ sát
             BXH.BXH_ds.clear();
             ps = conn.prepareStatement(
                     "SELECT`level`, `name`, `body`, `itemwear`, `hieuchien` FROM `player` WHERE `hieuchien` > 10 ORDER BY  hieuchien DESC LIMIT 20;");
@@ -505,6 +591,7 @@ public class SaveData {
                 temp.info = "Level : " + (temp.level) + "\t-\t" + percents +" ";
                 BXH.BXH_ds.add(temp);
             }
+            // bxh lôi đài
             BXH.BXH_ld.clear();
             ps = conn.prepareStatement(
                     "SELECT `id`, `level`, `name`, `body`, `itemwear`, `point_king_cup` FROM `player` WHERE `point_king_cup` > 1 ORDER BY  point_king_cup DESC LIMIT 20;");

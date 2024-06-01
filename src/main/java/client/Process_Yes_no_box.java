@@ -61,6 +61,23 @@ public class Process_Yes_no_box {
             }
         } else {
             switch (type) {
+                case -1: {
+                    Dungeon d = DungeonManager.get_list(conn.p.name);
+                    if(d == null){
+                        Service.send_notice_box(conn, "Phải vào phó bản trước rồi mới dùng được chức năng này");
+                        return;
+                    }
+                    if(conn.p.point_active[0] <1){
+                        Service.send_notice_box(conn,"Bạn không còn lượt nào để trừ");
+                        return;
+                    }
+                    conn.p.point_active[0] -= 1;
+                    d.finish_dungeon();
+                    conn.p.item.char_inventory(3);
+                    conn.p.item.char_inventory(5);
+                    Service.send_notice_box(conn,"Bạn đã sử dụng quyền trợ giúp hoàn thành phó bản");
+                    break;
+                }
                 case -127: {
                     if (!conn.p.isOwner) {
                         return;
@@ -101,6 +118,23 @@ public class Process_Yes_no_box {
                     } else {
                         Service.send_notice_box(conn, "Chưa có đệ tử");
                     }
+                }
+                case -112: {
+                    if (conn.p.checkcoin() < 5_000) {
+                        Service.send_notice_box(conn, "Không đủ coin");
+                        return;
+                    }
+                    Map map = Map.get_map_by_id(conn.p.map.map_id)[1];
+                    if (map != null && map.players.size() >= map.maxplayer) {
+                        Service.send_notice_box(conn, "Khu vực đầy!!!");
+                        return;
+                    }
+                    conn.p.update_coin(-5_000);
+                    conn.p.add_EffDefault(-127, 1, 2 * 60 * 60 * 1000);
+                    MapService.leave(conn.p.map, conn.p);
+                    conn.p.map = map;
+                    MapService.enter(conn.p.map, conn.p);
+                    break;
                 }
                 case -122: {
                     // Đệ tử
@@ -301,7 +335,11 @@ public class Process_Yes_no_box {
                         Service.send_notice_box(conn, "chưa đủ 100% exp!");
                         return;
                     }
-                    long vang_req = (3 * (temp.it.tier + 1)) * 10_000_000L;
+                    if(temp.it.tier == 30){
+                        Service.send_notice_box(conn, "Nhẫn đã nâng cấp tối đa");
+                        return;
+                    }
+                    long vang_req = (3 * (temp.it.tier + 1)) * 5_000_000L;
                     int ngoc_req = (3 * (temp.it.tier + 1)) * 10_000;
                     if (conn.p.get_vang() < vang_req) {
                         Service.send_notice_box(conn, "chưa đủ " + vang_req + " vàng!");

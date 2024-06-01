@@ -521,11 +521,11 @@ public class MessageHandler {
         Service.send_msg_data(conn, 1, Manager.gI().msg_1);
         Service.send_skill(conn.p);
         Service.send_login_rms(conn);
-        Service.send_notice_nobox_yellow(conn, ("Chào Mừng Bạn Đến Với Hiệp Sĩ Mèo Béo !! ")); //Số người online : " + (Session.client_entrys.size() + 30)));
+        Service.send_notice_nobox_yellow(conn, ("Chào Mừng Bạn Đến Với Hiệp Sĩ Mango !! ")); //Số người online : " + (Session.client_entrys.size() + 30)));
 //        send_notice_nobox_white(conn, ("Đổi Coin Sang Vàng Ngọc Tại Npc Zuru - Nạp Coin Tại hsomeobeo.pro  "));
 //        send_notice_nobox_white(conn, ("Số người online : " + (Session.client_entrys.size())));
-       //send_notice_nobox_white(conn, ("Bang " +  Manager.nameClanThue  + " Đang Sở Hữu  Quyền Thu Thuế Trên Toàn Sever " + " Thuế " + Manager.thue + " % "));
-       //  Service.send_notice_nobox_yellow(conn, ("Bang " + Manager.nameClanThue + " - Đang Là Bang Hùng Mạnh Nhất Thế Giới Hiệp Sĩ"));
+        send_notice_nobox_white(conn, ("Bang " +  Manager.nameClanThue  + " Đang Sở Hữu  Quyền Thu Thuế Trên Toàn Sever " + " Thuế " + Manager.thue + " % "));
+        Service.send_notice_nobox_yellow(conn, ("Bang " + Manager.nameClanThue + " - Đang Là Bang Hùng Mạnh Nhất Thế Giới Hiệp Sĩ"));
 
         // add x2 xp
         conn.p.set_x2_xp(1);

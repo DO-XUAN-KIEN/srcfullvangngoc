@@ -21,7 +21,7 @@ public class CheckItem {
     }
     
     public static boolean isTT(short id) {
-        return (id >= 3732 && id <= 3736) || id >= 3807 && id <= 3811 || id >= 3897 && id <= 3901 || id >= 4656 && id <= 4675;
+        return (id >= 3732 && id <= 3736) || id >= 3807 && id <= 3811 || id >= 3897 && id <= 3901 || id >= 4656 && id <= 4675 || (id >= 4831 && id <= 4873);
     }
     
     public static boolean item4CanTrade(short id)

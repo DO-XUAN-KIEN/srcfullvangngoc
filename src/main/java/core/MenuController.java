@@ -69,6 +69,10 @@ public class MenuController {
                         (Manager.logErrorLogin ? "tắt" : "bật") + " log bug", "disconnect client", "check bug", "fix bug"};
                 break;
             }
+            case -99: { // shop_coin
+                menu = new String[]{"Shop coin", "Shop đồ tinh tú","Shop nlmd = coin"};
+                break;
+            }
 //              case -20: { // Lisa
 //                menu = new String[]{"Mua bán", "Mở ly", "Thuế", "Nhận quà chiến trường",
 //                    "Đóng"};
@@ -133,7 +137,7 @@ public class MenuController {
             }
             case -32: {
                 menu = new String[]{"Xem BXH Danh vọng", "Xem BXH Cao Thủ", "Xem BXH Đi Buôn", "Xem BXH Đi Cướp", "Xem BXH Chiến trường",
-                    "Xem BXH Đổi quà", "Xem BXH Bang", "Xem BXH Hiếu chiến"};
+                    "Xem BXH Đổi quà", "Xem BXH Bang", "Xem BXH Hiếu chiến", "Xem BXH Săn Boss", "Xem BXH Phó Bản"};
                 break;
             }
             case -21: { // blackeye
@@ -190,7 +194,7 @@ public class MenuController {
             }
             case -37: {
                 menu = new String[]{"Vào Ngã Tư Tử Thần", "Giới thiệu", "BXH phó bản", "Đăng ký chiếm thành", "Vào chiếm thành",
-                    "Xem Điểm Hiện Tại", "Nhận phần thưởng", "Trở thành hiệp sĩ"};
+                    "Xem Điểm Hiện Tại", "Nhận phần thưởng", "Trở thành hiệp sĩ","Hoàn thành phó bản khẩn cấp"};
                 break;
             }
             case -38:
@@ -330,6 +334,32 @@ public class MenuController {
             return;
         }
         switch (idnpc) {
+            case -43: {
+                if (idmenu == 1) {
+                    switch (index) {
+                        case 0:
+                            if (conn.p.item.total_item_by_id(4, 54) >= 1) {
+                                Map map = Map.get_map_by_id(conn.p.map.map_id)[1];
+                                if (map != null && map.players.size() >= map.maxplayer) {
+                                    Service.send_notice_box(conn, "Khu vực đã đầy!!!");
+                                    return;
+                                }
+                                conn.p.item.remove(4, 54, 1);
+                                conn.p.add_EffDefault(-127, 1, 2 * 60 * 60 * 1000);
+                                MapService.leave(conn.p.map, conn.p);
+                                conn.p.map = map;
+                                MapService.enter(conn.p.map, conn.p);
+                            } else {
+                                Service.send_notice_box(conn, "Không đủ Đồng bạc Tyche");
+                            }
+                            break;
+                        case 1:
+                            Service.send_box_input_yesno(conn, -112, "Bạn có muốn vào khu 2 với 50 ngọc cho 2 giờ?");
+                            break;
+                    }
+                }
+                break;
+            }
             case 4: {
                 Menu_DoiDongMeDaySTG(conn, index);
                 break;
@@ -364,6 +394,10 @@ public class MenuController {
             }
             case -1: {
                 Menu_Admin(conn, index);
+                break;
+            }
+            case -99: { // shopcoin
+                Menu_shopcoin(conn, index);
                 break;
             }
             case -82: {
@@ -800,7 +834,26 @@ public class MenuController {
         }
 
     }
-
+    private static void Menu_shopcoin(Session conn, byte index) throws IOException{
+        switch (index){
+            case 0: {
+                Service.send_box_UI(conn, 37);
+                break;
+            }
+            case 1: {
+                Service.send_box_UI(conn, 48);
+                break;
+            }
+            case 2: {
+                Service.send_box_UI(conn, 99);
+                break;
+            }
+            default:{
+                Service.send_notice_box(conn,"Chưa có chức năng!!!");
+                break;
+            }
+        }
+    }
     private static void Menu_MissSophia(Session conn, int idNPC, byte idmenu, byte index) throws IOException {
 //        System.out.println("core.MenuController.Menu_MissSophia() id: "+idmenu);
 //        System.out.println("core.MenuController.Menu_MissSophia() idx: "+index);
@@ -1949,7 +2002,7 @@ public class MenuController {
                         Service.send_notice_box(conn, "Yêu cầu level trên 50");
                         return;
                     }
-                    send_menu_select(conn, 114, new String[]{"Cầu hôn", "Ly hôn", "Hướng dẫn"});
+                    send_menu_select(conn, 114, new String[]{"Cầu hôn", "Ly hôn","Nâng cấp nhẫn", "Hướng dẫn"});
                     break;
                 }
                 case 2: {
@@ -2498,6 +2551,10 @@ public class MenuController {
                 conn.p.fashion = Part_fashion.get_part(conn.p);
                 conn.p.change_map_di_buon(conn.p);
                 Service.send_notice_box(conn, "Nhận thành công");
+                break;
+            }
+            case 8: {
+                Service.send_box_input_yesno(conn, -1, "Bạn có chắc chắn muốn dùng hoàn thành phó bản khẩn cấp");
                 break;
             }
             default: {
@@ -3087,6 +3144,14 @@ public class MenuController {
             }
             case 7: {
                 BXH.send3(conn, 0);
+                break;
+            }
+            case 8: {
+                BXH.send3(conn, 2);
+                break;
+            }
+            case 9: {
+                BXH.send3(conn, 3);
                 break;
             }
             default: {
@@ -3855,10 +3920,12 @@ public class MenuController {
                 if (conn.p.diemdanh == 1) {
                     conn.p.diemdanh = 0;
                     int ngoc_ = Util.random(100, 500);
+                    int coin_ = Util.random(1_000,10_000);
                     conn.p.update_ngoc(ngoc_);
+                    conn.p.update_coin(coin_);
                     Log.gI().add_log(conn.p.name, "Điểm danh ngày được " + Util.number_format(ngoc_) + " ngọc");
                     conn.p.item.char_inventory(5);
-                    Service.send_notice_box(conn, "Bạn đã điểm danh thành công, được " + ngoc_ + " ngọc");
+                    Service.send_notice_box(conn, "Bạn đã điểm danh thành công, được " + ngoc_ + " ngọc and " + coin_+ " coin.");
                 } else {
                     Service.send_notice_box(conn, "Bạn đã điểm danh hôm nay rồi");
                 }
@@ -4040,6 +4107,8 @@ public class MenuController {
                 }
                 if (i == 4 && Map.is_map_chiem_mo(conn.p.map, false)) {
                     m.writer().writeByte(4);
+                } else if (i == 1 && !Map.is_map_not_zone2(conn.p.map.map_id)) {
+                    m.writer().writeByte(3);
                 } else {
                     m.writer().writeByte(0);
                 }
@@ -5383,35 +5452,37 @@ public class MenuController {
             }
             case 1: {
                 if (conn.p.item.wear[23] != null) {
-                    Wedding temp = Wedding.get_obj(conn.p.name);
-                    if (temp != null) {
-                        String name_target = "";
-                        if (temp.name_1.equals(conn.p.name)) {
-                            name_target = temp.name_2;
-                        } else {
-                            name_target = temp.name_1;
-                        }
-                        Service.send_box_input_yesno(conn, 111, "Xác định hủy hôn ước với " + name_target);
-                    }
+                    Service.send_notice_box(conn, "Hãy trân trọng đi. Ngoài kia bao nhiêu người dell có ny kia kìa");
+                    return;
+//                    Wedding temp = Wedding.get_obj(conn.p.name);
+//                    if (temp != null) {
+//                        String name_target = "";
+//                        if (temp.name_1.equals(conn.p.name)) {
+//                            name_target = temp.name_2;
+//                        } else {
+//                            name_target = temp.name_1;
+//                        }
+//                        Service.send_box_input_yesno(conn, 111, "Xác định hủy hôn ước với " + name_target);
+//                    }
                 } else {
                     Service.send_notice_box(conn, "Đã cưới ai đâu, ảo tưởng à??");
                 }
                 break;
             }
-//            case 2: {
-//                Item3 it = conn.p.item.wear[23];
-//                if (it != null) {
-//                    float perc = (((float) Wedding.get_obj(conn.p.name).exp) / Level.entrys.get(it.tier).exp) * 100f;
-//                    String notice = "Exp hiện tại : %s, nâng cấp cần %str vàng và %sk ngọc";
-//                    String a = String.format("%.2f", perc) + "%";
-//                    Service.send_box_input_yesno(conn, 112,
-//                            String.format(notice, a, (3 * (it.tier + 1)), (3 * (it.tier + 1))));
-//                } else {
-//                    Service.send_notice_box(conn, "Đã cưới ai éo đâu, ảo tưởng à??");
-//                }
-//                break;
-//            }
             case 2: {
+                Item3 it = conn.p.item.wear[23];
+                if (it != null) {
+                    float perc = (((float) Wedding.get_obj(conn.p.name).exp) / Level.entrys.get(it.tier).exp) * 100f;
+                    String notice = "Exp hiện tại : %s, nâng cấp cần %str vàng và %sk ngọc";
+                    String a = String.format("%.2f", perc) + "%";
+                    Service.send_box_input_yesno(conn, 112,
+                            String.format(notice, a, (3 * (it.tier + 1)) * 5_000_000L, (3 * (it.tier + 1)) * 10_000));
+                } else {
+                    Service.send_notice_box(conn, "Đã cưới ai éo đâu, ảo tưởng à??");
+                }
+                break;
+            }
+            case 3: {
                 String notice = "Nhẫn cưới\r\n" + "- 1 tỷ vàng \" nhẫn cưới 1\" \r\n" + "- 50k ngọc \" nhẫn cưới 2\"\r\n"
                         + "- 70k ngọc \" nhẫn cưới 3\"\r\n" + "- 100k ngọc \" nhẫn cưới 4\"\r\n" + "Nâng cấp nhẫn:\r\n"
                         + "Khi đã kết hôn vợ và chồng cùng chung 1 nhóm đi up quái hoặc giết boss thì nhẫn cưới sẽ đc + exp\r\n"

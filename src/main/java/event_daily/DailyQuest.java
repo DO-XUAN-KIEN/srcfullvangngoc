@@ -122,21 +122,20 @@ public class DailyQuest {
             short id_yellow = (short) Util.random(226, 236);
             short id_violet = (short) Util.random(236, 246);
             short id_ngocrong = (short) Util.random(464,470);
-            int vang = Util.random(70, 120) * (p.quest_daily[1] + 1) * p.quest_daily[2];
-            int ngoc = p.quest_daily[1] == 3 ? Util.random(800, 1000)
+            int vang = Util.random(100_000, 500_000) * (p.quest_daily[1] + 1) * p.quest_daily[2];
+            int ngoc = p.quest_daily[1] == 3 ? Util.random(100, 1000)
                     : (p.quest_daily[1] == 2 ? Util.random(400, 500)
                     : (p.quest_daily[1] == 1 ? Util.random(10, 200) : Util.random(10, 20)));
-            int exp = Util.random(50, 100) * (p.quest_daily[1] + 1) * p.quest_daily[2];
-
+            int exp = Util.random(1000, 10000) * (p.quest_daily[1] + 1) * p.quest_daily[2];
             p.update_vang(vang);
             Log.gI().add_log(p.name, "Nhận " + vang + " nhiệm vụ hàng ngày");
-            p.update_ngoc(ngoc);
+            p.update_coin(ngoc);
             p.update_Exp(exp, false);
             if (p.quest_daily[1] == 1) {
                 if (((p.item.get_bag_able() > 0) || (p.item.total_item_by_id(7, id_blue) > 0))) {
                     Item47 itbag = new Item47();
                     itbag.id = id_blue;
-                    itbag.quantity = (short) Util.random(0, 2);
+                    itbag.quantity = (short) Util.random(0, 5);
                     itbag.category = 7;
                     p.item.add_item_bag47(7, itbag);
                 }
@@ -144,7 +143,7 @@ public class DailyQuest {
                 if (((p.item.get_bag_able() > 0) || (p.item.total_item_by_id(7, id_yellow) > 0))) {
                     Item47 itbag = new Item47();
                     itbag.id = id_yellow;
-                    itbag.quantity = (short) Util.random(0, 2);
+                    itbag.quantity = (short) Util.random(0, 5);
                     itbag.category = 7;
                     p.item.add_item_bag47(7, itbag);
                 }
@@ -161,7 +160,7 @@ public class DailyQuest {
             p.item.char_inventory(4);
             p.item.char_inventory(7);
             Service.send_notice_box(p.conn,
-                    "Trả thành công, nhận được " + vang + " vàng, " + ngoc + " ngọc và " + exp + " kinh nghiệm!");
+                    "Trả thành công, nhận được " + vang + " vàng, " + ngoc + " coin và " + exp + " kinh nghiệm!");
             p.quest_daily[0] = -1;
             p.quest_daily[1] = -1;
             p.quest_daily[2] = 0;

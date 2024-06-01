@@ -95,11 +95,11 @@ public class TextFromClient {
                     }
                     switch (quant) {
                         case 4: {
-                            if (conn.p.get_ngoc() < 500_000) {
-                                Service.send_notice_box(conn, "Không đủ 500k ngọc");
+                            if (conn.p.checkcoin() < 100_000) {
+                                Service.send_notice_box(conn, "Không đủ 100k coin");
                                 return;
                             }
-                            conn.p.update_ngoc(-500_000);
+                            conn.p.update_coin(-100_000);
                             break;
                         }
                         default: {

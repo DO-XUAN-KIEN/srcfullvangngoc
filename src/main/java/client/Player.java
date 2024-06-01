@@ -50,6 +50,8 @@ public class Player extends Body2 {
     // public int hieuchien;
     public int dibuon;
     public int dicuop;
+    public int boss;
+    public int phoban;
     public long danhvong;
     public int doiqua;
     public byte type_exp;
@@ -147,6 +149,7 @@ public class Player extends Body2 {
     public int[] quest_daily;
     public int chuyencan;
     public int diemsukien;
+    public byte khu2;
     public int jointx;
     public boolean tai;
     public boolean xiu;
@@ -341,9 +344,12 @@ public class Player extends Body2 {
                 date = Util.getDate(rs.getString("date"));
                 diemdanh = rs.getByte("diemdanh");
                 chucphuc = rs.getByte("chucphuc");
+                khu2 = rs.getByte("khu2");
                 hieuchien = rs.getInt("hieuchien");
                 dibuon = rs.getInt("dibuon");
                 dicuop = rs.getInt("dicuop");
+                boss = rs.getInt("boss");
+                phoban = rs.getInt("phoban");
                 danhvong = rs.getLong("danhvong");
                 doiqua = rs.getInt("doiqua");
                 chuyencan = rs.getInt("chuyencan");
@@ -950,7 +956,7 @@ public class Player extends Body2 {
                 jsar.clear();
                 for (int i = 0; i < MainEff.size(); i++) {
                     EffTemplate temp = MainEff.get(i);
-                    if (temp.id != -126 && temp.id != -125 && temp.id != -128) {
+                    if (temp.id != -126 && temp.id != -125 && temp.id != -127 && temp.id != -128) {
                         continue;
                     }
                     JSONArray jsar21 = new JSONArray();
@@ -1238,9 +1244,12 @@ public class Player extends Body2 {
                 a += ",`kynang` = " + kynang;
                 a += ",`diemdanh` = " + diemdanh;
                 a += ",`chucphuc` = " + chucphuc;
+                a += ",`khu2` = " + khu2;
                 a += ",`hieuchien` = " + hieuchien;
                 a += ",`dibuon` = " + dibuon;
                 a += ",`dicuop` = " + dicuop;
+                a += ",`boss` = " + boss;
+                a += ",`phoban` = " + phoban;
                 a += ",`danhvong` = " + danhvong;
                 a += ",`doiqua` = " + doiqua;
                 a += ",`chuyencan` = " + chuyencan;
@@ -1410,13 +1419,13 @@ public class Player extends Body2 {
             // diem danh
             diemdanh = 1;
             chucphuc = 1;
+            khu2 = 2;
             point_active[0] = 10;
             point_active[1] = 0;
             quest_daily = new int[]{-1, -1, 0, 0, 20};
             date = Date.from(Instant.now());
         }
     }
-
     public void set_x2_xp(int type) throws IOException {
         switch (type) {
             case 0: {
@@ -1568,6 +1577,9 @@ public class Player extends Body2 {
             level = owner.level;
             return;
         }
+        if (this.map.zone_id == 1 && !Map.is_map_not_zone2(this.map.map_id)) { // Khu 2
+            dame_exp *= ((dame_exp * 5) / 100);
+        }
         if (level >= Manager.gI().lvmax || type_exp == 0) {
             return;
         }
@@ -1629,6 +1641,7 @@ public class Player extends Body2 {
     }
 
     public void change_zone(Session conn2, Message m2) throws IOException {
+
         if (this.map.map_id == 0) {
             Message m = new Message(55);
             m.writer().writeByte(1);
@@ -1639,6 +1652,10 @@ public class Player extends Body2 {
             m.cleanup();
         }
         byte zone = m2.reader().readByte();
+        Map map_change = Map.get_map_by_id(this.map.map_id)[zone];
+        if (zone == 5 && !conn.p.isKnight() && !conn.p.isRobber() && !conn.p.isTrader() && map_change.is_map_buon()) {
+            return;
+        }
         if (zone < this.map.maxzone || (conn.p.item.wear[11] != null && (conn.p.item.wear[11].id == 3599
                 || conn.p.item.wear[11].id == 3593 || conn.p.item.wear[11].id == 3596))) {
             if (zone != this.map.zone_id) {
@@ -1647,8 +1664,25 @@ public class Player extends Body2 {
                     Service.send_notice_box(conn, "Có lỗi xảy ra khi chuyển map hoặc đã đầy, hãy thử lại sau");
                     return;
                 }
+                if (zone == 1 && !Map.is_map_not_zone2(map_change.map_id)) {
+                    EffTemplate ff = conn.p.get_EffDefault(-127);
+                    if (ff == null) {
+                        if (conn.p.khu2 > 0) {
+                            conn.p.add_EffDefault(-127, 1, 2 * 60 * 60 * 1000);
+                            MapService.leave(conn.p.map, conn.p);
+                            conn.p.map = map_change;
+                            MapService.enter(conn.p.map, conn.p);
+                            khu2--;
+//                        } else if (conn.p.item.total_item_by_id(4, (short) 54) >= 1) {
+//                            MenuController.send_menu_select(conn, -43, new String[]{"Đồng bạc Tyche", "Dùng ngọc"}, (byte) 1);
+                        } else {
+                            Service.send_box_input_yesno(conn, -112, "Bạn có muốn vào khu 2 với 10k coin cho 2 giờ?");
+                        }
+                        return;
+                    }
+                }
                 MapService.leave(this.map, this);
-                this.map = map;
+                this.map = map_change;
                 MapService.enter(this.map, this);
             } else {
                 Service.send_notice_box(conn, "Bạn đang ở khu vực này!");

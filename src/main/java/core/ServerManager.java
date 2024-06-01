@@ -232,7 +232,7 @@ public class ServerManager implements Runnable {
                     //
                     checkError = 2;
                     if (min % 5 == 0 && sec == 0) {
-                        Manager.gI().chatKTGprocess("Bạn Đang Chơi Server" + " Hiệp Sĩ Mèo Béo " + "Chúc Bạn Chơi Game Vui Vẻ.");
+                        Manager.gI().chatKTGprocess("Bạn Đang Chơi Server" + " Hiệp Sĩ Mango " + "Chúc Bạn Chơi Game Vui Vẻ.");
                     }
                     checkError = 5;
                     if (min % 4 == 0 && sec == 0) {

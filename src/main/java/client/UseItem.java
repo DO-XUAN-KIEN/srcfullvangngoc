@@ -407,12 +407,13 @@ public class UseItem {
                     Service.send_notice_nobox_white(conn, "Hành trang đầy!");
                     return;
                 }
-                 ItemTemplate7 item1 = ItemTemplate7.item.get(Util.random(246, 345));
-                int quant1_ = Util.random(1,2);
-               
+                ItemTemplate7 item1 = ItemTemplate7.item.get(Util.random(316, 345));
+                ItemTemplate4 item2 = ItemTemplate4.item.get(246);
+                int quant1_ = Util.random(1,4);
+                int quant2_ = Util.random(0,10);
                 //
                 Message m = new Message(78);
-                m.writer().writeUTF("Rương BackFriday");
+                m.writer().writeUTF("");
                 m.writer().writeByte(3); // size
 //                for (int i = 0; i < 3; i++) {
                 m.writer().writeUTF(""); // name
@@ -422,20 +423,13 @@ public class UseItem {
                 m.writer().writeByte(0); // tier
                 m.writer().writeByte(0); // color
                 //
-//                m.writer().writeUTF(""); // name
-//                m.writer().writeShort(item2.getIcon()); // icon
-//                m.writer().writeInt(quant2_); // quantity
-//                m.writer().writeByte(7); // type in bag
-//                m.writer().writeByte(0); // tier
-//                m.writer().writeByte(0); // color
-                //
                 m.writer().writeUTF(""); // name
-                m.writer().writeShort(0); // icon
-               
+                m.writer().writeShort(item2.getIcon()); // icon
+                m.writer().writeInt(quant2_); // quantity
                 m.writer().writeByte(4); // type in bag
                 m.writer().writeByte(0); // tier
                 m.writer().writeByte(0); // color
-//                }
+                //
                 m.writer().writeUTF("");
                 m.writer().writeByte(1);
                 m.writer().writeByte(0);
@@ -448,19 +442,15 @@ public class UseItem {
                 itbag.category = 7;
                 conn.p.item.add_item_bag47(7, itbag);
                 //
-//                Item47 itbag2 = new Item47();
-//                itbag2.id = item2.getId();
-//                itbag2.quantity = (short) quant2_;
-//                itbag2.category = 7;
-//                conn.p.item.add_item_bag47(7, itbag2);
-                //
-               
+                Item47 itbag2 = new Item47();
+                itbag2.id = item2.getId();
+                itbag2.quantity = (short) quant2_;
+                itbag2.category = 4;
+                conn.p.item.add_item_bag47(4, itbag2);
                 //
                 conn.p.item.char_inventory(7);
                 conn.p.item.char_inventory(4);
-                conn.p.item.remove(4, id_potion, 1); // remove item 
-                conn.p.diemsukien ++;
-                //Event_Ruong.add_Ruong(conn.p.name, quant1_); // event ăn lên tăng điểm
+                conn.p.item.remove(4, id_potion, 1);
                 break;
             }
 //            case 327 :{ // rương vip

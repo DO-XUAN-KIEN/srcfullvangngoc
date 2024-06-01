@@ -361,6 +361,9 @@ public class MainObject {
             if (focus.isMobDiBuon() && ObjAtk.isPlayer() && ((Player) ObjAtk).isRobber() && ((Pet_di_buon) focus).type == 132) {
                 return;
             }
+            if (ObjAtk.isPlayer() && focus.isPlayer() && map.zone_id == 1 && !Map.is_map_not_zone2(map.map_id)) {
+                return;
+            }
             if (ObjAtk.isPlayer() && focus.isPlayer() && !map.isMapChiemThanh() && (map.ismaplang || ObjAtk.level < 11 || focus.level < 11
                     || (ObjAtk.typepk != 0 && ObjAtk.typepk == focus.typepk) || ObjAtk.hieuchien > 320_000)) {
                 return;
@@ -393,15 +396,21 @@ public class MainObject {
             }
             if (ObjAtk.isPlayer() && focus.isPlayer() && focus.typepk == -1)// đồ sát
             {
-//            if (ObjAtk.hieuchien > 1000) {
-//                Service.send_notice_box(((Player) ObjAtk).conn, "Không thể đồ sát quá nhiều, cần tẩy điểm trước.");
-//                return;
-//            }
+                if (ObjAtk.hieuchien > 10000) {
+                    Service.send_notice_box(((Player) ObjAtk).conn, "Không thể đồ sát quá nhiều, cần tẩy điểm trước.");
+                    return;
+                }
+                if (focus.get_EffDefault(-126) != null) {
+                    Service.send_notice_box(((Player) ObjAtk).conn, "Đối phương có hiệu ứng chống pk");
+                    return;
+                }
+                if (map.zone_id == 1 && !Map.is_map_not_zone2(map.map_id)) {
+                    return;
+                }
                 if (((Player) focus).pet_follow == 4708) {
                     Service.send_notice_box(((Player) ObjAtk).conn, "Đối phương đang được pet bảo vệ");
                     return;
                 }
-                ObjAtk.hieuchien += 1;
             }
             //</editor-fold>
 

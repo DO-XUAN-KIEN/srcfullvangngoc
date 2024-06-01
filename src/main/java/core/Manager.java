@@ -89,6 +89,7 @@ public class Manager {
     public List<ItemSell3[]> itemsellTB;
     public short[] itempoitionsell;
     public short[] item7sell;
+    public short[] item7sell1;
     public VXMM2 vxmm;
     public VXKC2 vxkc;
     public int size_mob_now = -20;
@@ -403,6 +404,7 @@ public class Manager {
             temp.setValue(rs.getShort("value"));
             temp.setTrade(rs.getByte("trade"));
             temp.setColor(rs.getByte("setcolorname"));
+            //temp.setLamcoin(rs.getByte("lamcoin"));
             ItemTemplate7.item.add(temp);
         }
         // load item medal
@@ -596,6 +598,14 @@ public class Manager {
                     for (int i = 0; i < item7sell.length; i++) {
                         item7sell[i] = Short.parseShort(jsar.get(i).toString());
                         item_sell.get(Service.SHOP_MATERIRAL).add(item7sell[i]);
+                    }
+                    break;
+                }
+                case 99: {
+                    item7sell1 = new short[jsar.size()];
+                    for (int i = 0; i < item7sell1.length; i++) {
+                        item7sell1[i] = Short.parseShort(jsar.get(i).toString());
+                        item_sell.get(Service.SHOP_MATERIRAL).add(item7sell1[i]);
                     }
                     break;
                 }

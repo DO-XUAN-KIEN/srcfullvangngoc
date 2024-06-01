@@ -163,24 +163,40 @@ public class Mob_in_map extends MainObject {
                                 LeaveItemMap.leave_item_event(map, mob, (Player) mainAtk);
                             }
                         } else {
+                            int percent = 20;
+                            if (zone_id == 1 && !Map.is_map_not_zone2(map_id)
+                                    && p.get_EffDefault(-127) != null) {
+                                percent = 40;
+                            }
                             if (Math.abs(mob.level - mainAtk.level) <= 5 && Manager.gI().event == 3 && Util.random_ratio(10)) {
                                 ev_he.Event_3.LeaveItemMap(map, this, mainAtk);
                             } else if (mob.level >= 133) {
                                 ev_he.Event_3.LeaveItemMap(map, this, mainAtk);
                             }
-                            if (10 > Util.random(0, 300) || mob.color_name != 0) {
+                            if (percent > Util.random(0, 300) || mob.color_name != 0) {
                                 LeaveItemMap.leave_item_3(map, mob, (Player) mainAtk);
                             }
-                            if (20 > Util.random(0, 300)) {
+                            else if (percent > Util.random(0, 500) && zone_id == 1 && !Map.is_map_not_zone2(map_id)
+                                    && p.get_EffDefault(-127) != null) {
+                                if(Util.random(2000) < 4) {
+                                    LeaveItemMap.leave_item_by_type7(map, (short) 494, p, mob.index);
+                                }
+                                if (Util.random(0, 10) < 2) {
+                                    LeaveItemMap.leave_item_by_type7(map, (short) Util.random(116, 126), p, mob.index);
+                                } else {
+                                    LeaveItemMap.leave_item_by_type7(map, (short) 13, p, mob.index);
+                                }
+                            }
+                            if (percent > Util.random(0, 300)) {
                                 LeaveItemMap.leave_item_4(map, mob, (Player) mainAtk);
                             }
-                            if (20 > Util.random(0, 300)) {
+                            if (percent > Util.random(0, 300)) {
                                 LeaveItemMap.leave_item_7(map, mob, (Player) mainAtk);
                             }
-                            if (30 > Util.random(0, 300)) {
+                            if (percent + 10 > Util.random(0, 300)) {
                                 LeaveItemMap.leave_vang(map, mob, (Player) mainAtk);
                             }
-                            if (30 > Util.random(0, 300)) {
+                            if (percent + 10 > Util.random(0, 300)) {
                                 LeaveItemMap.leave_material(map, mob, (Player) mainAtk);
                             }
                             if (Manager.gI().event != 0 && 30 > Util.random(0, 100) && Math.abs(mob.level - mainAtk.level) <= 5) {

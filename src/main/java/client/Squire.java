@@ -361,7 +361,7 @@ public class Squire extends Player {
                 jsar.clear();
                 for (int i = 0; i < MainEff.size(); i++) {
                     EffTemplate temp = MainEff.get(i);
-                    if (temp.id != -126 && temp.id != -125 && temp.id != -128) {
+                    if (temp.id != -126 && temp.id != -125 && temp.id != -127 && temp.id != -128) {
                         continue;
                     }
                     JSONArray jsar21 = new JSONArray();

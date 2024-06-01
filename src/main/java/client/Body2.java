@@ -737,7 +737,15 @@ public class Body2 extends MainObject {
                 p.isDie = true;
             }
             //</editor-fold>    eff Player
-
+            if (map.zone_id == 1 && !Map.is_map_not_zone2(map.map_id) && !p.isSquire) {
+                EffTemplate ff = get_EffDefault(-127);
+                if (ff == null) {
+                    Map m = Map.get_map_by_id(map.map_id)[0];
+                    MapService.leave(map, p);
+                    p.map = m;
+                    MapService.enter(p.map, p);
+                }
+            }
             if (p.pet_di_buon != null && p.pet_di_buon.id_map == p.map.map_id && p.map.zone_id == p.map.maxzone
                     && !p.pet_di_buon.item.isEmpty() && map.time_add_bot < System.currentTimeMillis()) {
                 Bot bot = new Bot(map.baseID--, p);

@@ -12,6 +12,7 @@ public class ItemTemplate7 {
 	private String content;
 	private byte type;
 	private byte pricetype;
+	//private byte lamcoin;
 	private byte sell;
 	private short value;
 	private byte trade;
@@ -72,7 +73,13 @@ public class ItemTemplate7 {
 	public void setPricetype(byte pricetype) {
 		this.pricetype = pricetype;
 	}
+//	public byte getLamcoin() {
+//		return lamcoin;
+//	}
 
+	//public void setLamcoin(byte lamcoin) {
+//		this.lamcoin = lamcoin;
+//	}
 	public byte getSell() {
 		return sell;
 	}

@@ -59,6 +59,12 @@ public class Dungeon {
     }
 
     public void finish_dungeon() {
+        Vgo vgo = null;
+        vgo = new Vgo();
+        vgo.id_map_go = 1;
+        vgo.x_new = 432;
+        vgo.y_new = 354;
+        DungeonManager.remove_list(this);
     }
 
     public void update() {

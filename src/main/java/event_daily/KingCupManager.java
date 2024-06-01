@@ -192,44 +192,57 @@ public class KingCupManager {
         short[] id_reward_4;
         short[] quantity_reward_4;
         boolean isHaveBook = false;
+        int coin;
 
         switch (p.type_reward_king_cup) {
             case 1, 5, 9, 13 -> {
                 id_reward_7 = new short[]{14, (short) Util.random(8, 10), 11, 349};
-                quantity_reward_7 = new short[]{3, 10, 10, 1};
+                quantity_reward_7 = new short[]{5, 15, 15, 2};
                 id_reward_4 = new short[]{53, 54};
                 quantity_reward_4 = new short[]{1, 1};
+                coin = 30_000;
+                p.update_coin(coin);
             }
             case 17, 21, 25 -> {
                 id_reward_7 = new short[]{14, (short) Util.random(8, 10), 11, 349};
-                quantity_reward_7 = new short[]{3, 10, 10, 1};
+                quantity_reward_7 = new short[]{5, 20, 20, 2};
                 id_reward_4 = new short[]{10, 53, 54};
                 quantity_reward_4 = new short[]{1, 1, 1};
+                coin = 40_000;
+                p.update_coin(coin);
                 isHaveBook = true;
             }
             case 2, 6, 10, 14 -> {
                 id_reward_7 = new short[]{(short) Util.random(8, 10), 11};
-                quantity_reward_7 = new short[]{5, 5};
+                quantity_reward_7 = new short[]{10, 10};
                 id_reward_4 = new short[]{53, 54};
                 quantity_reward_4 = new short[]{1, 1};
+                coin = 20_000;
+                p.update_coin(coin);
             }
             case 18, 22, 26 -> {
                 id_reward_7 = new short[]{14};
-                quantity_reward_7 = new short[]{2};
-                id_reward_4 = new short[]{10, 53, 54};
-                quantity_reward_4 = new short[]{1, 1, 1};
+                quantity_reward_7 = new short[]{7};
+                id_reward_4 = new short[]{10};
+                quantity_reward_4 = new short[]{5};
+                coin = 30_000;
+                p.update_coin(coin);
             }
             case 3, 7, 11, 15 -> {
                 id_reward_7 = new short[]{(short) Util.random(8, 10), 11};
-                quantity_reward_7 = new short[]{3, 3};
+                quantity_reward_7 = new short[]{6, 6};
                 id_reward_4 = new short[]{53};
-                quantity_reward_4 = new short[]{1};
+                quantity_reward_4 = new short[]{3};
+                coin = 10_000;
+                p.update_coin(coin);
             }
             case 19, 23, 27 -> {
                 id_reward_7 = new short[]{14};
                 quantity_reward_7 = new short[]{1};
                 id_reward_4 = new short[]{10, 53, 54};
                 quantity_reward_4 = new short[]{1, 1, 1};
+                coin = 20_000;
+                p.update_coin(coin);
             }
             default -> {
                 return;
@@ -243,7 +256,7 @@ public class KingCupManager {
         int gold = calculateGold(p.point_king_cup);
 
         Message m = new Message(78);
-        m.writer().writeUTF("Bạn nhận được");
+        m.writer().writeUTF("Bạn nhận được + " + coin + "coin.");
         if (isHaveBook) {
             m.writer().writeByte(id_reward_7.length + id_reward_4.length + 2);
             addBookSkill(m, p, 1);
@@ -266,7 +279,7 @@ public class KingCupManager {
         p.conn.addmsg(m);
         m.cleanup();
 
-        p.update_vang(gold);
+        p.update_vang(gold + 1_000_000);
         p.point_king_cup = 0;
         p.group_king_cup = -1;
         p.type_reward_king_cup = 0;
