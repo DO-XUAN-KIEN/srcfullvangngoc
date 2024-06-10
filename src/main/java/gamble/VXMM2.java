@@ -181,9 +181,9 @@ public class VXMM2 implements Runnable {
                 vang_win = get_total_vang();
                 long thue = (get_total_vang() / 100) * Manager.thue;
                 vang_win -= thue;
-                if (Manager.ClanThue != null) {
-                    Manager.ClanThue.update_vang(thue);
-                }
+//                if (Manager.ClanThue != null) {
+//                    Manager.ClanThue.update_vang(thue);
+//                }
                 Manager.gI().chatKTGprocess(last_winner + " đã thắng " + Util.number_format(vang_win)
                         + " vàng khi tham gia vòng xoay may mắn");
                 p0.update_vang(vang_win);
@@ -230,9 +230,9 @@ public class VXMM2 implements Runnable {
                         vang_win = get_total_vang();
                         long thue = (get_total_vang() / 100) * Manager.thue;
                         vang_win -= thue;
-                        if (Manager.ClanThue != null) {
-                            Manager.ClanThue.update_vang(thue);
-                        }
+//                        if (Manager.ClanThue != null) {
+//                            Manager.ClanThue.update_vang(thue);
+//                        }
                         Manager.gI().chatKTGprocess(last_winner + " đã thắng " + Util.number_format(vang_win)
                                 + " vàng khi tham gia vòng xoay may mắn");
                         p0.update_vang(vang_win);

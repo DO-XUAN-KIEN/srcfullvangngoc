@@ -361,6 +361,12 @@ public class MainObject {
             if (focus.isMobDiBuon() && ObjAtk.isPlayer() && ((Player) ObjAtk).isRobber() && ((Pet_di_buon) focus).type == 132) {
                 return;
             }
+            if((ObjAtk.level - focus.level >= 5 || ObjAtk.level - focus.level <= -5) && map.zone_id == map.maxzone){
+                return;
+            }
+            if ((focus.level - ObjAtk.level >=5 || focus.level - ObjAtk.level <= -5) && map.zone_id == map.maxzone){
+                return;
+            }
             if (ObjAtk.isPlayer() && focus.isPlayer() && map.zone_id == 1 && !Map.is_map_not_zone2(map.map_id)) {
                 return;
             }

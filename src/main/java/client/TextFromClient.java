@@ -325,6 +325,11 @@ public class TextFromClient {
                                 ar_quant[i] = Quants.get(i);
                                 ar_type[i] = Types.get(i);
                             }
+                            if(limit > 0){
+                                int updatedLimit = limit - 1;
+                                st.executeUpdate("UPDATE `giftcode` SET `limit` = " + updatedLimit + " WHERE `giftname` = '" + text + "';");
+                                connection.commit();
+                            }
                             Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ar_id, ar_quant, ar_type);
                             //Service.send_notice_box(conn, "Nhận thành công giftcode");
                             if (!giftfor.equals("0")) {
@@ -833,10 +838,10 @@ public class TextFromClient {
                     return;
                 }
                 if (conn.p.update_coin(-coin_exchange)) {
-                    Log.gI().add_log(conn.p.name, "Nhận " + ((coin_exchange * 1_000) * Manager.gI().giakmgold) + " từ đổi coin ra vàng");
                     conn.p.update_vang((long) ((coin_exchange * 1_000) * Manager.gI().giakmgold));
-                    conn.p.item.char_inventory(5);
                     Service.send_notice_box(conn, "Đổi thành công" + (coin_exchange * 1_000) * Manager.gI().giakmgold + "vàng");
+                    Log.gI().add_log(conn.p.name, "Nhận " + ((coin_exchange * 1_000) * Manager.gI().giakmgold) + " từ đổi coin ra vàng");
+                    conn.p.item.char_inventory(5);
 //                    Log.gI().add_log(conn.p.name,
 //                                    "đổi coin sang ngọc " + text + " : " + Util.number_format(ngoc_up) + " ngọc");
                 } else {
@@ -845,6 +850,7 @@ public class TextFromClient {
                 break;
             }
             case 15: {
+
                 if (size != 1) {
                     return;
                 }
@@ -1972,7 +1978,36 @@ public class TextFromClient {
                 Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", new short[]{id_ruonghuyenbi}, new int[]{quant}, new short[]{4});
                 break;
             }
-            
+            case 49: { // đổi đồng money
+                if (size != 1) {
+                    return;
+                }
+                String value = m2.reader().readUTF();
+                if (!(Util.isnumber(value))) {
+                    Service.send_notice_box(conn, "Dữ liệu nhập không phải số!!");
+                    return;
+                }
+                int dong_money = Integer.parseInt(value);
+                if (conn.p.item.total_item_by_id(7,494) < dong_money){
+                    Service.send_notice_box(conn,"Không đủ đồng money");
+                    return;
+                }
+                if (dong_money <= 0 || dong_money > 100) {
+                    Service.send_notice_box(conn, "Chỉ có thể đổi tối thiểu là 1k và tối đa là 300k");
+                    return;
+                }
+                if (conn.p.item.total_item_by_id(7,494) >= dong_money) {
+                    conn.p.item.remove(7, 494, dong_money);
+                    conn.p.update_coin(dong_money * 1);
+                    Service.send_notice_box(conn, "Đổi thành công" + dong_money * 1_000 + "coin");
+                    Log.gI().add_log(conn.p.name, "Nhận " + dong_money * 1_000 + " từ đổi đồng money ra coin");
+                    conn.p.item.char_inventory(5);
+                    conn.p.item.char_inventory(7);
+                } else {
+                    Service.send_notice_box(conn, "Thất bại xin hãy thử lại");
+                }
+                break;
+            }
             default: {
                 Service.send_notice_box(conn, "Đã xảy ra lỗi");
                 break;

@@ -6,6 +6,7 @@ import client.Player;
 import core.Manager;
 import io.Message;
 import java.io.IOException;
+import java.util.List;
 
 import map.Eff_player_in_map;
 import map.Map;
@@ -14,6 +15,7 @@ import map.MapService;
 public class Mob_MoTaiNguyen extends MainObject{
     public Map map;
     public String name_monster;
+    public List<NhanBan> nhanBans;
     public NhanBan nhanban;
     public NhanBan nhanban_save;
     public Clan clan;

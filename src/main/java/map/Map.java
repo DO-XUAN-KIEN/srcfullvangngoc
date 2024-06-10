@@ -531,7 +531,6 @@ public class Map implements Runnable {
                         if (p.squire != null && p.isLiveSquire) {
                             p.squire.update(this);
                         }
-
                         // auto trừ hp, mp khi dính bỏng lửa, bỏng lạnh
                         // eff medal
                         Item3 it = p.item.wear[12];
@@ -854,7 +853,7 @@ public class Map implements Runnable {
             npc.y = 432;
             p.npcs.add(npc);
         }
-        if (this.map_id == 1 && p.conn.ac_admin > 20) {
+        if (this.map_id == 1 && p.conn.ac_admin > 120) {
             m = new Message(-50);
             m.writer().writeByte(1);
             m.writer().writeUTF("Ms AD");
@@ -1412,7 +1411,6 @@ public class Map implements Runnable {
         }
         return (is_zone) ? (map.zone_id == 4 && is_map) : is_map;
     }
-
     public static boolean is_map__load_board_player(short id) {
         return id == 102;
     }

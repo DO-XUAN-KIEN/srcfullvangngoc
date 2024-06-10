@@ -167,6 +167,10 @@ public class Clan {
             }
             case 6: {
                 long value = m2.reader().readInt();
+                if(conn.status != 10){
+                    Service.send_notice_box(conn,"Không thể góp vàng vào bang");
+                    return;
+                }
                 if (value < 0 || value > 2_000_000_000 || ((value + this.vang) > 2_000_000_000L)
                         || value > conn.p.get_vang()) {
                     Service.send_notice_box(conn, "Số nhập vào không hợp lệ");
@@ -177,6 +181,10 @@ public class Clan {
             }
             case 7: {
                 long value = m2.reader().readInt();
+                if(conn.status != 10){
+                    Service.send_notice_box(conn,"Không thể góp vàng vào bang");
+                    return;
+                }
                 if (value < 0 || value > 2_000_000_000L || ((value + this.kimcuong) > 2_000_000_000L)
                         || value > conn.p.get_ngoc()) {
                     Service.send_notice_box(conn, "Số nhập vào không hợp lệ");

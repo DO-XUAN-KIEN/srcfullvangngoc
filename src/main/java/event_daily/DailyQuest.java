@@ -122,7 +122,7 @@ public class DailyQuest {
             short id_yellow = (short) Util.random(226, 236);
             short id_violet = (short) Util.random(236, 246);
             short id_ngocrong = (short) Util.random(464,470);
-            int vang = Util.random(100_000, 500_000) * (p.quest_daily[1] + 1) * p.quest_daily[2];
+            int vang = Util.random(100_000, 500_000);
             int ngoc = p.quest_daily[1] == 3 ? Util.random(100, 1000)
                     : (p.quest_daily[1] == 2 ? Util.random(400, 500)
                     : (p.quest_daily[1] == 1 ? Util.random(10, 200) : Util.random(10, 20)));

@@ -20,19 +20,6 @@ public class BossManager {
     private static byte GetIdMap(int idboss){
         switch (idboss) {
             //case = mod - Return = map
-            // boss 135
-//            case 194: return  0;
-//            case 196: return  0;
-//            case 197: return  0;
-////            case 186: return  3;
-////            case 187: return  3;
-//            case 188: return  3;
-//            case 189: return  3;
-//            case 190: return  3;
-//            case 191: return  3;
-//            case 192: return  3;
-//            case 193: return  3;
-            //
             case 103: return  7;
             case 104: return 15;
             case 101: return 25;
@@ -59,17 +46,6 @@ public class BossManager {
     private static short[] GetSite(int idboss){
         switch (idboss) {
             //mod + vị trí
-            // boss 135
-//            case 194: return  new short[]{244,192};
-//            case 196: return  new short[]{706,468};
-//            case 197: return  new short[]{680,184};
-//            case 188: return  new short[]{ 514,712};
-//            case 189: return new short[]{ 618,896};
-//            case 190: return new short[]{ 218,896};
-//            case 191: return new short[]{ 466,440};
-//            case 192: return new short[]{ 456,208};
-//            case 193: return new short[]{ 202,424};
-            //
             case 103: return  new short[]{432,512};
             case 104: return new short[]{ 530,213};
             case 101: return new short[]{ 204,284};

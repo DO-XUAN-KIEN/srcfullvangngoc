@@ -520,22 +520,19 @@ public class ChiemThanhManager {
         }
         if(Manager.ClanThue != null){
             Manager.ClanThue.update_vang(GetVang());
-            Manager.ClanThue.update_ngoc(Getngoc());
-            Vang = 400_000_000;
-            ngoc = 11_111;
-            try {
-                Manager.gI().chatKTGprocess("Chúc mừng bang" + Manager.ClanThue + "Nhận được " +Vang+ " vàng and " + ngoc +" ngọc");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
+            Vang = 0;
         }
-            
         timeAttack = 0;
-        Manager.thue =5;
+        Manager.thue = 10;
         CloseMap();
         try{
             Manager.gI().chatKTGprocess("Chiếm thành đã kết thúc "+ (NameClan != null && !NameClan.isEmpty() ? " bang "+NameClan : " không bang nào") +" chiếm được thành");
+            if(NameClan != null && !NameClan.isEmpty()) {
+                Manager.ClanThue.update_vang(500_000_000);
+                Manager.ClanThue.update_ngoc(30_000);
+                System.out.println("Bang " +Manager.ClanThue+ "nhận đc vàng và ngọc");
+                Manager.gI().chatKTGprocess("Chúc mừng bang " + NameClan + " nhận được 1b vàng and 10k ngọc");
+            }
         }
         catch(IOException e){}
     }

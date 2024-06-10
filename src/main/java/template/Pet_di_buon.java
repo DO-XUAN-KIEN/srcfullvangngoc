@@ -3,12 +3,13 @@ package template;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import map.MapService;
 import client.Player;
 import core.Service;
 import io.Message;
 import map.ItemMap;
 import map.Map;
-import map.MapService;
 
 public class Pet_di_buon extends MainObject {
 
@@ -50,7 +51,6 @@ public class Pet_di_buon extends MainObject {
             }
             this.update_all(p);
             p.update_ngoc(-5);
-            p.item.char_inventory(5);
         } else {
             Service.send_notice_box(p.conn,
                     "Thời gian dùng lần tiếp theo : " + (this.time_skill - System.currentTimeMillis()) + "ms");
@@ -58,17 +58,16 @@ public class Pet_di_buon extends MainObject {
     }
 
     public synchronized void update_speed(Player p) throws IOException {
-        if (countSpeed > 2) {
-            Service.send_notice_box(p.conn, "Chỉ có thể tăng tốc 3 lần");
+        if (countSpeed > 0) {
+            Service.send_notice_box(p.conn, "Chỉ có thể tăng tốc 1 lần");
             return;
         }
         if (this.time_skill < System.currentTimeMillis()) {
             this.time_skill = System.currentTimeMillis() + 10_000L;
-            this.speed = 2;
+            this.speed = 4;
             countSpeed++;
             this.update_all(p);
             p.update_ngoc(-5);
-            p.item.char_inventory(5);
         } else {
             Service.send_notice_box(p.conn,
                     "Thời gian dùng lần tiếp theo : " + (this.time_skill - System.currentTimeMillis()) + "ms");
@@ -90,7 +89,7 @@ public class Pet_di_buon extends MainObject {
         mm.writer().writeByte(this.speed);
         mm.writer().writeByte(0);
         mm.writer().writeUTF(this.name);
-        mm.writer().writeLong(-11111);
+        mm.writer().writeLong(-1);
         mm.writer().writeByte(4);
         MapService.send_msg_player_inside(p.map, p, mm, true);
         mm.cleanup();
@@ -103,6 +102,7 @@ public class Pet_di_buon extends MainObject {
 
     @Override
     public void SetDie(Map map, MainObject mainAtk) {
+        if (isDie) return;
         try {
             if (this.hp <= 0) {
                 this.isDie = true;

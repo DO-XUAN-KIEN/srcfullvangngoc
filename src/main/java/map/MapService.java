@@ -2127,7 +2127,7 @@ public class MapService {
         }
     }
 
-    private static void Fire_Mob_DiBuon(Map map, Session conn, Pet_di_buon pet_di_buon, int index_skill, int dameBase) throws IOException {
+    public static void Fire_Mob_DiBuon(Map map, Session conn, Pet_di_buon pet_di_buon, int index_skill, int dameBase) throws IOException {
         if (dameBase < 0) {
             dameBase = 0;
         }

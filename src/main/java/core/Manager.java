@@ -108,7 +108,7 @@ public class Manager {
      public static String BXH_level = "";
    
 
-    public static byte thue = 5;
+    public static byte thue = 10;
     public static String nameClanThue;
     public static Clan ClanThue;
     public static final List<String> PlayersWinCThanh = new ArrayList<>();
@@ -133,7 +133,7 @@ public class Manager {
     public static void ResetCThanh() {
         PlayersWinCThanh.clear();
         nameClanThue = null;
-        thue = 5;
+        thue = 10;
         ClanThue = null;
     }
 

@@ -401,8 +401,6 @@ public class ChienTruong {
 
 	public synchronized void open_register() throws IOException {
 		if (this.status == 0) {
-
-		//	Manager.gI().chatKTGprocess("Chiến trường mở đăng ký");
 			this.status = 1;
 			this.time = 60*44;
 		}

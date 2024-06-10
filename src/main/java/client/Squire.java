@@ -105,7 +105,6 @@ public class Squire extends Player {
         list_thao_kham_ngoc = new ArrayList<>();
         myclan = null;
     }
-
     public void removeClan() {
         try {
             Message msg = new Message(69);
@@ -119,7 +118,6 @@ public class Squire extends Player {
             e.printStackTrace();
         }
     }
-
     public Squire load() {
         long _time = System.currentTimeMillis();
         String query = "SELECT * FROM `squire` WHERE `id` = '" + this.index + "' LIMIT 1;";
@@ -656,7 +654,7 @@ public class Squire extends Player {
                     if (mob_target == null) {
                         mob_target = map.GetBoss(ObjAtk);
                     }
-                    if (map.zone_id == 5 && !map.isMapChiemThanh() && !map.isMapLoiDai()) {
+                    if (map.zone_id == map.maxzone && !map.isMapChiemThanh() && !map.isMapLoiDai()) {
                         Pet_di_buon pet_di_buon = Pet_di_buon_manager.check(ObjAtk);
                         if (pet_di_buon != null) {
                             if (!pet_di_buon.equals(conn.p.pet_di_buon)) {

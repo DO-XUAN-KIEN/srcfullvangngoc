@@ -18,9 +18,7 @@ import java.util.Map.Entry;
 import core.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
-import event_daily.ArenaTemplate;
-import event_daily.ChienTruong;
-import event_daily.Wedding;
+import event_daily.*;
 
 import io.Message;
 import io.Session;
@@ -147,6 +145,8 @@ public class Player extends Body2 {
     public Wedding it_wedding;
     public String[] in4_wedding;
     public int[] quest_daily;
+    public int[] st_ran;
+    public int[] sc_ran;
     public int chuyencan;
     public int diemsukien;
     public byte khu2;
@@ -171,6 +171,7 @@ public class Player extends Body2 {
     public long time_die;
     public byte type_armor_create = -1;
     public byte id_armor_create = -1;
+    public byte id_than;
     public List<NpcTemplate> npcs;
 
     public void datatx() {
@@ -760,6 +761,25 @@ public class Player extends Body2 {
                     quest_daily[i] = Integer.parseInt(jsar.get(i).toString());
                 }
                 jsar.clear();
+                // đồ thần random
+                jsar = (JSONArray) JSONValue.parse(rs.getString("st_ran"));
+                if (jsar == null) {
+                    return false;
+                }
+                st_ran = new  int[jsar.size()];
+                for (int i = 0; i < jsar.size(); i++) {
+                    st_ran[i] = Integer.parseInt(jsar.get(i).toString());
+                }
+                //
+                jsar = (JSONArray) JSONValue.parse(rs.getString("sc_ran"));
+                if (jsar == null) {
+                    return false;
+                }
+                sc_ran = new  int[jsar.size()];
+                for (int i = 0; i < jsar.size(); i++) {
+                    sc_ran[i] = Integer.parseInt(jsar.get(i).toString());
+                }
+                jsar.clear();
                 jsar = (JSONArray) JSONValue.parse(rs.getString("point_active"));
                 if (jsar == null) {
                     return false;
@@ -768,7 +788,6 @@ public class Player extends Body2 {
                 for (int i = 0; i < jsar.size(); i++) {
                     point_active[i] = Integer.parseInt(jsar.get(i).toString());
                 }
-
                 jsar.clear();
                 myclan = Clan.get_clan_of_player(this.name);
                 //
@@ -993,6 +1012,19 @@ public class Player extends Body2 {
                 }
                 a += ",`quest_daily` = '" + jsar.toJSONString() + "'";
                 jsar.clear();
+                // random đồ thần
+                for (int i = 0; i < st_ran.length; i++) {
+                    jsar.add(st_ran[i]);
+                }
+                a += ",`st_ran` = '" + jsar.toJSONString() + "'";
+                jsar.clear();
+                // random đồ thần
+                for (int i = 0; i < sc_ran.length; i++) {
+                    jsar.add(sc_ran[i]);
+                }
+                a += ",`sc_ran` = '" + jsar.toJSONString() + "'";
+                jsar.clear();
+
                 for (int i = 0; i < 21; i++) {
                     jsar.add(skill_point[i]);
                 }
@@ -1422,7 +1454,7 @@ public class Player extends Body2 {
             khu2 = 2;
             point_active[0] = 10;
             point_active[1] = 0;
-            quest_daily = new int[]{-1, -1, 0, 0, 20};
+            quest_daily = new int[]{-1, -1, 0, 0, 10};
             date = Date.from(Instant.now());
         }
     }
@@ -1514,7 +1546,7 @@ public class Player extends Body2 {
                 }
             }
             if (mbuffer2 == null) {
-                Service.send_notice_box(p.conn, "Có lỗi xảy ra khi chuyển map hoặc đã đầy, hãy thử lại sau");
+                Service.send_notice_box(p.conn, "có lỗi xảy ra khi chuyển map");
                 return;
             }
             // di buon
@@ -1567,6 +1599,9 @@ public class Player extends Body2 {
         if (expmulti && this.getlevelpercent() >= 0) {
             dame_exp *= Manager.gI().exp;
         }
+        if (conn.p.isTrader() == true || conn.p.isRobber() == true || conn.p.isKnight() == true){
+            dame_exp = 0;
+        }
         if (type_use_mount == 4) {
             dame_exp += ((dame_exp * 5) / 100);
         }
@@ -1578,7 +1613,7 @@ public class Player extends Body2 {
             return;
         }
         if (this.map.zone_id == 1 && !Map.is_map_not_zone2(this.map.map_id)) { // Khu 2
-            dame_exp *= ((dame_exp * 5) / 100);
+            dame_exp += ((dame_exp * 5) / 100);
         }
         if (level >= Manager.gI().lvmax || type_exp == 0) {
             return;
@@ -1653,7 +1688,7 @@ public class Player extends Body2 {
         }
         byte zone = m2.reader().readByte();
         Map map_change = Map.get_map_by_id(this.map.map_id)[zone];
-        if (zone == 5 && !conn.p.isKnight() && !conn.p.isRobber() && !conn.p.isTrader() && map_change.is_map_buon()) {
+        if (zone == map.maxzone && !conn.p.isKnight() && !conn.p.isRobber() && !conn.p.isTrader() && map_change.is_map_buon()) {
             return;
         }
         if (zone < this.map.maxzone || (conn.p.item.wear[11] != null && (conn.p.item.wear[11].id == 3599
@@ -1676,7 +1711,7 @@ public class Player extends Body2 {
 //                        } else if (conn.p.item.total_item_by_id(4, (short) 54) >= 1) {
 //                            MenuController.send_menu_select(conn, -43, new String[]{"Đồng bạc Tyche", "Dùng ngọc"}, (byte) 1);
                         } else {
-                            Service.send_box_input_yesno(conn, -112, "Bạn có muốn vào khu 2 với 10k coin cho 2 giờ?");
+                            Service.send_box_input_yesno(conn, -112, "Bạn có muốn vào khu 2 với 5k coin cho 2 giờ?");
                         }
                         return;
                     }
@@ -1710,6 +1745,22 @@ public class Player extends Body2 {
         }
         return true;
     }
+    public synchronized boolean update_nap(int nap_exchange) throws IOException {
+        String query = "SELECT `tichdiem` FROM `account` WHERE `user` = '" + conn.user + "' LIMIT 1;";
+        int nap_old = 0;
+        try (Connection connection = SQL.gI().getConnection(); Statement ps = connection.createStatement(); ResultSet rs = ps.executeQuery(query)) {
+            rs.next();
+            nap_old = rs.getInt("tichdiem");
+            nap_old += nap_exchange;
+            if (ps.executeUpdate(
+                    "UPDATE `account` SET `tichdiem` = " + nap_old + " WHERE `user` = '" + conn.user + "'") == 1) {
+                connection.commit();
+            }
+        } catch (SQLException e) {
+            Service.send_notice_box(conn, "Đã xảy ra lỗi");
+        }
+        return true;
+    }
     public synchronized int checkcoin() {
         int result = 0;
         String query = "SELECT `coin` FROM `account` WHERE `user` = '" + conn.user + "' LIMIT 1;";
@@ -1721,7 +1772,17 @@ public class Player extends Body2 {
         }
         return result;
     }
-
+    public synchronized int check_nap() {
+        int result = 0;
+        String query = "SELECT `tichdiem` FROM `account` WHERE `user` = '" + conn.user + "' LIMIT 1;";
+        try ( Connection connection = SQL.gI().getConnection();  Statement ps = connection.createStatement();  ResultSet rs = ps.executeQuery(query)) {
+            rs.next();
+            result = rs.getInt("tichdiem");
+        } catch (SQLException e) {
+            result = 0;
+        }
+        return result;
+    }
     public synchronized boolean history_coin(int coin_exchange, String log) throws IOException {
         String query
                 = "INSERT INTO `history_coin` (`user_id`, `user_name`, `name_player` , `coin_change`, `logger`) VALUES ('"

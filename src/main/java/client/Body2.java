@@ -278,7 +278,6 @@ public class Body2 extends MainObject {
         }
         return (int) (pie / 2.1);
     }
-
     @Override
     public int get_PhanDame() {
         int param = 2 * get_point(3);
@@ -293,7 +292,6 @@ public class Body2 extends MainObject {
         }
         return (int) (param / 2.1);
     }
-
     @Override
     public int get_Miss(boolean giam_ne) {
         int param = 2 * get_point(2);
@@ -307,7 +305,6 @@ public class Body2 extends MainObject {
         }
         return (int) (param / 1.8);
     }
-
     @Override
     public int get_Crit() {
         int crit = total_item_param(33) + total_skill_param(33);
@@ -685,7 +682,7 @@ public class Body2 extends MainObject {
             if (isDie) {
                 return;
             }
-            //<editor-fold defaultstate="collapsed" desc="auto +hp,mp       ..."> 
+            //<editor-fold defaultstate="collapsed" desc="auto +hp,mp       ...">
             EffTemplate vet_thuong_sau = p.get_EffDefault(StrucEff.VET_THUONG_SAU);
             EffTemplate te_cong = p.get_EffDefault(StrucEff.TE_CONG);
             int percent = p.body.total_skill_param(29) + p.body.total_item_param(29);

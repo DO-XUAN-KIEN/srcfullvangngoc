@@ -275,7 +275,7 @@ public class GameSrc {
     }
 
     private static boolean checkmaterial(Session conn, short id, byte tem) throws IOException {
-        if (conn.p.get_vang() < 1_000_000 || conn.p.get_ngoc() < 1000) {
+        if (conn.p.get_vang() < 10_000 || conn.p.get_ngoc() < 10) {
             return false;
         }
         if (!conn.p.item.bag3[id].islock) {
@@ -1115,8 +1115,8 @@ public class GameSrc {
         }
     }
 
-    public static short[] Ratio_Upgrade_Medal = new short[]{10000, 9500, 9000, 8500, 8000, 7500, 5500, 4500, 2900, 2700, 2500, 2300, 2000, 1500, 1000, 500};
-    //open public static short[] Ratio_Upgrade_Medal = new short[]{10000, 10000, 10000, 6666, 5555, 4444, 3333, 2222, 1111, 500, 300, 200, 50, 1, 1, 1};// op
+    //public static short[] Ratio_Upgrade_Medal = new short[]{10000, 9500, 9000, 8500, 8000, 7500, 5500, 4500, 2900, 2700, 2500, 2300, 2000, 1500, 1000, 500};
+    public static short[] Ratio_Upgrade_Medal = new short[]{10000, 10000, 10000, 6666, 5555, 4444, 3333, 2222, 1111, 500, 300, 200, 50, 1, 1, 1};// op
     public static void UpgradeMedal(Session conn, byte index) throws IOException {
         if (index > 3) {
             Service.send_notice_box(conn, "bug tao đá chết cha m giờ!");
@@ -1887,19 +1887,17 @@ public class GameSrc {
                             conn.p.update_vang(-vang_trade);
                             Log.gI().add_log(conn.p.name, "Trừ " + vang_trade + " mua đồ của " + p0.name + " khu mua bán");
                             long thue = (vang_trade / 100) * Manager.thue;
-                            if (Manager.ClanThue != null) {
-                                Manager.ClanThue.update_vang(thue);
-                            }
+//                            if (Manager.ClanThue != null) {
+//                                Manager.ClanThue.update_vang(thue);
+//                            }
 //                                Manager.ClanThue.update_vang((vang_trade * Manager.thue) / 100);
                             vang_trade -= thue;
-
                             p0.update_vang(vang_trade);
                             Log.gI().add_log(conn.p.name, "Nhận" + vang_trade + " bán đồ cho " + conn.p.name + " khu mua bán");
 
                             hist.tem3 = itTrade;
                             hist.UpdateGold(p0.get_vang(), conn.p.get_vang());
                             hist.Flus();
-
                             conn.p.item.add_item_bag3(itTrade);
                             p0.item.bag3[p0.my_store.get(i).it_id] = null;
                             p0.item.char_inventory(4);
@@ -1930,10 +1928,10 @@ public class GameSrc {
                                     conn.p.update_vang(-vang_trade);
                                     Log.gI().add_log(conn.p.name, "Trừ " + vang_trade + " mua đồ của " + p0.name + " khu mua bán");
                                     long thue = (vang_trade / 100) * Manager.thue;
-                                    if (Manager.ClanThue != null) {
-                                        Manager.ClanThue.update_vang(thue);
-                                    }
-                                    //                                Manager.ClanThue.update_vang((vang_trade * Manager.thue) / 100);
+//                                    if (Manager.ClanThue != null) {
+//                                        Manager.ClanThue.update_vang(thue);
+//                                    }
+//                                    //                                Manager.ClanThue.update_vang((vang_trade * Manager.thue) / 100);
                                     vang_trade -= thue;
                                     p0.update_vang(vang_trade);
                                     Log.gI().add_log(conn.p.name, "Nhận" + vang_trade + " bán đồ cho " + conn.p.name + " khu mua bán");
@@ -2149,7 +2147,7 @@ public class GameSrc {
                 }
                 Message m = new Message(-100);
                 // 5 open
-                if (40 > Util.random(100) || (p.conn.ac_admin > 3 && Manager.BuffAdmin)) {
+                if (5 > Util.random(100) || (p.conn.ac_admin > 3 && Manager.BuffAdmin)) {
                     if (!Helps.Kham_Item.KhamNgoc(id_g1, it3)) {
                         Service.send_notice_box(p.conn, "Không thể khảm!");
                         return;
@@ -2227,13 +2225,13 @@ public class GameSrc {
                     //open
                     if (id_g1 == 33) {
                         // 20
-                        suc = 35 > Util.random(100 + index_ngoc_kham_vao * 35);
+                        suc = 20 > Util.random(100 + index_ngoc_kham_vao * 35);
                     } else if (id_g1 == 44) {
                         // 35
-                        suc = 55 > Util.random(100 + index_ngoc_kham_vao * 35);
+                        suc = 35 > Util.random(100 + index_ngoc_kham_vao * 35);
                     } else if (id_g1 == 45) {
                         //  55
-                        suc = 65 > Util.random(100 + index_ngoc_kham_vao * 35);
+                        suc = 55 > Util.random(100 + index_ngoc_kham_vao * 35);
                     } else {
                         Service.send_notice_box(p.conn, "Nguyên liệu đục không hợp lệ!");
                         return;
@@ -2306,8 +2304,8 @@ public class GameSrc {
         }
     }
 
-    public static short[] Ratio_UpgradeItemStar = new short[]{5500, 4500, 4000, 3500, 3000, 2500, 1800, 1200, 500};
-    //open public static short[] Ratio_UpgradeItemStar = new short[]{3000, 2500, 2000, 1500, 1000, 500, 200, 100, 50};
+    //public static short[] Ratio_UpgradeItemStar = new short[]{5500, 4500, 4000, 3500, 3000, 2500, 1800, 1200, 500};
+    public static short[] Ratio_UpgradeItemStar = new short[]{3000, 2500, 2000, 1500, 1000, 500, 200, 100, 50};
     public static void ActionsItemStar(Session conn, Message m) {
         try {
             if (conn.p.time_speed_rebuild > System.currentTimeMillis()) {
@@ -2995,7 +2993,6 @@ public class GameSrc {
                     }
                     conn.p.update_vang(-2000000);
                     conn.p.item.remove(7, id_material, 500);
-
                     Item3 itbag = new Item3();
                     short iditem = (short) (4784 + conn.p.id_armor_create);
                     ItemTemplate3 temp = ItemTemplate3.item.get(iditem);
@@ -3060,10 +3057,9 @@ public class GameSrc {
                     Item3 item = conn.p.item.bag3[id];
                     if (item != null && item.type == 28 && item.tier < 10) {
                         short id_material = (short) (material_update_armor[item.tier] + item.id - 4784);
-                        System.out.println(id_material);
+                        //System.out.println(id_material);
                         int quantity = quantity_update_armor[item.tier];
                         int gems = gems_update_armor[item.tier];
-
                         if (conn.p.get_ngoc() < gems) {
                             Service.send_notice_box(conn, "Không đủ " + gems + " ngọc");
                             return;

@@ -90,7 +90,9 @@ public class ServerManager implements Runnable {
                             fileOutputStream.close();
                             System.out.println("Đã lưu mảng byte vào file ERROR/check.txt");
                         }
-                    } catch (Exception eee) {
+                    }catch (Exception e) {
+                        System.out.println("Lỗi: " + e.getMessage());
+                        e.printStackTrace();
                     }
                 }
             }
@@ -119,7 +121,9 @@ public class ServerManager implements Runnable {
                 if (time_sleep > 0) {
                     Thread.sleep(time_sleep);
                 }
-            } catch (Exception e) {
+            }catch (Exception e) {
+                System.out.println("Lỗi: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
@@ -133,7 +137,7 @@ public class ServerManager implements Runnable {
 //            ServerManager.gI().close();
 //        } catch (Exception e) {
 //            e.printStackTrace();
-//        }  
+//        }
 //    }
 
     public void run() {
@@ -234,10 +238,10 @@ public class ServerManager implements Runnable {
                     if (min % 5 == 0 && sec == 0) {
                         Manager.gI().chatKTGprocess("Bạn Đang Chơi Server" + " Hiệp Sĩ Mango " + "Chúc Bạn Chơi Game Vui Vẻ.");
                     }
-                    checkError = 5;
-                    if (min % 4 == 0 && sec == 0) {
-                        Manager.gI().chatKTGprocess("Lưu Ý Không Để Cho Hành Trang Đầy Chừa 30 Ô Trong Hành Trang Để Tránh Gây Ra Lỗi Mất Đồ! Mua Túi Hành Trang Npc Lisa.");
-                    }
+//                    checkError = 5;
+//                    if (min % 4 == 0 && sec == 0) {
+//                        Manager.gI().chatKTGprocess("Lưu Ý Không Để Cho Hành Trang Đầy Chừa 30 Ô Trong Hành Trang Để Tránh Gây Ra Lỗi Mất Đồ! Mua Túi Hành Trang Npc Lisa.");
+//                    }
                    //  checkError = 5;
                    // if (min % 2 == 0 && sec == 0) {
                      //   Manager.gI().chatKTGprocess("Code Test: 1-10.  Nguyên liệu Trắng Cấp 3 Mua Ở Npc Pháp Sư");
@@ -279,7 +283,6 @@ public class ServerManager implements Runnable {
                         }
                     }
                     checkError = 8;
-
                     if (Manager.gI().event == 1) {
                         if (Event_1.naukeo == null) {
                             Event_1.naukeo = new NauKeo();
@@ -313,10 +316,10 @@ public class ServerManager implements Runnable {
                         ChiemThanhManager.update();
                     }
                     checkError = 9;
-                    if (sec == 3 && min == 0 && (hour == 12 || hour == 20)) {
+                    if (sec == 3 && min == 0 && (hour == 8 || hour == 20)) {
                         Manager.gI().chiem_mo.mo_open_atk();
                         Manager.gI().chatKTGprocess(" Thời gian chiếm mỏ đã đến!");
-                    } else if (sec == 3 && min == 0 && (hour == 13 || hour == 21)) {
+                    } else if (sec == 3 && min == 0 && (hour == 9 || hour == 21)) {
                         Manager.gI().chiem_mo.mo_close_atk();
                         Manager.gI().chatKTGprocess(" Thời gian chiếm mỏ đã đóng!");
                     }

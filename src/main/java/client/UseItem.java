@@ -67,7 +67,6 @@ public class UseItem {
         }
 
     }
-
     private static void use_item4_default(Session conn, short id_potion) throws IOException {
         switch (id_potion) {
             case 57:
@@ -85,7 +84,7 @@ public class UseItem {
                     return;
                 }
                 if (!conn.p.isTrader()) {
-                    Service.send_notice_box(conn, "Chỉ dùng được khi là thương nhân");
+                    Service.send_notice_box(conn, "Chỉ dùng được khi là buôn ");
                     return;
                 }
                 if (conn.p.pet_di_buon == null) {
@@ -102,52 +101,54 @@ public class UseItem {
                     m22.writer().writeByte(-1);
                     conn.addmsg(m22);
                     m22.cleanup();
-                    conn.p.item.remove(4, id_potion, 1);
-                } else {
-                    Service.send_notice_box(conn,
-                            "Bạn đang dắt 1 con rồi!\nVị trí:\n" + Map.get_map_by_id(conn.p.pet_di_buon.id_map)[0].name + "\n"
-                            + conn.p.pet_di_buon.x + " " + conn.p.pet_di_buon.y);
-                }
-                break;
-            }
-            case 86: {
-                if (conn.p.map.zone_id != conn.p.map.maxzone) {
-                    Service.send_notice_box(conn, "Chỉ dùng được trong khu đi buôn");
-                    return;
-                }
-                if (!conn.p.isRobber()) {
-                    Service.send_notice_box(conn, "Chỉ dùng được khi là cướp");
-                    return;
-                }
-                if (conn.p.pet_di_buon == null) {
-                    conn.p.pet_di_buon = new Pet_di_buon(132, Manager.gI().get_index_mob_new(), conn.p.x, conn.p.y,
-                            conn.p.map.map_id, conn.p.name, conn.p);
-                    Pet_di_buon_manager.add(conn.p.name, conn.p.pet_di_buon);
                     //
-                    Message m22 = new Message(4);
-                    m22.writer().writeByte(1);
-                    m22.writer().writeShort(132);
-                    m22.writer().writeShort(conn.p.pet_di_buon.index);
-                    m22.writer().writeShort(conn.p.pet_di_buon.x);
-                    m22.writer().writeShort(conn.p.pet_di_buon.y);
-                    m22.writer().writeByte(-1);
-                    conn.addmsg(m22);
-                    m22.cleanup();
                     conn.p.item.remove(4, id_potion, 1);
                 } else {
                     Service.send_notice_box(conn,
-                            "Bạn đang dắt 1 con rồi!\nVị trí:\n" + Map.get_map_by_id(conn.p.pet_di_buon.id_map)[0].name + "\n"
+                            "Vật đi buôn của bạn đang ở\nVị trí:\n" + Map.get_map_by_id(conn.p.pet_di_buon.id_map)[0].name + "\n"
                                     + conn.p.pet_di_buon.x + " " + conn.p.pet_di_buon.y);
                 }
-                break;
+            break;
+        }
+        case 86: {
+            if (conn.p.map.zone_id != conn.p.map.maxzone) {
+                Service.send_notice_box(conn, "Chỉ dùng được trong khu đi buôn");
+                return;
             }
+            if (!conn.p.isRobber()) {
+                Service.send_notice_box(conn, "Chỉ dùng được khi là cướp ");
+                return;
+            }
+            if (conn.p.pet_di_buon == null) {
+                conn.p.pet_di_buon = new Pet_di_buon(132, Manager.gI().get_index_mob_new(), conn.p.x, conn.p.y,
+                        conn.p.map.map_id, conn.p.name, conn.p);
+                Pet_di_buon_manager.add(conn.p.name, conn.p.pet_di_buon);
+                //
+                Message m22 = new Message(4);
+                m22.writer().writeByte(1);
+                m22.writer().writeShort(132);
+                m22.writer().writeShort(conn.p.pet_di_buon.index);
+                m22.writer().writeShort(conn.p.pet_di_buon.x);
+                m22.writer().writeShort(conn.p.pet_di_buon.y);
+                m22.writer().writeByte(-1);
+                conn.addmsg(m22);
+                m22.cleanup();
+                //
+                conn.p.item.remove(4, id_potion, 1);
+            } else {
+                Service.send_notice_box(conn,
+                        "Vật đi buôn của bạn đang ở\nVị trí:\n" + Map.get_map_by_id(conn.p.pet_di_buon.id_map)[0].name + "\n"
+                                + conn.p.pet_di_buon.x + " " + conn.p.pet_di_buon.y);
+            }
+            break;
+        }
             case 0:
             case 1:
             case 25:
             case 2: {
                 EffTemplate vet_thuong_sau = conn.p.get_EffDefault(StrucEff.VET_THUONG_SAU);
                 EffTemplate te_cong = conn.p.get_EffDefault(StrucEff.TE_CONG);
-                if (conn.p.time_use_poition_hp < System.currentTimeMillis() && vet_thuong_sau == null && te_cong == null) {
+                if (conn.p.time_use_poition_hp < System.currentTimeMillis() && te_cong == null && vet_thuong_sau == null) {
                     conn.p.time_use_poition_hp = System.currentTimeMillis() + 2000L;
                     conn.p.item.remove(4, id_potion, 1);
                     int param = ItemTemplate4.item.get(id_potion).getValue();
@@ -1509,7 +1510,6 @@ public class UseItem {
                 break;
             }
             case 163: {
-                conn.p.item.remove(4, id, 1);
                 conn.p.type_use_mount = (byte) 10;
                 conn.p.map.send_mount(conn.p);
                 break;

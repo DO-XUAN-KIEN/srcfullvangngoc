@@ -170,8 +170,8 @@ public class Mob_in_map extends MainObject {
                             }
                             if (Math.abs(mob.level - mainAtk.level) <= 5 && Manager.gI().event == 3 && Util.random_ratio(10)) {
                                 ev_he.Event_3.LeaveItemMap(map, this, mainAtk);
-                            } else if (mob.level >= 133) {
-                                ev_he.Event_3.LeaveItemMap(map, this, mainAtk);
+//                            } else if (mob.level >= 133) {
+//                                ev_he.Event_3.LeaveItemMap(map, this, mainAtk);
                             }
                             if (percent > Util.random(0, 300) || mob.color_name != 0) {
                                 LeaveItemMap.leave_item_3(map, mob, (Player) mainAtk);
