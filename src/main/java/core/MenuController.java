@@ -72,7 +72,7 @@ public class MenuController {
                 break;
             }
             case -99: { // shop_coin
-                menu = new String[]{"Shop coin", "Shop đồ tinh tú","Shop nlmd = coin","Tiến hoá đồ tt","Tiến hóa mề đay","Nhận quà tích lũy"};
+                menu = new String[]{"Shop coin", "Shop đồ tinh tú","Shop nlmd = coin","Tiến hoá đồ tt","Tiến hóa mề đay","Nhận quà tích lũy","Đổi đồng money","TEST"};
                 break;
             }
 //              case -20: { // Lisa
@@ -917,6 +917,7 @@ public class MenuController {
 
     }
     private static void Menu_shopcoin(Session conn, byte index) throws IOException{
+        conn.p.ResetCreateItemStar();
         switch (index){
             case 0: {
                 Service.send_box_UI(conn, 37);
@@ -931,53 +932,14 @@ public class MenuController {
                 break;
             }
             case 3: {
-                    Service.send_notice_box(conn,"Chưa ra mắt");
-//                    List<String> list = new ArrayList<>();
-//                    for (int i = 0; i < conn.p.item.bag3.length; i++) {
-//                        Item3 it = conn.p.item.bag3[i];
-//                        if (it != null && it.id >= 4831 && it.id <= 4873 && it.color == 5 && it.tierStar <= 15) {
-//                            list.add(it.name + " +" + it.tier);
-//                        }
-//
-//                    }
-//
-//                    String[] list_2 = null;
-//                    if (list.size() > 0) {
-//                        list_2 = new String[list.size()];
-//                        for (int i = 0; i < list_2.length; i++) {
-//                            list_2[i] = list.get(i);
-//                        }
-//                    } else {
-//                        Service.send_notice_box(conn, "Trang Bị Tinh Tú [Cấp 9] Trở Lên!");
-//                    }
-//                    MenuController.send_menu_select(conn, 130, list_2);
+                conn.p.isdothan = true;
+                Service.send_box_UI(conn, 33);
                 break;
             }
             case 4: {
-                Service.send_notice_box(conn,"Chưa ra mắt");
-//                try {
-//                    List<String> list = new ArrayList<>();
-//                    for (int i = 0; i < conn.p.item.bag3.length; i++) {
-//                        Item3 it = conn.p.item.bag3[i];
-//                        if (it != null && it.id >= 4587 && it.id <= 4590 && it.color == 5){
-//                            list.add(it.name + " +" + it.tier);
-//                        }
-//                    }
-//                    String[] list_2 = null;
-//                    if (list.size() > 0) {
-//                        list_2 = new String[list.size()];
-//                        for (int i = 0; i < list_2.length; i++) {
-//                            list_2[i] = list.get(i);
-//                        }
-//                    } else {
-//                        Service.send_notice_box(conn, "Trang Bị Mề đay +15 trở lên mới nâng được mới nâng được");
-//                    }
-//                    MenuController.send_menu_select(conn, 131, list_2);
-//                }catch (Exception e) {
-//                    System.out.println("Lỗi: " + e.getMessage());
-//                    e.printStackTrace();
-//                }
-//                break;
+                //Service.send_notice_box(conn,"Chưa ra mắt");
+                conn.p.ismdthan = true;
+                Service.send_box_UI(conn, 33);
             }
             case 5: {
                 send_menu_select(conn, -98,new String[]{"Mốc 100 điểm(cánh V1)","Mốc 200 điểm(Cánh V2)","Mốc 300 điểm(Cánh V3)", "Mốc 300 điểm(Áo choàng đại gia)", "Mốc 400 điểm(Cánh V4)", "Mốc 400 điểm(Áo choàng Triệu phú)", "Mốc 500 điểm(Cánh V5)", "Mốc 500 điểm(Áo choàng tỷ phú)"});
@@ -985,6 +947,10 @@ public class MenuController {
             }
             case 6: {
                 Service.send_box_input_text(conn,49,"Đổi đồng money",new String[]{"Nhập số lượng đồng money"});
+                break;
+            }
+            case 7: {
+                Service.send_box_input_yesno(conn,-118,"OKI");
                 break;
             }
             default:{
@@ -3993,30 +3959,25 @@ public class MenuController {
             }
             case 4: {
                 Service.send_box_UI(conn, 25);
-                conn.p.ResetCreateItemStar();
                 conn.p.id_medal_is_created = 0;
                 break;
             }
             case 5: {
                 Service.send_box_UI(conn, 26);
-                conn.p.ResetCreateItemStar();
                 conn.p.id_medal_is_created = 1;
                 break;
             }
             case 6: {
                 Service.send_box_UI(conn, 27);
-                conn.p.ResetCreateItemStar();
                 conn.p.id_medal_is_created = 2;
                 break;
             }
             case 7: {
                 Service.send_box_UI(conn, 28);
-                conn.p.ResetCreateItemStar();
                 conn.p.id_medal_is_created = 3;
                 break;
             }
             case 8: {
-                conn.p.ResetCreateItemStar();
                 Service.send_box_UI(conn, 33);
                 break;
             }
@@ -5012,6 +4973,7 @@ public class MenuController {
     }
 
     private static void Menu_Hammer(Session conn, byte index, byte idmenu) throws IOException {
+        conn.p.ResetCreateItemStar();
         if (idmenu == 0) {
             switch (index) {
                 case 0: {

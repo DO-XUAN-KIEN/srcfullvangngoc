@@ -7,13 +7,10 @@ import ai.Player_Nhan_Ban;
 
 import java.io.IOException;
 
-import core.GameSrc;
-import core.Manager;
-import core.MenuController;
-import core.Service;
+import core.*;
+
 import static core.Service.send_notice_nobox_white;
 
-import core.Util;
 import event_daily.MoLy;
 import event_daily.ChienTruong;
 import io.Message;
@@ -22,6 +19,7 @@ import map.Dungeon;
 import map.DungeonManager;
 import map.Map;
 import map.MapService;
+import template.Horse;
 
 public class MessageHandler {
 
@@ -62,6 +60,10 @@ public class MessageHandler {
                     GameSrc.ActionsItemStar(conn, m);
                 } else if (conn.p.isCreateArmor) {
                     GameSrc.ActionsItemArmor(conn, m);
+                } else if (conn.p.isdothan) {
+                    DoSieucap.nangdothan(conn,m);
+                } else if (conn.p.ismdthan) {
+                    DoSieucap.nangmdthan(conn,m);
                 } else {
                     GameSrc.Create_Medal(conn, m);
                 }
@@ -529,6 +531,9 @@ public class MessageHandler {
 
         // add x2 xp
         conn.p.set_x2_xp(1);
+        if (conn.p.myclan == null || !Horse.isHorseClan(conn.p.type_use_mount)) {
+            conn.p.type_use_mount = -1;
+        }
         MapService.enter(conn.p.map, conn.p);
     }
 

@@ -64,6 +64,7 @@ public class MapService {
                 }
             }
             map.send_map_data(p);
+            p.map.send_mount(p);
             Service.send_char_main_in4(p);
             Service.send_combo(p.conn);
             Service.send_point_pk(p);
@@ -1750,7 +1751,7 @@ public class MapService {
             ChiemThanhManager.request_livefromdie(map, conn, type);
         } else {
             if (type == 1) { // hsl
-                Service.send_box_input_yesno(conn, 9, "Cần 5 ngọc cho mỗi lần hồi sinh tại chỗ ?");
+                Service.send_box_input_yesno(conn, 9, "Cần 5000 vàng cho mỗi lần hồi sinh tại chỗ ?");
             } else if (type == 0) { // ve lang
                 conn.p.isDie = false;
                 conn.p.hp = conn.p.body.get_HpMax();

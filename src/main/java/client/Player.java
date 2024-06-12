@@ -45,6 +45,7 @@ public class Player extends Body2 {
     public Date date;
     public byte diemdanh;
     public byte chucphuc;
+    public byte type_use_mount;
     // public int hieuchien;
     public int dibuon;
     public int dicuop;
@@ -91,7 +92,6 @@ public class Player extends Body2 {
     public HashMap<Integer, Boolean> bot_inside;
     public HashMap<Integer, Boolean> other_mob_inside;
     public HashMap<Integer, Boolean> other_mob_inside_update;
-    public byte type_use_mount;
     public short id_item_rebuild;
     public boolean is_use_mayman;
     public short id_use_mayman;
@@ -199,9 +199,12 @@ public class Player extends Body2 {
     //create item star
     public boolean isCreateItemStar = false;
     public boolean isCreateArmor = false;
+    public boolean isdothan = false;
+    public boolean ismdthan = false;
     public byte ClazzItemStar = -1;
     public byte TypeItemStarCreate = -1;
     public short[] MaterialItemStar;
+    public short[] NLdothan;
     public int id_Upgrade_Medal_Star = -1;
 
     //biến heo chiến trường
@@ -212,6 +215,9 @@ public class Player extends Body2 {
 
     public void ResetCreateItemStar() {
         isCreateItemStar = false;
+        isdothan = false;
+        ismdthan = false;
+        isCreateArmor = false;
         ClazzItemStar = -1;
         TypeItemStarCreate = -1;
     }
@@ -252,6 +258,18 @@ public class Player extends Body2 {
                 (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
                 (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),};
     }
+    public void setnldothan() {
+        NLdothan = new short[]{
+                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
+                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
+                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
+                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
+                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
+                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
+                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
+                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),};
+    }
+
 
     public void ChangeMaterialItemStar(byte type) {
         if (type >= 8) {
@@ -264,6 +282,17 @@ public class Player extends Body2 {
         MaterialItemStar[type * 5 + 3] = (short) Util.random(336, 346);
 
         MaterialItemStar[type * 5 + 4] = (short) Util.random(457, 464);
+    }
+
+    public void ChangeNL_dothan(byte type) {
+        if (type >= 8) {
+            return;
+        }
+        NLdothan[type * 5] = (short) Util.random(417, 437);
+        NLdothan[type * 5 + 1] = (short) Util.random(437, 457);
+        NLdothan[type * 5 + 2] = (short) Util.random(326, 336);
+        NLdothan[type * 5 + 3] = (short) Util.random(336, 346);
+        NLdothan[type * 5 + 4] = (short) Util.random(457, 464);
     }
 
     public Player(Session conn, int id) {
@@ -359,6 +388,7 @@ public class Player extends Body2 {
                 clazz = rs.getByte("clazz");
                 level = rs.getShort("level");
                 exp = rs.getLong("exp");
+                type_use_mount = rs.getByte("type_use_mount");
                 //
                 if (level > Manager.gI().lvmax) {
                     level = (short) Manager.gI().lvmax;
@@ -751,6 +781,20 @@ public class Player extends Body2 {
                     SetMaterialItemStar();
                 }
                 jsar.clear();
+
+                jsar = (JSONArray) JSONValue.parse(rs.getString("NL_do_than"));
+                if (jsar == null) {
+                    return false;
+                }
+                NLdothan = new short[jsar.size()];
+                for (int i = 0; i < jsar.size(); i++) {
+                    NLdothan[i] = Short.parseShort(jsar.get(i).toString());
+                }
+                if (NLdothan == null || NLdothan.length < 40) {
+                    setnldothan();
+                }
+                jsar.clear();
+
                 jsar = (JSONArray) JSONValue.parse(rs.getString("quest_daily"));
                 if (jsar == null) {
                     return false;
@@ -1264,6 +1308,13 @@ public class Player extends Body2 {
                 a += ",`item_star_material` = '" + jsar.toJSONString() + "'";
                 jsar.clear();
 
+                //nldothan
+                for (int i = 0; i < NLdothan.length; i++) {
+                    jsar.add(NLdothan[i]);
+                }
+                a += ",`NL_do_than` = '" + jsar.toJSONString() + "'";
+                jsar.clear();
+
                 for (int i = 0; i < point_active.length; i++) {
                     jsar.add(point_active[i]);
                 }
@@ -1296,6 +1347,11 @@ public class Player extends Body2 {
                 a += ",`type_reward_king_cup` = " + type_reward_king_cup;
                 a += ",`point_king_cup` = " + point_king_cup;
                 a += ",`group_king_cup` = " + group_king_cup;
+                int id_hore = type_use_mount;
+                if (!Horse.isHorseClan(id_hore)) {
+                    id_hore = -1;
+                }
+                a += ",`type_use_mount` = " + id_hore;
 
                 if (ps.executeUpdate("UPDATE `player` SET " + a + " WHERE `id` = " + this.index + ";") > 0) {
                     connection.commit();
@@ -1593,7 +1649,16 @@ public class Player extends Body2 {
             Service.send_notice_box(p.conn, "Có lỗi xảy ra khi chuyển map");
         }
     }
-
+    public void down_horse_clan() throws IOException {
+        if (Horse.isHorseClan(type_use_mount)) {
+            type_use_mount = -1;
+            id_horse = -1;
+            MapService.update_in4_2_other_inside(this.map, this);
+            MapService.send_in4_other_char(this.map, this, this);
+            Service.send_char_main_in4(this);
+            Service.send_notice_nobox_white(conn, "Tháo thú cưỡi thành công");
+        }
+    }
     public void update_Exp(long expup, boolean expmulti) throws IOException {
         long dame_exp = expup;
         if (expmulti && this.getlevelpercent() >= 0) {
@@ -1602,7 +1667,7 @@ public class Player extends Body2 {
         if (conn.p.isTrader() == true || conn.p.isRobber() == true || conn.p.isKnight() == true){
             dame_exp = 0;
         }
-        if (type_use_mount == 4) {
+        if (type_use_mount == Horse.NGUA_DEN) {
             dame_exp += ((dame_exp * 5) / 100);
         }
         if ((type_exp == 0 && this.typepk != 0) || this.getlevelpercent() < (-500)) {
@@ -2411,7 +2476,6 @@ public class Player extends Body2 {
         hp = body.get_HpMax();
         mp = body.get_MpMax();
         fashion = Part_fashion.get_part(this);
-        type_use_mount = -1;
         id_item_rebuild = -1;
         is_use_mayman = false;
         id_use_mayman = -1;

@@ -72,6 +72,7 @@ public class Map implements Runnable {
     public int baseID = -1001;
     private boolean running;
     public Dungeon d;
+    public Leothap leo;
     public short mapW;
     public short mapH;
     public long time_ct;
@@ -213,6 +214,9 @@ public class Map implements Runnable {
 
     public boolean isMapChiemThanh() {
         return map_id >= 83 && map_id <= 87;
+    }
+    public boolean ismapkogioihan(){
+        return map_id == 55;
     }
     public boolean is_map_buon() {
         return map_id == 8 || map_id == 7 || (map_id >= 15 && map_id <= 18) || (map_id >= 20 && map_id <= 25) || map_id == 33
@@ -1019,6 +1023,14 @@ public class Map implements Runnable {
     }
 
     public static Map get_map_dungeon(int id) {
+        for (Map[] temp : entrys) {
+            if (temp[0].map_id == id) {
+                return temp[0];
+            }
+        }
+        return null;
+    }
+    public static Map get_leothap(int id) {
         for (Map[] temp : entrys) {
             if (temp[0].map_id == id) {
                 return temp[0];

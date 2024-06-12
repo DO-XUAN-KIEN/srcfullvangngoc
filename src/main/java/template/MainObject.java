@@ -547,23 +547,6 @@ public class MainObject {
             }
             //</editor-fold>
 
-            //<editor-fold defaultstate="collapsed" desc="ngựa...">
-            if (ObjAtk.isPlayer()) {
-                if (p.type_use_mount == 3) {
-                    DamePlus += 0.2;
-                } else if (p.type_use_mount == 5) {
-                    DamePlus += 0.4;
-                } else if (p.type_use_mount == 11 || p.type_use_mount == 12) {
-                    DamePlus += 0.1;
-                } else if ((p.type_use_mount == 20 && p.id_horse == 114)
-                        || (p.type_use_mount == 22 && p.id_horse == 117)) {
-                    DamePlus += 0.15;
-                } else if ((p.type_use_mount == 20 && p.id_horse == 116)) {
-                    DamePlus += 0.35;
-                }
-            }
-            //</editor-fold>
-
             List<Float> giamdame = new ArrayList<>();
             ef = ObjAtk.get_EffDefault(3);
             if (ef != null) {
@@ -744,11 +727,11 @@ public class MainObject {
                         dame = 1;
                     }
                 }
-                boolean check = dame < 0
+                boolean check = (dame < 0
                         || (focus.isBoss() && Math.abs(focus.level - ObjAtk.level) >= 5 && focus.level < 139 && focus.template.mob_id != 178 && !Map.is_map_cant_save_site(focus.map_id))
                         || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 0 && ObjAtk.level > 89)
                         || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 2 && !(ObjAtk.level >= 90 && ObjAtk.level < 110))
-                        || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 3 && ObjAtk.level < 110);
+                        || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 3 && ObjAtk.level < 110)) && !(map.ismapkogioihan());
                 if (check) {
                     dame = 0;
                 }

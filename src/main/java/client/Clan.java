@@ -23,6 +23,7 @@ import template.Item47;
 import template.Level;
 import template.Mob_MoTaiNguyen;
 import template.Part_player;
+import template.Horse;
 
 public class Clan {
 
@@ -131,6 +132,9 @@ public class Clan {
                 if (p0 != null) {
                     Service.send_notice_box(p0.conn, "Bạn bị đá khỏi bang vì lý do quá kém cỏi!");
                     p0.myclan = null;
+                    if (Horse.isHorseClan(p0.type_use_mount)) {
+                        p0.type_use_mount = -1;
+                    }
                     MapService.update_in4_2_other_inside(conn.p.map, p0);
                     MapService.send_in4_other_char(p0.map, p0, p0);
                     Service.send_char_main_in4(p0);

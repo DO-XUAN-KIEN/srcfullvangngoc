@@ -22,6 +22,7 @@ import map.Vgo;
 import template.ItemTemplate3;
 import template.MainObject;
 import template.Member_ChienTruong;
+import BossHDL.*;
 
 public class ChienTruong {
 	private static ChienTruong instance;
@@ -32,9 +33,9 @@ public class ChienTruong {
 	public int[] info_house;
 	public List<Player_Nhan_Ban> list_ai;
 	public List<Mob_in_map> boss;
-        public long vang;	
-        public long ngoc;
-         
+	public long vang;
+	public long ngoc;
+
 
 	public int getStatus() {
 		return status;
@@ -61,6 +62,8 @@ public class ChienTruong {
 		this.BXH = new ArrayList<>();
 		this.status = 0;
 		this.time = 0;
+		this.vang = 0;
+		this.ngoc = 0;
 		list_ai = Player_Nhan_Ban.init();
 		this.boss = new ArrayList<>();
 		//
@@ -75,13 +78,13 @@ public class ChienTruong {
 				}
 			} else if (this.status == 2) {
 				this.time--;
-				// event
-//				if (this.time == 60*58) {
-//					create_boss(10);
-//				} else
-//					if (this.time == 60 * 55) {
-//					create_boss(20);
-//				}
+				if(this.time == 60* 58){
+					BossManager.callBossToMap(61, 101, 487,510 , 1_000_000_000, 55);
+					Manager.gI().chatKTGprocess("Xà nữ đã xuất hiện tại chiến trường");
+				}else if(this.time == 60 * 50){
+					BossManager.callBossToMap(61, 101, 487,510, 1_000_000_000, 55);
+					Manager.gI().chatKTGprocess("Xà nữ đã xuất hiện tại chiến trường");
+				}
 				//
 				if (this.time <= 0) {
 					this.finish();
@@ -90,61 +93,60 @@ public class ChienTruong {
 		} catch (IOException e) {
 		}
 	}
-
 	private void create_boss(int i) {
-		if (i == 20) {
-			Mob_in_map m = null;
-			for (int j = 0; j < boss.size(); j++) {
-				if (boss.get(j).is_boss_active) {
-					m = boss.get(j);
-					break;
-				}
-			}
-			if (m == null) {
-				int index = Util.random(boss.size());
-				if (!boss.get(index).is_boss_active && boss.get(index).level == 10) {
-					boss.get(index).level = 100;
-					boss.get(index).is_boss_active = true;
-				}
-				try {
-					Manager.gI().chatKTGprocess(" Xà nữ xuất hiện tại chiến trường.");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			} else {
-				for (int j = 0; j < boss.size(); j++) {
-					if (!boss.get(j).equals(m) && boss.get(j).zone_id == m.zone_id) {
-						boss.get(j).level = 100;
-						boss.get(j).is_boss_active = true;
-						break;
-					}
-				}
-				try {
-					Manager.gI().chatKTGprocess(" Xà nữ xuất hiện tại chiến trường.");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		} else {
-			int index = Util.random(boss.size());
-			if (!boss.get(index).is_boss_active && boss.get(index).level == 10) {
-				boss.get(index).level = 50;
-				boss.get(index).is_boss_active = true;
-			}
-			try {
-				Manager.gI().chatKTGprocess(" Xà nữ xuất hiện tại chiến trường.");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+//		if (i == 20) {
+//			Mob_in_map m = null;
+//			for (int j = 0; j < boss.size(); j++) {
+//				if (boss.get(j).is_boss_active) {
+//					m = boss.get(j);
+//					break;
+//				}
+//			}
+//			if (m == null) {
+//				int index = Util.random(boss.size());
+//				if (!boss.get(index).is_boss_active && boss.get(index).level == 10) {
+//					boss.get(index).level = 100;
+//					boss.get(index).is_boss_active = true;
+//				}
+//				try {
+//					Manager.gI().chatKTGprocess(" Xà nữ xuất hiện tại chiến trường.");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			} else {
+//				for (int j = 0; j < boss.size(); j++) {
+//					if (!boss.get(j).equals(m) && boss.get(j).zone_id == m.zone_id) {
+//						boss.get(j).level = 100;
+//						boss.get(j).is_boss_active = true;
+//						break;
+//					}
+//				}
+//				try {
+//					Manager.gI().chatKTGprocess(" Xà nữ xuất hiện tại chiến trường.");
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		} else {
+//			int index = Util.random(boss.size());
+//			if (!boss.get(index).is_boss_active && boss.get(index).level == 10) {
+//				boss.get(index).level = 50;
+//				boss.get(index).is_boss_active = true;
+//			}
+//			try {
+//				Manager.gI().chatKTGprocess(" Xà nữ xuất hiện tại chiến trường.");
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
 	}
 
 	private void start() throws IOException {
 		if (this.status == 1) {
-			Manager.gI().chatKTGprocess("Chiến trường bắt đầu , hãy kiếm thật nhiều nguyên liệu và điểm nào");
+			Manager.gI().chatKTGprocess("Chiến trường bắt đầu , cố gắng lấy nhiều nguyên liệu, điểm nhất nào");
 			this.BXH.clear();
 			this.status = 2;
-			this.time = 60 * 45;
+			this.time = 60 * 60;
 			int init_house = this.list.size() / 40;
 			init_house = init_house > 0 ? init_house : 10;
 			this.info_house = new int[] {init_house, init_house, init_house, init_house
@@ -277,7 +279,7 @@ public class ChienTruong {
 			for (Entry<String, Member_ChienTruong> en : this.list.entrySet()) {
 				Player p0 = Map.get_player_by_name(en.getKey());
 				if (p0 != null && Map.is_map_chien_truong(p0.map.map_id)) {
-					p0.update_point_arena(100);
+					p0.update_point_arena(1);
 					ChienTruong.gI().send_info(p0);
 					this.update_time(p0);
 				}
@@ -349,7 +351,7 @@ public class ChienTruong {
 //			this.ngoc = 0;
 //			list_receiv.clear();
 			for (Entry<String, Member_ChienTruong> en : this.list.entrySet()) {
-				 System.out.println(en.getKey() + " " + en.getValue().village);
+				System.out.println(en.getKey() + " " + en.getValue().village);
 				Player p0 = Map.get_player_by_name(en.getKey());
 				if (p0 != null) {
 					Vgo vgo = new Vgo();
@@ -384,6 +386,7 @@ public class ChienTruong {
 	}
 
 	public synchronized void register(Player p) throws IOException {
+
 		if (this.list.containsKey(p.name)) {
 			Service.send_notice_box(p.conn, "Đã đăng ký rồi");
 		} else {
@@ -393,16 +396,15 @@ public class ChienTruong {
 			temp.village = 0;
 			temp.received = false;
 			this.list.put(p.name, temp);
-			int coin_ = Util.random(1_000,10_000);
-			p.update_coin(coin_);
-			Service.send_notice_box(p.conn, "Đăng ký thành công và nhận được " +coin_+ " coin.");
+			Service.send_notice_box(p.conn, "Đăng ký thành công");
 		}
 	}
 
 	public synchronized void open_register() throws IOException {
 		if (this.status == 0) {
+			Manager.gI().chatKTGprocess("Chiến trường mở đăng ký, mau mau đến ");
 			this.status = 1;
-			this.time = 60*44;
+			this.time = 60*1;
 		}
 	}
 
@@ -418,7 +420,6 @@ public class ChienTruong {
 			m.cleanup();
 		}
 	}
-
 	private int total_p_of_house(int i) {
 		int result = 0;
 		for (Entry<String, Member_ChienTruong> en : this.list.entrySet()) {
@@ -453,10 +454,10 @@ public class ChienTruong {
 				m.writer().writeShort(temp.x);
 				m.writer().writeShort(temp.y);
 				m.writer().writeByte(1); // clazz
-				m.writer().writeByte(126);
-				m.writer().writeByte(1); // head
-				m.writer().writeByte(1); // eye
-				m.writer().writeByte(Util.random(32,34)); // hair
+				m.writer().writeByte(-1);
+				m.writer().writeByte(0); // head
+				m.writer().writeByte(8); // eye
+				m.writer().writeByte(8); // hair
 				m.writer().writeShort(50); // level
 				m.writer().writeInt(temp.hp); // hp
 				m.writer().writeInt(temp.hp_max); // hp max
@@ -479,11 +480,7 @@ public class ChienTruong {
 				m.writer().writeByte(-1); // pet
 				m.writer().writeByte(7);
 				for (int i1 = 0; i1 < 7; i1++) {
-					if (p.conn.version >= 280) {
-						m.writer().writeShort(-1);
-					} else {
-						m.writer().writeByte(-1);
-					}
+					m.writer().writeByte(-1);
 				}
 				//
 				m.writer().writeShort(-1);

@@ -25,6 +25,7 @@ import template.Option;
 import template.Pet_di_buon;
 import template.Pet_di_buon_manager;
 import template.StrucEff;
+import template.Horse;
 import template.box_item_template;
 
 public class UseItem {
@@ -1469,11 +1470,11 @@ public class UseItem {
             }
             case 124: {
                 conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 5;
+                conn.p.type_use_mount = Horse.TUAN_LOC;
                 conn.p.map.send_mount(conn.p);
                 break;
             }
-            case 125: {
+            case 125, 223, 247, 272, 276, 295, 282, 280, 300, 324, 270, 302: {
                 if (conn.p.item.get_bag_able() < 1) {
                     Service.send_notice_nobox_white(conn, "Hành trang đầy!");
                     return;
@@ -1486,185 +1487,109 @@ public class UseItem {
                 break;
             }
             case 146: {
-                conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 6;
+                conn.p.type_use_mount = Horse.SOI_XAM;
                 conn.p.map.send_mount(conn.p);
                 break;
             }
             case 159: {
-                conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 7;
+                conn.p.type_use_mount = Horse.SOI_GIO_TUYET;
                 conn.p.map.send_mount(conn.p);
                 break;
             }
             case 160: {
-                conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 8;
+                conn.p.type_use_mount = Horse.SOI_BAO_LUA;
                 conn.p.map.send_mount(conn.p);
                 break;
             }
             case 161: {
-                conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 9;
+                conn.p.type_use_mount = Horse.SOI_BONG_MA;
                 conn.p.map.send_mount(conn.p);
                 break;
             }
             case 163: {
-                conn.p.type_use_mount = (byte) 10;
+                conn.p.type_use_mount = Horse.SU_TU;
                 conn.p.map.send_mount(conn.p);
                 break;
             }
             case 222: {
                 conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 11;
+                conn.p.type_use_mount = Horse.HEO_RUNG;
                 conn.p.map.send_mount(conn.p);
-                break;
-            }
-            case 223: {
-                if (conn.p.item.get_bag_able() < 1) {
-                    Service.send_notice_nobox_white(conn, "Hành trang đầy!");
-                    return;
-                }
-                conn.p.item.remove(4, id, 1);
-                Item47 itbag = new Item47();
-                itbag.id = (short) (id - 1);
-                itbag.quantity = 99;
-                conn.p.item.add_item_bag47(4, itbag);
                 break;
             }
             case 246: {
                 conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 12;
+                conn.p.type_use_mount = Horse.CON_LAN;
                 conn.p.map.send_mount(conn.p);
                 break;
             }
-            case 247: {
-                if (conn.p.item.get_bag_able() < 1) {
-                    Service.send_notice_nobox_white(conn, "Hành trang đầy!");
-                    return;
-                }
-                conn.p.item.remove(4, id, 1);
-                Item47 itbag = new Item47();
-                itbag.id = (short) (id - 1);
-                itbag.quantity = 99;
-                conn.p.item.add_item_bag47(4, itbag);
-                break;
-            }
             case 248: {
-                conn.p.type_use_mount = (byte) 12;
+                conn.p.type_use_mount = Horse.CON_LAN;
                 conn.p.map.send_mount(conn.p);
                 break;
             }
             case 250: {
-                conn.p.type_use_mount = (byte) 13;
+                conn.p.type_use_mount = Horse.SKELETON;
                 conn.p.map.send_mount(conn.p);
                 break;
             }
-             case 251: {
+            case 251: {
                 conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 20;
+                conn.p.type_use_mount = Horse.CHUOT_TUYET;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 69;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-              case 268: {
-                conn.p.type_use_mount = (byte) 20;
+            case 268: {
+                conn.p.type_use_mount = Horse.CHUOT_TUYET;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 69;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-               case 271: {
+            case 271: {
                 conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 20;
+                conn.p.type_use_mount = Horse.TRAU_RUNG;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 107;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-                case 272: {
-                if (conn.p.item.get_bag_able() < 1) {
-                    Service.send_notice_nobox_white(conn, "Hành trang đầy!");
-                    return;
-                }
-                conn.p.item.remove(4, id, 1);
-                Item47 itbag = new Item47();
-                itbag.id = (short) (id - 1);
-                itbag.quantity = 99;
-                conn.p.item.add_item_bag47(4, itbag);
-                break;
-            }
-             
+
             case 275: {
                 conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 17;
+                conn.p.type_use_mount = Horse.CAN_DAU_VAN;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 111;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-            case 276: {
-                if (conn.p.item.get_bag_able() < 1) {
-                    Service.send_notice_nobox_white(conn, "Hành trang đầy!");
-                    return;
-                }
-                conn.p.item.remove(4, id, 1);
-                Item47 itbag = new Item47();
-                itbag.id = (short) (id - 1);
-                itbag.quantity = 99;
-                conn.p.item.add_item_bag47(4, itbag);
-                break;
-            }
             case 294: {
                 conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 20;
+                conn.p.type_use_mount = Horse.HOA_KY_LAN;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 116;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-            case 295: {
-                if (conn.p.item.get_bag_able() < 1) {
-                    Service.send_notice_nobox_white(conn, "Hành trang đầy!");
-                    return;
-                }
-                conn.p.item.remove(4, id, 1);
-                Item47 itbag = new Item47();
-                itbag.id = (short) (id - 1);
-                itbag.quantity = 99;
-                conn.p.item.add_item_bag47(4, itbag);
-                break;
-            }
             case 281: {
                 conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 20;
+                conn.p.type_use_mount = Horse.XE_TRUOT_TUYET;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 115;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-            case 282: {
-                if (conn.p.item.get_bag_able() < 1) {
-                    Service.send_notice_nobox_white(conn, "Hành trang đầy!");
-                    return;
-                }
-                conn.p.item.remove(4, id, 1);
-                Item47 itbag = new Item47();
-                itbag.id = (short) (id - 1);
-                itbag.quantity = 99;
-                conn.p.item.add_item_bag47(4, itbag);
-                break;
-            }
             case 279: {
                 conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 20;
+                conn.p.type_use_mount = Horse.MA_TOC_DO;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 114;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
@@ -1673,72 +1598,25 @@ public class UseItem {
             }
 
             case 317: {
-                conn.p.type_use_mount = (byte) 20;
+                conn.p.type_use_mount = Horse.XE_TRUOT_TUYET;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 115;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-            case 280: {
-                if (conn.p.item.get_bag_able() < 1) {
-                    Service.send_notice_nobox_white(conn, "Hành trang đầy!");
-                    return;
-                }
-                conn.p.item.remove(4, id, 1);
-                Item47 itbag = new Item47();
-                itbag.id = (short) (id - 1);
-                itbag.quantity = 99;
-                conn.p.item.add_item_bag47(4, itbag);
-                break;
-            }
             case 299: {
                 conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 22;
+                conn.p.type_use_mount = Horse.PHUONG_HOANG_LUA;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 117;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-            
-            case 300: {
-                if (conn.p.item.get_bag_able() < 1) {
-                    Service.send_notice_nobox_white(conn, "Hành trang đầy!");
-                    return;
-                }
-                conn.p.item.remove(4, id, 1);
-                Item47 itbag = new Item47();
-                itbag.id = (short) (id - 1);
-                itbag.quantity = 99;
-                conn.p.item.add_item_bag47(4, itbag);
-                break;
-            }
-             case 323: {
-                conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 22;
-                conn.p.map.send_mount(conn.p);
-                conn.p.id_horse = 145;
-                MapService.update_in4_2_other_inside(conn.p.map, conn.p);
-                Service.send_char_main_in4(conn.p);
-                break;
-            }
-            
-            case 324: {
-                if (conn.p.item.get_bag_able() < 1) {
-                    Service.send_notice_nobox_white(conn, "Hành trang đầy!");
-                    return;
-                }
-                conn.p.item.remove(4, id, 1);
-                Item47 itbag = new Item47();
-                itbag.id = (short) (id - 1);
-                itbag.quantity = 99;
-                conn.p.item.add_item_bag47(4, itbag);
-                break;
-            }
             case 269: {
                 conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 15;
+                conn.p.type_use_mount = Horse.VOI_MA_MUT;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 106;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
@@ -1746,48 +1624,24 @@ public class UseItem {
                 break;
             }
             case 296: {
-                conn.p.type_use_mount = (byte) 15;
+                conn.p.type_use_mount = Horse.VOI_MA_MUT;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 106;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-            case 270: {
-                if (conn.p.item.get_bag_able() < 1) {
-                    Service.send_notice_nobox_white(conn, "Hành trang đầy!");
-                    return;
-                }
-                conn.p.item.remove(4, id, 1);
-                Item47 itbag = new Item47();
-                itbag.id = (short) (id - 1);
-                itbag.quantity = 99;
-                conn.p.item.add_item_bag47(4, itbag);
-                break;
-            }
             case 301: {
                 conn.p.item.remove(4, id, 1);
-                conn.p.type_use_mount = (byte) 20;
+                conn.p.type_use_mount = Horse.RONG_BANG;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 121;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-            case 302: {
-                if (conn.p.item.get_bag_able() < 1) {
-                    Service.send_notice_nobox_white(conn, "Hành trang đầy!");
-                    return;
-                }
-                conn.p.item.remove(4, id, 1);
-                Item47 itbag = new Item47();
-                itbag.id = (short) (id - 1);
-                itbag.quantity = 99;
-                conn.p.item.add_item_bag47(4, itbag);
-                break;
-            }
             case 313: {
-                conn.p.type_use_mount = (byte) 22;
+                conn.p.type_use_mount = Horse.PHUONG_HOANG_LUA;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 117;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
@@ -1795,39 +1649,36 @@ public class UseItem {
                 break;
             }
             case 314: {
-                conn.p.type_use_mount = (byte) 20;
+                conn.p.type_use_mount = Horse.RONG_BANG;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 121;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-            case 315: {
-                conn.p.type_use_mount = (byte) 20;
-                conn.p.map.send_mount(conn.p);
-                conn.p.id_horse = 116;
-                MapService.update_in4_2_other_inside(conn.p.map, conn.p);
-                Service.send_char_main_in4(conn.p);
-                break;
-            }
             case 316: {
-                conn.p.type_use_mount = (byte) 20;
+                conn.p.type_use_mount = Horse.MA_TOC_DO;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 114;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-             case 325: {
-                conn.p.type_use_mount = (byte) 22;
+            case 323: {
+                conn.p.item.remove(4, id, 1);
+                conn.p.type_use_mount = Horse.CA_CHEP;
                 conn.p.map.send_mount(conn.p);
                 conn.p.id_horse = 145;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
                 break;
             }
-            default: {
-                //System.out.println("mount id " + id);
+            case 325: {
+                conn.p.type_use_mount = Horse.CA_CHEP;
+                conn.p.map.send_mount(conn.p);
+                conn.p.id_horse = 145;
+                MapService.update_in4_2_other_inside(conn.p.map, conn.p);
+                Service.send_char_main_in4(conn.p);
                 break;
             }
         }

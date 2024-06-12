@@ -1000,6 +1000,10 @@ public class Service {
                     m.writer().writeUTF("Nâng cấp đồ tinh tú");
                 } else if (conn.p.isCreateArmor) {
                     m.writer().writeUTF("Code by Vĩnh Lỏh");
+                } else if (conn.p.isdothan) {
+                    m.writer().writeUTF("Tiến hóa đồ tinh tú[VIP PRO]");
+                } else if (conn.p.ismdthan) {
+                    m.writer().writeUTF("Tiến hóa mề đay");
                 } else {
                     m.writer().writeUTF("Nâng cấp mề đay");
                 }

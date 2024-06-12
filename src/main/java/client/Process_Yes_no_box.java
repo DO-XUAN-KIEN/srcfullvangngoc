@@ -11,7 +11,6 @@ import event_daily.ChiemThanhManager;
 import event_daily.Wedding;
 import event_daily.*;
 import event_daily.st.*;
-import event_daily.sc.*;
 
 import io.Message;
 import io.Session;
@@ -684,17 +683,11 @@ public class Process_Yes_no_box {
                 }
                 case 9: {
                     if(conn.p.map.isMapChienTruong()){
-                        
-                    }
-                    else if(conn.p.map.isMapChiemThanh()){
-                        ChiemThanhManager.ActionHoiSinh(conn.p.map, conn.p);
-                    }
-                    else {
-                        if (conn.p.get_ngoc() >= 5) {
+                        if (conn.p.get_vang() >= 10_000) {
                             conn.p.isDie = false;
                             conn.p.hp = conn.p.body.get_HpMax();
                             conn.p.mp = conn.p.body.get_MpMax();
-                            conn.p.update_ngoc(-5);
+                            conn.p.update_vang(-10_000);
                             conn.p.item.char_inventory(5);
                             Service.send_char_main_in4(conn.p);
                             // chest in4
@@ -702,7 +695,26 @@ public class Process_Yes_no_box {
                             Service.usepotion(conn.p, 0, conn.p.body.get_HpMax());
                             Service.usepotion(conn.p, 1, conn.p.body.get_MpMax());
                         } else {
-                            Service.send_notice_box(conn, "Không đủ ngọc để thực hiện");
+                            Service.send_notice_box(conn, "Không đủ vàng để thực hiện");
+                        }
+                    }
+                    else if(conn.p.map.isMapChiemThanh()){
+                        ChiemThanhManager.ActionHoiSinh(conn.p.map, conn.p);
+                    }
+                    else {
+                        if (conn.p.get_vang() >= 10_000) {
+                            conn.p.isDie = false;
+                            conn.p.hp = conn.p.body.get_HpMax();
+                            conn.p.mp = conn.p.body.get_MpMax();
+                            conn.p.update_vang(-10_000);
+                            conn.p.item.char_inventory(5);
+                            Service.send_char_main_in4(conn.p);
+                            // chest in4
+                            Service.send_combo(conn);
+                            Service.usepotion(conn.p, 0, conn.p.body.get_HpMax());
+                            Service.usepotion(conn.p, 1, conn.p.body.get_MpMax());
+                        } else {
+                            Service.send_notice_box(conn, "Không đủ vàng để thực hiện");
                         }
                     }
                     break;

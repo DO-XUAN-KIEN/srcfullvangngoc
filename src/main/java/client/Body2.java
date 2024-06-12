@@ -22,6 +22,7 @@ import template.MainObject;
 import template.Option;
 import template.Option_pet;
 import template.StrucEff;
+import template.Horse;
 
 /**
  * @author chien
@@ -189,11 +190,12 @@ public class Body2 extends MainObject {
                 }
             }
         }
-        hpm += ((hpm * (percent / 100)) / 100);
-        if (p.type_use_mount == 11 || p.type_use_mount == 12 || p.type_use_mount == 13
-                || (p.type_use_mount == 20 && (p.id_horse == 114 || p.id_horse == 121))) {
-            hpm += (hpm / 10);
+        if (p.type_use_mount == Horse.HEO_RUNG || p.type_use_mount == Horse.CON_LAN || p.type_use_mount == Horse.SKELETON
+                || p.type_use_mount == Horse.CHUOT_TUYET || p.type_use_mount == Horse.VOI_MA_MUT
+                || p.type_use_mount == Horse.MA_TOC_DO || p.type_use_mount == Horse.RONG_BANG) {
+            percent += 1000;
         }
+        hpm += ((hpm * (percent / 100)) / 100);
         EffTemplate ef = p.get_EffDefault(2);
         if (ef != null) {
             hpm = (hpm * 8) / 10;
@@ -344,9 +346,24 @@ public class Body2 extends MainObject {
         if (ef != null) {
             def += ef.param;
         }
+        if (p.type_use_mount == Horse.NGUA_CHIEN_GIAP || p.type_use_mount == Horse.VOI_MA_MUT) {
+            def += 2000;
+        } else if (p.type_use_mount == Horse.NGUA_XICH_THO || p.type_use_mount == Horse.TUAN_LOC
+                || p.type_use_mount == Horse.CAN_DAU_VAN || p.type_use_mount == Horse.XE_TRUOT_TUYET
+                || p.type_use_mount == Horse.CA_CHEP) {
+            def += 1000;
+        } else if (p.type_use_mount == Horse.MA_TOC_DO || p.type_use_mount == Horse.HOA_KY_LAN
+                || p.type_use_mount == Horse.PHUONG_HOANG_LUA) {
+            def += 1500;
+        } else if (p.type_use_mount == Horse.TRAU_RUNG) {
+            def += 3000;
+        }
         EffTemplate temp2 = p.get_EffDefault(StrucEff.PowerWing);
         if (temp2 != null) {
             def += 3000;
+        }
+        if(p.get_EffDefault(EffTemplate.SPECIAL) != null){
+            def *= 1.5;
         }
         if (p.get_EffDefault(StrucEff.NOI_TAI_LUA) != null) {
             def -= 2000;
@@ -371,15 +388,6 @@ public class Body2 extends MainObject {
             }
         }
         def += ((def * (get_PercentDefBase() / 100)) / 100);
-        if (p.type_use_mount == 2 || (p.type_use_mount == 15 && p.id_horse == 106)) {
-            def += ((def * 2) / 10);
-        } else if (p.type_use_mount == 3 || p.type_use_mount == 5 || (p.type_use_mount == 17 && p.id_horse == 111)
-                || (p.type_use_mount == 20 && p.id_horse == 115)) {
-            def += ((def * 1) / 10);
-        } else if ((p.type_use_mount == 22 && p.id_horse == 117)
-                || (p.type_use_mount == 20 && (p.id_horse == 114 || p.id_horse == 116))) {
-            def += ((def * 15) / 100);
-        }
         EffTemplate ef = p.get_EffDefault(0);
         if (ef != null) {
             def = (def * 8) / 10;
@@ -420,12 +428,26 @@ public class Body2 extends MainObject {
                 percent += eff.param;
             }
             if (p.getEffTinhTu(EffTemplate.SPECIAL) != null) {
-                percent += 4000;
+                percent *= 1.5;
             }
             EffTemplate temp2 = p.get_EffDefault(StrucEff.PowerWing);
             if (temp2 != null) {
                 percent += 3000;
             }
+            //<editor-fold defaultstate="collapsed" desc="ngựa...">
+            if (p.type_use_mount == Horse.NGUA_XICH_THO) {
+                percent += 2000;
+            } else if (p.type_use_mount == Horse.TUAN_LOC) {
+                percent += 4000;
+            } else if (p.type_use_mount == Horse.HEO_RUNG || p.type_use_mount == Horse.CON_LAN || p.type_use_mount == Horse.CA_CHEP) {
+                percent += 1000;
+            } else if (p.type_use_mount == Horse.TRAU_RUNG || p.type_use_mount == Horse.MA_TOC_DO
+                    || p.type_use_mount == Horse.PHUONG_HOANG_LUA) {
+                percent += 1500;
+            } else if (p.type_use_mount == Horse.HOA_KY_LAN) {
+                percent += 3500;
+            }
+            //</editor-fold>
             return percent;
         }
         int perct = 0;
@@ -508,12 +530,26 @@ public class Body2 extends MainObject {
             }
         }
         if (p.getEffTinhTu(EffTemplate.SPECIAL) != null) {
-            perct += 4000;
+            perct *= 1.5;
         }
         EffTemplate temp2 = p.get_EffDefault(StrucEff.PowerWing);
         if (temp2 != null) {
             perct += 3000;
         }
+        //<editor-fold defaultstate="collapsed" desc="ngựa...">
+        if (p.type_use_mount == Horse.NGUA_XICH_THO) {
+            perct += 2000;
+        } else if (p.type_use_mount == Horse.TUAN_LOC) {
+            perct += 4000;
+        } else if (p.type_use_mount == Horse.HEO_RUNG || p.type_use_mount == Horse.CON_LAN || p.type_use_mount == Horse.CA_CHEP) {
+            perct += 1000;
+        } else if (p.type_use_mount == Horse.TRAU_RUNG || p.type_use_mount == Horse.MA_TOC_DO
+                || p.type_use_mount == Horse.PHUONG_HOANG_LUA) {
+            perct += 1500;
+        } else if (p.type_use_mount == Horse.HOA_KY_LAN) {
+            perct += 3500;
+        }
+        //</editor-fold>
         return perct;
     }
 
@@ -628,7 +664,7 @@ public class Body2 extends MainObject {
         p.dame_affect_special_sk = 0;
         p.hp = 0;
         p.isDie = true;
-        if (p.type_use_mount < 6 && p.type_use_mount > 10) {
+        if (!Horse.isHorseClan(p.type_use_mount)) {
             p.type_use_mount = -1;
             map.send_mount(p);
         }

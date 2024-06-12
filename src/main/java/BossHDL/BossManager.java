@@ -162,7 +162,22 @@ public class BossManager {
             }
         }
     }
-    
+    public static void callBossToMap(int map_id, int boss_id, int x, int y, int hp, int level) {
+        Mob m = Mob.entrys.get(boss_id);
+        Mob_in_map temp = new Mob_in_map();
+        temp.template = m;
+        temp.x = (short) x;
+        temp.y = (short) y;
+        temp.level = (short) level;
+        temp.color_name = 5;
+
+        temp.Set_isBoss(true);
+        temp.hp = temp.Set_hpMax(hp);
+        temp.map_id = (short) map_id;
+        temp.zone_id = 0;
+        temp.index = 10_000 + entrys.size();
+        entrys.add(temp);
+    }
     
     
 }
