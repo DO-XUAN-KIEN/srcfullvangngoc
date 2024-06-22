@@ -12,13 +12,7 @@ import core.Service;
 import core.Util;
 import io.Message;
 import io.Session;
-import template.EffTemplate;
-import template.ItemTemplate3;
-import template.ItemTemplate7;
-import template.Mob;
-import template.Mob_Dungeon;
-import template.Option;
-import template.Option_pet;
+import template.*;
 
 public class Dungeon {
 
@@ -507,8 +501,15 @@ public class Dungeon {
             return;
         }
         //
-        
-        dame_atk -= ((dame_atk*(Util.random(10)))/100);
+
+        int clazz = switch (p.clazz) {
+            case 0 -> 2;
+            case 1 -> 4;
+            case 2 -> 1;
+            case 3 -> 3;
+            default -> p.get_DameBase();
+        };
+        dame_atk = p.get_DameProp(clazz)* 2;
         long dame = dame_atk;
         //
         EffTemplate ef = null;
@@ -592,10 +593,14 @@ public class Dungeon {
             if (!mob.isDie) {
                 mob.isDie = true;
                 // send p outside
-                if(Util.random_ratio(17))
-                    ev_he.Event_3.LeaveItemMap(map, mob, p);
-                if(30>Util.random(1,101))
-                    leave_item_by_type7(map, (short)Util.random(417,464), p, mob.index);
+//                if(Util.random_ratio(17))
+//                    ev_he.Event_3.LeaveItemMap(map, mob, p);
+//                if(30>Util.random(1,101))
+//                    leave_item_by_type7(map, (short)Util.random(417,464), p, mob.index);
+                if(30>Util.random(0,100))
+                    Dungeon.leave_item_by_type7(map, (short)Util.random(417,464), p, mob.index);
+                if(5>Util.random(0,100))
+                    Dungeon.leave_item_by_type7(map, Medal_Material.m_blue[Util.random(Medal_Material.m_blue.length)], p, mob.index);
                 Message m2 = new Message(17);
                 m2.writer().writeShort(p.index);
                 m2.writer().writeShort(mob.index);

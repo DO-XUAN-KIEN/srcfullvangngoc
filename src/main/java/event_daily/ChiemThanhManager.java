@@ -621,7 +621,7 @@ public class ChiemThanhManager {
                 case 151: { 
                     id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 18};
                     id_item_leave7 = new short[]{11, 13, 2, 3, 2, 3, 14};
-                    if(Util.random(100)<10)
+                    if(Util.random(200)<10)
                         id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
                     //  sizeRandomMedal = (short) (50);
                     break;
@@ -633,7 +633,7 @@ public class ChiemThanhManager {
                     dem = true;
                     id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 18};
                     id_item_leave7 = new short[]{11, 13, 2, 3, 2, 3, 14};
-                    if(Util.random(100)<20)
+                    if(Util.random(150)< 20)
                         id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
                  //   sizeRandomMedal = (short) (60);
                     break;

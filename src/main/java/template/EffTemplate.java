@@ -15,6 +15,14 @@ public class EffTemplate {
    
     // = option item = param this option
 
+    public static final int buffdame = 90;
+    public static final int buffhp = 91;
+    public static final int buffne = 92;
+
+    public static final int buffpst = 93;
+    public static final int buffhoihp = 94;
+    public static final int buffpt = 95;
+    public static final int bufftatca = 96;
     public static final int SPECIAL = 39;
     public static final int GIAP_BAO_HO = 38;
     public static final int HUNG_TAN = 34;

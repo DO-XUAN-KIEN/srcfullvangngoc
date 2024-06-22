@@ -79,6 +79,83 @@ public class UseItem {
                 }
                 break;
             }
+            case 328: {
+                if (conn.p.get_EffDefault(EffTemplate.buffdame) != null){
+                    Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
+                    return;
+                }
+                conn.p.item.remove(4,328,1);
+                conn.p.add_EffDefault(EffTemplate.buffdame,1,30 * 1000);
+                EffTemplate eff = conn.p.get_EffDefault(EffTemplate.buffdame);
+                Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff dame"});
+                break;
+            }
+            case 332:{
+                if (conn.p.get_EffDefault(EffTemplate.buffhp) != null){
+                    Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
+                    return;
+                }
+                conn.p.item.remove(4,332,1);
+                conn.p.add_EffDefault(EffTemplate.buffhp,1,30 * 1000);
+                EffTemplate eff = conn.p.get_EffDefault(EffTemplate.buffhp);
+                Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff hp"});
+                break;
+            }
+            case 331:{
+                if (conn.p.get_EffDefault(EffTemplate.buffne) != null){
+                    Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
+                    return;
+                }
+                conn.p.item.remove(4,331,1);
+                conn.p.add_EffDefault(EffTemplate.buffne,1,30 * 1000);
+                EffTemplate eff = conn.p.get_EffDefault(EffTemplate.buffne);
+                Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff né"});
+                break;
+            }
+            case 330:{
+                if (conn.p.get_EffDefault(EffTemplate.buffpst) != null){
+                    Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
+                    return;
+                }
+                conn.p.item.remove(4,330,1);
+                conn.p.add_EffDefault(EffTemplate.buffpst,1,30 * 1000);
+                EffTemplate eff = conn.p.get_EffDefault(EffTemplate.buffpst);
+                Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff pst"});
+                break;
+            }
+            case 329:{
+                if (conn.p.get_EffDefault(EffTemplate.buffpt) != null){
+                    Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
+                    return;
+                }
+                conn.p.item.remove(4,329,1);
+                conn.p.add_EffDefault(EffTemplate.buffpt,1,30 * 1000);
+                EffTemplate eff = conn.p.get_EffDefault(EffTemplate.buffpt);
+                Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff pt"});
+                break;
+            }
+            case 333:{
+                if (conn.p.get_EffDefault(EffTemplate.buffhoihp) != null){
+                    Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
+                    return;
+                }
+                conn.p.item.remove(4,333,1);
+                conn.p.add_EffDefault(EffTemplate.buffhoihp,1,30 * 1000);
+                EffTemplate eff = conn.p.get_EffDefault(EffTemplate.buffhoihp);
+                Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff hồi hp"});
+                break;
+            }
+            case 334:{
+                if (conn.p.get_EffDefault(EffTemplate.bufftatca) != null){
+                    Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
+                    return;
+                }
+                conn.p.item.remove(4,334,1);
+                conn.p.add_EffDefault(EffTemplate.bufftatca,1,60 * 1000);
+                EffTemplate eff = conn.p.get_EffDefault(EffTemplate.bufftatca);
+                Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff a đến z"});
+                break;
+            }
             case 84: {
                 if (conn.p.map.zone_id != conn.p.map.maxzone) {
                     Service.send_notice_box(conn, "Chỉ dùng được trong khu đi buôn");

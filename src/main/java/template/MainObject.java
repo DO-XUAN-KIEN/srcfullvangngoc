@@ -22,6 +22,7 @@ import map.Eff_special_skill;
 import map.Map;
 import map.MapService;
 import map.Mob_in_map;
+import template.Horse;
 
 /**
  * @author chien
@@ -361,17 +362,17 @@ public class MainObject {
             if (focus.isMobDiBuon() && ObjAtk.isPlayer() && ((Player) ObjAtk).isRobber() && ((Pet_di_buon) focus).type == 132) {
                 return;
             }
-            if((ObjAtk.level - focus.level >= 5 || ObjAtk.level - focus.level <= -5) && map.zone_id == map.maxzone){
+            if((ObjAtk.level - focus.level >= 10 || ObjAtk.level - focus.level <= -10) && map.zone_id == map.maxzone){
                 return;
             }
-            if ((focus.level - ObjAtk.level >=5 || focus.level - ObjAtk.level <= -5) && map.zone_id == map.maxzone){
+            if ((focus.level - ObjAtk.level >=10 || focus.level - ObjAtk.level <= -10) && map.zone_id == map.maxzone){
                 return;
             }
-            if (ObjAtk.isPlayer() && focus.isPlayer() && map.zone_id == 1 && !Map.is_map_not_zone2(map.map_id)) {
+            if (ObjAtk.isPlayer() && focus.isPlayer() && map.zone_id == 1 && !Map.is_map_not_zone2(map.map_id) && ((Player) ObjAtk).conn.ac_admin < 66) {
                 return;
             }
             if (ObjAtk.isPlayer() && focus.isPlayer() && !map.isMapChiemThanh() && (map.ismaplang || ObjAtk.level < 11 || focus.level < 11
-                    || (ObjAtk.typepk != 0 && ObjAtk.typepk == focus.typepk) || ObjAtk.hieuchien > 320_000)) {
+                    || (ObjAtk.typepk != 0 && ObjAtk.typepk == focus.typepk) || ObjAtk.hieuchien > 320_000) && ((Player) ObjAtk).conn.ac_admin < 66) {
                 return;
             }
             if (focus.isMob() && focus.template.mob_id == 152 && !ChiemThanhManager.isDameTruChinh(map)) {
@@ -410,7 +411,7 @@ public class MainObject {
                     Service.send_notice_box(((Player) ObjAtk).conn, "Đối phương có hiệu ứng chống pk");
                     return;
                 }
-                if (map.zone_id == 1 && !Map.is_map_not_zone2(map.map_id)) {
+                if (map.zone_id == 1 && !Map.is_map_not_zone2(map.map_id) && ((Player) ObjAtk).conn.ac_admin < 66) {
                     return;
                 }
                 if (((Player) focus).pet_follow == 4708) {
@@ -543,6 +544,25 @@ public class MainObject {
                 }
                 if (p.get_EffDefault(StrucEff.NOI_TAI_DIEN) != null) {
                     dame -= dame / 5;
+                }
+            }
+            //</editor-fold>
+            //<editor-fold defaultstate="collapsed" desc="ngựa...">
+            if (ObjAtk.isPlayer()) {
+                if (p.get_EffDefault(EffTemplate.buffdame) != null || p.get_EffDefault(EffTemplate.bufftatca) != null){
+                    DamePlus += 0.2;
+                }
+                if (p.type_use_mount == Horse.NGUA_XICH_THO) {
+                    DamePlus += 0.2;
+                } else if (p.type_use_mount == Horse.TUAN_LOC ) {
+                    DamePlus += 0.4;
+                } else if (p.type_use_mount == Horse.HEO_RUNG || p.type_use_mount == Horse.CON_LAN || p.type_use_mount == Horse.CA_CHEP) {
+                    DamePlus += 0.1;
+                } else if (p.type_use_mount == Horse.TRAU_RUNG || p.type_use_mount == Horse.MA_TOC_DO
+                        || p.type_use_mount == Horse.PHUONG_HOANG_LUA) {
+                    DamePlus += 0.15;
+                } else if ((p.type_use_mount == Horse.HOA_KY_LAN)) {
+                    DamePlus += 0.35;
                 }
             }
             //</editor-fold>
@@ -920,7 +940,7 @@ public class MainObject {
                 // Tàn phế
                 EffTemplate eff_giap_tan_phe = focus.getEffTinhTu(EffTemplate.TAN_PHE);
                 if (eff_giap_tan_phe == null && p.isEffTinhTu(-92)) {
-                    long mp = focus.mp - focus.get_MpMax() / 99;
+                    long mp = focus.mp - focus.get_MpMax() / 50;
                     focus.addEffTinhTu(EffTemplate.TAN_PHE, 0, 5000L);
                     Service.usepotion(player, 1, -mp);
                     sendEffTinhTu(p, EffTemplate.TAN_PHE, 5000);

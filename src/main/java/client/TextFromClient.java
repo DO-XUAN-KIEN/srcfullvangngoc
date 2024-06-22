@@ -198,6 +198,7 @@ public class TextFromClient {
                         List<Short> Types = new ArrayList<>();
                         empty_box = rs.getByte("empty_box");
                         int limit = rs.getInt("limit");
+                        byte date = rs.getByte("date");
                         String giftfor = rs.getString("giftfor");
                         if (limit < 1 && conn.ac_admin < 4) {
                             Service.send_notice_box(conn, "Đã hết lượt dùng giftcode này");
@@ -221,6 +222,9 @@ public class TextFromClient {
                                 itbag.color = ItemTemplate3.item.get(it).getColor();
                                 itbag.part = ItemTemplate3.item.get(it).getPart();
                                 itbag.tier = 0;
+                                if(date > 0) {
+                                    itbag.expiry_date = System.currentTimeMillis() + 1000L * 60 * 60 * 24 * date;
+                                }
                                 itbag.time_use = 0;
                                 itbag.islock = false;
                                 IDs.add(it);
@@ -298,8 +302,10 @@ public class TextFromClient {
 //                            int vang_up = rs.getInt("vang");
                             long vang_up = rs.getLong("vang");
                             int ngoc_up = rs.getInt("ngoc");
+                            int coin_up = rs.getInt("coin");
                             conn.p.update_vang(vang_up);
                             conn.p.update_ngoc(ngoc_up);
+                            conn.p.update_coin(coin_up);
                             if (vang_up != 0) {
                                 IDs.add((short) -1);
                                 Quants.add((int) (vang_up > 2_000_000_000 ? 2_000_000_000 : vang_up));
@@ -310,6 +316,11 @@ public class TextFromClient {
                                 Quants.add((int) (ngoc_up > 2_000_000_000 ? 2_000_000_000 : ngoc_up));
                                 Types.add((short) 4);
                             }
+//                            if (coin_up != 0) {
+//                                IDs.add((short) -2);
+//                                Quants.add((int) (coin_up > 2_000_000_000 ? 2_000_000_000 : coin_up));
+//                                Types.add((short) 4);
+//                            }
                             Log.gI().add_log(conn.p.name,
                                     "Nhận giftcode " + text + " : " + Util.number_format(vang_up) + " vàng");
                             Log.gI().add_log(conn.p.name,
@@ -330,7 +341,7 @@ public class TextFromClient {
                                 st.executeUpdate("UPDATE `giftcode` SET `limit` = " + updatedLimit + " WHERE `giftname` = '" + text + "';");
                                 connection.commit();
                             }
-                            Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ar_id, ar_quant, ar_type);
+                            Service.Show_open_box_notice_item(conn.p, "Bạn nhận được và + "+coin_up+" coin", ar_id, ar_quant, ar_type);
                             //Service.send_notice_box(conn, "Nhận thành công giftcode");
                             if (!giftfor.equals("0")) {
                                 st.executeUpdate("DELETE FROM `giftcode` WHERE `giftname` = '" + text + "';");
@@ -1992,15 +2003,15 @@ public class TextFromClient {
                     Service.send_notice_box(conn,"Không đủ đồng money");
                     return;
                 }
-                if (dong_money <= 0 || dong_money > 100) {
-                    Service.send_notice_box(conn, "Chỉ có thể đổi tối thiểu là 1k và tối đa là 300k");
+                if (dong_money < 1 || dong_money > 100) {
+                    Service.send_notice_box(conn, "Chỉ có thể đổi tối thiểu là 1 đồng và tối đa là 100 đồng");
                     return;
                 }
                 if (conn.p.item.total_item_by_id(7,494) >= dong_money) {
                     conn.p.item.remove(7, 494, dong_money);
-                    conn.p.update_coin(dong_money * 1);
-                    Service.send_notice_box(conn, "Đổi thành công" + dong_money * 1_000 + "coin");
-                    Log.gI().add_log(conn.p.name, "Nhận " + dong_money * 1_000 + " từ đổi đồng money ra coin");
+                    conn.p.update_coin(dong_money * Util.random(500,2000));
+                    Service.send_notice_box(conn, "Đổi thành công" + dong_money * Util.random(500,2000) + "coin");
+                    Log.gI().add_log(conn.p.name, "Nhận " + dong_money * Util.random(500,2000) + " từ đổi đồng money ra coin");
                     conn.p.item.char_inventory(5);
                     conn.p.item.char_inventory(7);
                 } else {
@@ -2012,8 +2023,6 @@ public class TextFromClient {
                 Service.send_notice_box(conn, "Đã xảy ra lỗi");
                 break;
             }
-        
-    
         } 
     }
         }

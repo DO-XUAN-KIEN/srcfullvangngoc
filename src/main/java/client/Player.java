@@ -260,14 +260,14 @@ public class Player extends Body2 {
     }
     public void setnldothan() {
         NLdothan = new short[]{
-                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
-                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
-                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
-                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
-                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
-                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
-                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),
-                (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),};
+                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
+                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
+                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
+                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
+                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
+                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
+                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
+                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),};
     }
 
 
@@ -288,11 +288,11 @@ public class Player extends Body2 {
         if (type >= 8) {
             return;
         }
-        NLdothan[type * 5] = (short) Util.random(417, 437);
-        NLdothan[type * 5 + 1] = (short) Util.random(437, 457);
-        NLdothan[type * 5 + 2] = (short) Util.random(326, 336);
-        NLdothan[type * 5 + 3] = (short) Util.random(336, 346);
-        NLdothan[type * 5 + 4] = (short) Util.random(457, 464);
+        NLdothan[type * 5] = (short) Util.random(246, 316);
+        NLdothan[type * 5 + 1] = (short) Util.random(246, 316);
+        NLdothan[type * 5 + 2] = (short) Util.random(316, 326);
+        NLdothan[type * 5 + 3] = (short) Util.random(326, 336);
+        NLdothan[type * 5 + 4] = (short) Util.random(336, 346);
     }
 
     public Player(Session conn, int id) {
@@ -1542,6 +1542,7 @@ public class Player extends Body2 {
 
     public void add_EffDefault(int id, int param, int time) {
         this.body.add_EffDefault(id, param, System.currentTimeMillis() + time);
+
     }
 
     public int getlevelpercent() {

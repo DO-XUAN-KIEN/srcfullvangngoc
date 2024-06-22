@@ -1116,7 +1116,7 @@ public class GameSrc {
     }
 
     //public static short[] Ratio_Upgrade_Medal = new short[]{10000, 9500, 9000, 8500, 8000, 7500, 5500, 4500, 2900, 2700, 2500, 2300, 2000, 1500, 1000, 500};
-    public static short[] Ratio_Upgrade_Medal = new short[]{10000, 10000, 10000, 6666, 5555, 4444, 3333, 2222, 1111, 500, 300, 200, 50, 1, 1, 1};// op
+    public static short[] Ratio_Upgrade_Medal = new short[]{10000, 10000, 10000, 6666, 5555, 4444, 3333, 2222, 1111, 300, 100, 50, 20, 1, 1, 1};// op
     public static void UpgradeMedal(Session conn, byte index) throws IOException {
         if (index > 3) {
             Service.send_notice_box(conn, "bug tao đá chết cha m giờ!");

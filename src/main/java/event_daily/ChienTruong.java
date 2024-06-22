@@ -78,11 +78,11 @@ public class ChienTruong {
 				}
 			} else if (this.status == 2) {
 				this.time--;
-				if(this.time == 60* 58){
-					BossManager.callBossToMap(61, 101, 487,510 , 1_000_000_000, 55);
+				if(this.time == 60* 55){
+					BossManager.callBossToMap(61, 101, 487,510 , 250_000_000, 55);
 					Manager.gI().chatKTGprocess("Xà nữ đã xuất hiện tại chiến trường");
 				}else if(this.time == 60 * 50){
-					BossManager.callBossToMap(61, 101, 487,510, 1_000_000_000, 55);
+					BossManager.callBossToMap(61, 101, 487,510, 250_000_000, 55);
 					Manager.gI().chatKTGprocess("Xà nữ đã xuất hiện tại chiến trường");
 				}
 				//
@@ -404,7 +404,7 @@ public class ChienTruong {
 		if (this.status == 0) {
 			Manager.gI().chatKTGprocess("Chiến trường mở đăng ký, mau mau đến ");
 			this.status = 1;
-			this.time = 60*1;
+			this.time = 60*44;
 		}
 	}
 
@@ -550,7 +550,7 @@ public class ChienTruong {
 					}
 				}
 			}
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < 3; i++) {
 				for (short id : id_item_leave7) {
 					LeaveItemMap.leave_item_by_type7(map, id, p, mob.index, p.index);
 				}

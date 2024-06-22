@@ -47,14 +47,13 @@ public class Eff_special_skill {
         // t9: eff poison
         // t17 : eff vat ly
     }
-    public static void send_eff_Vip(Player p, int i, int time, boolean isTangHinh) throws IOException {
+    public static void send_eff_Vip(Player p, int i, int time) throws IOException {
         Message m = new Message(-49);
         m.writer().writeByte(2);
         m.writer().writeShort(0);
         m.writer().writeByte(0);
         m.writer().writeByte(0);
         m.writer().writeByte((byte)i);
-        
         m.writer().writeShort(p.index);
         m.writer().writeByte(0);
         m.writer().writeByte((byte)0);//

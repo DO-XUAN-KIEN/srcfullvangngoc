@@ -835,7 +835,7 @@ public class Service {
             Service.send_notice_nobox_white(conn,"Chức năng đang tạm khoá");
             return;
         }
-        if (conn.p.get_ngoc() < 5) {
+        if (conn.p.get_vang() < 50_000) {
             send_notice_box(conn, "Không đủ ngọc để thực hiện");
             return;
         }
@@ -849,7 +849,7 @@ public class Service {
         // return;
         // }
         // conn.p.time_chat_ktg = System.currentTimeMillis() + 1000L * 60 * 5;
-        conn.p.update_ngoc(-5);
+        conn.p.update_vang(-50_000);
         conn.p.item.char_inventory(5);
         String text = m2.reader().readUTF();
 
@@ -1748,7 +1748,7 @@ public class Service {
                 m.writer().writeByte(it.islock ? 0 : 1);
                 m.writer().writeByte(it.islock ? 0 : 1);
                 m.writer().writeByte(0); // op size
-                m.writer().writeInt((int) ((temp.time_born - System.currentTimeMillis()) / 60000));
+                    m.writer().writeInt((int) ((temp.time_born - System.currentTimeMillis()) / 60000));
                 m.writer().writeByte(it.islock ? 1 : 0);
                 conn.addmsg(m);
                 m.cleanup();

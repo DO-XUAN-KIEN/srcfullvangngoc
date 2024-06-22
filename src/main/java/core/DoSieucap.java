@@ -125,6 +125,21 @@ public class DoSieucap {
                 Service.send_notice_box(conn, "Trang bị đã đạt cấp tối đa!");
                 return;
             }
+            long vang_req = (temp.tierStar + 1) * 5_000_000;
+            int coin_req = (temp.tierStar + 1) * 10_000;
+            if (temp.tierStar < 8) {
+                if (conn.p.get_vang() < vang_req){
+                    Service.send_notice_box(conn,"Không đủ "+vang_req+ "vàng");
+                    return;
+                }
+                conn.p.update_vang(-vang_req);
+            }else {
+                if (conn.p.checkcoin()< coin_req){
+                    Service.send_notice_box(conn,"Không đủ" + coin_req + "coin");
+                    return;
+                }
+                conn.p.update_coin(-coin_req);
+            }
             boolean suc = ti_le_nang_do[temp.tierStar] > Util.random(10000);
             if (conn.ac_admin > 3) {
                 suc = true;
@@ -282,7 +297,7 @@ public class DoSieucap {
                     }
                     break;
                 }
-                case 4: {//nâng cấp tbtt
+                case 4: {//nâng cấp md thần
                     if (id >= conn.p.item.bag3.length || id < 0) {
                         return;
                     }
@@ -291,7 +306,7 @@ public class DoSieucap {
                         Service.send_notice_box(conn, "Trang bị không phù hợp!");
                         return;
                     }
-                    if (temp != null && temp.id >= 4831 && temp.id <= 4873 && temp.color == 5 && temp.tierStar <= 15) {
+                    if (temp != null && temp.id >= 4831 && temp.id <= 4873 && temp.tierStar >= 15 && temp.tierStar <= 15) {
                         conn.p.id_Upgrade_Medal_Star = id;
                         Upgrade_MD_than(conn, tem);
                     } else {

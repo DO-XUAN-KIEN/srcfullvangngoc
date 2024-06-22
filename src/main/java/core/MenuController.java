@@ -72,7 +72,7 @@ public class MenuController {
                 break;
             }
             case -99: { // shop_coin
-                menu = new String[]{"Shop coin", "Shop đồ tinh tú","Shop nlmd = coin","Tiến hoá đồ tt","Tiến hóa mề đay","Nhận quà tích lũy","Đổi đồng money","TEST"};
+                menu = new String[]{"Shop coin", "Shop đồ tinh tú","Shop nlmd = coin","Tiến hoá đồ tt","Tiến hóa mề đay","Nhận quà tích lũy","Đổi đồng money"};
                 break;
             }
 //              case -20: { // Lisa
@@ -377,10 +377,6 @@ public class MenuController {
 //                        + (tierStar) + "/" + conn.p.item.total_item_by_id(7, st2.id[p.st_ran[2]]) + " " + ItemTemplate7.item.get(st2.id[p.st_ran[2]]).getName() + "\n"
 //                        + (tierStar) + "/" + conn.p.item.total_item_by_id(7, st3.id[p.st_ran[3]]) + " " + ItemTemplate7.item.get(st3.id[p.st_ran[3]]).getName() + "\n"
 //                        + (tierStar) + "/" + conn.p.item.total_item_by_id(7, st4.id[p.st_ran[4]]) + " " + ItemTemplate7.item.get(st4.id[p.st_ran[4]]).getName());
-                break;
-            }
-            case 131: {
-                Menu_mdsieuthan(conn, index);
                 break;
             }
             case 114: {
@@ -932,25 +928,26 @@ public class MenuController {
                 break;
             }
             case 3: {
-                conn.p.isdothan = true;
-                Service.send_box_UI(conn, 33);
+                Service.send_notice_box(conn,"Chưa ra mắt");
+//                conn.p.isdothan = true;
+//                Service.send_box_UI(conn, 33);
                 break;
             }
             case 4: {
-                //Service.send_notice_box(conn,"Chưa ra mắt");
-                conn.p.ismdthan = true;
-                Service.send_box_UI(conn, 33);
+                Service.send_notice_box(conn,"Chưa ra mắt");
+//                conn.p.ismdthan = true;
+//                Service.send_box_UI(conn, 33);
             }
             case 5: {
                 send_menu_select(conn, -98,new String[]{"Mốc 100 điểm(cánh V1)","Mốc 200 điểm(Cánh V2)","Mốc 300 điểm(Cánh V3)", "Mốc 300 điểm(Áo choàng đại gia)", "Mốc 400 điểm(Cánh V4)", "Mốc 400 điểm(Áo choàng Triệu phú)", "Mốc 500 điểm(Cánh V5)", "Mốc 500 điểm(Áo choàng tỷ phú)"});
                 break;
             }
             case 6: {
-                Service.send_box_input_text(conn,49,"Đổi đồng money",new String[]{"Nhập số lượng đồng money"});
+                //Service.send_notice_box(conn,"Chưa ra mắt");
+                Service.send_box_input_text(conn,49,"Đổi đồng money",new String[]{"Nhập số lượng"});
                 break;
-            }
-            case 7: {
-                Service.send_box_input_yesno(conn,-118,"OKI");
+            } case 7: {
+                Service.send_box_input_text(conn,51,"Ghép Linh hồn 4 mùa thường",new String[]{"4 loại hồn gió + 500k vàng"});
                 break;
             }
             default:{
@@ -973,7 +970,7 @@ public class MenuController {
                         itbag.id = iditem;
                         itbag.name = ItemTemplate3.item.get(iditem).getName();
                         itbag.clazz = ItemTemplate3.item.get(iditem).getClazz();
-                        itbag.type = ItemTemplate3.item.get(iditem).getType();
+                          itbag.type = ItemTemplate3.item.get(iditem).getType();
                         itbag.level = ItemTemplate3.item.get(iditem).getLevel();
                         itbag.icon = ItemTemplate3.item.get(iditem).getIcon();
                         itbag.op = new ArrayList<>();
@@ -1697,7 +1694,7 @@ public class MenuController {
                     break;
                 }
                 case 3: {
-                    if (conn.p.item.wear[11] != null && (conn.p.item.wear[11].id == 3599 || conn.p.item.wear[11].id == 3593 || conn.p.item.wear[11].id == 3596)) {
+                    if (conn.p.item.wear[11] != null && (conn.p.item.wear[11].id == 3599 || conn.p.item.wear[11].id == 3593 || conn.p.item.wear[11].id == 3596) && conn.ac_admin < 66) {
                         Service.send_notice_box(conn, "Bạn không thể về làng nhanh khi đang mặc loại giáp liên quan đến chức năng buôn");
                         return;
                     }
@@ -2062,7 +2059,8 @@ public class MenuController {
             }
             case 1: {
                 if (conn.p.isTrader()) {
-                    if (conn.p.pet_di_buon != null && conn.p.item.wear[11] != null
+                    if (conn.p.pet_di_buon != null && Math.abs(conn.p.pet_di_buon.x - conn.p.x) < 75
+                            && Math.abs(conn.p.pet_di_buon.y - conn.p.y) < 75 && conn.p.item.wear[11] != null
                             && conn.p.item.wear[11].id == 3599) {
                         //
                         int vang_recei = 0;
@@ -3272,109 +3270,6 @@ public class MenuController {
                 send_menu_select(conn, 131, new String[]{"Tài", "Xỉu", "Soi Cầu"});
                 break;
             }
-            // case 1: {
-            //     if (conn.p.chuyensinh <= 5) {
-            //         if (conn.p.level != 500) {
-            //            Service.send_notice_box(conn, "Cần level 500");
-            //            return;
-            //        }
-            //        if (conn.p.get_vang() < 50000000) {
-            //            Service.send_notice_box(conn, "Cần 50.000.000 vàng");
-            //           return;
-            //        }
-            //       if (conn.p.get_ngoc() < 50000) {
-            //            Service.send_notice_box(conn, "Cần 50.000 Ngọc");
-            //            return;
-            //     }
-            //   //         conn.p.level = 10;
-            //             conn.p.exp = 0;
-            //             conn.p.update_ngoc(-5000);
-            //             conn.p.update_vang(-5000000L);
-            //              conn.p.chuyensinh++;
-            //             Service.send_notice_box(conn, "Chuyển Sinh Thành công. \nSố Lần: " + conn.p.chuyensinh);
-            ///             Manager.gI().chatKTGprocess("Chúc Mừng " + conn.p.name + " Đã Chuyển Sinh Thành Công " + conn.p.chuyensinh + " Lần.");
-            //             conn.p.update_Exp(1, false);
-            //             Service.send_char_main_in4(conn.p);
-            //             break;
-            //          }
-            //          if (conn.p.chuyensinh > 5 || conn.p.chuyensinh <= 10) {
-            //               if (conn.p.level != 500) {
-            //                 Service.send_notice_box(conn, "Cần level 500");
-            //                   return;
-            //              }
-            //               if (conn.p.get_vang() < 100_000_0000) {
-            //                   Service.send_notice_box(conn, "Cần 100.000.000 vàng");
-            //                   return;
-            //               }
-            //               if (conn.p.get_ngoc() < 100_00000) {
-            //                   Service.send_notice_box(conn, "Cần 100.000 Ngọc");
-            //                  return;
-            //              }
-            //               conn.p.level = 10;
-            //               conn.p.exp = 0;
-            //               conn.p.update_ngoc(-10000000);
-            //               conn.p.update_vang(-1000000000L);
-            //               conn.p.chuyensinh++;
-            //              Service.send_notice_box(conn, "Chuyển Sinh Thành công. \nSố Lần: " + conn.p.chuyensinh);
-            //              Manager.gI().chatKTGprocess("Chúc Mừng " + conn.p.name + " Đã Chuyển Sinh Thành Công " + conn.p.chuyensinh + " Lần.");
-            //               conn.p.update_Exp(1, false);
-            //               Service.send_char_main_in4(conn.p);
-            //               break;
-            //           }
-            //           if (conn.p.chuyensinh > 10 || conn.p.chuyensinh <= 15) {
-            //              if (conn.p.level != 500) {
-            ///                   Service.send_notice_box(conn, "Cần level 500");
-            //                   return;
-            //               }
-            //               if (conn.p.get_vang() < 200_000_0000) {
-            //                   Service.send_notice_box(conn, "Cần 200.000.000 vàng");
-            //                   return;
-            //               }
-            //               if (conn.p.get_ngoc() < 200_00000) {
-            //                   Service.send_notice_box(conn, "Cần 200.000 Ngọc");
-            //                    return;
-            //               }
-            //              conn.p.level = 10;
-            //               conn.p.exp = 0;
-            //               conn.p.update_ngoc(-20000000);
-            //               conn.p.update_vang(-2000000000L);
-            //               conn.p.chuyensinh++;
-            //               Service.send_notice_box(conn, "Chuyển Sinh Thành công. \nSố Lần: " + conn.p.chuyensinh);
-            //               Manager.gI().chatKTGprocess("Chúc Mừng " + conn.p.name + " Đã Chuyển Sinh Thành Công " + conn.p.chuyensinh + " Lần.");
-            //               conn.p.update_Exp(1, false);
-            //              Service.send_char_main_in4(conn.p);
-            //              break;
-            //           }
-            //           if (conn.p.chuyensinh > 15) {
-            //               if (conn.p.level != 500) {
-            ///                   Service.send_notice_box(conn, "Cần level 500");
-            //                   return;
-            //               }
-            //              if (conn.p.get_vang() < 500_000_000) {
-            //                 Service.send_notice_box(conn, "Cần 500.000.000 vàng");
-            //                  return;
-            //             }
-            //             if (conn.p.get_ngoc() < 500_00000) {
-            //                 Service.send_notice_box(conn, "Cần 500.000 Ngọc");
-            //                return;
-            //            }
-            //             conn.p.level = 10;
-            //            conn.p.exp = 0;
-            // /            conn.p.update_ngoc(-50000000);
-            //            conn.p.update_vang(-500000000L);
-            //             conn.p.chuyensinh++;
-            //            Service.send_notice_box(conn, "Chuyển Sinh Thành công. \nSố Lần: " + conn.p.chuyensinh);
-            //             Manager.gI().chatKTGprocess("Chúc Mừng " + conn.p.name + " Đã Chuyển Sinh Thành Công " + conn.p.chuyensinh + " Lần.");
-            //             conn.p.update_Exp(1, false);
-            //            Service.send_char_main_in4(conn.p);
-            //            break;
-            // /       }
-            //        break;
-            //    }
-            //    case 2: {
-            //        Service.send_notice_box(conn, "Lần Chuyển Sinh:" + conn.p.chuyensinh);
-            //    break;
-            //}
 
         }
     }
@@ -3681,6 +3576,7 @@ public class MenuController {
 
                     String mess = rs.getString("logger");
                     empty_box = rs.getByte("empty_box");
+                    byte date = rs.getByte("date");
                     if (conn.p.item.get_bag_able() >= empty_box) {
                         if (ps.executeUpdate("UPDATE `giftcode2` SET `status` = '1' WHERE `id` = '" + rs.getInt("id") + "';") > 0) {
                             connection.commit();
@@ -3693,7 +3589,6 @@ public class MenuController {
                             }
                             Item3 itbag = new Item3();
                             short it = Short.parseShort(jsar2.get(0).toString());
-                            short date = Short.parseShort(jsar2.get(1).toString());
                             itbag.id = it;
                             itbag.name = ItemTemplate3.item.get(it).getName();
                             itbag.clazz = ItemTemplate3.item.get(it).getClazz();
@@ -3714,48 +3609,32 @@ public class MenuController {
                         }
                         jsar.clear();
                         jsar = (JSONArray) JSONValue.parse(rs.getString("item3"));
-                        if (jsar != null && jsar.size() > 0) {
-                            for (int i = 0; i < jsar.size(); i++) {
-                                JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i).toString());
-                                Item3 temp = new Item3();
-                                temp.id = Short.parseShort(jsar2.get(0).toString());
-                                temp.clazz = Byte.parseByte(jsar2.get(1).toString());
-                                temp.type = Byte.parseByte(jsar2.get(2).toString());
-                                temp.level = Short.parseShort(jsar2.get(3).toString());
-                                temp.icon = Short.parseShort(jsar2.get(4).toString());
-                                temp.color = Byte.parseByte(jsar2.get(5).toString());
-                                temp.part = Byte.parseByte(jsar2.get(6).toString());
-                                temp.islock = Byte.parseByte(jsar2.get(7).toString()) == 1;
-                                temp.name = ItemTemplate3.item.get(temp.id).getName();
-                                if (temp.islock) {
-                                    temp.name += " [Khóa]";
-                                }
-                                temp.tier = Byte.parseByte(jsar2.get(8).toString());
-                                // if (temp.type == 15) {
-                                // temp.tier = 0;
-                                // }
-                                JSONArray jsar3 = (JSONArray) JSONValue.parse(jsar2.get(9).toString());
-                                temp.op = new ArrayList<>();
-                                for (int j = 0; j < jsar3.size(); j++) {
-                                    JSONArray jsar4 = (JSONArray) JSONValue.parse(jsar3.get(j).toString());
-                                    temp.op.add(
-                                            new Option(Byte.parseByte(jsar4.get(0).toString()), Integer.parseInt(jsar4.get(1).toString()), temp.id));
-                                }
-                                temp.time_use = 0;
-                                if (jsar2.size() >= 11) {
-                                    temp.time_use = Long.parseLong(jsar2.get(10).toString());
-                                }
-                                if (jsar2.size() >= 12) {
-                                    temp.tierStar = Byte.parseByte(jsar2.get(11).toString());
-                                }
-                                if (jsar2.size() >= 13) {
-                                    temp.expiry_date = Long.parseLong(jsar2.get(12).toString());
-                                }
-                                temp.UpdateName();
-                                conn.p.item.add_item_bag3(temp);
+                        for (int i = 0; i < jsar.size(); i++) {
+                            JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i).toString());
+                            if (jsar2 == null || jsar2.size() < 1) {
+                                continue;
                             }
-                            jsar.clear();
+                            Item3 itbag = new Item3();
+                            short it = Short.parseShort(jsar2.get(0).toString());
+                            itbag.id = it;
+                            itbag.name = ItemTemplate3.item.get(it).getName();
+                            itbag.clazz = ItemTemplate3.item.get(it).getClazz();
+                            itbag.type = ItemTemplate3.item.get(it).getType();
+                            itbag.level = ItemTemplate3.item.get(it).getLevel();
+                            itbag.icon = ItemTemplate3.item.get(it).getIcon();
+                            itbag.op = new ArrayList<>();
+                            itbag.op.addAll(ItemTemplate3.item.get(it).getOp());
+                            itbag.color = ItemTemplate3.item.get(it).getColor();
+                            itbag.part = ItemTemplate3.item.get(it).getPart();
+                            itbag.tier = 0;
+                            itbag.time_use = 0;
+                            itbag.islock = true;
+                            if (date > 0) {
+                                itbag.expiry_date = System.currentTimeMillis() + 1000L * 60 * 60 * 24 * date;
+                            }
+                            conn.p.item.add_item_bag3(itbag);
                         }
+                        jsar.clear();
 
                         //
                         jsar = (JSONArray) JSONValue.parse(rs.getString("item4"));
@@ -3808,6 +3687,7 @@ public class MenuController {
                     }
                     String mess = rs.getString("logger");
                     empty_box = rs.getByte("empty_box");
+                    byte date = rs.getByte("date");
                     if (conn.p.item.get_bag_able() >= empty_box) {
                         if (ps.executeUpdate("UPDATE `giftcode2` SET `status` = '1' WHERE `id` = '" + rs.getInt("id") + "';") > 0) {
                             connection.commit();
@@ -3820,7 +3700,6 @@ public class MenuController {
                             }
                             Item3 itbag = new Item3();
                             short it = Short.parseShort(jsar2.get(0).toString());
-                            short date = Short.parseShort(jsar2.get(1).toString());
                             itbag.id = it;
                             itbag.name = ItemTemplate3.item.get(it).getName();
                             itbag.clazz = ItemTemplate3.item.get(it).getClazz();
@@ -3840,50 +3719,34 @@ public class MenuController {
                             conn.p.item.add_item_bag3(itbag);
                         }
                         jsar.clear();
+                        //
                         jsar = (JSONArray) JSONValue.parse(rs.getString("item3"));
-                        if (jsar != null && jsar.size() > 0) {
-                            for (int i = 0; i < jsar.size(); i++) {
-                                JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i).toString());
-                                Item3 temp = new Item3();
-                                temp.id = Short.parseShort(jsar2.get(0).toString());
-                                temp.clazz = Byte.parseByte(jsar2.get(1).toString());
-                                temp.type = Byte.parseByte(jsar2.get(2).toString());
-                                temp.level = Short.parseShort(jsar2.get(3).toString());
-                                temp.icon = Short.parseShort(jsar2.get(4).toString());
-                                temp.color = Byte.parseByte(jsar2.get(5).toString());
-                                temp.part = Byte.parseByte(jsar2.get(6).toString());
-                                temp.islock = Byte.parseByte(jsar2.get(7).toString()) == 1;
-                                temp.name = ItemTemplate3.item.get(temp.id).getName();
-                                if (temp.islock) {
-                                    temp.name += " [Khóa]";
-                                }
-                                temp.tier = Byte.parseByte(jsar2.get(8).toString());
-                                // if (temp.type == 15) {
-                                // temp.tier = 0;
-                                // }
-                                JSONArray jsar3 = (JSONArray) JSONValue.parse(jsar2.get(9).toString());
-                                temp.op = new ArrayList<>();
-                                for (int j = 0; j < jsar3.size(); j++) {
-                                    JSONArray jsar4 = (JSONArray) JSONValue.parse(jsar3.get(j).toString());
-                                    temp.op.add(
-                                            new Option(Byte.parseByte(jsar4.get(0).toString()), Integer.parseInt(jsar4.get(1).toString()), temp.id));
-                                }
-                                temp.time_use = 0;
-                                if (jsar2.size() >= 11) {
-                                    temp.time_use = Long.parseLong(jsar2.get(10).toString());
-                                }
-                                if (jsar2.size() >= 12) {
-                                    temp.tierStar = Byte.parseByte(jsar2.get(11).toString());
-                                }
-                                if (jsar2.size() >= 13) {
-                                    temp.expiry_date = Long.parseLong(jsar2.get(12).toString());
-                                }
-                                temp.UpdateName();
-                                conn.p.item.add_item_bag3(temp);
+                        for (int i = 0; i < jsar.size(); i++) {
+                            JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i).toString());
+                            if (jsar2 == null || jsar2.size() < 1) {
+                                continue;
                             }
-                            jsar.clear();
+                            Item3 itbag = new Item3();
+                            short it = Short.parseShort(jsar2.get(0).toString());
+                            itbag.id = it;
+                            itbag.name = ItemTemplate3.item.get(it).getName();
+                            itbag.clazz = ItemTemplate3.item.get(it).getClazz();
+                            itbag.type = ItemTemplate3.item.get(it).getType();
+                            itbag.level = ItemTemplate3.item.get(it).getLevel();
+                            itbag.icon = ItemTemplate3.item.get(it).getIcon();
+                            itbag.op = new ArrayList<>();
+                            itbag.op.addAll(ItemTemplate3.item.get(it).getOp());
+                            itbag.color = ItemTemplate3.item.get(it).getColor();
+                            itbag.part = ItemTemplate3.item.get(it).getPart();
+                            itbag.tier = 0;
+                            itbag.time_use = 0;
+                            itbag.islock = true;
+                            if (date > 0) {
+                                itbag.expiry_date = System.currentTimeMillis() + 1000L * 60 * 60 * 24 * date;
+                            }
+                            conn.p.item.add_item_bag3(itbag);
                         }
-
+                        jsar.clear();
                         //
                         jsar = (JSONArray) JSONValue.parse(rs.getString("item4"));
                         for (int i = 0; i < jsar.size(); i++) {
@@ -4424,7 +4287,7 @@ public class MenuController {
                 conn.p.item.remove(7, id_5, 1);
                 for (int i = 0; i < 2; i++) {
                     int ran = Util.random(1, 100);
-                    if (ran < 20) {
+                    if (ran < 10) {
                         short id = Util.random(it7, new ArrayList<>()).shortValue();
                         short quant = 1;
                         ids.add(new box_item_template(id, quant, (byte) 7));
@@ -4440,7 +4303,7 @@ public class MenuController {
                         ids.add(new box_item_template(id, quant, (byte) 4));
                         conn.p.item.add_item_bag47(id, quant, (byte) 4);
                     } else if (ran > 99.9) {
-                        short[] allowedIds = {4761, 4626};
+                        short[] allowedIds = {4761};
                         short iditem = allowedIds[Util.random(0, allowedIds.length - 1)];
                         Item3 itbag = new Item3();
                         itbag.id = iditem;
@@ -5833,7 +5696,7 @@ public class MenuController {
                             conn.p.item.add_item_bag47(7, it_add);
                         }
                         it.op.get(i).setParam(-1);
-                    } else if (id >= 100 && id <= 107) {
+                    } else if (id >= 100 && id <= 107 || id == 5 || id == 6 || id == 116) {
                         it.op.remove(i);
                     }
                 }

@@ -484,7 +484,7 @@ public class Process_Yes_no_box {
                         Service.send_notice_box(conn, "chưa đủ 100% exp!");
                         return;
                     }
-                    if(temp.it.tier >= 15){
+                    if(temp.it.tier >= 25){
                         Service.send_notice_box(conn, "Nhẫn đã nâng cấp tối đa");
                         return;
                     }
@@ -506,9 +506,9 @@ public class Process_Yes_no_box {
                     if ((suc < 80 && temp.it.tier <= 5) ||
                         (suc < 60 && (temp.it.tier >= 5 && temp.it.tier < 10)) ||
                         (suc < 40 && (temp.it.tier >= 10 && temp.it.tier < 15)) ||
-                        (suc < 20 && (temp.it.tier >= 15 && temp.it.tier < 20)) ||
-                        (suc < 10 && (temp.it.tier >= 20 && temp.it.tier < 25)) ||
-                        (suc < 3 && (temp.it.tier >= 25 && temp.it.tier < 33)) || conn.ac_admin > 20) {
+                        (suc < 10 && (temp.it.tier >= 15 && temp.it.tier < 20)) ||
+                        (suc < 2 && (temp.it.tier >= 20 && temp.it.tier < 25)) ||
+                        (suc < 1 && (temp.it.tier >= 25 && temp.it.tier < 33)) || conn.ac_admin > 66) {
                         temp.exp -= Level.entrys.get(temp.it.tier).exp;
                         temp.it.tier++;
                         Service.send_notice_box(conn, "nâng cấp thành công lên +" + temp.it.tier);
@@ -525,6 +525,9 @@ public class Process_Yes_no_box {
                             MapService.update_in4_2_other_inside(p0.map, p0);
                         }
                     } else {
+                        if(temp.it.tier >= 15){
+                            temp.exp -=(Level.entrys.get(temp.it.tier).exp)/2;
+                        }
                         Service.send_notice_box(conn, "nâng cấp thất bại!");
                     }
                     break;
@@ -683,11 +686,11 @@ public class Process_Yes_no_box {
                 }
                 case 9: {
                     if(conn.p.map.isMapChienTruong()){
-                        if (conn.p.get_vang() >= 10_000) {
+                        if (conn.p.get_vang() >= 5_000) {
                             conn.p.isDie = false;
                             conn.p.hp = conn.p.body.get_HpMax();
                             conn.p.mp = conn.p.body.get_MpMax();
-                            conn.p.update_vang(-10_000);
+                            conn.p.update_vang(-5_000);
                             conn.p.item.char_inventory(5);
                             Service.send_char_main_in4(conn.p);
                             // chest in4

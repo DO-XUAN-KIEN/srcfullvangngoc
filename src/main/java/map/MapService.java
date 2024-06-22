@@ -2026,7 +2026,8 @@ public class MapService {
                         if (d != null) {
                             Mob_Dungeon mod_target_dungeon = d.get_mob(ObjAtk);
                             if (mod_target_dungeon != null) {
-                                MainObject.MainAttack(map, conn.p, mod_target_dungeon, index_skill, _skill, type);
+                                //MainObject.MainAttack(map, conn.p, mod_target_dungeon, index_skill, _skill, type);
+                                d.fire_mob(map, mod_target_dungeon, conn.p, index_skill, type);
                             }
                         }
                     } else if (Map.is_map_chiem_mo(conn.p.map, true) && conn.p.myclan != null) {

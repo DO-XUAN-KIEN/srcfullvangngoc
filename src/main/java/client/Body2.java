@@ -190,14 +190,16 @@ public class Body2 extends MainObject {
                 }
             }
         }
+        if(p.get_EffDefault(EffTemplate.buffhp) != null || p.get_EffDefault(EffTemplate.bufftatca) != null){
+            percent += 2000;
+        }
         if (p.type_use_mount == Horse.HEO_RUNG || p.type_use_mount == Horse.CON_LAN || p.type_use_mount == Horse.SKELETON
                 || p.type_use_mount == Horse.CHUOT_TUYET || p.type_use_mount == Horse.VOI_MA_MUT
                 || p.type_use_mount == Horse.MA_TOC_DO || p.type_use_mount == Horse.RONG_BANG) {
             percent += 1000;
         }
         hpm += ((hpm * (percent / 100)) / 100);
-        EffTemplate ef = p.get_EffDefault(2);
-        if (ef != null) {
+        if (p.get_EffDefault(2) != null) {
             hpm = (hpm * 8) / 10;
         }
         if (hpm > 2_000_000_000) {
@@ -284,9 +286,11 @@ public class Body2 extends MainObject {
     public int get_PhanDame() {
         int param = 2 * get_point(3);
         param += total_item_param(35);
-        EffTemplate ef = get_EffDefault(35);
-        if (ef != null) {
-            param += ef.param;
+        if (p.get_EffDefault(35) != null) {
+            param += p.get_EffDefault(35).param;
+        }
+        if(p.get_EffDefault(EffTemplate.buffpst) != null || get_EffDefault(EffTemplate.bufftatca) != null){
+            param += 2000;
         }
         EffTemplate eff_thien_su = getEffTinhTu(EffTemplate.GIAP_THIEN_SU);
         if (eff_thien_su != null) {
@@ -298,9 +302,11 @@ public class Body2 extends MainObject {
     public int get_Miss(boolean giam_ne) {
         int param = 2 * get_point(2);
         param += total_item_param(34);
-        EffTemplate ef = get_EffDefault(34);
-        if (ef != null) {
-            param += ef.param;
+        if (get_EffDefault(34) != null) {
+            param += get_EffDefault(34).param;
+        }
+        if (get_EffDefault(EffTemplate.buffne) != null || get_EffDefault(EffTemplate.bufftatca) != null){
+            param += 2000;
         }
         if (giam_ne) {
             param = param / 10 * 9;
@@ -342,9 +348,11 @@ public class Body2 extends MainObject {
                 }
             }
         }
-        EffTemplate ef = p.get_EffDefault(24);
-        if (ef != null) {
-            def += ef.param;
+        if (p.get_EffDefault(24) != null) {
+            def += p.get_EffDefault(24).param;
+        }
+        if (p.get_EffDefault(EffTemplate.buffpt) != null || get_EffDefault(EffTemplate.bufftatca) != null){
+            def += 2000;
         }
         if (p.type_use_mount == Horse.NGUA_CHIEN_GIAP || p.type_use_mount == Horse.VOI_MA_MUT) {
             def += 2000;
@@ -722,6 +730,9 @@ public class Body2 extends MainObject {
             EffTemplate vet_thuong_sau = p.get_EffDefault(StrucEff.VET_THUONG_SAU);
             EffTemplate te_cong = p.get_EffDefault(StrucEff.TE_CONG);
             int percent = p.body.total_skill_param(29) + p.body.total_item_param(29);
+            if (p.get_EffDefault(EffTemplate.buffhoihp) != null || get_EffDefault(EffTemplate.bufftatca) != null){
+                percent += 2000;
+            }
             if (p.time_buff_hp < System.currentTimeMillis() && vet_thuong_sau == null && te_cong == null) {
                 p.time_buff_hp = System.currentTimeMillis() + 5000L;
                 if (percent > 0 && p.hp < p.body.get_HpMax()) {

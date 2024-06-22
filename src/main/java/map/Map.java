@@ -72,7 +72,6 @@ public class Map implements Runnable {
     public int baseID = -1001;
     private boolean running;
     public Dungeon d;
-    public Leothap leo;
     public short mapW;
     public short mapH;
     public long time_ct;
@@ -406,6 +405,8 @@ public class Map implements Runnable {
             for (int i1 = players.size() - 1; i1 >= 0; i1--) {
                 try {
                     Player p = players.get(i1);
+                    Service.send_char_main_in4(p);
+                    MapService.update_in4_2_other_inside(p.map, p);
                     if (p == null || p.conn == null || p.conn.socket == null || p.conn.socket.isClosed() || !p.conn.connected) {
                         players.remove(p);
                         if (p != null && p.conn != null) {
@@ -758,7 +759,9 @@ public class Map implements Runnable {
         m.writer().write(this.map_data);
         m.writer().writeByte(this.zone_id); // zone
         m.writer().writeByte(this.typemap);
-        m.writer().writeBoolean(this.ismaplang);
+        if (p.conn.ac_admin < 66) {
+            m.writer().writeBoolean(this.ismaplang);
+        }
         m.writer().writeBoolean(this.showhs);
         p.conn.addmsg(m);
         m.cleanup();
