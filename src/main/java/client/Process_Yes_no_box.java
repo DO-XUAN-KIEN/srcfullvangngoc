@@ -276,94 +276,6 @@ public class Process_Yes_no_box {
                     }
                     break;
                 }
-                case -12: {
-                    if (conn.p.id_than != -1) {
-                        Player p = conn.p;
-                        Item3 it_pr = conn.p.item.bag3[conn.p.id_than];
-                        if (it_pr != null) {
-                            int[] ids = {st.id[p.st_ran[0]], st1.id[p.st_ran[1]], st2.id[p.st_ran[2]], st3.id[p.st_ran[3]], st4.id[p.st_ran[4]]};
-                            int[] values = {10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40};
-                            int tierStar = it_pr.tierStar >= 0 && it_pr.tierStar < values.length ? values[it_pr.tierStar] : it_pr.tierStar;
-                            for (int i = 0; i < ids.length; i++) {
-                                if (conn.p.item.total_item_by_id(7, ids[i]) < tierStar) {
-                                    Service.send_notice_box(conn, "Không đủ " + tierStar + " " + ItemTemplate7.item.get(ids[i]).getName());
-                                    return;
-                                }
-                                conn.p.item.remove(7, ids[i], tierStar);
-                            }
-                            for (int i = 0; i < it_pr.op.size(); i++) {
-                                Option op = it_pr.op.get(i);
-                                if (op.id >= 0 && op.id <= 99) {
-                                    op.setParam(op.getParam(4));
-                                }
-                                if (op != null && op.id >= -128 && op.id <= -80 || (op.id == 99)) {
-                                    op.setParam(op.getParam(0) + 100);
-                                }
-                            }
-                            boolean suc = 15 > Util.random(100) || conn.ac_admin > 10;
-                            if (suc) {
-                                it_pr.tierStar++;
-                                it_pr.name = ItemTemplate3.item.get(it_pr.id).getName() + "";
-                                it_pr.UpdateName();
-                                conn.p.item.char_inventory(4);
-                                conn.p.item.char_inventory(7);
-                                conn.p.item.char_inventory(3);
-                                Service.send_notice_box(conn, "Nhận Được " + it_pr.name + "");
-                                st.ran_st(conn.p);
-                            } else {
-                                Service.send_notice_box(conn, "Nâng cấp thất bại!");
-                            }
-                        }
-                    }
-                    break;
-//                    if (conn.p.id_than != -1) {
-//                        Player p = conn.p;
-//                        Item3 it_pr = conn.p.item.bag3[conn.p.id_than];
-//                        if (it_pr == null) {
-//                            Service.send_notice_box(conn, "Không tìm thấy vật phẩm phù hợp");
-//                            return;
-//                        }
-//                        if (conn.p.get_ngoc() < 10_000) {
-//                            Service.send_notice_box(conn, "Không đủ 10k ngọc");
-//                            return;
-//                        }
-//                        if (it_pr != null && it_pr.id >= 4831 && it_pr.id <= 4873 && it_pr.color == 5 && it_pr.tierStar <= 17) {
-//                            int[] ids = {st.id[p.st_ran[0]], st1.id[p.st_ran[1]], st2.id[p.st_ran[2]], st3.id[p.st_ran[3]], st4.id[p.st_ran[4]]};
-//                            int[] sls = {st.sl[p.st_ran[0]], st1.sl[p.st_ran[1]], st2.sl[p.st_ran[2]], st3.sl[p.st_ran[3]], st4.sl[p.st_ran[4]]};
-//                            for (int i = 0; i < ids.length; i++) {
-//                                if (conn.p.item.total_item_by_id(7, ids[i]) < sls[i] * it_pr.tierStar) {
-//                                    Service.send_notice_box(conn, "Không đủ " + sls[i] * it_pr.tierStar + " " + ItemTemplate7.item.get(ids[i]).getName());
-//                                    return;
-//                                }
-//                                conn.p.item.remove(7, ids[i], sls[i] * it_pr.tierStar / 9);
-//                            }
-//                            for (int i = 0; i < it_pr.op.size(); i++) {
-//                                Option op = it_pr.op.get(i);
-//                                if (op.id >= 0 && op.id <= 99) {
-//                                    op.setParam(op.getParam(4));
-//                                }
-//                                if (op != null && op.id >= -128 && op.id <= -80 || (op.id == 99)) {
-//                                    op.setParam(op.getParam(0) + 100);
-//                                }
-//                            }
-//                            boolean suc = 15 > Util.random(100) || conn.ac_admin > 10;
-//                            if (suc) {
-//                                it_pr.tierStar++;
-//                                it_pr.name = ItemTemplate3.item.get(it_pr.id).getName() + "";
-//                                it_pr.UpdateName();
-//                                conn.p.item.char_inventory(4);
-//                                conn.p.item.char_inventory(7);
-//                                conn.p.item.char_inventory(3);
-//                                Service.send_notice_box(conn, "Nhận Được " + it_pr.name + "");
-//                                conn.p.item.char_inventory(3);
-//                                st.ran_st(conn.p);
-//                            } else {
-//                                Service.send_notice_box(conn, "Nâng cấp thất bại!");
-//                            }
-//                        }
-//                    }
-//                    break;
-                }
                 case -13: {
                     Item3 it_pr = null;
                     Player p = conn.p;
@@ -604,7 +516,7 @@ public class Process_Yes_no_box {
                             Service.send_notice_box(conn, "Tên không tồn tại");
                         }
                     } else {
-                        Service.send_notice_box(conn, "Đã xảy ra lỗi");
+                        Service.send_notice_box(conn, "Đã xảy ra lỗi-ys");
                     }
                     break;
                 }

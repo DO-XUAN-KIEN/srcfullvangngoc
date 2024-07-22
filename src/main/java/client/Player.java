@@ -53,6 +53,7 @@ public class Player extends Body2 {
     public int phoban;
     public long danhvong;
     public int doiqua;
+    public int sk_hongio;
     public byte type_exp;
     //    public byte clazz;
 //    public short level;
@@ -259,17 +260,18 @@ public class Player extends Body2 {
                 (short) Util.random(417, 437), (short) Util.random(437, 457), (short) Util.random(326, 336), (short) Util.random(336, 346), (short) Util.random(457, 464),};
     }
     public void setnldothan() {
-        NLdothan = new short[]{
-                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
-                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
-                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
-                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
-                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
-                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
-                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),
-                (short) Util.random(246, 316), (short) Util.random(246, 316), (short) Util.random(316, 326), (short) Util.random(326, 336), (short) Util.random(336, 346),};
+        short[] baseValues = {
+                (short) Util.random(246, 268),
+                (short) Util.random(268, 316),
+                (short) Util.random(316, 336),
+                (short) Util.random(326, 336),
+                (short) Util.random(336, 346)
+        };
+        NLdothan = new short[baseValues.length * 8];
+        for (int i = 0; i < NLdothan.length; i++) {
+            NLdothan[i] = baseValues[i % baseValues.length];
+        }
     }
-
 
     public void ChangeMaterialItemStar(byte type) {
         if (type >= 8) {
@@ -285,11 +287,11 @@ public class Player extends Body2 {
     }
 
     public void ChangeNL_dothan(byte type) {
-        if (type >= 8) {
-            return;
-        }
-        NLdothan[type * 5] = (short) Util.random(246, 316);
-        NLdothan[type * 5 + 1] = (short) Util.random(246, 316);
+//        if (type >= 8) {
+//            return;
+//        }
+        NLdothan[type * 5] = (short) Util.random(246, 286);
+        NLdothan[type * 5 + 1] = (short) Util.random(286, 316);
         NLdothan[type * 5 + 2] = (short) Util.random(316, 326);
         NLdothan[type * 5 + 3] = (short) Util.random(326, 336);
         NLdothan[type * 5 + 4] = (short) Util.random(336, 346);
@@ -382,6 +384,7 @@ public class Player extends Body2 {
                 phoban = rs.getInt("phoban");
                 danhvong = rs.getLong("danhvong");
                 doiqua = rs.getInt("doiqua");
+                sk_hongio = rs.getInt("sk_hongio");
                 chuyencan = rs.getInt("chuyencan");
                 diemsukien = rs.getInt("diemsukien");
                 type_exp = rs.getByte("typeexp");
@@ -1335,6 +1338,7 @@ public class Player extends Body2 {
                 a += ",`phoban` = " + phoban;
                 a += ",`danhvong` = " + danhvong;
                 a += ",`doiqua` = " + doiqua;
+                a += ",`sk_hongio` = " + sk_hongio;
                 a += ",`chuyencan` = " + chuyencan;
                 a += ",`diemsukien` = " + diemsukien;
                 a += ",`typeexp` = " + type_exp;
@@ -1650,16 +1654,6 @@ public class Player extends Body2 {
             Service.send_notice_box(p.conn, "Có lỗi xảy ra khi chuyển map");
         }
     }
-    public void down_horse_clan() throws IOException {
-        if (Horse.isHorseClan(type_use_mount)) {
-            type_use_mount = -1;
-            id_horse = -1;
-            MapService.update_in4_2_other_inside(this.map, this);
-            MapService.send_in4_other_char(this.map, this, this);
-            Service.send_char_main_in4(this);
-            Service.send_notice_nobox_white(conn, "Tháo thú cưỡi thành công");
-        }
-    }
     public void update_Exp(long expup, boolean expmulti) throws IOException {
         long dame_exp = expup;
         if (expmulti && this.getlevelpercent() >= 0) {
@@ -1807,7 +1801,7 @@ public class Player extends Body2 {
                 connection.commit();
             }
         } catch (SQLException e) {
-            Service.send_notice_box(conn, "Đã xảy ra lỗi");
+            Service.send_notice_box(conn, "Đã xảy ra lỗi-p");
         }
         return true;
     }
@@ -1823,7 +1817,7 @@ public class Player extends Body2 {
                 connection.commit();
             }
         } catch (SQLException e) {
-            Service.send_notice_box(conn, "Đã xảy ra lỗi");
+            Service.send_notice_box(conn, "Đã xảy ra lỗi-p1");
         }
         return true;
     }
@@ -2218,6 +2212,10 @@ public class Player extends Body2 {
                     }
                     if (dont_have_book_skill_110 && conn.ac_admin < 4) {
                         Service.send_notice_box(conn, "Chưa có sách kỹ năng để học!");
+                        return;
+                    }
+                    if(conn.p.level < 111){
+                        Service.send_notice_box(conn,"level 111 mới học được kĩ năng này");
                         return;
                     }
                     item.char_inventory(3);

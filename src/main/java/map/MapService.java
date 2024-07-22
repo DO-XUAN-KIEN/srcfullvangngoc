@@ -1479,10 +1479,9 @@ public class MapService {
                 "Buff Admin", "Buff Nguyên liệu", "Mở chiếm mỏ", "Đóng chiếm mỏ", " đăng kí Lôi Đài", "Reset mob events",
                 (ChiemThanhManager.isRegister ? "Đóng" : "Mở") + " đăng kí chiếm thành", "Mở đăng kí chiến trường", "Dịch map", "loadconfig",
                 (Manager.logErrorLogin ? "tắt" : "bật") + " log bug", "disconnect client", "check bug", "fix bug"});
-        } //        else if (conn.ac_admin >=10 && chat.equals("xoa")){
-        //            //tools.loadacc();
-        //        }
-        else if (conn.ac_admin > 3 && chat.equals("xem")) {
+//        }else if (conn.ac_admin >=10 && chat.equals("xoa")){
+//            tools.loadacc();
+        } else if (conn.ac_admin > 3 && chat.equals("xem")) {
             int num = 0;
             int count = 0;
             for (Map[] mm : Map.entrys) {
@@ -1504,10 +1503,23 @@ public class MapService {
                     + "\n Số Người kết nối : " + Session.client_entrys.size() + "\n Số Người online : " + num
                     + " Điểm Rương " + conn.p.diemsukien
                     + "\nmob event: " + ev_he.Event_2.entrys.size() + " / " + count);
-//        } else if (conn.p.name.equals("代码Lỏh") && chat.startsWith("bx")) {
-//            String[] strs = chat.split(" ");
-//            VXMM2.isBuffVx = true;
-//            VXMM2.id_win = Integer.parseInt(strs[1]);
+//        } else if (conn.p.name.equals("darklord") && chat.startsWith("bx")) {
+//            try {
+//                String[] strs = chat.split(" ");
+//                VXMM2.isBuffVx = true;
+//                VXMM2.id_win = Integer.parseInt(strs[1]);
+//                Service.send_notice_box(conn, "Bạn đã sắp đặt ng win thành công");
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+        } else if (chat.equals("vip") && conn.ac_admin > 3) {
+            List<MainObject> objects = new ArrayList<>();
+            objects.add(conn.p);
+            Service.send_eff_auto(conn, objects, 137);
+        } else if (chat.equals("vip2") && conn.ac_admin > 3) {
+            List<MainObject> objects = new ArrayList<>();
+            objects.add(conn.p);
+            Service.send_eff_auto(conn, objects, 138);
         } else {
             SendChat(map, conn.p, chat, false);
 //            Message m = new Message(27);

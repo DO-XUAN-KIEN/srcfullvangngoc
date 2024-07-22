@@ -47,7 +47,7 @@ public class MenuController {
         String[] menu;
         switch (idnpc) {
             case -81: {
-                menu = new String[]{"Đăng ký lôi đài", "Vào lôi đài", "Xem lôi đài", "Xem điểm lôi đài", "Nhận quà lôi đài", "Huong dan", "Tháo ngọc khảm", "luyen de tu", "huy de tu", "Lang phu suong"};
+                menu = new String[]{"Đăng ký lôi đài", "Vào lôi đài", "Xem lôi đài", "Xem điểm lôi đài", "Nhận quà lôi đài", "Hướng dẫn", "Tháo ngọc khảm", "Luyện đệ tử", "Hủy đệ tử"};
                 break;
             }
             case -104:
@@ -72,7 +72,7 @@ public class MenuController {
                 break;
             }
             case -99: { // shop_coin
-                menu = new String[]{"Shop coin", "Shop đồ tinh tú","Shop nlmd = coin","Tiến hoá đồ tt","Tiến hóa mề đay","Nhận quà tích lũy","Đổi đồng money"};
+                menu = new String[]{"Shop coin", "Shop đồ tinh tú","Shop nlmd = coin","Tiến hoá đồ tt","Tiến hóa mề đay","Nhận quà tích lũy","Đổi đồng money","Hợp thể buff"};
                 break;
             }
 //              case -20: { // Lisa
@@ -147,7 +147,8 @@ public class MenuController {
                 break;
             }
             case -90: { // keva
-                menu = new String[]{"Shop", "Khu Phủ Sương Up", "Map Boss", "Quay Về Làng Phủ Sương", "Về Làng "};
+                menu = new String[]{"Map Boss", "Về Làng "};
+                //menu = new String[]{"Shop", "Khu Phủ Sương Up", "Map Boss", "Quay Về Làng Phủ Sương", "Về Làng "};
                 break;
             }
             case -7: {
@@ -250,6 +251,10 @@ public class MenuController {
                     return;
                 } else if (Manager.gI().event == 6) { // sự kiện Hallowen
                     menu = new String[]{"Rương huyền bí", "Xem Top"};
+                    send_menu_select(conn, -69, menu, (byte) Manager.gI().event);
+                    return;
+                } else if (Manager.gI().event == 11) { // sự kiện hồn gió
+                    menu = new String[]{"Ghép linh hồn 4 mùa thường","Ghép Linh Hồn 4 Mùa Trung Cấp","Ghép Linh Hồn 4 Mùa Cao Cấp", "Xem Top"};
                     send_menu_select(conn, -69, menu, (byte) Manager.gI().event);
                     return;
                 } else {
@@ -601,6 +606,9 @@ public class MenuController {
                 if (Manager.gI().event == 6) { // hallowin
                     Menu_MissSophia(conn, idnpc, idmenu, index);
                 }
+                if (Manager.gI().event == 11) { // hồn gió
+                    Menu_MissSophia(conn, idnpc, idmenu, index);
+                }
                 break;
             }
             case -62: {
@@ -628,12 +636,10 @@ public class MenuController {
                 break;
             }
             case -103: {
-
                 break;
             }
-
             default: {
-                Service.send_notice_box(conn, "Đã xảy ra lỗi");
+                //Service.send_notice_box(conn, "Đã xảy ra lỗi-menucontroller");
                 break;
             }
         }
@@ -937,6 +943,7 @@ public class MenuController {
                 Service.send_notice_box(conn,"Chưa ra mắt");
 //                conn.p.ismdthan = true;
 //                Service.send_box_UI(conn, 33);
+                break;
             }
             case 5: {
                 send_menu_select(conn, -98,new String[]{"Mốc 100 điểm(cánh V1)","Mốc 200 điểm(Cánh V2)","Mốc 300 điểm(Cánh V3)", "Mốc 300 điểm(Áo choàng đại gia)", "Mốc 400 điểm(Cánh V4)", "Mốc 400 điểm(Áo choàng Triệu phú)", "Mốc 500 điểm(Cánh V5)", "Mốc 500 điểm(Áo choàng tỷ phú)"});
@@ -946,8 +953,10 @@ public class MenuController {
                 //Service.send_notice_box(conn,"Chưa ra mắt");
                 Service.send_box_input_text(conn,49,"Đổi đồng money",new String[]{"Nhập số lượng"});
                 break;
-            } case 7: {
-                Service.send_box_input_text(conn,51,"Ghép Linh hồn 4 mùa thường",new String[]{"4 loại hồn gió + 500k vàng"});
+            }
+            case 7: {
+                //Service.send_notice_box(conn,"Chưa ra mắt");
+                Service.send_box_input_text(conn,50,"Hợp thể buff",new String[]{"Nhập số lượng"});
                 break;
             }
             default:{
@@ -1606,6 +1615,28 @@ public class MenuController {
                     Service.send_notice_box(conn, "Chưa có chức năng ev6!");
                     break;
             }
+        } else if (idmenu == 11 && Manager.gI().event == 11) { // sự kiện halloween
+            switch (index) {
+                case 0: {
+                    Service.send_box_input_text(conn, 51, "Linh hồn 4 mùa thường", new String[]{"4 loại hồn gió + 500.000 vàng"});
+                    break;
+                }
+                case 1: {
+                    Service.send_box_input_text(conn, 52, "Linh Hồn 4 Mùa Trung Cấp", new String[]{"4 loại hồn gió + 10.000 coin"});
+                    break;
+                }
+                case 2: {
+                    Service.send_box_input_text(conn, 53, "Linh Hồn 4 Mùa Cao Cấp", new String[]{"4 loại hồn gió + 2.000.000 vàng + 20.000 coin"});
+                    break;
+                }
+                case 3: {
+                    BXH.send1(conn,2);
+                    break;
+                }
+                default:
+                    Service.send_notice_box(conn, "Chưa có chức năng ev11!");
+                    break;
+            }
         } else {
             Service.send_notice_box(conn, "menu: " + idmenu + "  ev: " + Manager.gI().event);
         }
@@ -1855,14 +1886,14 @@ public class MenuController {
                     }
                     break;
                 }
-                case 9: {
-                    if (conn.p.level < 100) {
-                        Service.send_notice_box(conn, "Bạn phải đạt từ cấp độ 100 mới có thể thực hiện chức năng này");
-                        return;
-                    }
-                    conn.p.langPhuSuong();
-                    break;
-                }
+//                case 9: {
+//                    if (conn.p.level < 100) {
+//                        Service.send_notice_box(conn, "Bạn phải đạt từ cấp độ 100 mới có thể thực hiện chức năng này");
+//                        return;
+//                    }
+//                    conn.p.langPhuSuong();
+//                    break;
+//                }
 
                 default: {
                     Service.send_notice_box(conn, "Chưa có chức năng");
@@ -3326,7 +3357,7 @@ public class MenuController {
                 for (int i = 0; i < menu.length; i++) {
                     m2.writer().writeUTF(menu[i]);
                 }
-                if (conn.ac_admin > 0) {
+                if (conn.ac_admin > 10) {
                     m2.writer().writeUTF("MENU : " + idnpc);
                 } else {
                     m2.writer().writeUTF("MENU");
@@ -3347,7 +3378,7 @@ public class MenuController {
                 for (int i = 0; i < menu.length; i++) {
                     m2.writer().writeUTF(menu[i]);
                 }
-                if (conn.ac_admin > 0) {
+                if (conn.ac_admin > 10) {
                     m2.writer().writeUTF("MENU : " + idnpc);
                 } else {
                     m2.writer().writeUTF("MENU");
@@ -5062,25 +5093,25 @@ public class MenuController {
     private static void Menu_keva(Session conn, byte index, byte idmenu) throws IOException {
         if (idmenu == 0) {
             switch (index) {
-                case 0: { // cua hang potion
-                    Service.send_box_UI(conn, 0);
-                    break;
-                }
-                case 1: {
-                    if (conn.status != 0) {
-                        Service.send_notice_box(conn, "Tài khoản chưa được kích hoạt,");
-                        return;
-                    }
-                    if (conn.p.get_ngoc() < 100) {
-                        Service.send_notice_box(conn, "Không đủ 100 ngọc");
-                        return;
-                    }
-                    conn.p.update_ngoc(-100);
-
-                    send_menu_select(conn, -90, new String[]{"Khu Làng 10x", "Khu Lảng 11x", "Khu Lảng 12x", "Khu Lảng 13x", "Khu Lảng 14x"}, (byte) 1);
-                    break;
-                }
-                case 2: {
+//                case 0: { // cua hang potion
+//                    Service.send_box_UI(conn, 0);
+//                    break;
+//                }
+//                case 0: {
+//                    if (conn.status != 0) {
+//                        Service.send_notice_box(conn, "Tài khoản chưa được kích hoạt,");
+//                        return;
+//                    }
+//                    if (conn.p.get_ngoc() < 100) {
+//                        Service.send_notice_box(conn, "Không đủ 100 ngọc");
+//                        return;
+//                    }
+//                    conn.p.update_ngoc(-100);
+//
+//                    send_menu_select(conn, -90, new String[]{"Khu Làng 10x", "Khu Lảng 11x", "Khu Lảng 12x", "Khu Lảng 13x", "Khu Lảng 14x"}, (byte) 1);
+//                    break;
+//                }
+                case 0: {
                     if (conn.status != 0) {
                         Service.send_notice_box(conn, "Tài khoản chưa được kích hoạt,");
                         return;
@@ -5094,27 +5125,27 @@ public class MenuController {
                     send_menu_select(conn, -90, new String[]{"Khu Boss Even 0x", "Khu Boss Even 1x", "Khu Boss Even 2x", "Khu Boss Even 7x", "Khu Boss Even 8x", "Khu Boss Even 11x", "Khu Boss Even 13x"}, (byte) 2);
                     break;
                 }
-                case 3: {
-                    if (conn.status != 0) {
-                        Service.send_notice_box(conn, "Tài khoản chưa được kích hoạt,");
-                        return;
-                    }
-                    if (conn.p.get_ngoc() < 100) {
-                        Service.send_notice_box(conn, "Không đủ 100 ngọc");
-                        return;
-                    }
-                    conn.p.update_ngoc(-100);
-
-                    Vgo vgo = null;
-                    vgo = new Vgo();
-                    vgo.id_map_go = 103;
-                    vgo.x_new = 282;
-                    vgo.y_new = 186;
-                    conn.p.change_map(conn.p, vgo);
-
-                    break;
-                }
-                case 4: {
+//                case 3: {
+//                    if (conn.status != 0) {
+//                        Service.send_notice_box(conn, "Tài khoản chưa được kích hoạt,");
+//                        return;
+//                    }
+//                    if (conn.p.get_ngoc() < 100) {
+//                        Service.send_notice_box(conn, "Không đủ 100 ngọc");
+//                        return;
+//                    }
+//                    conn.p.update_ngoc(-100);
+//
+//                    Vgo vgo = null;
+//                    vgo = new Vgo();
+//                    vgo.id_map_go = 103;
+//                    vgo.x_new = 282;
+//                    vgo.y_new = 186;
+//                    conn.p.change_map(conn.p, vgo);
+//
+//                    break;
+//                }
+                case 1: {
                     if (conn.status != 0) {
                         Service.send_notice_box(conn, "Tài khoản chưa được kích hoạt,");
                         return;

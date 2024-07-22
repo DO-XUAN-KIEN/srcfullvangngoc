@@ -756,7 +756,6 @@ public class MainObject {
                     dame = 0;
                 }
             }
-
             if (focus.isMoTaiNguyen() && ObjAtk.isPlayer()) {
                 Mob_MoTaiNguyen mo = (Mob_MoTaiNguyen) focus;
                 if (!mo.is_atk) {

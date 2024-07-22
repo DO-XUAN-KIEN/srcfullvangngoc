@@ -502,6 +502,22 @@ public class Manager {
                             item_sell.get(Service.SHOP_POTION).add((short) 30);
                             break;
                         }
+                        case 11: {
+                            itempoitionsell = new short[jsar.size() + 4];
+                            for (int i = 0; i < jsar.size(); i++) {
+                                itempoitionsell[i] = Short.parseShort(jsar.get(i).toString());
+                                item_sell.get(Service.SHOP_POTION).add(itempoitionsell[i]);
+                            }
+                            itempoitionsell[itempoitionsell.length - 4] = 335;
+                            itempoitionsell[itempoitionsell.length - 3] = 336;
+                            itempoitionsell[itempoitionsell.length - 2] = 337;
+                            itempoitionsell[itempoitionsell.length - 1] = 338;
+                            item_sell.get(Service.SHOP_POTION).add((short) 335);
+                            item_sell.get(Service.SHOP_POTION).add((short) 336);
+                            item_sell.get(Service.SHOP_POTION).add((short) 337);
+                            item_sell.get(Service.SHOP_POTION).add((short) 338);
+                            break;
+                        }
                         default: {
                             itempoitionsell = new short[jsar.size()];
                             for (int i = 0; i < itempoitionsell.length; i++) {

@@ -1174,6 +1174,9 @@ public class GameSrc {
             if (suc) {
                 it_temp.tier++;
                 it_temp = Helps.medal.Upgare_Medal(it_temp);
+                if (it_temp.tier == 15) {
+                    it_temp.op.add(new Option(96, 25,it_temp.id));
+                }
                 conn.p.item.bag3[id] = it_temp;
                 // change material
                 int material_type_1st = Util.random(0, 7);
@@ -1796,7 +1799,7 @@ public class GameSrc {
                                 Service.send_notice_box(conn, "Số lượng không hợp lệ!");
                                 return;
                             }
-                            if (p_store.it_type == 4 && (Helps.CheckItem.item4CanTrade(p_store.it_id) || p_store.it_id == 135 || p_store.it_id == 52 || p_store.it_id == 56 || p_store.it_id == 143 || p_store.it_id == 226 || p_store.it_id == 318 || p_store.it_id == 327 || p_store.it_id == 328 || p_store.it_id == 329 || p_store.it_id == 330)) {
+                            if (p_store.it_type == 4 && (Helps.CheckItem.item4CanTrade(p_store.it_id) || p_store.it_id == 135 || p_store.it_id == 52 || p_store.it_id == 56 || p_store.it_id == 143 || p_store.it_id == 226 || p_store.it_id == 318 || p_store.it_id == 327 || p_store.it_id == 328 || p_store.it_id == 329 || p_store.it_id == 330 || (p_store.it_id >= 339 && p_store.it_id <=341))) {
                                 Service.send_notice_box(conn, "Đồ bán không hợp lệ!");
                                 return;
                             }
@@ -1866,7 +1869,7 @@ public class GameSrc {
                 byte idType = m2.reader().readByte();
                 Player p0 = Map.get_player_by_id(idChar);
                 if (p0 != null && !p0.my_store_name.isEmpty()) {
-                    if (p0.Store_Sell_ToPL != null && !p0.Store_Sell_ToPL.isEmpty() && !p0.Store_Sell_ToPL.equals(conn.p.name)) {
+                    if(p0.Store_Sell_ToPL != null && !p0.Store_Sell_ToPL.isEmpty() && !p0.Store_Sell_ToPL.equals(conn.p.name)){
                         Service.send_notice_box(conn, "Người bán không muốn bán vật phẩm cho bạn!");
                         return;
                     }
@@ -1879,21 +1882,18 @@ public class GameSrc {
                                 Service.send_notice_box(conn, "Không đủ " + vang_trade + " vàng!");
                                 return;
                             }
-                            if (conn.p.item.get_bag_able() < 1) {
+                            if(conn.p.item.get_bag_able()<1) {
                                 Service.send_notice_box(conn, "Hành trang đầy!");
                                 return;
                             }
                             Item3 itTrade = p0.item.bag3[p0.my_store.get(i).it_id];
                             conn.p.update_vang(-vang_trade);
-                            Log.gI().add_log(conn.p.name, "Trừ " + vang_trade + " mua đồ của " + p0.name + " khu mua bán");
                             long thue = (vang_trade / 100) * Manager.thue;
-//                            if (Manager.ClanThue != null) {
+//                            if(Manager.ClanThue!=null)
 //                                Manager.ClanThue.update_vang(thue);
-//                            }
 //                                Manager.ClanThue.update_vang((vang_trade * Manager.thue) / 100);
                             vang_trade -= thue;
                             p0.update_vang(vang_trade);
-                            Log.gI().add_log(conn.p.name, "Nhận" + vang_trade + " bán đồ cho " + conn.p.name + " khu mua bán");
 
                             hist.tem3 = itTrade;
                             hist.UpdateGold(p0.get_vang(), conn.p.get_vang());
@@ -1920,21 +1920,19 @@ public class GameSrc {
                                         Service.send_notice_box(conn, "Không đủ " + vang_trade + " vàng!");
                                         return;
                                     }
-                                    if (conn.p.item.total_item_by_id(idType, iditem) + p0.my_store.get(i).it_quant > 30_000
-                                            || (conn.p.item.total_item_by_id(idType, iditem) == 0 && conn.p.item.get_bag_able() < 1)) {
+                                    if(conn.p.item.total_item_by_id(idType, iditem) + p0.my_store.get(i).it_quant > 30_000 ||
+                                            (conn.p.item.total_item_by_id(idType, iditem) == 0 && conn.p.item.get_bag_able() < 1))
+                                    {
                                         Service.send_notice_box(conn, "Hành trang đầy!");
                                         return;
                                     }
                                     conn.p.update_vang(-vang_trade);
-                                    Log.gI().add_log(conn.p.name, "Trừ " + vang_trade + " mua đồ của " + p0.name + " khu mua bán");
                                     long thue = (vang_trade / 100) * Manager.thue;
-//                                    if (Manager.ClanThue != null) {
+//                                    if(Manager.ClanThue!=null)
 //                                        Manager.ClanThue.update_vang(thue);
-//                                    }
-//                                    //                                Manager.ClanThue.update_vang((vang_trade * Manager.thue) / 100);
+                                    //Manager.ClanThue.update_vang((vang_trade * Manager.thue) / 100);
                                     vang_trade -= thue;
                                     p0.update_vang(vang_trade);
-                                    Log.gI().add_log(conn.p.name, "Nhận" + vang_trade + " bán đồ cho " + conn.p.name + " khu mua bán");
                                     Item47 it_b_add = new Item47();
                                     it_b_add.category = idType;
                                     it_b_add.id = iditem;

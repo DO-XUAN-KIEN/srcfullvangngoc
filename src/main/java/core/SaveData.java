@@ -344,6 +344,46 @@ public class SaveData {
                 BXH.BXH_doiqua.add(temp);
             }
             ri.close();
+            BXH.BXH_hongio.clear();
+            ps = conn.prepareStatement(
+                    "SELECT `id`, `level`, `name`, `body`, `itemwear`, `sk_hongio` FROM `player` WHERE `sk_hongio` > 1 ORDER BY  sk_hongio DESC LIMIT 20;");
+            ri = ps.executeQuery();
+            while (ri.next()) {
+                Memin4 temp = new Memin4();
+                temp.level = ri.getShort("level");
+                temp.sk_hongio= ri.getInt("sk_hongio");
+                temp.name = ri.getString("name");
+                JSONArray jsar = (JSONArray) JSONValue.parse(ri.getString("body"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.head = Byte.parseByte(jsar.get(0).toString());
+                temp.hair = Byte.parseByte(jsar.get(2).toString());
+                temp.eye = Byte.parseByte(jsar.get(1).toString());
+                jsar.clear();
+                jsar = (JSONArray) JSONValue.parse(ri.getString("itemwear"));
+                if (jsar == null) {
+                    return;
+                }
+                temp.itemwear = new ArrayList<>();
+                for (int i3 = 0; i3 < jsar.size(); i3++) {
+                    JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i3).toString());
+                    byte index_wear = Byte.parseByte(jsar2.get(9).toString());
+                    if (index_wear != 0 && index_wear != 1 && index_wear != 6 && index_wear != 7 && index_wear != 10) {
+                        continue;
+                    }
+                    Part_player temp2 = new Part_player();
+                    temp2.type = Byte.parseByte(jsar2.get(2).toString());
+                    temp2.part = Byte.parseByte(jsar2.get(6).toString());
+                    temp.itemwear.add(temp2);
+                }
+                temp.clan = Clan.get_clan_of_player(temp.name);
+                String percents
+                        = String.format("%.0f", (((float) temp.sk_hongio)));
+                temp.info = "Level : " + (temp.level) + "\t-\t" + percents +" ";
+                BXH.BXH_hongio.add(temp);
+            }
+            ri.close();
             // bxh danh vọng
             BXH.BXH_Danhvong.clear();
             ps = conn.prepareStatement(

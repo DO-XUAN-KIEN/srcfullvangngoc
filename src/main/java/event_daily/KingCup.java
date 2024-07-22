@@ -130,6 +130,7 @@ public class KingCup implements Runnable {
             try {
                 Thread.sleep(200L);
             } catch (InterruptedException e) {
+                System.out.println("Lỗi ở kingcup");
                 e.printStackTrace();
             }
         }

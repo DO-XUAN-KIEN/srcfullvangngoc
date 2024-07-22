@@ -201,6 +201,7 @@ public class Dungeon {
                 try {
                     Thread.sleep(5000L);
                 } catch (InterruptedException e) {
+                    System.out.println("Lỗi ở dungeon");
                     e.printStackTrace();
                 }
             } else if (this.state == 7) {

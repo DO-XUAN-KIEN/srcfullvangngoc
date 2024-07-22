@@ -105,7 +105,7 @@ public class CheckDDOS {
     public static boolean checkCountIP(String ip) {
         lock1.lock();
         try {
-            return countIp.getOrDefault(ip, (byte) 0) < 7;
+            return countIp.getOrDefault(ip, (byte) 0) < 5;
         } finally {
             lock1.unlock();
         }

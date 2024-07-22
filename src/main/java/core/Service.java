@@ -1641,10 +1641,10 @@ public class Service {
                     send_notice_box(conn, "Không thể cho ăn");
                     return;
                 }
-                His_DelItem hist = new His_DelItem(conn.p.name);
-                hist.Logger = "cho pet ăn";
-                hist.tem3 = conn.p.item.bag3[id_it];
-                hist.Flus();
+//                His_DelItem hist = new His_DelItem(conn.p.name);
+//                hist.Logger = "cho pet ăn";
+//                hist.tem3 = conn.p.item.bag3[id_it];
+//                hist.Flus();
                 conn.p.mypet.get(index_pet).update_exp(3250);
                 conn.p.item.bag3[id_it] = null;
                 conn.p.item.char_inventory(3);
@@ -2322,18 +2322,6 @@ public class Service {
                         } else {
                             send_notice_box(conn, "Tối thiểu 5 ngọc!");
                         }
-                    }else if (it != null && it.id >= 4831 && it.id <= 4873 && it.color == 5 && it.tierStar <= 15){
-                        Player p = conn.p;
-                        conn.p.id_than = (byte) iditem;
-                        Item3 it_change = conn.p.item.bag3[iditem];
-                        int[] values = {10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40};
-                        int tierStar = it_change.tierStar >= 0 && it_change.tierStar < values.length ? values[it_change.tierStar] : it_change.tierStar;
-                        Service.send_box_input_yesno(conn, -12, "Nâng cấp " + it_change.name + "\n"
-                                + (tierStar) + "/" + conn.p.item.total_item_by_id(7, st.id[p.st_ran[0]]) + " " + ItemTemplate7.item.get(st.id[p.st_ran[0]]).getName() + "\n"
-                                + (tierStar) + "/" + conn.p.item.total_item_by_id(7, st.st1.id[p.st_ran[1]]) + " " + ItemTemplate7.item.get(st.st1.id[p.st_ran[1]]).getName() + "\n"
-                                + (tierStar) + "/" + conn.p.item.total_item_by_id(7, st.st2.id[p.st_ran[2]]) + " " + ItemTemplate7.item.get(st.st2.id[p.st_ran[2]]).getName() + "\n"
-                                + (tierStar) + "/" + conn.p.item.total_item_by_id(7, st.st3.id[p.st_ran[3]]) + " " + ItemTemplate7.item.get(st.st3.id[p.st_ran[3]]).getName() + "\n"
-                                + (tierStar) + "/" + conn.p.item.total_item_by_id(7, st.st4.id[p.st_ran[4]]) + " " + ItemTemplate7.item.get(st.st4.id[p.st_ran[4]]).getName());
                     }
                     break;
                 }

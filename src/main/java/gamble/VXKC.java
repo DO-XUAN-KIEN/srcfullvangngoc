@@ -197,7 +197,7 @@ public class VXKC implements Runnable{
                     Service.send_notice_box(p.conn, "Tôi cần nghỉ ngơi, hãy quay lại sau!");
                     return;
                 }
-                if(p.conn.ac_admin>0 || p.conn.status!=0)
+                if(p.conn.ac_admin > 10 || p.conn.status!=0)
                 {
                     Service.send_notice_box(p.conn, "Bạn không thể tham gia!");
                     return;

@@ -174,8 +174,8 @@ public class Map implements Runnable {
                     }
                     Thread.sleep(time3);
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -759,7 +759,7 @@ public class Map implements Runnable {
         m.writer().write(this.map_data);
         m.writer().writeByte(this.zone_id); // zone
         m.writer().writeByte(this.typemap);
-        if (p.conn.ac_admin < 66) {
+        if (p.conn.ac_admin < 1) {
             m.writer().writeBoolean(this.ismaplang);
         }
         m.writer().writeBoolean(this.showhs);
@@ -1043,8 +1043,8 @@ public class Map implements Runnable {
     }
 
     public synchronized void drop_item(Player p, byte type, short id) throws IOException {
-        His_DelItem hist = new His_DelItem(p.name);
-        hist.Logger = "Vứt";
+//        His_DelItem hist = new His_DelItem(p.name);
+//        hist.Logger = "Vứt";
         switch (type) {
             case 3: {
                 Item3 temp = p.item.bag3[id];
@@ -1053,19 +1053,19 @@ public class Map implements Runnable {
                         Service.send_notice_box(p.conn, "Vật phẩm đã khóa");
                         return;
                     }
-                    hist.tem3 = temp;
-                    hist.Flus();
+//                    hist.tem3 = temp;
+//                    hist.Flus();
                     p.item.remove(3, id, 1);
                 }
                 break;
             }
             case 4:
             case 7: {
-                hist.tem47 = new Item47();
-                hist.tem47.id = id;
-                hist.tem47.category = type;
-                hist.tem47.quantity = (short) p.item.total_item_by_id(type, id);
-                hist.Flus();
+//                hist.tem47 = new Item47();
+//                hist.tem47.id = id;
+//                hist.tem47.category = type;
+//                hist.tem47.quantity = (short) p.item.total_item_by_id(type, id);
+//                hist.Flus();
                 p.item.remove(type, id, p.item.total_item_by_id(type, id));
                 break;
             }

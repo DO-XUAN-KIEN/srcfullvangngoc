@@ -615,14 +615,21 @@ public class ChiemThanhManager {
             short[] id_item_leave3 = new short[]{};
             short[] id_item_leave4 = new short[]{};
             short[] id_item_leave7 = new short[]{};
+            short[] id_item_hongio = new short[]{};
             short id_medal_material = -1;
             short sizeRandomMedal = 0;
             switch (mob.template.mob_id) {
                 case 151: { 
                     id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 18};
                     id_item_leave7 = new short[]{11, 13, 2, 3, 2, 3, 14};
-                    if(Util.random(200)<10)
+                    if(Util.random(200)<10) {
                         id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
+                    }
+                    if (Manager.gI().event == 11){
+                        if (Util.random(100) < 70){
+                            id_item_hongio = new short[]{337};
+                        }
+                    }
                     //  sizeRandomMedal = (short) (50);
                     break;
                 }
@@ -635,6 +642,9 @@ public class ChiemThanhManager {
                     id_item_leave7 = new short[]{11, 13, 2, 3, 2, 3, 14};
                     if(Util.random(150)< 20)
                         id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
+                    if (Manager.gI().event == 11){
+                        id_item_hongio = new short[]{337};
+                    }
                  //   sizeRandomMedal = (short) (60);
                     break;
                 }
@@ -650,6 +660,11 @@ public class ChiemThanhManager {
                     } else {
                         LeaveItemMap.leave_item_by_type4(map, id, p, mob.index,p.index);
                     }
+                }
+            }
+            for (int i = 0; i < 3; i++) {
+                for (short id : id_item_hongio) {
+                    LeaveItemMap.leave_item_by_type4(map, id, p, mob.index,p.index);
                 }
             }
             for (int i = 0; i < 5; i++) {

@@ -160,6 +160,7 @@ public class ItemStar {
         if (typeItem >= 8 && typeItem <= 11) {
             return 6;
         }
+
         switch (typeItem) {
             case 2:
                 return 0;

@@ -455,7 +455,7 @@ public class Session implements Runnable {
                 this.status = rs.getByte("status");
                 this.coin = rs.getLong("coin");
               //  this.topnap = rs.getInt("topnap");
-                if (this.ac_admin <= 0 && time_can_login > 0 && !ip.equals("127.0.0.1")) {
+                if (this.ac_admin <= 10 && time_can_login > 0 && !ip.equals("127.0.0.1")) {
                     float t_ = ((float) time_can_login) / 1000f;
                     noticelogin("sau " + String.format("%.1f", t_) + "s nữa mới có thể vào!");
                     return;
@@ -483,7 +483,7 @@ public class Session implements Runnable {
                 return;
             }
         }
-        if (Manager.gI().isServerAdmin && this.ac_admin <= 0) {
+        if (Manager.gI().isServerAdmin && this.ac_admin <= 10) {
             noticelogin("Server này chỉ admin mới có thể truy cập!");
             return;
         }

@@ -176,7 +176,7 @@ public class Mob_in_map extends MainObject {
                             if (percent > Util.random(0, 300) || mob.color_name != 0) {
                                 LeaveItemMap.leave_item_3(map, mob, (Player) mainAtk);
                             }
-                            else if (percent > Util.random(0, 500) && zone_id == 1 && !Map.is_map_not_zone2(map_id)
+                            if (percent > Util.random(0, 500) && zone_id == 1 && !Map.is_map_not_zone2(map_id)
                                     && p.get_EffDefault(-127) != null) {
                                 if(Util.random(2000) < 4) {
                                     LeaveItemMap.leave_item_by_type7(map, (short) 494, p, mob.index);
@@ -185,6 +185,11 @@ public class Mob_in_map extends MainObject {
                                     LeaveItemMap.leave_item_by_type7(map, (short) Util.random(116, 126), p, mob.index);
                                 } else {
                                     LeaveItemMap.leave_item_by_type7(map, (short) 13, p, mob.index);
+                                }
+                                if (Manager.gI().event == 11){
+                                    if (Util.random(300) < 4){
+                                        LeaveItemMap.leave_item_by_type4(map,(short) Util.random(335, 339),p,mob.index);
+                                    }
                                 }
                             }
                             if (percent > Util.random(0, 300)) {
@@ -241,10 +246,10 @@ public class Mob_in_map extends MainObject {
                 }
                 for (int j = 0; j < map.players.size(); j++) {
                     Player pp = map.players.get(j);
-                    if (!pp.other_mob_inside.containsKey(this.index)) {
+                    if (pp != null && !pp.other_mob_inside.containsKey(this.index)) {
                         pp.other_mob_inside.put(this.index, true);
                     }
-                    if (pp.other_mob_inside.get(this.index)) {
+                    if (pp != null && pp.other_mob_inside.get(this.index)) {
                         Message mm = new Message(4);
                         mm.writer().writeByte(1);
                         mm.writer().writeShort(this.template.mob_id);
