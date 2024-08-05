@@ -14,10 +14,7 @@ import event_daily.st.*;
 
 import io.Message;
 import io.Session;
-import map.Dungeon;
-import map.DungeonManager;
-import map.Map;
-import map.MapService;
+import map.*;
 import template.*;
 
 public class Process_Yes_no_box {
@@ -146,7 +143,7 @@ public class Process_Yes_no_box {
                     if (conn.p.get_ngoc() > 5) {
                         if ((conn.p.item.total_item_by_id(7, 472) > 50 && conn.p.item.total_item_by_id(7, 473) > 50
                                 && conn.p.item.total_item_by_id(7, 474) > 50 && conn.p.item.total_item_by_id(7, 475) > 50) || conn.ac_admin > 2) {
-                            short[] id_ma_phap = new short[]{4578, 4579, 4581, 4583};
+                            short[] id_ma_phap = new short[]{4578, 4579, 4581, 4584};
                             ItemTemplate3 temp3 = ItemTemplate3.item.get(id_ma_phap[Util.random(id_ma_phap.length)]);
                             Item3 it = new Item3();
                             it.id = temp3.getId();
@@ -189,7 +186,7 @@ public class Process_Yes_no_box {
                     if (conn.p.get_ngoc() >= 10) {
                         if ((conn.p.item.total_item_by_id(7, 476) > 50 && conn.p.item.total_item_by_id(7, 477) > 50
                                 && conn.p.item.total_item_by_id(7, 478) > 50 && conn.p.item.total_item_by_id(7, 479) > 50) || conn.ac_admin > 2) {
-                            short[] id_vat_ly = new short[]{4577, 4580, 4582, 4584};
+                            short[] id_vat_ly = new short[]{4577, 4580, 4582, 4583};
                             ItemTemplate3 temp3 = ItemTemplate3.item.get(id_vat_ly[Util.random(id_vat_ly.length)]);
                             Item3 it = new Item3();
                             it.id = temp3.getId();
@@ -205,10 +202,10 @@ public class Process_Yes_no_box {
                             it.part = temp3.getPart();
                             conn.p.item.add_item_bag3(it);
                             it.op.clear();
+                            conn.p.item.remove(7, 476, 50);
                             conn.p.item.remove(7, 477, 50);
                             conn.p.item.remove(7, 478, 50);
                             conn.p.item.remove(7, 479, 50);
-                            conn.p.item.remove(7, 480, 50);
                             conn.p.item.char_inventory(3);
                             conn.p.item.char_inventory(4);
                             conn.p.item.char_inventory(7);
@@ -723,6 +720,58 @@ public class Process_Yes_no_box {
                             conn.p.myclan.max_mem += 5;
                         }
                         Service.send_notice_box(conn, "Nâng bang lên cấp " + conn.p.myclan.level + " thành công");
+                    }
+                    break;
+                }
+                case -118: {
+                    try {
+                        Leo_thap d = Leo_thapManager.get_list(conn.p.name);
+                        if (d == null) {
+                            try {
+                                d = new Leo_thap();
+                                conn.p.item.remove(4,342,1);
+                                conn.p.item.char_inventory(4);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (d != null) {
+                                d.name_party = conn.p.name;
+                                if(conn.p.dokho == 1){
+                                    d.setMode(0);
+                                    d.wave = 1;
+                                }else if(conn.p.dokho == 2){
+                                    d.setMode(1);
+                                    d.wave = 3;
+                                }else if(conn.p.dokho == 3){
+                                    d.setMode(2);
+                                    d.state = 4;
+                                }else if(conn.p.dokho == 4){
+                                    d.setMode(3);
+                                    d.wave = 5;
+                                }else if(conn.p.dokho == 5){
+                                    d.setMode(4);
+                                    d.wave = 6;
+                                }
+                                //
+                                MapService.leave(conn.p.map, conn.p);
+                                conn.p.map = d.template;
+                                conn.p.x = 550;
+                                conn.p.y = 400;
+                                MapService.enter(conn.p.map, conn.p);
+                                //
+                                Leo_thapManager.add_list(d);
+                                Service.send_char_main_in4(conn.p);
+                            } else {
+                                Service.send_notice_box(conn, "Lỗi, hãy thử lại sau!");
+                            }
+                        } else {
+                            MapService.leave(conn.p.map, conn.p);
+                            conn.p.map = d.template;
+                            MapService.enter(conn.p.map, conn.p);
+                            d.send_mob_move_when_exit(conn.p);
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
                     break;
                 }

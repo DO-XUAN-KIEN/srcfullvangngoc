@@ -677,6 +677,14 @@ public class Squire extends Player {
                                 Squire.SquireAttack(map, this, mod_target_dungeon, index_skill, _skill, type);
                             }
                         }
+                    } else if (conn.p.map.map_id == 46) {
+                        Leo_thap d = Leo_thapManager.get_list(conn.p.name);
+                        if (d != null) {
+                            Mob_Leothap mod_target_leothap = d.get_mob(ObjAtk);
+                            if (mod_target_leothap != null) {
+                                Squire.SquireAttack(map, this, mod_target_leothap, index_skill, _skill, type);
+                            }
+                        }
                     } else if (Map.is_map_chiem_mo(conn.p.map, true) && conn.p.myclan != null) {
                         Mob_MoTaiNguyen temp_mob = conn.p.myclan.get_mo_tai_nguyen(conn.p.map.map_id);
                         if (temp_mob == null) {

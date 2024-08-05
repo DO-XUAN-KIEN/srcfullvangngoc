@@ -83,6 +83,7 @@ public class Map implements Runnable {
     public long time_add_bot;
     public UseItemArena Arena;
     public KingCup kingCupMap;
+    public Leo_thap leot;
 
     public Map(int id, int zone, String[] npc_name, String name, byte typemap, boolean ismaplang, boolean showhs,
             int maxplayer, int maxzone, List<Vgo> vgo) throws IOException {
@@ -161,6 +162,9 @@ public class Map implements Runnable {
                 }
                 if (this.map_id == 48 && d != null) {
                     d.update();
+                }
+                if (this.map_id == 46 && leot != null){
+                    leot.update();
                 }
                 if (map_id == 102 && kingCupMap != null) {
                     kingCupMap.update();
@@ -1033,7 +1037,7 @@ public class Map implements Runnable {
         }
         return null;
     }
-    public static Map get_leothap(int id) {
+    public static Map get_Leo_thap(int id) {
         for (Map[] temp : entrys) {
             if (temp[0].map_id == id) {
                 return temp[0];
@@ -1369,7 +1373,7 @@ public class Map implements Runnable {
 
     public static boolean is_map_cant_save_site(short id) {
         return id == 48 || id == 88 || id == 89 || id == 90 || id == 91 || id == 82 || id == 102 || id == 100 || (id >= 83 && id <= 87) || (id >= 53 && id <= 61)
-                || Map.is_map_chien_truong(id) || id == 125 || id == 127 || id == 129 || id == 132 || id == 135;
+                || Map.is_map_chien_truong(id) || id == 46 || id == 125 || id == 127 || id == 129 || id == 132 || id == 135;
     }
     public static boolean is_map_not_zone2(short id) {
         return id == 48 || id == 88 || id == 89 || id == 90 || id == 91 || id == 82 || id == 102 || id == 100

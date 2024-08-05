@@ -15,10 +15,7 @@ import event_daily.MoLy;
 import event_daily.ChienTruong;
 import io.Message;
 import io.Session;
-import map.Dungeon;
-import map.DungeonManager;
-import map.Map;
-import map.MapService;
+import map.*;
 import template.Horse;
 
 public class MessageHandler {
@@ -64,6 +61,8 @@ public class MessageHandler {
                     DoSieucap.nangdothan(conn,m);
                 } else if (conn.p.ismdthan) {
                     DoSieucap.nangmdthan(conn,m);
+                } else if (conn.p.istb2) {
+                    DoSieucap.nangtb2(conn,m);
                 } else {
                     GameSrc.Create_Medal(conn, m);
                 }
@@ -321,6 +320,7 @@ public class MessageHandler {
             case 5: {
                 //int id = Short.toUnsignedInt(m.reader().readShort());
                 int id = m.reader().readShort();
+                //Leo_thap d = Leo_thapManager.get_list(conn.p.name);
                 if (id >= -1000 && id < 0) {
                     for (MobAi temp : conn.p.map.Ai_entrys) {
                         if (temp != null && temp.index == id && !temp.isDie) {
@@ -387,6 +387,12 @@ public class MessageHandler {
                 Dungeon d = DungeonManager.get_list(conn.p.name);
                 if (d != null) {
                     d.send_mob_in4(conn, n);
+                } else {
+                    Service.mob_in4(conn.p, n);
+                }
+                Leo_thap leoThap = Leo_thapManager.get_list(conn.p.name);
+                if (leoThap != null) {
+                    leoThap.send_mob_in4(conn, n);
                 } else {
                     Service.mob_in4(conn.p, n);
                 }
@@ -531,6 +537,7 @@ public class MessageHandler {
 
         // add x2 xp
         conn.p.set_x2_xp(1);
+        conn.p.dokho = 0;
         if (conn.p.myclan == null || !Horse.isHorseClan(conn.p.type_use_mount)) {
             conn.p.type_use_mount = -1;
         }

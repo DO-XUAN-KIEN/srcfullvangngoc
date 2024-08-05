@@ -45,6 +45,9 @@ public class Player extends Body2 {
     public Date date;
     public byte diemdanh;
     public byte chucphuc;
+    public byte mm_tt;
+    public byte mm_md;
+    public byte dokho;
     public byte type_use_mount;
     // public int hieuchien;
     public int dibuon;
@@ -202,10 +205,12 @@ public class Player extends Body2 {
     public boolean isCreateArmor = false;
     public boolean isdothan = false;
     public boolean ismdthan = false;
+    public boolean istb2 = false;
     public byte ClazzItemStar = -1;
     public byte TypeItemStarCreate = -1;
     public short[] MaterialItemStar;
     public short[] NLdothan;
+    public short[] NLtb2;
     public int id_Upgrade_Medal_Star = -1;
 
     //biến heo chiến trường
@@ -218,6 +223,7 @@ public class Player extends Body2 {
         isCreateItemStar = false;
         isdothan = false;
         ismdthan = false;
+        istb2 = false;
         isCreateArmor = false;
         ClazzItemStar = -1;
         TypeItemStarCreate = -1;
@@ -270,6 +276,13 @@ public class Player extends Body2 {
         NLdothan = new short[baseValues.length * 8];
         for (int i = 0; i < NLdothan.length; i++) {
             NLdothan[i] = baseValues[i % baseValues.length];
+        }
+    }
+    public void setnltb2() {
+        short[] baseValues = {493};
+        NLtb2 = new short[baseValues.length * 8];
+        for (int i = 0; i < NLtb2.length; i++) {
+            NLtb2[i] = baseValues[i % baseValues.length];
         }
     }
 
@@ -376,6 +389,9 @@ public class Player extends Body2 {
                 date = Util.getDate(rs.getString("date"));
                 diemdanh = rs.getByte("diemdanh");
                 chucphuc = rs.getByte("chucphuc");
+                mm_tt = rs.getByte("mm_tt");
+                mm_md = rs.getByte("mm_md");
+                dokho = rs.getByte("dokho");
                 khu2 = rs.getByte("khu2");
                 hieuchien = rs.getInt("hieuchien");
                 dibuon = rs.getInt("dibuon");
@@ -782,6 +798,19 @@ public class Player extends Body2 {
                 }
                 if (MaterialItemStar == null || MaterialItemStar.length < 40) {
                     SetMaterialItemStar();
+                }
+                jsar.clear();
+
+                jsar = (JSONArray) JSONValue.parse(rs.getString("NL_tb2"));
+                if (jsar == null) {
+                    return false;
+                }
+                NLtb2 = new short[jsar.size()];
+                for (int i = 0; i < jsar.size(); i++) {
+                    NLtb2[i] = Short.parseShort(jsar.get(i).toString());
+                }
+                if (NLtb2 == null || NLtb2.length < 40) {
+                    setnltb2();
                 }
                 jsar.clear();
 
@@ -1318,6 +1347,13 @@ public class Player extends Body2 {
                 a += ",`NL_do_than` = '" + jsar.toJSONString() + "'";
                 jsar.clear();
 
+                //nltb2
+                for (int i = 0; i < NLtb2.length; i++) {
+                    jsar.add(NLtb2[i]);
+                }
+                a += ",`NL_tb2` = '" + jsar.toJSONString() + "'";
+                jsar.clear();
+
                 for (int i = 0; i < point_active.length; i++) {
                     jsar.add(point_active[i]);
                 }
@@ -1330,6 +1366,9 @@ public class Player extends Body2 {
                 a += ",`kynang` = " + kynang;
                 a += ",`diemdanh` = " + diemdanh;
                 a += ",`chucphuc` = " + chucphuc;
+                a += ",`mm_tt` = " + mm_tt;
+                a += ",`mm_md` = " + mm_md;
+                a += ",`dokho` = " + dokho;
                 a += ",`khu2` = " + khu2;
                 a += ",`hieuchien` = " + hieuchien;
                 a += ",`dibuon` = " + dibuon;

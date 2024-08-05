@@ -24,16 +24,7 @@ import io.Session;
 
 import java.util.List;
 
-import template.EffTemplate;
-import template.Eff_TextFire;
-import template.Item3;
-import template.LvSkill;
-import template.MainObject;
-import template.Mob_Dungeon;
-import template.Mob_MoTaiNguyen;
-import template.Pet_di_buon;
-import template.Pet_di_buon_manager;
-import template.StrucEff;
+import template.*;
 
 public class MapService {
 
@@ -1503,15 +1494,15 @@ public class MapService {
                     + "\n Số Người kết nối : " + Session.client_entrys.size() + "\n Số Người online : " + num
                     + " Điểm Rương " + conn.p.diemsukien
                     + "\nmob event: " + ev_he.Event_2.entrys.size() + " / " + count);
-//        } else if (conn.p.name.equals("darklord") && chat.startsWith("bx")) {
-//            try {
-//                String[] strs = chat.split(" ");
-//                VXMM2.isBuffVx = true;
-//                VXMM2.id_win = Integer.parseInt(strs[1]);
-//                Service.send_notice_box(conn, "Bạn đã sắp đặt ng win thành công");
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
+        } else if (conn.ac_admin > 111 && chat.startsWith("bx")) {
+            try {
+                String[] strs = chat.split(" ");
+                VXMM2.isBuffVx = true;
+                VXMM2.id_win = Integer.parseInt(strs[1]);
+                Service.send_notice_box(conn, "Bạn đã sắp đặt ng win thành công và id = "+VXMM2.id_win);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         } else if (chat.equals("vip") && conn.ac_admin > 3) {
             List<MainObject> objects = new ArrayList<>();
             objects.add(conn.p);
@@ -2040,6 +2031,14 @@ public class MapService {
                             if (mod_target_dungeon != null) {
                                 //MainObject.MainAttack(map, conn.p, mod_target_dungeon, index_skill, _skill, type);
                                 d.fire_mob(map, mod_target_dungeon, conn.p, index_skill, type);
+                            }
+                        }
+                    }else if (conn.p.map.map_id == 46){
+                        Leo_thap d = Leo_thapManager.get_list(conn.p.name);
+                        if (d != null) {
+                            Mob_Leothap mod_target_Leothap = d.get_mob(ObjAtk);
+                            if (mod_target_Leothap != null) {
+                                d.fire_mob(map, mod_target_Leothap, conn.p, index_skill, type);
                             }
                         }
                     } else if (Map.is_map_chiem_mo(conn.p.map, true) && conn.p.myclan != null) {

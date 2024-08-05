@@ -31,7 +31,8 @@ public class MainObject {
 
     public String name;
     public int hp, mp;
-    protected int hp_max, mp_max;
+    public int hp_max;
+    protected int mp_max;
     public boolean isDie, isATK = true;
     public int index;
     public short x, x_old, y, y_old;

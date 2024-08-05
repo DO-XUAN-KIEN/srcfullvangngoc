@@ -1302,6 +1302,8 @@ public class GameSrc {
                         _st = Util.random(400, 600);
                     } else if (color_ == 4) {
                         _st = Util.random(600, 800);
+                    } else if (color_ == 5) {
+                        _st = Util.random(800, 1000);
                     }
                     it_temp.op.set(i, new Option(Util.random(0, 5), _st, it_temp.id));
                     Service.send_wear(conn.p);
@@ -1342,6 +1344,8 @@ public class GameSrc {
                         param_add = Util.randomNext(253, 300, lastpr);
                     } else if (it_temp.color == 4) {
                         param_add = Util.randomNext(300, 347, lastpr);
+                    } else if (it_temp.color == 5) {
+                        param_add = Util.randomNext(500, 800, lastpr);
                     }
                 }
                 ops.add(id_add);
@@ -1799,7 +1803,7 @@ public class GameSrc {
                                 Service.send_notice_box(conn, "Số lượng không hợp lệ!");
                                 return;
                             }
-                            if (p_store.it_type == 4 && (Helps.CheckItem.item4CanTrade(p_store.it_id) || p_store.it_id == 135 || p_store.it_id == 52 || p_store.it_id == 56 || p_store.it_id == 143 || p_store.it_id == 226 || p_store.it_id == 318 || p_store.it_id == 327 || p_store.it_id == 328 || p_store.it_id == 329 || p_store.it_id == 330 || (p_store.it_id >= 339 && p_store.it_id <=341))) {
+                            if (p_store.it_type == 4 && (Helps.CheckItem.item4CanTrade(p_store.it_id) || p_store.it_id == 135 || p_store.it_id == 52 || p_store.it_id == 56 || p_store.it_id == 143 || p_store.it_id == 226 || p_store.it_id == 318 || p_store.it_id == 327 || p_store.it_id == 328 || p_store.it_id == 329 || p_store.it_id == 330 || p_store.it_id == 342 || (p_store.it_id >= 339 && p_store.it_id <=341))) {
                                 Service.send_notice_box(conn, "Đồ bán không hợp lệ!");
                                 return;
                             }

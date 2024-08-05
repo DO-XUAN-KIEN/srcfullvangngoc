@@ -1004,6 +1004,8 @@ public class Service {
                     m.writer().writeUTF("Tiến hóa đồ tinh tú[VIP PRO]");
                 } else if (conn.p.ismdthan) {
                     m.writer().writeUTF("Tiến hóa mề đay");
+                } else if (conn.p.istb2) {
+                    m.writer().writeUTF("Cường hóa trang bị 2");
                 } else {
                     m.writer().writeUTF("Nâng cấp mề đay");
                 }

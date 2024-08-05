@@ -284,7 +284,7 @@ public class LeaveItemMap {
             Message mi = new Message(19);
             mi.writer().writeByte(7);
             mi.writer().writeShort(indexmob); // id mob die
-            mi.writer().writeShort(ItemTemplate7.item.get(map.item_map[index_item_map].id_item).ge  tIcon());
+            mi.writer().writeShort(ItemTemplate7.item.get(map.item_map[index_item_map].id_item).getIcon());
             mi.writer().writeShort(index_item_map); //
             mi.writer().writeUTF(ItemTemplate7.item.get(map.item_map[index_item_map].id_item).getName());
             mi.writer().writeByte(map.item_map[index_item_map].color); // color

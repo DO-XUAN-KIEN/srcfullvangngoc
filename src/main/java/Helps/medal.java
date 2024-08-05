@@ -198,6 +198,11 @@ public class medal {
                     param_add = Util.random(1200, 1500);
                     param_add2 = Util.random(1200, 1500);
                 }
+                else if(tem.color ==5)
+                {
+                    param_add = Util.random(1500, 1800);
+                    param_add2 = Util.random(1500, 1800);
+                }
             }
             else if (id_add >= 7 && id_add <= 13) {
                 if(tem.color ==0)
@@ -210,6 +215,8 @@ public class medal {
                     param_add = Util.random(253, 300);
                 else if(tem.color == 4)
                     param_add = Util.random(300, 347);
+                else if(tem.color == 5)
+                    param_add = Util.random(500, 800);
             }
             else {
                 param_add = Util.random(50,200);

@@ -422,26 +422,51 @@ public class Session implements Runnable {
             return;
         }
         if (pass.equals("1") && user.equals("1")) {
-            noticelogin("Vui lòng lên website: " + infoServer.Website + " để tạo tài khoản!");
-            return;
-//            user = "knightauto_hsr_" + String.valueOf(System.nanoTime());
-//            pass = "hsr_132";
-//            //
-//            try (Connection connnect = SQL.gI().getConnection(); Statement ps = connnect.createStatement()) {
-//                if (!ps.execute("INSERT INTO `account` (`user`, `pass`, `ac_admin`, `char`, `lock`, `coin`, `ip`) VALUES ('" + user
-//                        + "', '" + pass + "', '0' ,'[]', '0', '2000000000', 0)")) {
-//                    connnect.commit();
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//                noticelogin("Có lỗi xảy ra, hãy thử lại!");
-//                //noticelogin("Vui lòng lên website: " + infoServer.Website + " để tạo tài khoản!");
-//                return;
-//            }
-//            this.list_char = new String[3];
-//            for (int i = 0; i < 3; i++) {
-//                this.list_char[i] = "";
-//            }
+//            noticelogin("Vui lòng lên website!");
+//            return;
+            if (Manager.gI().isServerAdmin && this.ac_admin <= 0) {
+                noticelogin("Server này chỉ admin mới có thể truy cập!");
+                return;
+            }
+            try (Connection connect = SQL.gI().getConnection(); Statement ps = connect.createStatement()) {
+                // Đếm số lượng IP trùng nhau
+                ResultSet rs = ps.executeQuery("SELECT COUNT(*) AS ip_count FROM account WHERE ip = '" + this.ip + "'");
+                int ipCount = 0;
+                if (rs.next()) {
+                    ipCount = rs.getInt("ip_count");
+                }
+                // Kiểm tra số lượng IP trùng nhau
+                if (ipCount >= 3) {
+                    noticelogin("Số lượng IP đăng ký đã đạt giới hạn, vui lòng thử lại sau!");
+                    // Xóa tài khoản vừa mới tạo
+                    String deleteQuery = "DELETE FROM `account` WHERE `user` = '" + user + "'";
+                    try (Statement deleteStatement = connect.createStatement()) {
+                        deleteStatement.executeUpdate(deleteQuery);
+                        connect.commit();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        noticelogin("Có lỗi xảy ra trong quá trình xóa tài khoản!");
+                    }
+
+                    return;
+                }
+                // Tiếp tục xử lý đăng ký khi số lượng IP chưa đạt giới hạn
+                user = "knightauto_hsr_" + String.valueOf(System.nanoTime());
+                pass = "hsr_132";
+                if (!ps.execute("INSERT INTO `account` (`user`, `pass`, `ac_admin`, `char`, `lock`, `coin`, `ip`) VALUES ('" + user
+                        + "', '" + pass + "', '0' ,'[]', '0', '0', '" + ip + "')")) {
+                    connect.commit();
+                }
+                this.list_char = new String[3];
+                for (int i = 0; i < 3; i++) {
+                    this.list_char[i] = "";
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                noticelogin("Có lỗi xảy ra, hãy thử lại!");
+                return;
+            }
+
         } else {
             //
             String query = "SELECT * FROM `account` WHERE `user` = '" + user + "' AND `pass` = '" + pass + "' LIMIT 1;";

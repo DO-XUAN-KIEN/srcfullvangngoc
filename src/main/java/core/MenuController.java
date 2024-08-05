@@ -43,6 +43,10 @@ public class MenuController {
             Menu_ChangeZone(conn);
             return;
         }
+        if(!conn.p.my_store_name.isEmpty()){
+            Service.send_notice_box(conn,"Bạn đang bán hàng hãy hủy bán hàng trước khi thực hiện hành động này");
+            return;
+        }
         // create menu per id npc
         String[] menu;
         switch (idnpc) {
@@ -72,7 +76,7 @@ public class MenuController {
                 break;
             }
             case -99: { // shop_coin
-                menu = new String[]{"Shop coin", "Shop đồ tinh tú","Shop nlmd = coin","Tiến hoá đồ tt","Tiến hóa mề đay","Nhận quà tích lũy","Đổi đồng money","Hợp thể buff"};
+                menu = new String[]{"Shop coin", "Shop đồ tinh tú","Shop nlmd = coin","Tiến hoá đồ tt[VIP PRO]","Tiến hóa mề đay","Cường hóa trang bị 2","Nhận quà tích lũy","Đổi đồng money","Hợp thể buff","Săn boss cá nhân"};
                 break;
             }
 //              case -20: { // Lisa
@@ -334,6 +338,7 @@ public class MenuController {
             Menu_MobEvent(conn, idnpc, idmenu, index);
             return;
         }
+
         switch (idnpc) {
             case -43: {
                 if (idmenu == 1) {
@@ -419,6 +424,22 @@ public class MenuController {
             case -98: { // quanap
                 Menu_quanap(conn,index);
                 //quanap.get_qua(conn.p, index);
+                break;
+            }
+            case -97: { // dokho
+                Menu_dokho(conn, index);
+                break;
+            }
+            case -96: { // tiến hóa tt
+                Menu_tienhoatt(conn, index);
+                break;
+            }
+            case -95: { // tiến hóa md
+                Menu_tienhoamd(conn, index);
+                break;
+            }
+            case -94: { // cường hóa tb2
+                Menu_tb2(conn, index);
                 break;
             }
             case -82: {
@@ -918,6 +939,7 @@ public class MenuController {
         }
 
     }
+    public static Leo_thap d;
     private static void Menu_shopcoin(Session conn, byte index) throws IOException{
         conn.p.ResetCreateItemStar();
         switch (index){
@@ -934,33 +956,137 @@ public class MenuController {
                 break;
             }
             case 3: {
-                Service.send_notice_box(conn,"Chưa ra mắt");
-//                conn.p.isdothan = true;
-//                Service.send_box_UI(conn, 33);
+                send_menu_select(conn, -96,new String[]{"Hướng dẫn","Tiến hóa đồ tinh tú[VIP PRO]"});
                 break;
             }
             case 4: {
-                Service.send_notice_box(conn,"Chưa ra mắt");
-//                conn.p.ismdthan = true;
-//                Service.send_box_UI(conn, 33);
+                send_menu_select(conn, -95,new String[]{"Hướng dẫn","Tiến hóa mề đay"});
                 break;
             }
             case 5: {
-                send_menu_select(conn, -98,new String[]{"Mốc 100 điểm(cánh V1)","Mốc 200 điểm(Cánh V2)","Mốc 300 điểm(Cánh V3)", "Mốc 300 điểm(Áo choàng đại gia)", "Mốc 400 điểm(Cánh V4)", "Mốc 400 điểm(Áo choàng Triệu phú)", "Mốc 500 điểm(Cánh V5)", "Mốc 500 điểm(Áo choàng tỷ phú)"});
+                send_menu_select(conn, -94,new String[]{"Hướng dẫn","Cường hóa trang bị 2"});
                 break;
             }
             case 6: {
-                //Service.send_notice_box(conn,"Chưa ra mắt");
-                Service.send_box_input_text(conn,49,"Đổi đồng money",new String[]{"Nhập số lượng"});
+                send_menu_select(conn, -98,new String[]{"Mốc 100 điểm(cánh V1)","Mốc 200 điểm(Cánh V2)","Mốc 300 điểm(Cánh V3)", "Mốc 300 điểm(Áo choàng đại gia)", "Mốc 400 điểm(Cánh V4)", "Mốc 400 điểm(Áo choàng Triệu phú)", "Mốc 500 điểm(Cánh V5)", "Mốc 500 điểm(Áo choàng tỷ phú)"});
                 break;
             }
             case 7: {
                 //Service.send_notice_box(conn,"Chưa ra mắt");
+                Service.send_box_input_text(conn,49,"Đổi đồng money",new String[]{"Nhập số lượng"});
+                break;
+            }
+            case 8: {
+                //Service.send_notice_box(conn,"Chưa ra mắt");
                 Service.send_box_input_text(conn,50,"Hợp thể buff",new String[]{"Nhập số lượng"});
+                break;
+            }
+            case 9: {
+                if(d == null) {
+                    if (conn.p.item.total_item_by_id(4, 342) <= 0) {
+                        Service.send_notice_box(conn, "Không có vé săn boss");
+                        return;
+                    }
+                    send_menu_select(conn,-97,new String[]{"Mức độ dễ","Mức độ trung bình-dễ","Mức độ trung bình","Mức độ khó","Mức độ khó[VIP PRO]"});
+                }
+                send_menu_select(conn,-97,new String[]{"Mức độ dễ","Mức độ trung bình-dễ","Mức độ trung bình","Mức độ khó","Mức độ khó[VIP PRO]"});
                 break;
             }
             default:{
                 Service.send_notice_box(conn,"Chưa có chức năng!!!");
+                break;
+            }
+        }
+    }
+    private static void Menu_tb2(Session conn, byte index) throws IOException{
+        switch (index){
+            case 0: {
+                Service.send_notice_box(conn,"Cường hóa đồ sẽ được tăng rất nhiều dame!\n"
+                        +"Để cường hóa trang bị 2 cần ngọc nâng cấp, vàng và coin!\n"
+                        +"Một lần cường hóa trang bị 2 cần 100 ngọc nâng cấp, 5.000.000 vàng và 50.000 coin!\n"
+                        +"Cường hóa trang bị 2 thành công thì ngọc nâng giữ 100 cái, vàng và coin nhân 2 so với lần trước!\n"
+                        +"Ngọc nâng cấp kiếm được từ đánh boss cá nhân\n"
+                        +"Cường hóa trang bị 2 cao nhất là 100 lần.");
+                break;
+            }
+            case 1: {
+                conn.p.istb2 = true;
+                Service.send_box_UI(conn, 33);
+                break;
+            }
+            default: {
+                Service.send_notice_box(conn,"Chưa có chức năng...");
+                break;
+            }
+        }
+    }
+    private static void Menu_tienhoatt(Session conn, byte index) throws IOException{
+        switch (index){
+            case 0: {
+                Service.send_notice_box(conn,"Tiến hóa đồ sẽ được tăng rất nhiều dame!\n"
+                        +"Để Để tiến hóa đồ tinh tú[VIP PRO] cần nlmd cấp 3 ngẫu nhiên, vàng và coin!\n"
+                        +"Một lần tiến hóa lần đầu cần 10 cái của 5 loại nguyên liệu mề đay, 10.000.000 vàng và 50.000 coin!\n"
+                        +"Tiến hóa thành công thì nguyên liệu mề đay sẽ tăng lên 2 cái, vàng và coin nhân 2 so với lần trước!\n"
+                        +"Tiến hóa cao nhất là 15 lần.");
+                break;
+            }
+            case 1: {
+                conn.p.isdothan = true;
+                Service.send_box_UI(conn, 33);
+                break;
+            }
+            default: {
+                Service.send_notice_box(conn,"Chưa có chức năng...");
+                break;
+            }
+        }
+    }
+    private static void Menu_tienhoamd(Session conn, byte index) throws IOException{
+        switch (index){
+            case 0: {
+                Service.send_notice_box(conn,"Tiến hóa đồ sẽ được tăng rất nhiều dame!\n"
+                        +"Để Để tiến hóa Mề đay cần nlmd cấp 3 ngẫu nhiên, vàng và coin!\n"
+                        +"Một lần tiến hóa lần đầu cần 10 cái của 5 loại nguyên liệu mề đay, 10.000.000 vàng và 50.000 coin!\n"
+                        +"Tiến hóa thành công thì nguyên liệu mề đay sẽ tăng lên 2 cái, vàng và coin nhân 2 so với lần trước!\n"
+                        +"Tiến hóa cao nhất là 15 lần.");
+                break;
+            }
+            case 1: {
+                conn.p.ismdthan = true;
+                Service.send_box_UI(conn, 33);
+                break;
+            }
+            default: {
+                Service.send_notice_box(conn,"Chưa có chức năng...");
+                break;
+            }
+        }
+    }
+    private static void Menu_dokho(Session conn, byte index) throws IOException{
+        switch (index){
+            case 0: {
+                conn.p.dokho = 1;
+                Service.send_box_input_yesno(conn, -118, "Bạn muốn vào đánh boss với mức độ dễ");
+                break;
+            }
+            case 1: {
+                conn.p.dokho = 2;
+                Service.send_box_input_yesno(conn, -118, "Bạn muốn vào đánh boss với mức độ trung bình-dễ");
+                break;
+            }
+            case 2: {
+                conn.p.dokho = 3;
+                Service.send_box_input_yesno(conn, -118, "Bạn muốn vào đánh boss với mức độ trung bình");
+                break;
+            }
+            case 3: {
+                conn.p.dokho = 4;
+                Service.send_box_input_yesno(conn, -118, "Bạn muốn vào đánh boss với mức độ khó");
+                break;
+            }
+            case 4: {
+                conn.p.dokho = 5;
+                Service.send_box_input_yesno(conn, -118, "Bạn muốn vào đánh boss với mức độ khó[VIP PRO]");
                 break;
             }
         }
@@ -4265,11 +4391,21 @@ public class MenuController {
             case 1: {
                 if (conn.p.diemdanh == 1) {
                     conn.p.diemdanh = 0;
+                    if (conn.p.item.get_bag_able()< 1){
+                        Service.send_notice_box(conn,"Cần để trống 1 ô");
+                        return;
+                    }
                     int vang_ = Util.random(1_000, 20_000);
                     int coin_ = Util.random(1_000,5_000);
                     conn.p.update_vang(vang_);
                     conn.p.update_coin(coin_);
+                    Item47 itbag = new Item47();
+                    itbag.id = 342;
+                    itbag.quantity = 5;
+                    itbag.category = 4;
+                    conn.p.item.add_item_bag47(4, itbag);
                     Log.gI().add_log(conn.p.name, "Điểm danh ngày được " + Util.number_format(vang_) + " vàng và " + coin_+" coin.");
+                    conn.p.item.char_inventory(4);
                     conn.p.item.char_inventory(5);
                     Service.send_notice_box(conn, "Bạn đã điểm danh thành công, được " + vang_ + " vàng và " + coin_+ " coin.");
                 } else {
