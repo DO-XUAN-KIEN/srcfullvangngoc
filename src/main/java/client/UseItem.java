@@ -84,7 +84,7 @@ public class UseItem {
                     Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
                     return;
                 }
-                conn.p.item.remove(4,328,1);
+                conn.p.item.remove(4,id_potion,1);
                 conn.p.add_EffDefault(EffTemplate.buffdame,1,30 * 1000);
                 EffTemplate eff = conn.p.get_EffDefault(EffTemplate.buffdame);
                 Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff dame"});
@@ -95,7 +95,7 @@ public class UseItem {
                     Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
                     return;
                 }
-                conn.p.item.remove(4,332,1);
+                conn.p.item.remove(4,id_potion,1);
                 conn.p.add_EffDefault(EffTemplate.buffhp,1,30 * 1000);
                 EffTemplate eff = conn.p.get_EffDefault(EffTemplate.buffhp);
                 Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff hp"});
@@ -106,7 +106,7 @@ public class UseItem {
                     Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
                     return;
                 }
-                conn.p.item.remove(4,331,1);
+                conn.p.item.remove(4,id_potion,1);
                 conn.p.add_EffDefault(EffTemplate.buffne,1,30 * 1000);
                 EffTemplate eff = conn.p.get_EffDefault(EffTemplate.buffne);
                 Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff né"});
@@ -117,7 +117,7 @@ public class UseItem {
                     Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
                     return;
                 }
-                conn.p.item.remove(4,330,1);
+                conn.p.item.remove(4,id_potion,1);
                 conn.p.add_EffDefault(EffTemplate.buffpst,1,30 * 1000);
                 EffTemplate eff = conn.p.get_EffDefault(EffTemplate.buffpst);
                 Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff pst"});
@@ -128,7 +128,7 @@ public class UseItem {
                     Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
                     return;
                 }
-                conn.p.item.remove(4,329,1);
+                conn.p.item.remove(4,id_potion,1);
                 conn.p.add_EffDefault(EffTemplate.buffpt,1,30 * 1000);
                 EffTemplate eff = conn.p.get_EffDefault(EffTemplate.buffpt);
                 Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff pt"});
@@ -139,7 +139,7 @@ public class UseItem {
                     Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
                     return;
                 }
-                conn.p.item.remove(4,333,1);
+                conn.p.item.remove(4,id_potion,1);
                 conn.p.add_EffDefault(EffTemplate.buffhoihp,1,30 * 1000);
                 EffTemplate eff = conn.p.get_EffDefault(EffTemplate.buffhoihp);
                 Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff hồi hp"});
@@ -150,28 +150,47 @@ public class UseItem {
                     Service.send_notice_box(conn,"Bạn đang sử dụng buff rồi");
                     return;
                 }
-                conn.p.item.remove(4,334,1);
+                conn.p.item.remove(4,id_potion,1);
                 conn.p.add_EffDefault(EffTemplate.bufftatca,1,60 * 1000);
                 EffTemplate eff = conn.p.get_EffDefault(EffTemplate.bufftatca);
                 Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Buff a đến z"});
                 break;
             }
             case 339: {
-                conn.p.item.remove(4,339,1);
+                conn.p.item.remove(4,id_potion,1);
                 conn.p.item.char_inventory(4);
                 Quask.quask_hon_gio(conn, (byte) 0);
                 break;
             }
             case 341: {
-                conn.p.item.remove(4,341,1);
+                conn.p.item.remove(4,id_potion,1);
                 conn.p.item.char_inventory(4);
                 Quask.quask_hon_gio(conn, (byte) 1);
                 break;
             }
             case 340: {
-                conn.p.item.remove(4,340,1);
+                conn.p.item.remove(4,id_potion,1);
                 conn.p.item.char_inventory(4);
                 Quask.quask_hon_gio(conn, (byte) 2);
+                break;
+            }
+            case 343: {
+                conn.p.item.remove(4,id_potion,1);
+                conn.p.add_EffDefault(-129, 1, 2 * 60 * 60 * 1000);
+                EffTemplate eff = conn.p.get_EffDefault(-129);
+                Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Miễn nhiễm hiệu ứng"});
+                break;
+            }
+            case 346: {
+                conn.p.item.remove(4,id_potion,1);
+                conn.p.item.char_inventory(4);
+                Quask.qua_sk_moi(conn, (byte) 0);
+                break;
+            }
+            case 347: {
+                conn.p.item.remove(4,id_potion,1);
+                conn.p.item.char_inventory(4);
+                Quask.qua_sk_moi(conn, (byte) 1);
                 break;
             }
             case 84: {

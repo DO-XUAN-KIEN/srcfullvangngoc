@@ -1051,7 +1051,7 @@ public class Player extends Body2 {
                 jsar.clear();
                 for (int i = 0; i < MainEff.size(); i++) {
                     EffTemplate temp = MainEff.get(i);
-                    if (temp.id != -126 && temp.id != -125 && temp.id != -127 && temp.id != -128) {
+                    if (temp.id != -126 && temp.id != -125 && temp.id != -127 && temp.id != -128 && temp.id != -129) {
                         continue;
                     }
                     JSONArray jsar21 = new JSONArray();
@@ -1609,6 +1609,11 @@ public class Player extends Body2 {
 //            Service.send_notice_nobox_white(conn, "Yêu cầu trình độ cấp 40");
 //            return;
 //        }
+        if (p.pet_di_buon != null && !Map.is_map_di_buon(p.map.map_id)) {
+            p.pet_di_buon = null;
+            Service.send_notice_box(p.conn,"mày đã đi quá xa bò, bò của mày về với tổ tiên r mua bò mới đê");
+            return;
+        }
         if (map.map_id == 0) {
             Message m = new Message(55);
             m.writer().writeByte(1);

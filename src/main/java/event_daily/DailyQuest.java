@@ -138,6 +138,7 @@ public class DailyQuest {
             p.update_vang(vang);
             Log.gI().add_log(p.name, "Nhận " + vang + " nhiệm vụ hàng ngày");
             p.update_coin(ngoc);
+            Log.gI().add_log(p.name, "Nhận " + ngoc + " từ điểm danh hàng ngày");
             p.update_Exp(exp, false);
             if (p.quest_daily[1] == 1) {
                 if (((p.item.get_bag_able() > 0) || (p.item.total_item_by_id(7, id_blue) > 0))) {

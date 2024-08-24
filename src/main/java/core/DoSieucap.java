@@ -122,7 +122,7 @@ public class DoSieucap {
                 return;
             }
             long vang_req = (temp.tierStar + 1) * 10_000_000;
-            int coin_req = (temp.tierStar + 1) * 50_000;
+            int coin_req = (temp.tierStar + 1) * 20_000;
             if (conn.p.get_vang() < vang_req){
                 Service.send_notice_box(conn,"Không đủ "+vang_req+ "vàng");
                 return;
@@ -133,6 +133,7 @@ public class DoSieucap {
             }
             conn.p.update_vang(-vang_req);
             conn.p.update_coin(-coin_req);
+            Log.gI().add_log(conn.p.name, "trừ "+coin_req+" coin từ nâng do1");
             boolean suc;
             if (temp.tierStar < 10) {
                 suc = Util.random(15111) < ti_le_nang_do[temp.tierStar] || (conn.ac_admin > 111 && Manager.BuffAdmin) || conn.p.mm_tt >= 70;
@@ -152,9 +153,11 @@ public class DoSieucap {
                 for (int i = 0; i < temp.op.size(); i++) {
                     Option op = temp.op.get(i);
                     if (op.id >= 0 && op.id <= 99) {
-                        if (op.id == 37 || op.id == 38){
+                        if (op.id >= 0 && op.id <= 7){
+                            op.setParam(op.getParam(1));
+                        } else if (op.id == 37 || op.id == 38) {
                             op.setParam(3);
-                        }else {
+                        } else {
                             op.setParam(op.getParam(4));
                         }
                     }
@@ -239,7 +242,7 @@ public class DoSieucap {
         }
     }
 
-    public static short[] ti_le_nang_md = new short[]{1000, 800, 600, 500, 400, 300, 200, 100, 80, 70, 50, 30, 20, 1, 1,1};
+    public static short[] ti_le_nang_md = new short[]{20000, 800, 600, 500, 400, 300, 200, 100, 80, 70, 50, 30, 20, 1, 1,1};
     public static void nangmdthan(Session conn, Message m) {
         try {
             if (conn.p.time_speed_rebuild > System.currentTimeMillis()) {
@@ -316,7 +319,7 @@ public class DoSieucap {
                         return;
                     }
                     long vang_req = (item.tierStar + 1) * 10_000_000;
-                    int coin_req = (item.tierStar + 1) * 50_000;
+                    int coin_req = (item.tierStar + 1) * 20_000;
                     if (conn.p.get_vang() < vang_req){
                         Service.send_notice_box(conn,"Không đủ "+vang_req+ "vàng");
                         return;
@@ -343,6 +346,7 @@ public class DoSieucap {
                         }
                         conn.p.update_coin(-coin_req);
                         conn.p.update_vang(-vang_req);
+                        Log.gI().add_log(conn.p.name, "trừ "+coin_req+" coin từ nâng do2");
                         boolean suc;
                         if (item.tierStar < 10) {
                             suc = Util.random(15111) < ti_le_nang_md[item.tier - 15] || (conn.ac_admin > 111 && Manager.BuffAdmin) || conn.p.mm_md >= 70;
@@ -485,7 +489,7 @@ public class DoSieucap {
                     }
                     Item3 item = conn.p.item.bag3[id];
                     long vang_req = (item.tier + 1) * 5_000_000;
-                    int coin_req = (item.tier + 1) * 50_000;
+                    int coin_req = (item.tier + 1) * 20_000;
                     if (conn.p.get_vang() < vang_req){
                         Service.send_notice_box(conn,"Không đủ "+vang_req+ "vàng");
                         return;
@@ -510,6 +514,7 @@ public class DoSieucap {
                         }
                         conn.p.update_vang(-vang_req);
                         conn.p.update_coin(-coin_req);
+                        Log.gI().add_log(conn.p.name, "trừ "+coin_req+" coin từ nâng do3");
                         int ran = Util.random(1000);
                         boolean suc =(item.tier >= 0 && item.tier < 5) && ran > 200 ||
                                 (item.tier >= 5 && item.tier < 10) && ran > 300 ||
@@ -545,7 +550,10 @@ public class DoSieucap {
                             conn.p.setnltb2();
                             for (int i = 0; i < item.op.size(); i++) {
                                 Option op = item.op.get(i);
-                                if (op.id >= 0 && op.id <= 99 && op.id != 37 && op.id != 38) {
+                                if (op.id >= 0 && op.id <= 7){
+                                    op.setParam(op.getParam(0)+1000);
+                                }
+                                else if (op.id >= 8 && op.id <= 99 && op.id != 37 && op.id != 38) {
                                     op.setParam(op.getParam(4));
                                 }
                             }

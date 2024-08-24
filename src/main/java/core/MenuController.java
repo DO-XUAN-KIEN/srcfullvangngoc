@@ -143,7 +143,7 @@ public class MenuController {
             }
             case -32: {
                 menu = new String[]{"Xem BXH Danh vọng", "Xem BXH Cao Thủ", "Xem BXH Đi Buôn", "Xem BXH Đi Cướp", "Xem BXH Chiến trường",
-                    "Xem BXH Đổi quà", "Xem BXH Bang", "Xem BXH Hiếu chiến", "Xem BXH Săn Boss", "Xem BXH Phó Bản"};
+                    "Xem BXH Đổi quà", "Xem BXH Bang", "Xem BXH Hiếu chiến", "Xem BXH Phó Bản"};
                 break;
             }
             case -21: { // blackeye
@@ -255,6 +255,10 @@ public class MenuController {
                     return;
                 } else if (Manager.gI().event == 6) { // sự kiện Hallowen
                     menu = new String[]{"Rương huyền bí", "Xem Top"};
+                    send_menu_select(conn, -69, menu, (byte) Manager.gI().event);
+                    return;
+                } else if (Manager.gI().event == 7) { // sự kiện xoài
+                    menu = new String[]{"Vào map sự kiện","Ghép Rương sự kiện Xoài thường","Ghép Rương sự kiện Xoài VIP", "Xem Top", "Xem BXH Săn Boss"};
                     send_menu_select(conn, -69, menu, (byte) Manager.gI().event);
                     return;
                 } else if (Manager.gI().event == 11) { // sự kiện hồn gió
@@ -625,6 +629,9 @@ public class MenuController {
                     Menu_MissSophia(conn, idnpc, idmenu, index);
                 }
                 if (Manager.gI().event == 6) { // hallowin
+                    Menu_MissSophia(conn, idnpc, idmenu, index);
+                }
+                if (Manager.gI().event == 7) {
                     Menu_MissSophia(conn, idnpc, idmenu, index);
                 }
                 if (Manager.gI().event == 11) { // hồn gió
@@ -1741,6 +1748,41 @@ public class MenuController {
                     Service.send_notice_box(conn, "Chưa có chức năng ev6!");
                     break;
             }
+        } else if (idmenu == 7 && Manager.gI().event == 7) { // sự kiện xoài
+            switch (index) {
+                case 0: {
+                    if(conn.p.level < 44){
+                        Service.send_notice_box(conn,"Bạn chưa đủ level");
+                        return;
+                    }
+                    Vgo vgo = null;
+                    vgo = new Vgo();
+                    vgo.id_map_go = 136;
+                    vgo.x_new = 150;
+                    vgo.y_new = 54;
+                    conn.p.change_map(conn.p, vgo);
+                    break;
+                }
+                case 1: {
+                    Service.send_box_input_text(conn, 54, "Rương sự kiện Xoài thường", new String[]{"Nguyên liệu số 1 + 500.000 vàng + 30.000 coin"});
+                    break;
+                }
+                case 2: {
+                    Service.send_box_input_text(conn, 55, "Rương sự kiện Xoài VIP", new String[]{"(Nguyên liệu số 1 + 2) + 2.000.000 vàng + 120.000 coin"});
+                    break;
+                }
+                case 3: {
+                    BXH.send1(conn,2);
+                    break;
+                }
+                case 4: {
+                    BXH.send3(conn, 2);
+                    break;
+                }
+                default:
+                    Service.send_notice_box(conn, "Chưa có chức năng ev11!");
+                    break;
+            }
         } else if (idmenu == 11 && Manager.gI().event == 11) { // sự kiện halloween
             switch (index) {
                 case 0: {
@@ -2123,11 +2165,21 @@ public class MenuController {
                     //
                     int vang_recei = 0;
                     for (int i = 0; i < conn.p.pet_di_buon.item.size(); i++) {
-                        if (null != conn.p.pet_di_buon.item.get(i)) switch (conn.p.pet_di_buon.item.get(i)) {
-                            case 3590 -> vang_recei += 200_000;
-                            case 3591 -> vang_recei += 400_000;
-                            case 3592 -> vang_recei += 800_000;
-                            default -> {
+                        if (conn.p.item.total_item_by_id(4, 147) >0) {
+                            if (null != conn.p.pet_di_buon.item.get(i)) switch (conn.p.pet_di_buon.item.get(i)) {
+                                case 3590 -> vang_recei += 400_000;
+                                case 3591 -> vang_recei += 800_000;
+                                case 3592 -> vang_recei += 1_600_000;
+                                default -> {
+                                }
+                            }
+                        }else {
+                            if (null != conn.p.pet_di_buon.item.get(i)) switch (conn.p.pet_di_buon.item.get(i)) {
+                                case 3590 -> vang_recei += 200_000;
+                                case 3591 -> vang_recei += 400_000;
+                                case 3592 -> vang_recei += 800_000;
+                                default -> {
+                                }
                             }
                         }
                     }
@@ -2222,18 +2274,34 @@ public class MenuController {
                         //
                         int vang_recei = 0;
                         for (int i = 0; i < conn.p.pet_di_buon.item.size(); i++) {
-                            if (null != conn.p.pet_di_buon.item.get(i)) switch (conn.p.pet_di_buon.item.get(i)) {
-                                case 3590:
-                                    vang_recei += 200_000;
-                                    break;
-                                case 3591:
-                                    vang_recei += 400_000;
-                                    break;
-                                case 3592:
-                                    vang_recei += 800_000;
-                                    break;
-                                default:
-                                    break;
+                            if (conn.p.item.total_item_by_id(4, 147) >0) {
+                                if (null != conn.p.pet_di_buon.item.get(i)) switch (conn.p.pet_di_buon.item.get(i)) {
+                                    case 3590:
+                                        vang_recei += 400_000;
+                                        break;
+                                    case 3591:
+                                        vang_recei += 800_000;
+                                        break;
+                                    case 3592:
+                                        vang_recei += 1_600_000;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }else {
+                                if (null != conn.p.pet_di_buon.item.get(i)) switch (conn.p.pet_di_buon.item.get(i)) {
+                                    case 3590:
+                                        vang_recei += 200_000;
+                                        break;
+                                    case 3591:
+                                        vang_recei += 400_000;
+                                        break;
+                                    case 3592:
+                                        vang_recei += 800_000;
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
                         if (vang_recei > 0) {
@@ -2580,6 +2648,7 @@ public class MenuController {
                     int coin_ = Util.random(1000, 10000);
                     conn.p.update_vang(vang_);
                     conn.p.update_coin(coin_);
+                    Log.gI().add_log(conn.p.name, "nhận "+coin_+" coin từ điểm danh");
                     conn.p.item.char_inventory(5);
                     Service.send_notice_box(conn,
                             "Cảm ơn bạn đã yêu thích cho tôi, để tỏ lòng biết ơn tôi tặng bạn: " + coin_ + " coin, " + vang_ + " Vàng.");
@@ -3655,10 +3724,6 @@ public class MenuController {
                 break;
             }
             case 8: {
-                BXH.send3(conn, 2);
-                break;
-            }
-            case 9: {
                 BXH.send3(conn, 3);
                 break;
             }
@@ -5168,7 +5233,7 @@ public class MenuController {
             } else if (index == 15) {
                 s = BossHDL.BossManager.GetInfoBoss(173);
             } else if (index == 16) {
-                s = BossHDL.BossManager.GetInfoBoss(178);
+                s = BossHDL.BossManager.GetInfoBoss(190);
             }
             Service.send_notice_box(conn, s);
             return;

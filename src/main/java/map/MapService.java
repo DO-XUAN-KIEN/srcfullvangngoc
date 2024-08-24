@@ -54,6 +54,9 @@ public class MapService {
                     p.typepk = -1;
                 }
             }
+            if (map.map_id == 11 && Manager.gI().event == 7) {
+                p.typepk = 0;
+            }
             map.send_map_data(p);
             p.map.send_mount(p);
             Service.send_char_main_in4(p);
@@ -284,6 +287,11 @@ public class MapService {
         if (p.pet_di_buon != null && p.pet_di_buon.id_map == p.map.map_id && p.map.zone_id == p.map.maxzone) {
             if (p.pet_di_buon.time_move < System.currentTimeMillis()) {
                 p.pet_di_buon.time_move = System.currentTimeMillis() + 1000L;
+                if (p.pet_di_buon != null && !Map.is_map_di_buon(p.map.map_id)) {
+                    p.pet_di_buon = null;
+                    Service.send_notice_box(p.conn,"mày đã đi quá xa bò, bò của mày về với tổ tiên r mua bò mới đê");
+                    return;
+                }
                 if (Math.abs(p.pet_di_buon.x - p.x) < (85 * p.pet_di_buon.speed)
                         && Math.abs(p.pet_di_buon.y - p.y) < (85 * p.pet_di_buon.speed)) {
                     p.pet_di_buon.x = p.x;
@@ -731,6 +739,9 @@ public class MapService {
             return;
         }
         if (Map.is_map_chien_truong(map.map_id)) {
+            return;
+        }
+        if (map.map_id == 11 && Manager.gI().event == 7){
             return;
         }
         if ((Map.is_map_chiem_mo(map, true) && Manager.gI().chiem_mo.isRunning()) || map.kingCupMap != null) {

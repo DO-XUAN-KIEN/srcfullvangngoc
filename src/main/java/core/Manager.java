@@ -502,6 +502,20 @@ public class Manager {
                             item_sell.get(Service.SHOP_POTION).add((short) 30);
                             break;
                         }
+                        case 7: {
+                            itempoitionsell = new short[jsar.size() + 4];
+                            for (int i = 0; i < jsar.size(); i++) {
+                                itempoitionsell[i] = Short.parseShort(jsar.get(i).toString());
+                                item_sell.get(Service.SHOP_POTION).add(itempoitionsell[i]);
+                            }
+                            itempoitionsell[itempoitionsell.length - 4] = 343;
+                            itempoitionsell[itempoitionsell.length - 3] = 344;
+                            itempoitionsell[itempoitionsell.length - 2] = 345;
+                            item_sell.get(Service.SHOP_POTION).add((short) 343);
+                            item_sell.get(Service.SHOP_POTION).add((short) 344);
+                            item_sell.get(Service.SHOP_POTION).add((short) 345);
+                            break;
+                        }
                         case 11: {
                             itempoitionsell = new short[jsar.size() + 4];
                             for (int i = 0; i < jsar.size(); i++) {
@@ -824,7 +838,7 @@ public class Manager {
             temp.setVang(rs.getLong("vang"));
             temp.setKimcuong(rs.getInt("kimcuong"));
             temp.max_mem = rs.getShort("max_mem");
-            temp.max_mem = Clan.get_mem_by_level(temp.level);
+            //temp.max_mem = Clan.get_mem_by_level(temp.level);
             //
             temp.item_clan = new ArrayList<>();
             JSONArray jsar = (JSONArray) JSONValue.parse(rs.getString("item"));

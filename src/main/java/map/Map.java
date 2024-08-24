@@ -84,6 +84,7 @@ public class Map implements Runnable {
     public UseItemArena Arena;
     public KingCup kingCupMap;
     public Leo_thap leot;
+    public boolean mapsk;
 
     public Map(int id, int zone, String[] npc_name, String name, byte typemap, boolean ismaplang, boolean showhs,
             int maxplayer, int maxzone, List<Vgo> vgo) throws IOException {
@@ -224,6 +225,10 @@ public class Map implements Runnable {
     public boolean is_map_buon() {
         return map_id == 8 || map_id == 7 || (map_id >= 15 && map_id <= 18) || (map_id >= 20 && map_id <= 25) || map_id == 33
                 || map_id == 34 || (map_id >= 37 && map_id <= 39) || (map_id >= 42 && map_id <= 45) || map_id == 52;
+    }
+    public static boolean is_map_di_buon(short id) {
+        return id == 7 || id == 8 || id == 15 || id == 16 || id == 17 || id == 18 || id == 20 || id == 22 || id == 23 || id == 24
+                || id == 25 || id == 33 || id == 34 || id == 42 || id == 44 || id == 45 || id == 52;
     }
 
     public boolean isMapLoiDai() {
@@ -404,7 +409,6 @@ public class Map implements Runnable {
                     }
                 }
             }
-
             //<editor-fold defaultstate="collapsed" desc="update Player       ...">  
             for (int i1 = players.size() - 1; i1 >= 0; i1--) {
                 try {
@@ -435,6 +439,16 @@ public class Map implements Runnable {
                     }
                     if (p.isDie && kingCupMap != null && p.time_die + 3000L > System.currentTimeMillis()) {
                         kingCupMap.refresh();
+                    }
+                    if (this.map_id == 136) {
+                        if(p.get_EffDefault(-129) == null){
+                            mapsk = true;
+                            Service.usepotion(p, 0, (int) -(p.hp * Util.random(5, 10) * 0.01));
+                        } else {
+                            mapsk = false;
+                        }
+                    }else {
+                        mapsk = false;
                     }
                     if (this.map_id == 50) { // pet_manager
                         long now_time = System.currentTimeMillis();

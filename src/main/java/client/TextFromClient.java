@@ -100,6 +100,7 @@ public class TextFromClient {
                                 return;
                             }
                             conn.p.update_coin(-100_000);
+                            Log.gI().add_log(conn.p.name, "trừ 100k coin từ kết hôn");
                             break;
                         }
                         default: {
@@ -306,6 +307,7 @@ public class TextFromClient {
                             conn.p.update_vang(vang_up);
                             conn.p.update_ngoc(ngoc_up);
                             conn.p.update_coin(coin_up);
+                            Log.gI().add_log(conn.p.name, "Nhận " + coin_up + " từ gitcode");
                             if (vang_up != 0) {
                                 IDs.add((short) -1);
                                 Quants.add((int) (vang_up > 2_000_000_000 ? 2_000_000_000 : vang_up));
@@ -541,6 +543,7 @@ public class TextFromClient {
                     conn.p.update_ngoc((int) (coin_exchange * 3 * Manager.gI().giakmngoc));
                     conn.p.item.char_inventory(5);
                     Service.send_notice_box(conn, "Đổi thành công" + coin_exchange * 3 * Manager.gI().giakmngoc + "ngọc");
+                    Log.gI().add_log(conn.p.name, "trừ" +coin_exchange+ "coin từ đổi coin sang vàng");
 //                    Log.gI().add_log(conn.p.name,
 //                                    "đổi coin sang ngọc " + text + " : " + Util.number_format(ngoc_up) + " ngọc");
                 } else {
@@ -852,6 +855,7 @@ public class TextFromClient {
                     conn.p.update_vang((long) ((coin_exchange * 1_000) * Manager.gI().giakmgold));
                     Service.send_notice_box(conn, "Đổi thành công" + (coin_exchange * 1_000) * Manager.gI().giakmgold + "vàng");
                     Log.gI().add_log(conn.p.name, "Nhận " + ((coin_exchange * 1_000) * Manager.gI().giakmgold) + " từ đổi coin ra vàng");
+                    Log.gI().add_log(conn.p.name, "trừ " +coin_exchange+"coin từ đổi coin sang vàng");
                     conn.p.item.char_inventory(5);
 //                    Log.gI().add_log(conn.p.name,
 //                                    "đổi coin sang ngọc " + text + " : " + Util.number_format(ngoc_up) + " ngọc");
@@ -2098,6 +2102,7 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_coin(-coin);
+                Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk1");
                 Item47 itbag = new Item47();
                 itbag.id = tatca;
                 itbag.quantity = (short) quant;
@@ -2254,6 +2259,7 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_coin(-coin);
+                Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk2");
                 Item47 itbag = new Item47();
                 itbag.id = ruong;
                 itbag.quantity = (short) quant;
@@ -2337,6 +2343,7 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_coin(-coin);
+                Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk3");
                 conn.p.update_vang(-vag);
                 Item47 itbag = new Item47();
                 itbag.id = ruong;
@@ -2346,6 +2353,129 @@ public class TextFromClient {
                 conn.p.item.remove(4, ha, quant * chuyendoi);
                 conn.p.item.remove(4, thu, quant * chuyendoi);
                 conn.p.item.remove(4, dong, quant * chuyendoi);
+                conn.p.item.add_item_bag47(4, itbag);
+                conn.p.item.char_inventory(4);
+                conn.p.item.char_inventory(5);
+
+                Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", new short[]{ruong}, new int[]{quant}, new short[]{4});
+                break;
+            }
+            case 54: {
+                String value = m2.reader().readUTF();
+                if (!(Util.isnumber(value))) { // kiểm tra điều kiện nhập là số
+                    Service.send_notice_box(conn, "Dữ liệu nhập không phải số!!");
+                    return;
+                }
+                int quant = Integer.parseInt(value);
+                if (quant > 100 || quant <= 0) { // điều kiện nhập ko quá 10  và  < 0
+                    Service.send_notice_box(conn, "Số lượng không hợp lệ!");
+                    return;
+                }
+                if (conn.p.item.get_bag_able() < 1) { // kiếm tra hành trang
+                    Service.send_notice_box(conn, "Hành trang đầy!");
+                    return;
+                }
+                short nl, ruong, chuyendoi;
+                int coin;// lấy số lượng nhân với coin
+                long vag;// lấy số lượng nhân với vàng
+                nl = 344;
+                ruong = 346; // xoài thường
+                chuyendoi = 1;
+                coin = quant * 30_000;
+                vag = quant * 500_000;
+                if (coin > conn.p.checkcoin()) {
+                    Service.send_notice_box(conn, "Không đủ " + coin + " coin để đổi " + quant + " Linh Hồn 4 Mùa Cao cấp");
+                    return;
+                }
+                if (vag > conn.p.get_vang()){
+                    Service.send_notice_box(conn, "Không đủ " + vag + " vàng để đổi " + quant + " Linh Hồn 4 Mùa Cao cấp");
+                    return;
+                }
+                if (nl > (ItemTemplate4.item.size() - 1) || nl < 0 ||
+                        ruong > (ItemTemplate4.item.size() - 1) || ruong < 0) {
+                    Service.send_notice_box(conn, "Đã xảy ra lỗi...");
+                    return;
+                }
+                int quant_inbag3 = conn.p.item.total_item_by_id(4, nl);
+                int quant_real3 = quant_inbag3 / chuyendoi;
+                if (quant_real3 < quant) {
+                    Service.send_notice_box(conn, "Chỉ có thể đổi tối đa " + quant_real3 + " " + ItemTemplate4.item.get(ruong).getName());
+                    return;
+                }
+                conn.p.update_coin(-coin);
+                conn.p.update_vang(-vag);
+                Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk4");
+                Item47 itbag = new Item47();
+                itbag.id = ruong;
+                itbag.quantity = (short) quant;
+                itbag.category = 4;// loại type
+                conn.p.item.remove(4, nl, quant * chuyendoi);
+                conn.p.item.add_item_bag47(4, itbag);
+                conn.p.item.char_inventory(4);
+                conn.p.item.char_inventory(5);
+
+                Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", new short[]{ruong}, new int[]{quant}, new short[]{4});
+                break;
+            }
+            case 55: {
+                String value = m2.reader().readUTF();
+                if (!(Util.isnumber(value))) { // kiểm tra điều kiện nhập là số
+                    Service.send_notice_box(conn, "Dữ liệu nhập không phải số!!");
+                    return;
+                }
+                int quant = Integer.parseInt(value);
+                if (quant > 100 || quant <= 0) { // điều kiện nhập ko quá 10  và  < 0
+                    Service.send_notice_box(conn, "Số lượng không hợp lệ!");
+                    return;
+                }
+                if (conn.p.item.get_bag_able() < 1) { // kiếm tra hành trang
+                    Service.send_notice_box(conn, "Hành trang đầy!");
+                    return;
+                }
+                short nl, nl1, ruong, chuyendoi;
+                int coin;// lấy số lượng nhân với coin
+                long vag;// lấy số lượng nhân với vàng
+                nl = 344;
+                nl1 = 345;
+                ruong = 347; // xoài vip
+                chuyendoi = 1;
+                coin = quant * 120_000;
+                vag = quant * 2_000_000;
+                if (coin > conn.p.checkcoin()) {
+                    Service.send_notice_box(conn, "Không đủ " + coin + " coin để đổi " + quant + " Linh Hồn 4 Mùa Cao cấp");
+                    return;
+                }
+                if (vag > conn.p.get_vang()){
+                    Service.send_notice_box(conn, "Không đủ " + vag + " vàng để đổi " + quant + " Linh Hồn 4 Mùa Cao cấp");
+                    return;
+                }
+                if (nl > (ItemTemplate4.item.size() - 1) || nl < 0 ||
+                        nl1 > (ItemTemplate4.item.size() - 1) || nl1 < 0 ||
+                        ruong > (ItemTemplate4.item.size() - 1) || ruong < 0) {
+                    Service.send_notice_box(conn, "Đã xảy ra lỗi...");
+                    return;
+                }
+                int quant_inbag = conn.p.item.total_item_by_id(4, nl);
+                int quant_inbag1 = conn.p.item.total_item_by_id(4, nl1);
+                int quant_real = quant_inbag / chuyendoi;
+                int quant_real1 = quant_inbag1 / chuyendoi;
+                if (quant_real < quant) {
+                    Service.send_notice_box(conn, "Chỉ có thể đổi tối đa " + quant_real + " " + ItemTemplate4.item.get(ruong).getName());
+                    return;
+                }
+                if (quant_real1 < quant) {
+                    Service.send_notice_box(conn, "Chỉ có thể đổi tối đa " + quant_real1 + " " + ItemTemplate4.item.get(ruong).getName());
+                    return;
+                }
+                conn.p.update_coin(-coin);
+                conn.p.update_vang(-vag);
+                Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk5");
+                Item47 itbag = new Item47();
+                itbag.id = ruong;
+                itbag.quantity = (short) quant;
+                itbag.category = 4;// loại type
+                conn.p.item.remove(4, nl, quant * chuyendoi);
+                conn.p.item.remove(4, nl1, quant * chuyendoi);
                 conn.p.item.add_item_bag47(4, itbag);
                 conn.p.item.char_inventory(4);
                 conn.p.item.char_inventory(5);

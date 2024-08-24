@@ -211,6 +211,9 @@ public class Body2 extends MainObject {
                 hp = (int) hpm;
             }
         }
+        if (p.map != null && p.map.mapsk == true) {
+            hpm /= 2;
+        }
         return (int) (hpm * Manager.ratio_hp);
     }
 
@@ -249,6 +252,9 @@ public class Body2 extends MainObject {
         if (mpm > 2_000_000_000) {
             mpm = 2_000_000_000;
         }
+        if (p.map != null && p.map.mapsk == true) {
+            mpm /= 2;
+        }
         return (int) mpm;
     }
 
@@ -279,6 +285,9 @@ public class Body2 extends MainObject {
         EffTemplate eff_ve_binh = getEffTinhTu(EffTemplate.GIAP_VE_BINH);
         if (eff_ve_binh != null) {
             pie = pie / 10;
+        }
+        if (p.map.mapsk == true){
+            pie /= 2;
         }
         return (int) (pie / 2.1);
     }
@@ -324,6 +333,9 @@ public class Body2 extends MainObject {
         EffTemplate eff_bach_kim = getEffTinhTu(EffTemplate.GIAP_BACH_KIM);
         if (eff_bach_kim != null) {
             crit = crit / 10;
+        }
+        if (p.map.mapsk == true){
+            crit /= 2;
         }
         return (int) (crit / 2.1);
     }
@@ -765,6 +777,9 @@ public class Body2 extends MainObject {
                 Service.usepotion(p, 1, (int) -(p.mp * Util.random(5, 10) * 0.01));
 //                p.mp -= (int) (p.mp * Util.random(5, 10) * 0.01);
 //                Service.send_char_main_in4(p);
+            }
+            if (get_EffDefault(StrucEff.VET_THUONG_SAU) != null){
+                Service.usepotion(p, 0, (int) -(p.hp * 3 * 0.01));
             }
             if (getEffTinhTu(EffTemplate.THIEU_CHAY) != null) {
                 Service.usepotion(p, 0, -1500);

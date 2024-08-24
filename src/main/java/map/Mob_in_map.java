@@ -68,6 +68,9 @@ public class Mob_in_map extends MainObject {
         } else if (this.level > 100 && this.level <= 600) {
             dmob = (dmob * 21) / 10;
         }
+        if (this.map_id == 136){
+            dmob = (dmob * 60) / 10;
+        }
         if (this.is_boss) {
             dmob = (int) (dmob * this.level * 0.03);
         }
@@ -145,7 +148,7 @@ public class Mob_in_map extends MainObject {
                 p.danhvong += 1;
                 p.item.char_inventory(5);
                 if (mainAtk.isPlayer()) {
-                    if (Math.abs(mob.level - mainAtk.level) <= 10 && !check_mob_roi_ngoc_kham) {
+                    if ((Math.abs(mob.level - mainAtk.level) <= 10 || map.map_id == 136) && !check_mob_roi_ngoc_kham) {
                         if (map.isMapLangPhuSuong()) {
                             int percent = 20;
                             if (percent > Util.random(0, 300)) {
@@ -175,6 +178,11 @@ public class Mob_in_map extends MainObject {
                             }
                             if (percent > Util.random(0, 300) || mob.color_name != 0) {
                                 LeaveItemMap.leave_item_3(map, mob, (Player) mainAtk);
+                            }
+                            if (map_id == 136){
+                                if (Util.random(0,10000) < 10) {
+                                    LeaveItemMap.leave_item_by_type4(map, (short) 344, p, mob.index);
+                                }
                             }
                             if (percent > Util.random(0, 500) && zone_id == 1 && !Map.is_map_not_zone2(map_id)
                                     && p.get_EffDefault(-127) != null) {

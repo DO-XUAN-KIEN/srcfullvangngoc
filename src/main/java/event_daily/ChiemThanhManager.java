@@ -352,8 +352,8 @@ public class ChiemThanhManager {
             Service.send_notice_box(p.conn, "Bạn không phải thủ lĩnh.");
         } else if (Clan_entrys.containsKey(p.myclan.name_clan)) {
             Service.send_notice_box(p.conn, "Clan của bạn đã có tên trong danh sách.");
-        } else if (p.party == null || p.party.get_mems().size() < 5) {
-            Service.send_notice_box(p.conn, "Cần tạo nhóm 5 thành viên trong clan có level từ 60 để tham gia.");
+        } else if (p.party == null || p.party.get_mems().size() < 3 || p.party.get_mems().size() > 3) {
+            Service.send_notice_box(p.conn, "Cần tạo nhóm 3 thành viên trong clan có level từ 60 để tham gia.");
         } else if (p.myclan.get_vang() < 10_000_000) {
             Service.send_notice_box(p.conn, "Cần tối thiểu 10tr quỹ bang để đăng kí.");
         } else {
@@ -365,7 +365,7 @@ public class ChiemThanhManager {
                     return;
                 }
                 if (p2.myclan == null || !p2.myclan.name_clan.equals(p.myclan.name_clan) || p2.level < 60) {
-                    Service.send_notice_box(p.conn, "Cần tạo nhóm 5 thành viên trong clan có level từ 60 để tham gia.");
+                    Service.send_notice_box(p.conn, "Cần tạo nhóm 3 thành viên trong clan có level từ 60 để tham gia.");
                     return;
                 }
                 nameP.add(p2.name);

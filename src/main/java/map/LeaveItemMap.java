@@ -512,9 +512,20 @@ public class LeaveItemMap {
                         id_item_leave = new  short[]{471,349};
                         id_sk = new short[]{470};
                         // sizeRandomMedal = (short) (60);
-                        p.boss += 1;
                         break;
                     }
+                case 190: {
+                    id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251, 319, 320, 321, 322};
+                    if(Util.random(100)<10){
+                        id_item_leave4 = new short[]{(short) Util.random(319,323)};
+                    }
+                    if(Manager.gI().event == 7){
+                        id_item_hongio = new short[]{345};
+                    }
+                    id_item_leave7 = new short[]{14};
+                    p.boss += 1;
+                    break;
+                }
                 
 
             }
@@ -531,7 +542,7 @@ public class LeaveItemMap {
                     }
                 }
             }
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < Util.random(2,6); i++) {
                 for (short id : id_item_hongio) {
                     leave_item_by_type4(map, id, p, mob.index, p.index);
                 }

@@ -1060,7 +1060,6 @@ public class Service {
                 }
                 break;
             }
-
             case 18: {
                 m.writer().writeUTF("Cường hóa trang bị");
                 m.writer().writeByte(5);
@@ -1341,7 +1340,6 @@ public class Service {
                 }
                 break;
             }
-
             default: {
                 send_notice_box(conn, "Lỗi, hãy thử lại sau");
                 break;
@@ -1878,6 +1876,13 @@ public class Service {
                     }
                     Log.gI().add_log(p.name, "Trừ " + price + " mua đồ lisa");
                     p.update_vang(-price);
+                }else if (ItemTemplate4.item.get(idbuy).getPricetype() == 1 && idbuy == 343){
+                    if (p.checkcoin() < price) {
+                        send_notice_box(p.conn, "Không đủ " + price + " coin");
+                        return;
+                    }
+                    p.update_coin((int) -price);
+                    Log.gI().add_log(p.name, "trừ "+price+" coin từ mua do1");
                 } else {
                     if (p.get_ngoc() < price) {
                         send_notice_box(p.conn, "Không đủ " + price + " ngọc");
@@ -2169,6 +2174,7 @@ public class Service {
                         return;
                     }
                     p.update_coin((int) -price);
+                    Log.gI().add_log(p.name, "trừ "+price+" coin từ mua do2");
                 } else {
                     if (p.get_ngoc() < price) {
                         send_notice_box(p.conn, "Không đủ " + price + " ngọc");

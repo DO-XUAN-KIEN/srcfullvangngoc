@@ -94,6 +94,7 @@ public class Process_Yes_no_box {
                         conn.p.squire = new Squire(conn, conn.p.index);
                         conn.p.squire.load();
                         conn.p.update_coin(-100_000);
+                        Log.gI().add_log(conn.p.name, "trừ 100k coin từ đệ tử");
                         Service.send_notice_box(conn, "Nhận thành công đệ tử");
                         Squire.callSquire(conn);
                     }
@@ -129,6 +130,7 @@ public class Process_Yes_no_box {
                         return;
                     }
                     conn.p.update_coin(-5_000);
+                    Log.gI().add_log(conn.p.name, "trừ 5k coin từ làng phủ sương");
                     conn.p.add_EffDefault(-127, 1, 2 * 60 * 60 * 1000);
                     MapService.leave(conn.p.map, conn.p);
                     conn.p.map = map;
@@ -235,18 +237,22 @@ public class Process_Yes_no_box {
                     int id_book = -1;
                     if (conn.p.id_index_temp == 1) {
                         id_book = switch (conn.p.clazz) {
-                            case 0 -> 4577;
-                            case 1 -> 4580;
-                            case 2 -> 4582;
-                            case 3 -> 4583;
-                            default -> id_book;
-                        };
-                    } else if (conn.p.id_index_temp == 0) {
-                        id_book = switch (conn.p.clazz) {
                             case 0 -> 4578;
                             case 1 -> 4579;
                             case 2 -> 4581;
                             case 3 -> 4584;
+//                            case 0 -> 4577;
+//                            case 1 -> 4580;
+//                            case 2 -> 4582;
+//                            case 3 -> 4583;
+                            default -> id_book;
+                        };
+                    } else if (conn.p.id_index_temp == 0) {
+                        id_book = switch (conn.p.clazz) {
+                            case 0 -> 4577;
+                            case 1 -> 4580;
+                            case 2 -> 4582;
+                            case 3 -> 4583;
                             default -> id_book;
                         };
                     }
@@ -264,71 +270,12 @@ public class Process_Yes_no_box {
                         } else {
                             Service.send_notice_box(conn, "Thất bại rồi");
                         }
-                        conn.p.item.remove_item_book(id_book, (level + 1));
+                        conn.p.item.remove_item_book_skill(id_book, (level + 1));
                         conn.p.item.char_inventory(3);
                         conn.p.id_index_temp = -1;
                         conn.p.update_ngoc(-(level * 5 + 10));
                     } else {
                         Service.send_notice_box(conn, "Không đủ sách");
-                    }
-                    break;
-                }
-                case -13: {
-                    Item3 it_pr = null;
-                    Player p = conn.p;
-                    for (int i = 0; i < conn.p.item.bag3.length; i++) {
-                        Item3 it = conn.p.item.bag3[i];
-
-                        if (it != null && it.id >= 4656 && it.id <= 4675 && it.color == 5 && it.tierStar >= 9 && it.tierStar <= 17) {
-                            it_pr = it;
-                            break;
-                        }
-                    }
-
-                    if (it_pr == null) {
-                        Service.send_notice_box(conn, "Không tìm thấy vật phẩm phù hợp");
-                        return;
-                    }
-
-                    if (conn.p.get_ngoc() < 10_000) {
-                        Service.send_notice_box(conn, "Không đủ 10k ngọc");
-                        return;
-                    }
-
-                    int[] ids = {st.id[p.st_ran[0]], st1.id[p.st_ran[1]], st2.id[p.st_ran[2]], st3.id[p.st_ran[3]], st4.id[p.st_ran[4]]};
-                    int[] sls = {st.sl[p.st_ran[0]], st1.sl[p.st_ran[1]], st2.sl[p.st_ran[2]], st3.sl[p.st_ran[3]], st4.sl[p.st_ran[4]]};
-
-                    for (int i = 0; i < ids.length; i++) {
-                        if (conn.p.item.total_item_by_id(7, ids[i]) < sls[i] * it_pr.tierStar / 9) {
-                            Service.send_notice_box(conn, "Không đủ " + sls[i] * it_pr.tierStar / 9 + " " + ItemTemplate7.item.get(ids[i]).getName());
-                            return;
-                        }
-                        conn.p.item.remove(7, ids[i], sls[i] * it_pr.tierStar / 9);
-                    }
-
-//                    for (int i = 0; i < it_pr.op.size(); i++) {
-//                        Option op = it_pr.op.get(i);
-//                        if (op.id >= 0 && op.id <= 99) {
-//                            op.setParam(op.getParam(4));
-//                        }
-//                        if (op != null && op.id >= -128 && op.id <= -80 || (op.id == 99)) {
-//                            op.setParam(op.getParam(0) + 100);
-//                        }
-//                    }
-
-                    boolean suc = 15 > Util.random(100) || conn.ac_admin > 10;
-                    if (suc) {
-                        it_pr.tierStar++;
-                        it_pr.name = ItemTemplate3.item.get(it_pr.id).getName() + "";
-                        it_pr.UpdateName();
-                        conn.p.item.char_inventory(4);
-                        conn.p.item.char_inventory(7);
-                        conn.p.item.char_inventory(3);
-                        Service.send_notice_box(conn, "Nhận Được " + it_pr.name + "");
-                        conn.p.item.char_inventory(3);
-                        sc.ran_sc(conn.p);
-                    } else {
-                        Service.send_notice_box(conn, "Nâng cấp thất bại!");
                     }
                     break;
                 }
@@ -348,19 +295,23 @@ public class Process_Yes_no_box {
                     if (conn.p.id_index_temp == 0) {
                         type_book = 0;
                         id_book = switch (conn.p.clazz) {
-                            case 0 -> 4577;
-                            case 1 -> 4580;
-                            case 2 -> 4582;
-                            case 3 -> 4583;
+                            case 0 -> 4578;
+                            case 1 -> 4579;
+                            case 2 -> 4581;
+                            case 3 -> 4584;
+//                            case 0 -> 4577;
+//                            case 1 -> 4580;
+//                            case 2 -> 4582;
+//                            case 3 -> 4583;
                             default -> id_book;
                         };
                     } else if (conn.p.id_index_temp == 1) {
                         type_book = 3;
                         id_book = switch (conn.p.clazz) {
-                            case 0 -> 4578;
-                            case 1 -> 4579;
-                            case 2 -> 4581;
-                            case 3 -> 4584;
+                            case 0 -> 4577;
+                            case 1 -> 4580;
+                            case 2 -> 4582;
+                            case 3 -> 4583;
                             default -> id_book;
                         };
                     }
@@ -716,9 +667,9 @@ public class Process_Yes_no_box {
                         conn.p.myclan.update_ngoc(-Clan.ngoc_upgrade[1] * conn.p.myclan.level);
                         conn.p.myclan.level++;
                         conn.p.myclan.exp = 0;
-                        if (conn.p.myclan.max_mem < 45 && conn.p.myclan.level % 5 == 0) {
-                            conn.p.myclan.max_mem += 5;
-                        }
+//                        if (conn.p.myclan.max_mem < 45 && conn.p.myclan.level % 5 == 0) {
+//                            conn.p.myclan.max_mem += 5;
+//                        }
                         Service.send_notice_box(conn, "Nâng bang lên cấp " + conn.p.myclan.level + " thành công");
                     }
                     break;

@@ -46,6 +46,7 @@ public class MainObject {
     public Mob template;
     public long exp;
     public byte clazz;
+    public Map map;
     public Kham_template kham;
     public int hieuchien;
 
@@ -372,7 +373,7 @@ public class MainObject {
             if (ObjAtk.isPlayer() && focus.isPlayer() && map.zone_id == 1 && !Map.is_map_not_zone2(map.map_id) && ((Player) ObjAtk).conn.ac_admin < 66) {
                 return;
             }
-            if (ObjAtk.isPlayer() && focus.isPlayer() && !map.isMapChiemThanh() && (map.ismaplang || ObjAtk.level < 11 || focus.level < 11
+            if (ObjAtk.isPlayer() && focus.isPlayer() && !map.isMapChiemThanh() && (map.ismaplang || ObjAtk.level < 5 || focus.level < 5
                     || (ObjAtk.typepk != 0 && ObjAtk.typepk == focus.typepk) || ObjAtk.hieuchien > 320_000) && ((Player) ObjAtk).conn.ac_admin < 66) {
                 return;
             }
@@ -545,6 +546,9 @@ public class MainObject {
                 }
                 if (p.get_EffDefault(StrucEff.NOI_TAI_DIEN) != null) {
                     dame -= dame / 5;
+                }
+                if (map.mapsk == true){
+                    dame -= dame /2;
                 }
             }
             //</editor-fold>
@@ -749,7 +753,7 @@ public class MainObject {
                     }
                 }
                 boolean check = (dame < 0
-                        || (focus.isBoss() && Math.abs(focus.level - ObjAtk.level) >= 5 && focus.level < 139 && focus.template.mob_id != 178 && !Map.is_map_cant_save_site(focus.map_id))
+                        || (focus.isBoss() && Math.abs(focus.level - ObjAtk.level) >= 5 && focus.level < 139 && focus.template.mob_id != 190 && focus.template.mob_id != 178 && !Map.is_map_cant_save_site(focus.map_id))
                         || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 0 && ObjAtk.level > 89)
                         || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 2 && !(ObjAtk.level >= 90 && ObjAtk.level < 110))
                         || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 3 && ObjAtk.level < 110)) && !(map.ismapkogioihan());

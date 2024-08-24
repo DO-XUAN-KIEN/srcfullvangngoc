@@ -1,6 +1,7 @@
 package event_daily;
 
 import client.Player;
+import core.Log;
 import core.Service;
 import core.Util;
 import map.Map;
@@ -186,7 +187,10 @@ public class KingCupManager {
             Service.send_notice_box(p.conn, "Bạn không có trong danh sách hoặc đã nhận rồi.");
             return;
         }
-
+        if(p.item.get_bag_able() < 20){
+            Service.send_notice_box(p.conn,"Không đủ ô hành trang");
+            return;
+        }
         short[] id_reward_7;
         short[] quantity_reward_7;
         short[] id_reward_4;
@@ -202,6 +206,7 @@ public class KingCupManager {
                 quantity_reward_4 = new short[]{1, 1};
                 coin = 30_000;
                 p.update_coin(coin);
+                Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 17, 21, 25 -> {
                 id_reward_7 = new short[]{14, (short) Util.random(8, 10), 11, 349};
@@ -211,6 +216,7 @@ public class KingCupManager {
                 coin = 40_000;
                 p.update_coin(coin);
                 isHaveBook = true;
+                Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 2, 6, 10, 14 -> {
                 id_reward_7 = new short[]{(short) Util.random(8, 10), 11};
@@ -219,6 +225,7 @@ public class KingCupManager {
                 quantity_reward_4 = new short[]{1, 1};
                 coin = 20_000;
                 p.update_coin(coin);
+                Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 18, 22, 26 -> {
                 id_reward_7 = new short[]{14};
@@ -227,6 +234,7 @@ public class KingCupManager {
                 quantity_reward_4 = new short[]{5};
                 coin = 30_000;
                 p.update_coin(coin);
+                Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 3, 7, 11, 15 -> {
                 id_reward_7 = new short[]{(short) Util.random(8, 10), 11};
@@ -235,6 +243,7 @@ public class KingCupManager {
                 quantity_reward_4 = new short[]{3};
                 coin = 10_000;
                 p.update_coin(coin);
+                Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 19, 23, 27 -> {
                 id_reward_7 = new short[]{14};
@@ -243,18 +252,18 @@ public class KingCupManager {
                 quantity_reward_4 = new short[]{1, 1, 1};
                 coin = 20_000;
                 p.update_coin(coin);
+                Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             default -> {
                 return;
             }
         }
+
+        int gold = calculateGold(p.point_king_cup);
         if (p.item.get_bag_able() < (id_reward_7.length + id_reward_4.length + 1)) {
             Service.send_notice_nobox_white(p.conn, "Hành trang đầy!");
             return;
         }
-
-        int gold = calculateGold(p.point_king_cup);
-
         Message m = new Message(78);
         m.writer().writeUTF("Bạn nhận được + " + coin + "coin.");
         if (isHaveBook) {

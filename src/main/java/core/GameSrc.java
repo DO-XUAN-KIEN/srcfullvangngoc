@@ -1803,7 +1803,7 @@ public class GameSrc {
                                 Service.send_notice_box(conn, "Số lượng không hợp lệ!");
                                 return;
                             }
-                            if (p_store.it_type == 4 && (Helps.CheckItem.item4CanTrade(p_store.it_id) || p_store.it_id == 135 || p_store.it_id == 52 || p_store.it_id == 56 || p_store.it_id == 143 || p_store.it_id == 226 || p_store.it_id == 318 || p_store.it_id == 327 || p_store.it_id == 328 || p_store.it_id == 329 || p_store.it_id == 330 || p_store.it_id == 342 || (p_store.it_id >= 339 && p_store.it_id <=341))) {
+                            if (p_store.it_type == 4 && (Helps.CheckItem.item4CanTrade(p_store.it_id) || p_store.it_id == 135 || p_store.it_id == 52 || p_store.it_id == 56 || p_store.it_id == 143 || p_store.it_id == 226 || p_store.it_id == 318 || p_store.it_id == 327 || p_store.it_id == 328 || p_store.it_id == 329 || p_store.it_id == 330 || p_store.it_id == 342  || p_store.it_id == 343 || p_store.it_id == 346 || p_store.it_id == 347 || (p_store.it_id >= 339 && p_store.it_id <=341))) {
                                 Service.send_notice_box(conn, "Đồ bán không hợp lệ!");
                                 return;
                             }
@@ -2979,14 +2979,14 @@ public class GameSrc {
                 }
                 case 3: {
                     int id_material = 481 + conn.p.id_armor_create;
-                    if (conn.p.item.total_item_by_id(7, id_material) < 500) {
+                    if (conn.p.item.total_item_by_id(7, id_material) < 500 && conn.ac_admin < 111) {
                         conn.p.type_armor_create = -1;
                         conn.p.id_armor_create = -1;
                         conn.p.isCreateArmor = false;
                         Service.send_notice_box(conn, "Không đủ nguyên liệu");
                         return;
                     }
-                    if (conn.p.get_vang() < 2000000) {
+                    if (conn.p.get_vang() < 2000000 && conn.ac_admin < 111) {
                         conn.p.type_armor_create = -1;
                         conn.p.id_armor_create = -1;
                         conn.p.isCreateArmor = false;
@@ -3040,6 +3040,10 @@ public class GameSrc {
                         m.writer().writeByte(temp.getOp().get(i).id);
                         m.writer().writeInt(temp.getOp().get(i).getParam(0));
                     }
+                    conn.p.item.char_inventory(4);
+                    conn.p.item.char_inventory(7);
+                    conn.p.item.char_inventory(3);
+
                     m.writer().writeInt(0); // time use
                     m.writer().writeByte(0);
                     m.writer().writeByte(0);

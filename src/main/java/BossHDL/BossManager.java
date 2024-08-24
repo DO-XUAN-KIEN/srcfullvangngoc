@@ -38,6 +38,7 @@ public class BossManager {
             case 186: return 109;
             case 187: return 110;
             case 188: return 111;
+            case 190: return 11;
             case 178: return 36;
             default:
                 throw new AssertionError();
@@ -65,13 +66,14 @@ public class BossManager {
             case 187: return new short[]{ 450,432};
             case 188: return new short[]{ 450,432};
             case 178: return new short[]{ 450,384};
+            case 190: return new short[]{ 280,440};
             default:
                 throw new AssertionError();
         }
     }
     public static void init(){
         int idx = 10_000;
-        int[] ids = new int[]{101 , 84 , 83 ,103 ,104 ,105 , 106, 149 , 155, 174, 173, 195, 196, 197, 186, 187, 188,178};
+        int[] ids = new int[]{101 , 84 , 83 ,103 ,104 ,105 , 106, 149 , 155, 174, 173, 195, 196, 197, 186, 187, 188, 178, 190};
         for(int id : ids){
             for(int i=0; i<5;i++){
 //                if(id == 174){
@@ -79,6 +81,9 @@ public class BossManager {
 //                }
                 if(id == 178){
                     if(i == 1 || i == 4) continue;
+                }
+                if (id == 190){
+                    if(Manager.gI().event != 7) continue;
                 }
                 Mob m = Mob.entrys.get(id);
                 Mob_in_map temp = new Mob_in_map();

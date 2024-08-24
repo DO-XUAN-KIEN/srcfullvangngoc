@@ -538,7 +538,7 @@ public class Clan {
         temp.notice = "";
         temp.setVang(0);
         temp.setKimcuong(0);
-        temp.max_mem = 5;
+        temp.max_mem = 3;
         temp.item_clan = new ArrayList<>();
         //
         // short[] list_it = new short[] {275, 279, 281, 294, 296, 299, 301};

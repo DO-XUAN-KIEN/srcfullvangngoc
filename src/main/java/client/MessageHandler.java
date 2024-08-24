@@ -16,6 +16,7 @@ import event_daily.ChienTruong;
 import io.Message;
 import io.Session;
 import map.*;
+import template.EffTemplate;
 import template.Horse;
 
 public class MessageHandler {
@@ -534,10 +535,13 @@ public class MessageHandler {
 //        send_notice_nobox_white(conn, ("Số người online : " + (Session.client_entrys.size())));
         send_notice_nobox_white(conn, ("Bang " +  Manager.nameClanThue  + " Đang Sở Hữu  Quyền Thu Thuế Trên Toàn Sever " + " Thuế " + Manager.thue + " % "));
         Service.send_notice_nobox_yellow(conn, ("Bang " + Manager.nameClanThue + " - Đang Là Bang Hùng Mạnh Nhất Thế Giới Hiệp Sĩ"));
-
         // add x2 xp
         conn.p.set_x2_xp(1);
         conn.p.dokho = 0;
+        if(conn.p.get_EffDefault(-129) != null) {
+            EffTemplate eff = conn.p.get_EffDefault(-129);
+            Service.send_time_box(conn.p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Miễn nhiễm hiệu ứng"});
+        }
         if (conn.p.myclan == null || !Horse.isHorseClan(conn.p.type_use_mount)) {
             conn.p.type_use_mount = -1;
         }
