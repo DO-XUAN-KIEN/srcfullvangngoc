@@ -29,7 +29,7 @@ public class Quask {
                         short quant = 1;
                         ids.add(new box_item_template(id, quant, (byte) 7));
                         conn.p.item.add_item_bag47(id, quant, (byte) 7);
-                    } else if (ran > 90 && ran <= 95) { // nlmd
+                    } else if (ran > 90 && ran <= 93) { // nlmd
                         short id = (short) Util.random(46, 346);
                         short quant = 1;
                         ids.add(new box_item_template(id, quant, (byte) 7));
@@ -44,7 +44,7 @@ public class Quask {
                         short quant = (short) Util.random(1, 10);
                         ids.add(new box_item_template(id, quant, (byte) 4));
                         conn.p.item.add_item_bag47(id, quant, (byte) 4);
-                    } else if (ran > 40 && ran < 55) { // thú cưỡi
+                    } else if (ran > 53 && ran < 55) { // thú cưỡi
                         short id = Util.random(thucuoi, new ArrayList<>()).shortValue();;
                         short quant = 1;
                         ids.add(new box_item_template(id, quant, (byte) 4));
@@ -83,7 +83,7 @@ public class Quask {
                         336, 337, 338, 339, 340, 341,342,343,344,345));
                 for (int i = 0; i < 3; i++) {
                     int ran = Util.random(101);
-                    if ( ran > 99) { // sách 110
+                    if ( ran > 101) { // sách 110
                         short iditem =(short) Util.random(4577, 4585);
                         Item3 itbag = new Item3();
                         itbag.id = iditem;
@@ -107,7 +107,7 @@ public class Quask {
                         short quant = 1;
                         ids.add(new box_item_template(id, quant, (byte) 4));
                         conn.p.item.add_item_bag47(id, quant, (byte) 4);
-                    } else if (ran > 90 && ran < 95) { // nlmd
+                    } else if (ran > 93 && ran < 95) { // nlmd
                         short id = Util.random(nlmdtim, new ArrayList<>()).shortValue();
                         short quant = 1;
                         ids.add(new box_item_template(id, quant, (byte) 7));
@@ -178,7 +178,7 @@ public class Quask {
 
                 for (int i = 0; i < 3; i++) {
                     int ran = Util.random(101);
-                    if (ran >= 100) {// trang bị
+                    if (ran >= 100.9999) {// trang bị
                         short iditem = Util.random(item3, new ArrayList<>()).shortValue();;
                         Item3 itbag = new Item3();
                         itbag.id = iditem;
@@ -197,7 +197,7 @@ public class Quask {
                         conn.p.item.add_item_bag3(itbag);
                         conn.p.item.char_inventory(5);
                         ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
-                    } else if (ran > 95 && ran < 98) { // sách 110
+                    } else if (ran >= 99 && ran < 100) { // sách 110
                         short iditem =(short) Util.random(4577, 4585);
                         Item3 itbag = new Item3();
                         itbag.id = iditem;
@@ -240,7 +240,7 @@ public class Quask {
                         short quant = 1;
                         ids.add(new box_item_template(id, quant, (byte) 7));
                         conn.p.item.add_item_bag47(id, quant, (byte) 7);
-                    } else if (ran > 64 && ran < 77) { // đá nâng cấp
+                    } else if (ran > 64 && ran < 68) { // đá nâng cấp
                         short id = Util.random(danangcap, new ArrayList<>()).shortValue();
                         short quant = 1;
                         ids.add(new box_item_template(id, quant, (byte) 7));

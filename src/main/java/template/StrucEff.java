@@ -27,6 +27,8 @@ public class StrucEff {
     public static final short NgocPhongMa = 21;
     public static final short NgocSinhMenh = 22;
     public static final short NgocTamLinh = 11;
+    public static final short Ngoctraubo = 23;
+    public static final short Ngoccuongbao = 24;
     
     public static final short TangHinh = 81;
     public static final short KhienMaThuat = 15;
@@ -34,5 +36,6 @@ public class StrucEff {
     public static final short BongLanh = 12;
     public static final short LuLan = 14;
     public static int VET_THUONG_SAU = 999;
+    public static int Quà_noel = 997;
     public static int TE_CONG = 998;
 }

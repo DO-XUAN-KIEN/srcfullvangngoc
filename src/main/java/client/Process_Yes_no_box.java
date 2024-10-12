@@ -1,5 +1,6 @@
 package client;
 
+import History.His_COIN;
 import core.*;
 
 import java.io.IOException;
@@ -94,7 +95,11 @@ public class Process_Yes_no_box {
                         conn.p.squire = new Squire(conn, conn.p.index);
                         conn.p.squire.load();
                         conn.p.update_coin(-100_000);
-                        Log.gI().add_log(conn.p.name, "trừ 100k coin từ đệ tử");
+                        His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                        hisc.coin_change = 100000;
+                        hisc.Logger = "(TRỪ COIN) từ đệ tử";
+                        hisc.Flus();
+                        //Log.gI().add_log(conn.p.name, "trừ 100k coin từ đệ tử");
                         Service.send_notice_box(conn, "Nhận thành công đệ tử");
                         Squire.callSquire(conn);
                     }
@@ -130,7 +135,11 @@ public class Process_Yes_no_box {
                         return;
                     }
                     conn.p.update_coin(-5_000);
-                    Log.gI().add_log(conn.p.name, "trừ 5k coin từ làng phủ sương");
+                    His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                    hisc.coin_change = 5000;
+                    hisc.Logger = "(TRỪ COIN) từ làng phủ sương";
+                    hisc.Flus();
+                    //Log.gI().add_log(conn.p.name, "trừ 5k coin từ làng phủ sương");
                     conn.p.add_EffDefault(-127, 1, 2 * 60 * 60 * 1000);
                     MapService.leave(conn.p.map, conn.p);
                     conn.p.map = map;
@@ -237,22 +246,22 @@ public class Process_Yes_no_box {
                     int id_book = -1;
                     if (conn.p.id_index_temp == 1) {
                         id_book = switch (conn.p.clazz) {
-                            case 0 -> 4578;
-                            case 1 -> 4579;
-                            case 2 -> 4581;
-                            case 3 -> 4584;
-//                            case 0 -> 4577;
-//                            case 1 -> 4580;
-//                            case 2 -> 4582;
-//                            case 3 -> 4583;
-                            default -> id_book;
-                        };
-                    } else if (conn.p.id_index_temp == 0) {
-                        id_book = switch (conn.p.clazz) {
+//                            case 0 -> 4578;
+//                            case 1 -> 4579;
+//                            case 2 -> 4581;
+//                            case 3 -> 4584;
                             case 0 -> 4577;
                             case 1 -> 4580;
                             case 2 -> 4582;
                             case 3 -> 4583;
+                            default -> id_book;
+                        };
+                    } else if (conn.p.id_index_temp == 0) {
+                        id_book = switch (conn.p.clazz) {
+                            case 0 -> 4578;
+                            case 1 -> 4579;
+                            case 2 -> 4581;
+                            case 3 -> 4584;
                             default -> id_book;
                         };
                     }
@@ -293,7 +302,7 @@ public class Process_Yes_no_box {
                     int id_book = -1;
                     int type_book = -1;
                     if (conn.p.id_index_temp == 0) {
-                        type_book = 0;
+                        type_book = 3;
                         id_book = switch (conn.p.clazz) {
                             case 0 -> 4578;
                             case 1 -> 4579;
@@ -306,7 +315,7 @@ public class Process_Yes_no_box {
                             default -> id_book;
                         };
                     } else if (conn.p.id_index_temp == 1) {
-                        type_book = 3;
+                        type_book = 0;
                         id_book = switch (conn.p.clazz) {
                             case 0 -> 4577;
                             case 1 -> 4580;
@@ -320,7 +329,7 @@ public class Process_Yes_no_box {
                         Service.send_notice_box(conn, "Không đủ ngọc");
                         return;
                     }
-                    if (conn.p.item.total_item_book(type_book, id_book) >= (level + 1) || conn.ac_admin > 2) {
+                    if (conn.p.item.total_item_book(type_book, id_book) >= (level + 1) || conn.ac_admin > 111) {
                         if (Util.nextInt(100) < 20 - level || level == 0) {
                             conn.p.skill_110[conn.p.id_index_temp] += 1;
                             Service.send_notice_box(conn, "Nâng cấp thành công");
@@ -777,7 +786,7 @@ public class Process_Yes_no_box {
                         Service.send_notice_box(conn, "20k ngọc còn không có thì không xứng đáng làm anh hùng!");
                         return;
                     }
-                    Service.send_box_input_text(conn, 23, "Bang hội", new String[]{"Tên (4-20 ký tự) :", "Tên viết tắt (3 ký tự) :"});
+                    Service.send_box_input_text(conn, 23, "Bang hội", new String[]{"Tên (4-20 ký tự) :", "Tên viết tắt (3 ký tự(VIẾT IN HOA)) :"});
 //                    Message m12 = new Message(-53);
 //                    m12.writer().writeShort(0);
 //                    String[] txt = new String[]{"Tên (4-20 ký tự) :", "Tên viết tắt (3 ký tự) :"};

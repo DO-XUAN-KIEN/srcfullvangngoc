@@ -46,7 +46,7 @@ public class Option {
     }
 
     public int getParam(int tier) {
-        if ((id >= 100 && id <= 107) || (id >= 58 && id <= 60)) {
+        if ((id >= 100 && id <= 107) || (id >= 58 && id <= 60) || (id >= 116 && id <= 120)) {
             return param;
         }
         if (Helps.CheckItem.isArmor(idItem)) {
@@ -55,26 +55,29 @@ public class Option {
         if (Helps.CheckItem.isMeDay(idItem)) {
             return getParamMD(tier);
         }
+        long parbuffer = this.param;
         //return param;
         if (tier == 0) {
-            return param;
+            return (int) param;
         }
         //
-        int parbuffer = this.param;
 
         if (this.id >= 29 && this.id <= 36 || this.id >= 16 && this.id <= 22 || this.id == 41) {
-            parbuffer += 20 * tier;
-            return parbuffer;
+            parbuffer += 20L * tier;
+            return (int) parbuffer;
         }
 
         if (this.id >= 23 && this.id <= 26) {
-            return (parbuffer + tier);
+            parbuffer = parbuffer + tier;
+            return (int) parbuffer;
         }
         if (this.id == 42) {
-            return (parbuffer + tier * 400);
+            parbuffer = parbuffer + tier * 400L;
+            return (int) parbuffer;
         }
         if ((this.id >= 7 && this.id <= 13) || this.id == 15 || this.id == 27 || this.id == 28) {
-            return (parbuffer + 100 * tier);
+            parbuffer = parbuffer + 100L * tier;
+            return (int)parbuffer;
         }
         if ((this.id == 37 || this.id == 38) && tier < 9) {
             return 1;
@@ -83,10 +86,10 @@ public class Option {
             tier = 15;
         }
         if ((this.id >= 0 && this.id <= 6) || this.id == 14 || this.id == 40) {
-            parbuffer = (parafterupdate[tier] * this.param) / 100;
-            return parbuffer;
+            parbuffer = (parafterupdate[tier] * this.param) / 100L;
+            return (int) parbuffer;
         }
-        return parbuffer;
+        return (int) parbuffer;
     }
 
     public int getParamMD(int tier) {

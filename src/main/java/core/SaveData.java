@@ -142,7 +142,7 @@ public class SaveData {
                         {
                             ps.clearParameters();
                             Player p0 = map0.players.get(i1);
-                            if(p0.conn == null || p0.conn.socket == null || p0.conn.socket.isClosed() || !p0.conn.connected)
+                            if(p0 == null || p0.conn == null || p0.conn.socket == null || p0.conn.socket.isClosed() || !p0.conn.connected)
                             {
                                 MapService.leave(map0, p0);
                                 continue;

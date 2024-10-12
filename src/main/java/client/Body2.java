@@ -193,6 +193,10 @@ public class Body2 extends MainObject {
         if(p.get_EffDefault(EffTemplate.buffhp) != null || p.get_EffDefault(EffTemplate.bufftatca) != null){
             percent += 2000;
         }
+        if (p.get_EffDefault(StrucEff.Quà_noel) != null && p.qua_noel == 1){
+            hpm *= 1.5;
+            hp *= 1.5;
+        }
         if (p.type_use_mount == Horse.HEO_RUNG || p.type_use_mount == Horse.CON_LAN || p.type_use_mount == Horse.SKELETON
                 || p.type_use_mount == Horse.CHUOT_TUYET || p.type_use_mount == Horse.VOI_MA_MUT
                 || p.type_use_mount == Horse.MA_TOC_DO || p.type_use_mount == Horse.RONG_BANG) {
@@ -213,6 +217,10 @@ public class Body2 extends MainObject {
         }
         if (p.map != null && p.map.mapsk == true) {
             hpm /= 2;
+        }
+        if (p.get_EffDefault(143) != null){
+            hpm *= 0.05;
+            hp *= 0.05;
         }
         return (int) (hpm * Manager.ratio_hp);
     }
@@ -289,6 +297,12 @@ public class Body2 extends MainObject {
         if (p.map.mapsk == true){
             pie /= 2;
         }
+        if (p.get_EffDefault(143) != null){
+            pie *= 0.05;
+        }
+        if (p.get_EffDefault(142) != null) {
+            pie *= 0;
+        }
         return (int) (pie / 2.1);
     }
     @Override
@@ -305,6 +319,12 @@ public class Body2 extends MainObject {
         if (eff_thien_su != null) {
             param = param / 10;
         }
+        if (p.get_EffDefault(143) != null){
+            param *= 0.05;
+        }
+        if (p.get_EffDefault(142) != null) {
+            param *= 0;
+        }
         return (int) (param / 2.1);
     }
     @Override
@@ -319,6 +339,12 @@ public class Body2 extends MainObject {
         }
         if (giam_ne) {
             param = param / 10 * 9;
+        }
+        if (p.get_EffDefault(143) != null){
+            param *= 0.05;
+        }
+        if (p.get_EffDefault(142) != null) {
+            param *= 0;
         }
         return (int) (param / 1.8);
     }
@@ -336,6 +362,15 @@ public class Body2 extends MainObject {
         }
         if (p.map.mapsk == true){
             crit /= 2;
+        }
+        if (p.get_EffDefault(141) != null) {
+            crit *= 10;
+        }
+        if (p.get_EffDefault(143) != null){
+            crit *= 0.05;
+        }
+        if (p.get_EffDefault(142) != null) {
+            crit *= 0;
         }
         return (int) (crit / 2.1);
     }
@@ -388,6 +423,12 @@ public class Body2 extends MainObject {
         if (p.get_EffDefault(StrucEff.NOI_TAI_LUA) != null) {
             def -= 2000;
         }
+        if (p.get_EffDefault(143) != null){
+            def *= 0.05;
+        }
+        if (p.get_EffDefault(140) != null) {
+            def *= 0;
+        }
         if (def < 0) {
             def = 0;
         }
@@ -396,7 +437,7 @@ public class Body2 extends MainObject {
 
     @Override
     public int get_DefBase() {
-        int def = total_item_param(14);
+        long def = total_item_param(14);
         switch (p.clazz) {
             case 0, 2: {
                 def += get_point(2) * 20;
@@ -408,6 +449,9 @@ public class Body2 extends MainObject {
             }
         }
         def += ((def * (get_PercentDefBase() / 100)) / 100);
+        if (def >= 2_000_000_000L){
+            def = 2_000_000_000L;
+        }
         EffTemplate ef = p.get_EffDefault(0);
         if (ef != null) {
             def = (def * 8) / 10;
@@ -415,6 +459,15 @@ public class Body2 extends MainObject {
         ef = p.get_EffDefault(15);
         if (ef != null) {
             def += (def * (ef.param / 100)) / 100;
+        }
+        if(p.get_EffDefault(StrucEff.Quà_noel) != null && p.qua_noel == 2){
+            def *= 0.15;
+        }
+        if (p.get_EffDefault(143) != null){
+            def *= 0.05;
+        }
+        if (p.get_EffDefault(140) != null) {
+            def *= 0;
         }
         return (int) (def * 0.8);
     }
@@ -453,6 +506,9 @@ public class Body2 extends MainObject {
             EffTemplate temp2 = p.get_EffDefault(StrucEff.PowerWing);
             if (temp2 != null) {
                 percent += 3000;
+            }
+            if (p.get_EffDefault(144) != null){
+                percent *= 0.1 * p.cuong_bao;
             }
             //<editor-fold defaultstate="collapsed" desc="ngựa...">
             if (p.type_use_mount == Horse.NGUA_XICH_THO) {

@@ -141,9 +141,9 @@ public class Pet {
             case 3616: {//khỉ
                 temp.icon = 12;
                 temp.type = 4;
-                id_ = new short[]{23, 24, 25, 26, 48, 49, 2};
-                param_ = new int[]{1, 1, 1, 1, 1500, 100, 1000};
-                maxdam_ = new int[]{0, 0, 0, 0, 4500, 100, 2000};
+                id_ = new short[]{23, 24, 25, 26, -68, -69, 2};
+                param_ = new int[]{1, 1, 1, 1, 1500, 2000, 1000};
+                maxdam_ = new int[]{0, 0, 0, 0, 4500, 4500, 2000};
                 break;
             }
             case 4617: {//rong lua

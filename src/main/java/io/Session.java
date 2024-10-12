@@ -428,6 +428,10 @@ public class Session implements Runnable {
                 noticelogin("Server này chỉ admin mới có thể truy cập!");
                 return;
             }
+            if (dem > Manager.gI().allow_ip_client) {
+                noticelogin("Vượt quá số lượng ip có thể truy cập vào thời điểm này!");
+                return;
+            }
             try (Connection connect = SQL.gI().getConnection(); Statement ps = connect.createStatement()) {
                 // Đếm số lượng IP trùng nhau
                 ResultSet rs = ps.executeQuery("SELECT COUNT(*) AS ip_count FROM account WHERE ip = '" + this.ip + "'");

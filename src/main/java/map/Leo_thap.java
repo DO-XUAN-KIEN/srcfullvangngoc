@@ -536,32 +536,7 @@ public class Leo_thap {
                 // send p outside
 //                if(Util.random_ratio(17))
 //                    ev_he.Event_3.LeaveItemMap(map, mob, p);
-                if (p.dokho == 1) {
-                    if (15 > Util.random(1, 101))
-                        leave_item_by_type7(map, (short) Util.random(246, 346), p, mob.index);
-                    if (10 > Util.random(100))
-                        leave_item_by_type7(map, (short) 493, p, mob.index);
-                }else if (p.dokho == 2){
-                    if (20 > Util.random(1, 101))
-                        leave_item_by_type7(map, (short) Util.random(246, 346), p, mob.index);
-                    if (15 > Util.random(100))
-                        leave_item_by_type7(map, (short) 493, p, mob.index);
-                }else if (p.dokho == 3){
-                    if (25 > Util.random(1, 101))
-                        leave_item_by_type7(map, (short) Util.random(246, 346), p, mob.index);
-                    if (20 > Util.random(100))
-                        leave_item_by_type7(map, (short) 493, p, mob.index);
-                }else if (p.dokho == 4){
-                    if (35 > Util.random(1, 101))
-                        leave_item_by_type7(map, (short) Util.random(246, 346), p, mob.index);
-                    if (25 > Util.random(100))
-                        leave_item_by_type7(map, (short) 493, p, mob.index);
-                }else if (p.dokho == 5){
-                    if (50 > Util.random(1, 101))
-                        leave_item_by_type7(map, (short) Util.random(246, 346), p, mob.index);
-                    if (40 > Util.random(100))
-                        leave_item_by_type7(map, (short) 493, p, mob.index);
-                }
+
                 Message m2 = new Message(17);
                 m2.writer().writeShort(p.index);
                 m2.writer().writeShort(mob.index);

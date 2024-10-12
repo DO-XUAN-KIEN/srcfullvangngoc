@@ -1891,7 +1891,11 @@ public class UseItem {
                 conn.p.id_ngoc_tinh_luyen = id;
                 Service.send_box_input_text(conn, 16, "Nhập số lượng", new String[]{"Nhập số lượng"});
 
-            } else {
+            } else if (id >= 498 && id <= 502){
+                conn.p.id_ngoc_tinh_luyen = id;
+                Service.send_box_input_text(conn,117,"Nhập số lượng", new String[]{"Nhập số lượng"});
+
+            }else {
                 switch (id) {
                     case 5:
                     case 6:

@@ -186,7 +186,7 @@ public class Mob_in_map extends MainObject {
                             }
                             if (percent > Util.random(0, 500) && zone_id == 1 && !Map.is_map_not_zone2(map_id)
                                     && p.get_EffDefault(-127) != null) {
-                                if(Util.random(2000) < 4) {
+                                if(Util.random(20000) < 4) {
                                     LeaveItemMap.leave_item_by_type7(map, (short) 494, p, mob.index);
                                 }
                                 if (Util.random(0, 10) < 2) {

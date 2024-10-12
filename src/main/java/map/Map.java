@@ -567,7 +567,9 @@ public class Map implements Runnable {
                             switch (it.id) {
                                 case 4588: {
                                     byte eff_ = 0;
-                                    if (it.tier == 15) {
+                                    if(it.tier > 15) {
+                                        eff_ = 65;
+                                    }else if (it.tier == 15) {
                                         eff_ = 26;
                                     } else if (it.tier >= 12) {
                                         eff_ = 25;
@@ -583,7 +585,9 @@ public class Map implements Runnable {
                                 }
                                 case 4589: {
                                     byte eff_ = 9;
-                                    if (it.tier == 15) {
+                                    if(it.tier > 15) {
+                                        eff_ = 64;
+                                    }else if (it.tier == 15) {
                                         eff_ = 28;
                                     } else if (it.tier >= 12) {
                                         eff_ = 27;
@@ -599,7 +603,9 @@ public class Map implements Runnable {
                                 }
                                 case 4590: {
                                     byte eff_ = 6;
-                                    if (it.tier == 15) {
+                                    if(it.tier > 15) {
+                                        eff_ = 60;
+                                    }else if (it.tier == 15) {
                                         eff_ = 32;
                                     } else if (it.tier >= 12) {
                                         eff_ = 31;
@@ -615,7 +621,9 @@ public class Map implements Runnable {
                                 }
                                 default: { // 4587
                                     byte eff_ = 3;
-                                    if (it.tier == 15) {
+                                    if(it.tier > 15) {
+                                        eff_ = 63;
+                                    }else if (it.tier == 15) {
                                         eff_ = 78;
                                     } else if (it.tier >= 12) {
                                         eff_ = 30;

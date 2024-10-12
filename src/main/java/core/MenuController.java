@@ -1,5 +1,6 @@
 package core;
 
+import History.His_COIN;
 import event.Event_1;
 
 import java.io.IOException;
@@ -688,26 +689,34 @@ public class MenuController {
         if (conn.p.id_index_temp == 0) {
             name_book = switch (conn.p.clazz) {
                 case 0 ->
-                    "sách học kiếm địa chấn";
+                        "sách học bão lửa";
                 case 1 ->
-                    "sách học thần tốc";
+                        "sách học bão độc";
                 case 2 ->
-                    "sách học cơn phẫn nộ";
+                        "sách học băng trận";
                 case 3 ->
-                    "sách học súng thần công";
+                        "sách học súng điện từ";
                 default ->
                     name_book;
             };
         } else if (conn.p.id_index_temp == 1) {
             name_book = switch (conn.p.clazz) {
                 case 0 ->
-                    "sách học bão lửa";
+                "sách học kiếm địa chấn";
                 case 1 ->
-                    "sách học bão độc";
+                        "sách học thần tốc";
                 case 2 ->
-                    "sách học băng trận";
+                        "sách học cơn phẫn nộ";
                 case 3 ->
-                    "sách học súng điện từ";
+                        "sách học súng thần công";
+//                case 0 ->
+//                    "sách học bão lửa";
+//                case 1 ->
+//                    "sách học bão độc";
+//                case 2 ->
+//                    "sách học băng trận";
+//                case 3 ->
+//                    "sách học súng điện từ";
                 default ->
                     name_book;
             };
@@ -948,6 +957,9 @@ public class MenuController {
     }
     public static Leo_thap d;
     private static void Menu_shopcoin(Session conn, byte index) throws IOException{
+        if (!conn.p.isOwner){
+            return;
+        }
         conn.p.ResetCreateItemStar();
         switch (index){
             case 0: {
@@ -2648,7 +2660,11 @@ public class MenuController {
                     int coin_ = Util.random(1000, 10000);
                     conn.p.update_vang(vang_);
                     conn.p.update_coin(coin_);
-                    Log.gI().add_log(conn.p.name, "nhận "+coin_+" coin từ điểm danh");
+                    His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                    hisc.coin_change = coin_;
+                    hisc.Logger = "(NHẬN) từ Like";
+                    hisc.Flus();
+                    //Log.gI().add_log(conn.p.name, "nhận "+coin_+" coin từ điểm danh");
                     conn.p.item.char_inventory(5);
                     Service.send_notice_box(conn,
                             "Cảm ơn bạn đã yêu thích cho tôi, để tỏ lòng biết ơn tôi tặng bạn: " + coin_ + " coin, " + vang_ + " Vàng.");
@@ -3585,6 +3601,9 @@ public class MenuController {
     }
 
     private static void Menu_Aman(Session conn, byte index) throws IOException {
+        if (!conn.p.isOwner){
+            return;
+        }
         switch (index) {
             case 0: {
                 Message m = new Message(23);
@@ -4020,6 +4039,9 @@ public class MenuController {
 
     private static void Menu_PhapSu(Session conn, byte index) throws IOException {
         conn.p.ResetCreateItemStar();
+        if (!conn.p.isOwner){
+            return;
+        }
         switch (index) {
             case 0: {
                 conn.p.id_item_rebuild = -1;
@@ -4436,6 +4458,9 @@ public class MenuController {
     private static void Menu_Zulu(Session conn, byte index) throws IOException {
         switch (index) {
             case 0: {
+                if (!conn.p.isOwner){
+                    return;
+                }
                 switch (conn.p.clazz) {
                     case 0: {
                         Service.send_msg_data(conn, 23, "tocchienbinh");
@@ -4454,6 +4479,9 @@ public class MenuController {
                 break;
             }
             case 1: {
+                if (!conn.p.isOwner){
+                    return;
+                }
                 if (conn.p.diemdanh == 1) {
                     conn.p.diemdanh = 0;
                     if (conn.p.item.get_bag_able()< 1){
@@ -4469,6 +4497,10 @@ public class MenuController {
                     itbag.quantity = 5;
                     itbag.category = 4;
                     conn.p.item.add_item_bag47(4, itbag);
+                    His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                    hisc.coin_change = coin_;
+                    hisc.Logger = "(NHẬN) từ điểm danh";
+                    hisc.Flus();
                     Log.gI().add_log(conn.p.name, "Điểm danh ngày được " + Util.number_format(vang_) + " vàng và " + coin_+" coin.");
                     conn.p.item.char_inventory(4);
                     conn.p.item.char_inventory(5);
@@ -4479,11 +4511,17 @@ public class MenuController {
                 break;
             }
             case 2: {
+                if (!conn.p.isOwner){
+                    return;
+                }
                 send_menu_select(conn, -49,
                         new String[]{"Hướng dẫn", "Nhận nhiệm vụ", "Hủy nhiệm vụ", "Trả nhiệm vụ", "Kiểm tra"}, (byte) 1);
                 break;
             }
             case 3: {
+                if (!conn.p.isOwner){
+                    return;
+                }
                 short id_3, id_0, id_4, id_e, id_n, id_d, id_1, id_5;
                 id_3 = 464;
                 id_0 = 465;
@@ -4591,6 +4629,9 @@ public class MenuController {
 //                break;
 //            }
             case 4: {
+                if (!conn.p.isOwner){
+                    return;
+                }
                 //Service.send_notice_box(conn,"Chức năng đang tạm khóa" );
                Service.send_box_input_text(conn, 14, "Đổi coin sang vàng \n" + "Khuyến Mại X" + Manager.gI().giakmgold, new String[]{"Tỷ lệ 1000 coin = " + 1000000 * Manager.gI().giakmgold + " Vàng"});
                 break;
@@ -4623,6 +4664,9 @@ public class MenuController {
                 break;
             }
             case 6: {
+                if (!conn.p.isOwner){
+                    return;
+                }
                 Service.send_box_input_text(conn, 30, "Đổi mật khẩu", new String[]{"nhập mật khẩu cũ",
                     "nhập mật khẩu mới", "nhập lại mật khẩu mới"});
                 break;
@@ -4732,6 +4776,10 @@ public class MenuController {
                 }
                 if (conn.p.get_ngoc() < 5_000) {
                     Service.send_notice_box(conn, "Không đủ 5k ngọc");
+                }
+                if (!conn.p.isOwner){
+                    Service.send_notice_box(conn,"Đệ tử không vào được kmb");
+                    return;
                 }
                 conn.p.update_ngoc(-5_000);
                 vgo = new Vgo();
@@ -5072,28 +5120,46 @@ public class MenuController {
         if (idmenu == 0) {
             switch (index) {
                 case 0: {
+                    if (!conn.p.isOwner){
+                        return;
+                    }
                     Service.send_box_UI(conn, 5);
                     break;
                 }
                 case 1: {
+                    if (!conn.p.isOwner){
+                        return;
+                    }
                     Service.send_box_UI(conn, 6);
                     break;
                 }
                 case 2: {
+                    if (!conn.p.isOwner){
+                        return;
+                    }
                     Service.send_box_UI(conn, 7);
                     break;
                 }
                 case 3: {
+                    if (!conn.p.isOwner){
+                        return;
+                    }
                     Service.send_box_UI(conn, 8);
                     break;
                 }
                 case 4: // chế tạo tinh tú
                 {
+                    if (!conn.p.isOwner){
+                        return;
+                    }
                     send_menu_select(conn, -5, new String[]{"Chiến binh", "Sát thủ", "Pháp sư", "Xạ thủ"}, (byte) 1);
                     break;
                 }
                 case 5:// nâng cấp tinh tú
                 {
+                    if (!conn.p.isOwner){
+                        return;
+                    }
                     conn.p.isCreateItemStar = true;
                     Service.send_box_UI(conn, 33);
                     break;
@@ -5131,16 +5197,25 @@ public class MenuController {
                     break;
                 }
                 case 8: {
+                    if (!conn.p.isOwner){
+                        return;
+                    }
                     String[] nemu = new String[]{"Kháng băng", "Kháng lửa", "Kháng điện", "Kháng độc"};
                     send_menu_select(conn, -5, nemu, (byte) 15);
                     break;
                 }
                 case 9: {
+                    if (!conn.p.isOwner){
+                        return;
+                    }
                     conn.p.isCreateArmor = true;
                     Service.send_box_UI(conn, 33);
                     break;
                 }
                 case 10: {
+                    if (!conn.p.isOwner){
+                        return;
+                    }
                     String[] nemu = new String[]{"Sách vật lý", "Sách ma pháp"};
                     send_menu_select(conn, -5, nemu, (byte) 14);
                     break;
@@ -5928,7 +6003,7 @@ public class MenuController {
                             conn.p.item.add_item_bag47(7, it_add);
                         }
                         it.op.get(i).setParam(-1);
-                    } else if (id >= 100 && id <= 107 || id == 5 || id == 6 || id == 116) {
+                    } else if (id >= 100 && id <= 107 || id == 5 || id == 6  || (id >= 116 && id <= 120)) {
                         it.op.remove(i);
                     }
                 }

@@ -1,5 +1,6 @@
 package event_daily;
 
+import History.His_COIN;
 import client.Player;
 import core.Log;
 import core.Service;
@@ -206,7 +207,11 @@ public class KingCupManager {
                 quantity_reward_4 = new short[]{1, 1};
                 coin = 30_000;
                 p.update_coin(coin);
-                Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
+                His_COIN hisc = new His_COIN(p.conn.user ,p.name);
+                hisc.coin_change = coin;
+                hisc.Logger = "(NHẬN) từ lôi đài";
+                hisc.Flus();
+                //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 17, 21, 25 -> {
                 id_reward_7 = new short[]{14, (short) Util.random(8, 10), 11, 349};
@@ -216,7 +221,11 @@ public class KingCupManager {
                 coin = 40_000;
                 p.update_coin(coin);
                 isHaveBook = true;
-                Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
+                His_COIN hisc = new His_COIN(p.conn.user ,p.name);
+                hisc.coin_change = coin;
+                hisc.Logger = "(NHẬN) từ lôi đài";
+                hisc.Flus();
+                //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 2, 6, 10, 14 -> {
                 id_reward_7 = new short[]{(short) Util.random(8, 10), 11};
@@ -225,7 +234,11 @@ public class KingCupManager {
                 quantity_reward_4 = new short[]{1, 1};
                 coin = 20_000;
                 p.update_coin(coin);
-                Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
+                His_COIN hisc = new His_COIN(p.conn.user ,p.name);
+                hisc.coin_change = coin;
+                hisc.Logger = "(NHẬN) từ lôi đài";
+                hisc.Flus();
+                //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 18, 22, 26 -> {
                 id_reward_7 = new short[]{14};
@@ -234,7 +247,11 @@ public class KingCupManager {
                 quantity_reward_4 = new short[]{5};
                 coin = 30_000;
                 p.update_coin(coin);
-                Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
+                His_COIN hisc = new His_COIN(p.conn.user ,p.name);
+                hisc.coin_change = coin;
+                hisc.Logger = "(NHẬN) từ lôi đài";
+                hisc.Flus();
+                //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 3, 7, 11, 15 -> {
                 id_reward_7 = new short[]{(short) Util.random(8, 10), 11};
@@ -243,7 +260,11 @@ public class KingCupManager {
                 quantity_reward_4 = new short[]{3};
                 coin = 10_000;
                 p.update_coin(coin);
-                Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
+                His_COIN hisc = new His_COIN(p.conn.user ,p.name);
+                hisc.coin_change = coin;
+                hisc.Logger = "(NHẬN) từ lôi đài";
+                hisc.Flus();
+                //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 19, 23, 27 -> {
                 id_reward_7 = new short[]{14};
@@ -252,7 +273,11 @@ public class KingCupManager {
                 quantity_reward_4 = new short[]{1, 1, 1};
                 coin = 20_000;
                 p.update_coin(coin);
-                Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
+                His_COIN hisc = new His_COIN(p.conn.user ,p.name);
+                hisc.coin_change = coin;
+                hisc.Logger = "(NHẬN) từ lôi đài";
+                hisc.Flus();
+                //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             default -> {
                 return;

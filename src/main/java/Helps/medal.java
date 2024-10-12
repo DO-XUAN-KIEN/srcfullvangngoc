@@ -127,7 +127,7 @@ public class medal {
             if(op==null)continue;
             ops.add(Integer.valueOf(op.id));
             if(op.id >=0 && op.id<=4) continue;
-            if((op.id >= 58 && op.id <=60) || (op.id >= 100 && op.id <=107) ){
+            if((op.id >= 58 && op.id <=60) || (op.id >= 100 && op.id <=107) || (op.id >= 116 && op.id <= 120) ){
                 continue;
             }
             if(op.id == 96)

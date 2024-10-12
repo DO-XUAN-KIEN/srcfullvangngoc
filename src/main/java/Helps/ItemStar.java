@@ -86,7 +86,7 @@ public class ItemStar {
                     ++countkham;
                     continue;
                 }
-                if ((o.id >= 58 && o.id <= 60) || (o.id >= 100 && o.id <= 107)) {
+                if ((o.id >= 58 && o.id <= 60) || (o.id >= 100 && o.id <= 107) || (o.id >= 116 && o.id <= 120)) {
                     kham.add(o);
                     ++countkham;
                     continue;

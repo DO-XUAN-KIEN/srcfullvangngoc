@@ -1,0 +1,75 @@
+[11:50:59 PM]  trừ 120000 coin từ nâng do3
+[11:51:21 PM]  trừ 140000 coin từ nâng do3
+[11:51:30 PM]  trừ 160000 coin từ nâng do3
+[11:51:38 PM]  trừ 20000 coin từ nâng do3
+[11:51:44 PM]  trừ 40000 coin từ nâng do3
+[11:51:48 PM]  trừ 60000 coin từ nâng do3
+[11:51:53 PM]  trừ 80000 coin từ nâng do3
+[11:51:59 PM]  trừ 100000 coin từ nâng do3
+[11:52:04 PM]  trừ 120000 coin từ nâng do3
+[11:52:11 PM]  trừ 140000 coin từ nâng do3
+[11:52:17 PM]  trừ 160000 coin từ nâng do3
+[11:52:31 PM]  trừ 20000 coin từ nâng do3
+[11:52:37 PM]  trừ 40000 coin từ nâng do3
+[11:52:41 PM]  trừ 60000 coin từ nâng do3
+[11:52:47 PM]  trừ 80000 coin từ nâng do3
+[11:52:52 PM]  trừ 100000 coin từ nâng do3
+[11:53:07 PM]  trừ 120000 coin từ nâng do3
+[11:53:12 PM]  trừ 140000 coin từ nâng do3
+[11:53:22 PM]  trừ 20000 coin từ nâng do3
+[11:53:27 PM]  trừ 40000 coin từ nâng do3
+[11:53:32 PM]  trừ 60000 coin từ nâng do3
+[11:53:43 PM]  trừ 20000 coin từ nâng do3
+[11:53:48 PM]  trừ 40000 coin từ nâng do3
+[11:53:54 PM]  trừ 60000 coin từ nâng do3
+[11:54:00 PM]  trừ 80000 coin từ nâng do3
+[11:54:05 PM]  trừ 100000 coin từ nâng do3
+[11:54:10 PM]  trừ 120000 coin từ nâng do3
+[11:54:15 PM]  trừ 140000 coin từ nâng do3
+[11:54:29 PM]  trừ 20000 coin từ nâng do3
+[11:54:38 PM]  trừ 40000 coin từ nâng do3
+[11:54:43 PM]  trừ 60000 coin từ nâng do3
+[11:56:53 PM]  trừ 20000 coin từ nâng do3
+[11:57:00 PM]  trừ 40000 coin từ nâng do3
+[11:57:05 PM]  trừ 60000 coin từ nâng do3
+[11:57:10 PM]  trừ 80000 coin từ nâng do3
+[11:57:15 PM]  trừ 100000 coin từ nâng do3
+[11:57:21 PM]  trừ 120000 coin từ nâng do3
+[11:57:26 PM]  trừ 140000 coin từ nâng do3
+[11:59:12 PM]  Logout : [Vàng] : 1.382.261.478 : [Ngọc] : 1.999.942.167
+[11:59:37 PM]  Login : [Vàng] : 1.382.261.478 : [Ngọc] : 1.999.942.167
+[11:59:46 PM]  trừ 20000 coin từ nâng do3
+[11:59:51 PM]  trừ 40000 coin từ nâng do3
+[11:59:56 PM]  trừ 60000 coin từ nâng do3
+[12:00:01 AM]  trừ 80000 coin từ nâng do3
+[12:00:06 AM]  trừ 100000 coin từ nâng do3
+[12:04:03 AM]  Logout : [Vàng] : 1.307.261.478 : [Ngọc] : 1.999.942.167
+[12:04:06 AM]  Login : [Vàng] : 1.307.261.478 : [Ngọc] : 1.999.942.167
+[12:05:29 AM]  Logout : [Vàng] : 1.307.261.478 : [Ngọc] : 1.999.942.167
+[12:05:36 AM]  Login : [Vàng] : 1.307.261.478 : [Ngọc] : 1.999.942.167
+[12:05:52 AM]  Logout : [Vàng] : 1.307.261.478 : [Ngọc] : 1.999.942.167
+[12:06:24 AM]  Login : [Vàng] : 1.307.261.478 : [Ngọc] : 1.999.942.167
+[12:06:32 AM]  Logout : [Vàng] : 1.307.261.478 : [Ngọc] : 1.999.942.167
+[12:06:46 AM]  Login : [Vàng] : 1.307.261.478 : [Ngọc] : 1.999.942.167
+[12:07:23 AM]  trừ 20000 coin từ nâng do3
+[12:07:28 AM]  trừ 40000 coin từ nâng do3
+[12:07:34 AM]  trừ 60000 coin từ nâng do3
+[12:07:39 AM]  trừ 80000 coin từ nâng do3
+[12:07:44 AM]  trừ 100000 coin từ nâng do3
+[12:07:50 AM]  trừ 120000 coin từ nâng do3
+[12:07:55 AM]  trừ 140000 coin từ nâng do3
+[12:08:30 AM]  Logout : [Vàng] : 1.167.261.478 : [Ngọc] : 1.999.942.167
+[12:08:38 AM]  Login : [Vàng] : 1.167.261.478 : [Ngọc] : 1.999.942.167
+[12:08:45 AM]  Logout : [Vàng] : 1.167.261.478 : [Ngọc] : 1.999.942.167
+[12:08:53 AM]  Login : [Vàng] : 1.167.261.478 : [Ngọc] : 1.999.942.167
+[12:09:22 AM]  Logout : [Vàng] : 1.167.261.478 : [Ngọc] : 1.999.942.167
+[12:09:28 AM]  Login : [Vàng] : 1.167.261.478 : [Ngọc] : 1.999.942.167
+[12:12:52 AM]  Logout : [Vàng] : 1.167.261.478 : [Ngọc] : 1.999.942.167
+[12:12:57 AM]  Login : [Vàng] : 1.167.261.478 : [Ngọc] : 1.999.942.167
+[12:13:28 AM]  trừ 40000 coin từ nâng do2
+[12:13:33 AM]  trừ 60000 coin từ nâng do2
+[12:14:49 AM]  Logout : [Vàng] : 1.117.261.478 : [Ngọc] : 1.999.942.167
+[12:15:14 AM]  Login : [Vàng] : 1.117.261.478 : [Ngọc] : 1.999.942.167
+[12:16:42 AM]  Logout : [Vàng] : 1.117.261.478 : [Ngọc] : 1.999.942.167
+[12:18:18 AM]  Login : [Vàng] : 1.117.261.478 : [Ngọc] : 1.999.942.167
+[12:19:01 AM]  Logout : [Vàng] : 1.117.261.478 : [Ngọc] : 1.999.942.167

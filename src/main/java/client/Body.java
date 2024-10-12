@@ -381,7 +381,7 @@ public class Body {
                 continue;
             }
             for (Option op : temp.op) {
-                if (op == null || !(op.id >= 100 && op.id <= 107)) {
+                if (op == null || !(op.id >= 100 && op.id <= 107) || (op.id >= 116 && op.id <= 120)) {
                     continue;
                 }
                 short pr = (short) op.getParam(temp.tier);

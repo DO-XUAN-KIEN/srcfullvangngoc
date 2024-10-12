@@ -1,5 +1,6 @@
 package client;
 
+import History.His_COIN;
 import core.GameSrc;
 import event.Event_1;
 import java.io.IOException;
@@ -100,7 +101,11 @@ public class TextFromClient {
                                 return;
                             }
                             conn.p.update_coin(-100_000);
-                            Log.gI().add_log(conn.p.name, "trừ 100k coin từ kết hôn");
+                            His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                            hisc.coin_change = 100_000;
+                            hisc.Logger = "(TRỪ COIN) từ kết hôn";
+                            hisc.Flus();
+                            //Log.gI().add_log(conn.p.name, "trừ 100k coin từ kết hôn");
                             break;
                         }
                         default: {
@@ -114,6 +119,50 @@ public class TextFromClient {
                 } else {
                     Service.send_notice_box(conn, "Không tìm thấy đối phương!");
                 }
+                break;
+            }
+            case 117: {
+                if (size != 1) {
+                    return;
+                }
+                String value = m2.reader().readUTF();
+                if (!(Util.isnumber(value))) {
+                    Service.send_notice_box(conn, "Dữ liệu nhập không phải số!!");
+                    return;
+                }
+                long quant = Integer.parseInt(value);
+                if (quant > 32_000 || quant <= 0) {
+                    Service.send_notice_box(conn, "Số lượng không hợp lệ!");
+                    return;
+                }
+                int quant_ngoc_can_create = conn.p.item.total_item_by_id(7, conn.p.id_ngoc_tinh_luyen);
+                if (quant > quant_ngoc_can_create) {
+                    Service.send_notice_box(conn, "Số lượng trong hành trang không đủ!");
+                    return;
+                }
+                long vang_required
+                        = (quant * (GameSrc.get_vang_hopngoc(conn.p.id_ngoc_tinh_luyen) / 50_000L) * 1_000_000L);
+                if (conn.p.get_vang() < vang_required) {
+                    Service.send_notice_box(conn, "Không đủ " + vang_required + " vàng");
+                    return;
+                }
+                if (conn.p.get_vang() < vang_required) {
+                    Service.send_notice_box(conn, "Tinh luyện cần " + vang_required + " vàng!");
+                    return;
+                }
+                conn.p.update_vang(-vang_required);
+                Log.gI().add_log(conn.p.name, "Trừ " + vang_required + " tinh luyện ngọc");
+                Item47 it = new Item47();
+                it.id = (short) (conn.p.id_ngoc_tinh_luyen + 5);
+                it.quantity = (short) quant;
+                conn.p.item.add_item_bag47(7, it);
+                conn.p.item.remove(7, conn.p.id_ngoc_tinh_luyen, (int) quant);
+                Service.send_notice_box(conn,
+                        "Tinh luyện thành công " + quant + " " + ItemTemplate7.item.get(it.id).getName());
+                conn.p.id_ngoc_tinh_luyen = -1;
+                conn.p.item.char_inventory(4);
+                conn.p.item.char_inventory(7);
+                conn.p.item.char_inventory(3);
                 break;
             }
             case 16: {
@@ -307,7 +356,11 @@ public class TextFromClient {
                             conn.p.update_vang(vang_up);
                             conn.p.update_ngoc(ngoc_up);
                             conn.p.update_coin(coin_up);
-                            Log.gI().add_log(conn.p.name, "Nhận " + coin_up + " từ gitcode");
+                            His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                            hisc.coin_change = 100_000;
+                            hisc.Logger = "(NHẬN) từ gitcode";
+                            hisc.Flus();
+                            //Log.gI().add_log(conn.p.name, "Nhận " + coin_up + " từ gitcode");
                             if (vang_up != 0) {
                                 IDs.add((short) -1);
                                 Quants.add((int) (vang_up > 2_000_000_000 ? 2_000_000_000 : vang_up));
@@ -543,7 +596,11 @@ public class TextFromClient {
                     conn.p.update_ngoc((int) (coin_exchange * 3 * Manager.gI().giakmngoc));
                     conn.p.item.char_inventory(5);
                     Service.send_notice_box(conn, "Đổi thành công" + coin_exchange * 3 * Manager.gI().giakmngoc + "ngọc");
-                    Log.gI().add_log(conn.p.name, "trừ" +coin_exchange+ "coin từ đổi coin sang vàng");
+                    His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                    hisc.coin_change = coin_exchange * 3 * Manager.gI().giakmngoc;
+                    hisc.Logger = "(TRỪ COIN) từ đổi coin sang ngọc";
+                    hisc.Flus();
+                    //Log.gI().add_log(conn.p.name, "trừ" +coin_exchange+ "coin từ đổi coin sang vàng");
 //                    Log.gI().add_log(conn.p.name,
 //                                    "đổi coin sang ngọc " + text + " : " + Util.number_format(ngoc_up) + " ngọc");
                 } else {
@@ -855,7 +912,11 @@ public class TextFromClient {
                     conn.p.update_vang((long) ((coin_exchange * 1_000) * Manager.gI().giakmgold));
                     Service.send_notice_box(conn, "Đổi thành công" + (coin_exchange * 1_000) * Manager.gI().giakmgold + "vàng");
                     Log.gI().add_log(conn.p.name, "Nhận " + ((coin_exchange * 1_000) * Manager.gI().giakmgold) + " từ đổi coin ra vàng");
-                    Log.gI().add_log(conn.p.name, "trừ " +coin_exchange+"coin từ đổi coin sang vàng");
+                    His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                    hisc.coin_change = (coin_exchange * 1_000) * Manager.gI().giakmgold;
+                    hisc.Logger = "(TRỪ COIN) từ đổi coin sang vàng";
+                    hisc.Flus();
+                    //Log.gI().add_log(conn.p.name, "trừ " +coin_exchange+"coin từ đổi coin sang vàng");
                     conn.p.item.char_inventory(5);
 //                    Log.gI().add_log(conn.p.name,
 //                                    "đổi coin sang ngọc " + text + " : " + Util.number_format(ngoc_up) + " ngọc");
@@ -1034,7 +1095,7 @@ public class TextFromClient {
                         Service.send_notice_box(conn, "Tên nhập vào không hợp lệ");
                         return;
                     }
-                    Pattern p = Pattern.compile("^[a-zA-Z0-9]{3,3}$");
+                    Pattern p = Pattern.compile("^[A-Z0-9]{3,3}$");
                     if (!p.matcher(value[1]).matches()) {
                         Service.send_notice_box(conn, "Tên rút gọn nhập vào không hợp lệ");
                         return;
@@ -2013,9 +2074,13 @@ public class TextFromClient {
                 }
                 if (conn.p.item.total_item_by_id(7,494) >= dong_money) {
                     conn.p.item.remove(7, 494, dong_money);
-                    conn.p.update_coin(dong_money * Util.random(500,2000));
-                    Service.send_notice_box(conn, "Đổi thành công" + dong_money * Util.random(500,2000) + "coin");
-                    Log.gI().add_log(conn.p.name, "Nhận " + dong_money * Util.random(500,2000) + " từ đổi đồng money ra coin");
+                    conn.p.update_coin(dong_money * Util.random(0,2000));
+                    Service.send_notice_box(conn, "Đổi thành công" + dong_money * Util.random(0,2000) + "coin");
+                    His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                    hisc.coin_change = dong_money * Util.random(500,2000);
+                    hisc.Logger = "(NHẬN) từ đồng money";
+                    hisc.Flus();
+                    //Log.gI().add_log(conn.p.name, "Nhận " + dong_money * Util.random(500,2000) + " từ đổi đồng money ra coin");
                     conn.p.item.char_inventory(5);
                     conn.p.item.char_inventory(7);
                 } else {
@@ -2102,7 +2167,11 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_coin(-coin);
-                Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk1");
+                His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                hisc.coin_change = coin;
+                hisc.Logger = "(TRỪ COIN) từ sk1";
+                hisc.Flus();
+                //Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk1");
                 Item47 itbag = new Item47();
                 itbag.id = tatca;
                 itbag.quantity = (short) quant;
@@ -2259,7 +2328,11 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_coin(-coin);
-                Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk2");
+                His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                hisc.coin_change = coin;
+                hisc.Logger = "(TRỪ COIN) từ sk2";
+                hisc.Flus();
+                //Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk2");
                 Item47 itbag = new Item47();
                 itbag.id = ruong;
                 itbag.quantity = (short) quant;
@@ -2343,7 +2416,11 @@ public class TextFromClient {
                     return;
                 }
                 conn.p.update_coin(-coin);
-                Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk3");
+                His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                hisc.coin_change = coin;
+                hisc.Logger = "(TRỪ COIN) từ sk3";
+                hisc.Flus();
+                //Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk3");
                 conn.p.update_vang(-vag);
                 Item47 itbag = new Item47();
                 itbag.id = ruong;
@@ -2404,7 +2481,11 @@ public class TextFromClient {
                 }
                 conn.p.update_coin(-coin);
                 conn.p.update_vang(-vag);
-                Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk4");
+                His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                hisc.coin_change = coin;
+                hisc.Logger = "(TRỪ COIN) từ sk4";
+                hisc.Flus();
+                //Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk4");
                 Item47 itbag = new Item47();
                 itbag.id = ruong;
                 itbag.quantity = (short) quant;
@@ -2469,7 +2550,11 @@ public class TextFromClient {
                 }
                 conn.p.update_coin(-coin);
                 conn.p.update_vang(-vag);
-                Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk5");
+                His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                hisc.coin_change = coin;
+                hisc.Logger = "(TRỪ COIN) từ sk5";
+                hisc.Flus();
+                //Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk5");
                 Item47 itbag = new Item47();
                 itbag.id = ruong;
                 itbag.quantity = (short) quant;

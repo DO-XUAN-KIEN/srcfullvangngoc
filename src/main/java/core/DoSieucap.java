@@ -2,6 +2,7 @@ package core;
 
 import Helps.ItemStar;
 import Helps.medal;
+import History.His_COIN;
 import io.Message;
 import io.Session;
 import template.*;
@@ -133,7 +134,11 @@ public class DoSieucap {
             }
             conn.p.update_vang(-vang_req);
             conn.p.update_coin(-coin_req);
-            Log.gI().add_log(conn.p.name, "trừ "+coin_req+" coin từ nâng do1");
+            His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+            hisc.coin_change = coin_req;
+            hisc.Logger = "(TRỪ COIN) từ nâng do1";
+            hisc.Flus();
+            //Log.gI().add_log(conn.p.name, "trừ "+coin_req+" coin từ nâng do1");
             boolean suc;
             if (temp.tierStar < 10) {
                 suc = Util.random(15111) < ti_le_nang_do[temp.tierStar] || (conn.ac_admin > 111 && Manager.BuffAdmin) || conn.p.mm_tt >= 70;
@@ -346,7 +351,11 @@ public class DoSieucap {
                         }
                         conn.p.update_coin(-coin_req);
                         conn.p.update_vang(-vang_req);
-                        Log.gI().add_log(conn.p.name, "trừ "+coin_req+" coin từ nâng do2");
+                        His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                        hisc.coin_change = coin_req;
+                        hisc.Logger = "(TRỪ COIN) từ nâng do2";
+                        hisc.Flus();
+                        //Log.gI().add_log(conn.p.name, "trừ "+coin_req+" coin từ nâng do2");
                         boolean suc;
                         if (item.tierStar < 10) {
                             suc = Util.random(15111) < ti_le_nang_md[item.tier - 15] || (conn.ac_admin > 111 && Manager.BuffAdmin) || conn.p.mm_md >= 70;
@@ -514,7 +523,11 @@ public class DoSieucap {
                         }
                         conn.p.update_vang(-vang_req);
                         conn.p.update_coin(-coin_req);
-                        Log.gI().add_log(conn.p.name, "trừ "+coin_req+" coin từ nâng do3");
+                        His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
+                        hisc.coin_change = coin_req;
+                        hisc.Logger = "(TRỪ COIN) từ nâng do3";
+                        hisc.Flus();
+                        //Log.gI().add_log(conn.p.name, "trừ "+coin_req+" coin từ nâng do3");
                         int ran = Util.random(1000);
                         boolean suc =(item.tier >= 0 && item.tier < 5) && ran > 200 ||
                                 (item.tier >= 5 && item.tier < 10) && ran > 300 ||
@@ -546,6 +559,7 @@ public class DoSieucap {
 //                        }
                         if (suc) {
                             item.tier++;
+                            item.islock = true;
                             item.UpdateName();
                             conn.p.setnltb2();
                             for (int i = 0; i < item.op.size(); i++) {

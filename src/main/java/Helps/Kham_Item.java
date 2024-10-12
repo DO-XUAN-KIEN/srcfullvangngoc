@@ -19,7 +19,7 @@ public class Kham_Item {
         if ((id >= 382 && id <= 386) || (id >= 387 && id <= 391) ||(id >= 392 && id <= 396) 
                 || (id >= 397 && id <= 401) || (id >= 402 && id <= 406) 
                 ||(id >= 407 && id <= 411) || (id >= 412 && id <= 416)
-                || (id >= 23 && id <= 32))
+                || (id >= 23 && id <= 32) || id == 496 || id == 497 || id == 498)
             return true;
         return false;
     }
@@ -159,6 +159,17 @@ public class Kham_Item {
             int idx = (33 - id);
             int pr = idx == 1 ? 1600 : (idx == 2 ? 800 : (idx == 3 ? 400 : (idx == 4 ? 200 : 100)));
             re = new Option(5, pr, idItem);
+        }
+        else if (id == 496)
+        {
+            re = new Option(117, 1400, idItem);
+        }
+        else if (id == 497)
+        {
+            re = new Option(118,1000, idItem);
+        }
+        else if (id == 498){ // cuồng bạo
+            re = new Option(119, 2000, idItem);
         }
         return re;
     }

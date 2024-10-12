@@ -416,7 +416,7 @@ public class MainObject {
                 if (map.zone_id == 1 && !Map.is_map_not_zone2(map.map_id) && ((Player) ObjAtk).conn.ac_admin < 66) {
                     return;
                 }
-                if (((Player) focus).pet_follow == 4708) {
+                if (((Player) focus).pet_follow == 4708 && !map.isMapChiemThanh()){
                     Service.send_notice_box(((Player) ObjAtk).conn, "Đối phương đang được pet bảo vệ");
                     return;
                 }
@@ -550,6 +550,9 @@ public class MainObject {
                 if (map.mapsk == true){
                     dame -= dame /2;
                 }
+                if (p.get_EffDefault(StrucEff.Quà_noel) != null && p.qua_noel == 3){
+                    dame -= dame*1.15;
+                }
             }
             //</editor-fold>
             //<editor-fold defaultstate="collapsed" desc="ngựa...">
@@ -571,7 +574,6 @@ public class MainObject {
                 }
             }
             //</editor-fold>
-
             List<Float> giamdame = new ArrayList<>();
             ef = ObjAtk.get_EffDefault(3);
             if (ef != null) {
@@ -705,7 +707,6 @@ public class MainObject {
                         DamePlus += 1;
                     }
                 }
-
                 double ptHP = (ObjAtk.hp / ObjAtk.get_HpMax()) * 100;
                 if ((ef = ObjAtk.get_EffMe_Kham(StrucEff.NgocPhongMa)) != null) {
                     HoiHP += (int) (hpmax * ef.param * 0.0001);
@@ -713,15 +714,34 @@ public class MainObject {
                     ObjAtk.add_EffMe_Kham(StrucEff.NgocPhongMa, prKham, System.currentTimeMillis() + 5000);
                     Eff_special_skill.send_eff_kham(p, StrucEff.NgocPhongMa, 5000);
                 }
-
                 if (focus.isBoss() && (ef = ObjAtk.get_EffMe_Kham(StrucEff.NgocSinhMenh)) != null) {
                     DamePlus += 0.5;
-//                dame += (long)(dame * 0.5);
+//                dame += (long)(dame * 0.5); 
                 } else if (focus.isBoss() && (prKham = ObjAtk.total_item_param(106)) > Util.random(10_000)) {
                     ObjAtk.add_EffMe_Kham(StrucEff.NgocSinhMenh, prKham, System.currentTimeMillis() + 3000);
                     Eff_special_skill.send_eff_kham(p, StrucEff.NgocSinhMenh, 3000);
                 }
+                if (p != null && focus.isPlayer() && (prKham = p.total_item_param(118)) > Util.random(10_000)){
+                    int time = prKham / 1000;
+                    //ObjAtk.add_EffMe_Kham(StrucEff.Ngoctraubo, prKham, System.currentTimeMillis() + 5000);
+                    p.add_EffDefault(143, 1, time * 1000);
+                    Eff_special_skill.send_eff_kham(p, StrucEff.Ngoctraubo, time * 1000);
+                    //Service.send_time_box(p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Trâu bò"});
+                }
+                if (ObjAtk.get_EffDefault(StrucEff.Ngoccuongbao) != null &&
+                        ObjAtk.total_item_param(119) > Util.random(10_000)){
+                    p.cuong_bao += 1;
+                }else if (p != null && focus.isPlayer() && (prKham = p.total_item_param(119)) > Util.random(10_000)){
+                    p.cuong_bao = 10;
+                    p.add_EffDefault(144,1,8* 1000);
+                    Eff_special_skill.send_eff_kham(p,StrucEff.Ngoccuongbao,8 * 1000);
+                    Service.send_notice_nobox_white(p.conn,"Cuồng bạo");
+                }
+                else if (ObjAtk.get_EffDefault(StrucEff.Ngoccuongbao) == null){
+                    p.cuong_bao = 0;
+                }
                 ptCrit += ObjAtk.total_item_param(107) * 0.0001;
+                ptxuyengiap += ObjAtk.total_item_param(117) * 0.0001;
             }
             //</editor-fold>
 
@@ -1067,7 +1087,17 @@ public class MainObject {
                 focus.hp += p_focus.hp_max * (Util.nextInt(20, 25) / 100);
                 Service.send_notice_nobox_white(p_focus.conn, "Giáp cốt");
             }
-
+            if (focus.isPlayer() && p != null && p.total_item_param((byte) 177) > Util.nextInt(10000)) {
+                p.add_EffDefault(141,1,5*1000);
+                p_focus.add_EffDefault(140,1,5*1000);
+                //EffTemplate eff = p.get_EffDefault(141);
+                //Service.send_time_box(p, (byte) 1, new short[]{(short) ((eff.time - System.currentTimeMillis()) / 1000)}, new String[]{"Miễn nhiễm hiệu ứng"});
+                Service.send_notice_nobox_white(p_focus.conn, "Vãn tiễn xuyên tâm");
+            }
+            if (p != null && focus.isPlayer() && p_focus.total_item_param((byte) 178) > Util.nextInt(10000)) {
+                p_focus.add_EffDefault(142,1,10 * 1000);
+                Service.send_notice_nobox_white(p_focus.conn, "Câm lặng");
+            }
             focus.hp -= (dame + dame_spec);
             if (focus.isBoss() && mob != null && ObjAtk.isPlayer()) {
                 if (!mob.top_dame.containsKey(p.name)) {
@@ -1282,6 +1312,18 @@ public class MainObject {
                             if (focus.isPlayer() && my_pet.get_id() == 4626 && Util.nextInt(100) < 5) {
                                 p_focus.add_EffDefault(StrucEff.TE_CONG, 1, 5000);
                                 Service.send_notice_nobox_white(p_focus.conn, "Bạn bị tê cóng");
+                            }
+                            if (focus.isPlayer() && my_pet.get_id() == 3616 && Util.nextInt(100) < 5){
+                                int ran = Util.random(0,100);
+                                if (ran < 30){
+                                    p.qua_noel = 1;
+                                }else if (ran < 66){
+                                    p.qua_noel = 2;
+                                }else {
+                                    p.qua_noel = 3;
+                                }
+                                p.add_EffDefault(StrucEff.Quà_noel,1,5000);
+                                Service.send_notice_nobox_white(p.conn, "Bạn nhận được quà");
                             }
                             p.pet_atk_speed = System.currentTimeMillis() + 5000L;
                             Message m = new Message(84);

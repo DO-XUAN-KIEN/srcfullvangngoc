@@ -1,5 +1,6 @@
 package core;
 
+import History.His_COIN;
 import History.His_DelItem;
 
 import java.io.IOException;
@@ -153,7 +154,7 @@ public class Service {
         m.writer().writeByte(p.hair);
         //
         byte[] i1 = new byte[]{0, 1, 2, 3, 4, 53, 54, 55, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 19, 20, 27, 28, 33, 34,
-                35, 36, 40, 112, -75, -74, -73};
+                35, 36, 40, -79, -78, 117,118};
         m.writer().writeByte(i1.length);
         for (int i = 0; i < i1.length; i++) {
             m.writer().writeByte(i1[i]);
@@ -1882,7 +1883,11 @@ public class Service {
                         return;
                     }
                     p.update_coin((int) -price);
-                    Log.gI().add_log(p.name, "trừ "+price+" coin từ mua do1");
+                    His_COIN hisc = new His_COIN(p.conn.user ,p.name);
+                    hisc.coin_change = (int) price;
+                    hisc.Logger = "(TRỪ COIN) từ mua do1";
+                    hisc.Flus();
+                    //Log.gI().add_log(p.name, "trừ "+price+" coin từ mua do1");
                 } else {
                     if (p.get_ngoc() < price) {
                         send_notice_box(p.conn, "Không đủ " + price + " ngọc");
@@ -1963,6 +1968,10 @@ public class Service {
                             p.item.add_item_bag3(itbag);
                             p.item.char_inventory(3);
                             send_notice_box(p.conn, "Mua thành công trang bị " + itbag.name);
+                            His_COIN hisc = new His_COIN(p.conn.user ,p.name);
+                            hisc.coin_change = itsell3.price;
+                            hisc.Logger = "(TRỪ COIN) từ mua do2";
+                            hisc.Flus();
                             return;
                         }
                     }
@@ -2052,6 +2061,10 @@ public class Service {
                                     itbag.time_use = 0;
                                     p.item.add_item_bag3(itbag);
                                     p.item.char_inventory(3);
+                                    His_COIN hisc = new His_COIN(p.conn.user ,p.name);
+                                    hisc.coin_change = itemsellcoin.price;
+                                    hisc.Logger = "(TRỪ COIN) từ mua do3";
+                                    hisc.Flus();
                                     send_notice_box(p.conn, "Mua thành công " + ItemTemplate3.item.get(idbuy).getName());
                                 } else {
                                     send_notice_box(p.conn, "Không đủ " + itemsellcoin.price + " coin");
@@ -2087,6 +2100,10 @@ public class Service {
                                     itbag.time_use = 0;
                                     p.item.add_item_bag3(itbag);
                                     p.item.char_inventory(3);
+                                    His_COIN hisc = new His_COIN(p.conn.user ,p.name);
+                                    hisc.coin_change = (int) itemshoptt.price;
+                                    hisc.Logger = "(TRỪ COIN) từ mua do4";
+                                    hisc.Flus();
                                     send_notice_box(p.conn, "Mua thành công " + ItemTemplate3.item.get(idbuy).getName());
                                 } else {
                                     send_notice_box(p.conn, "Không đủ " + itemshoptt.price + " coin");
@@ -2174,7 +2191,11 @@ public class Service {
                         return;
                     }
                     p.update_coin((int) -price);
-                    Log.gI().add_log(p.name, "trừ "+price+" coin từ mua do2");
+                    His_COIN hisc = new His_COIN(p.conn.user ,p.name);
+                    hisc.coin_change = (int) price;
+                    hisc.Logger = "(TRỪ COIN) từ mua do5";
+                    hisc.Flus();
+                    //Log.gI().add_log(p.name, "trừ "+price+" coin từ mua do2");
                 } else {
                     if (p.get_ngoc() < price) {
                         send_notice_box(p.conn, "Không đủ " + price + " ngọc");

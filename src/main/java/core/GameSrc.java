@@ -1173,6 +1173,7 @@ public class GameSrc {
 
             if (suc) {
                 it_temp.tier++;
+                it_temp.islock = true;
                 it_temp = Helps.medal.Upgare_Medal(it_temp);
                 if (it_temp.tier == 15) {
                     it_temp.op.add(new Option(96, 25,it_temp.id));
@@ -2268,14 +2269,14 @@ public class GameSrc {
 
     private static boolean check_item_kham_ngoc_type(short id_g1, Item3 it3) {
         boolean check = false;
-        if ((it3.type >= 8 && it3.type <= 11) && ((id_g1 >= 352 && id_g1 <= 361) || (id_g1 >= 23 && id_g1 <= 32))) {
+        if ((it3.type >= 8 && it3.type <= 11) && ((id_g1 >= 352 && id_g1 <= 361) || (id_g1 >= 23 && id_g1 <= 32) || id_g1 == 498)) {
             check = true;
         }
-        if ((it3.type == 0 || it3.type == 1 || it3.type == 2 || it3.type == 3 || it3.type == 6) && id_g1 >= 362
-                && id_g1 <= 371) {
+        if ((it3.type == 0 || it3.type == 1 || it3.type == 2 || it3.type == 3 || it3.type == 6) && (id_g1 >= 362
+                && id_g1 <= 371 || id_g1 == 497)) {
             check = true;
         }
-        if ((it3.type == 4 || it3.type == 5) && id_g1 >= 372 && id_g1 <= 381) {
+        if ((it3.type == 4 || it3.type == 5) && (id_g1 >= 372 && id_g1 <= 381 || id_g1 == 496)) {
             check = true;
         }
         if (it3.type == 16 && id_g1 >= 412 && id_g1 <= 416) {
@@ -2287,11 +2288,11 @@ public class GameSrc {
             if ((it3.type >= 8 && it3.type <= 11) && id_g1 >= 352 && id_g1 <= 361) {
                 check = true;
             }
-            if ((it3.type == 0 || it3.type == 1 || it3.type == 2 || it3.type == 3 || it3.type == 6) && id_g1 >= 362
-                    && id_g1 <= 371) {
+            if ((it3.type == 0 || it3.type == 1 || it3.type == 2 || it3.type == 3 || it3.type == 6) && (id_g1 >= 362
+                    && id_g1 <= 371 || id_g1 == 497)) {
                 check = true;
             }
-            if ((it3.type == 4 || it3.type == 5) && id_g1 >= 372 && id_g1 <= 381) {
+            if ((it3.type == 4 || it3.type == 5) && (id_g1 >= 372 && id_g1 <= 381 || id_g1 == 496)) {
                 check = true;
             }
         }
@@ -2416,7 +2417,7 @@ public class GameSrc {
                         for (Option o : ops) {
                             int pr = o.getParam(0);
                             int pr1 = (int) (pr * color * 0.3);
-                            if ((o.id >= 58 && o.id <= 60) || (o.id >= 100 && o.id <= 107)) {
+                            if ((o.id >= 58 && o.id <= 60) || (o.id >= 100 && o.id <= 107) || (o.id >= 116 && o.id <= 120)) {
                                 itbag.op.add(new Option(o.id, pr, itbag.id));
                             } else if (o.id == 37 || o.id == 38) {
                                 itbag.op.add(new Option(o.id, 2, itbag.id));
@@ -2818,14 +2819,14 @@ public class GameSrc {
                 Service.send_notice_box(conn, "Lỗi không tìm thấy chỉ số, hãy chụp lại chỉ số và báo ngay cho ad \"Nhắn riêng\"");
                 return;
             }
-
+            temp.islock = true;
             temp.tierStar++;
             temp.level = Helps.ItemStar.GetLevelItemStar(temp.tierStar);
             temp.op.clear();
             temp.UpdateName();
             for (Option o : ops) {
                 int pr = o.getParam(0);
-                if ((o.id >= 58 && o.id <= 60) || (o.id >= 100 && o.id <= 107)) {
+                if ((o.id >= 58 && o.id <= 60) || (o.id >= 100 && o.id <= 107) || (o.id >= 116 && o.id <= 120)) {
                     temp.op.add(new Option(o.id, pr, temp.id));
                 } else if (o.id == 37 || o.id == 38) {
                     temp.op.add(new Option(o.id, 2, temp.id));

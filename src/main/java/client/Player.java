@@ -39,6 +39,8 @@ public class Player extends Body2 {
     public Map map;
     public boolean is_changemap;
     public long timeCantChangeMap;
+    public byte qua_noel;
+    public byte cuong_bao;
     public byte head;
     public byte eye;
     public byte hair;
