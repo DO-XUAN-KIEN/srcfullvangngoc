@@ -732,7 +732,7 @@ public class MainObject {
                         ObjAtk.total_item_param(119) > Util.random(10_000)){
                     p.cuong_bao += 1;
                 }else if (p != null && focus.isPlayer() && (prKham = p.total_item_param(119)) > Util.random(10_000)){
-                    p.cuong_bao = 10;
+                    p.cuong_bao = 1;
                     p.add_EffDefault(144,1,8* 1000);
                     Eff_special_skill.send_eff_kham(p,StrucEff.Ngoccuongbao,8 * 1000);
                     Service.send_notice_nobox_white(p.conn,"Cuồng bạo");

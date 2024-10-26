@@ -939,9 +939,9 @@ public class Player extends Body2 {
                     for (int k = 0; k < (int) b3; k++) {
                         skill.mLvSkill[j].minfo[k] = new Option(dis.readUnsignedByte(), dis.readInt(), (short) 0);
                         if (skill.id == 19 && skill_110[0] > 1 && skill.mLvSkill[j].minfo[k].id >= 7 && skill.mLvSkill[j].minfo[k].id <= 11) {
-                            skill.mLvSkill[j].minfo[k].param += 800 + skill_110[0] * 300;
+                            skill.mLvSkill[j].minfo[k].param += 800 + skill_110[0] * 600;
                         } else if (skill.id == 20 && skill_110[1] > 1 && skill.mLvSkill[j].minfo[k].id >= 7 && skill.mLvSkill[j].minfo[k].id <= 11) {
-                            skill.mLvSkill[j].minfo[k].param += 800 + skill_110[1] * 300;
+                            skill.mLvSkill[j].minfo[k].param += 800 + skill_110[1] * 600;
                         }
                     }
                     skill.mLvSkill[j].nTarget = dis.readByte();

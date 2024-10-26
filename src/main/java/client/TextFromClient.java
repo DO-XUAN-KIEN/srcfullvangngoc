@@ -356,10 +356,12 @@ public class TextFromClient {
                             conn.p.update_vang(vang_up);
                             conn.p.update_ngoc(ngoc_up);
                             conn.p.update_coin(coin_up);
-                            His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
-                            hisc.coin_change = 100_000;
-                            hisc.Logger = "(NHẬN) từ gitcode";
-                            hisc.Flus();
+                            if(coin_up > 0) {
+                                His_COIN hisc = new His_COIN(conn.user, conn.p.name);
+                                hisc.coin_change = coin_up;
+                                hisc.Logger = "(NHẬN) từ gitcode";
+                                hisc.Flus();
+                            }
                             //Log.gI().add_log(conn.p.name, "Nhận " + coin_up + " từ gitcode");
                             if (vang_up != 0) {
                                 IDs.add((short) -1);
@@ -913,7 +915,7 @@ public class TextFromClient {
                     Service.send_notice_box(conn, "Đổi thành công" + (coin_exchange * 1_000) * Manager.gI().giakmgold + "vàng");
                     Log.gI().add_log(conn.p.name, "Nhận " + ((coin_exchange * 1_000) * Manager.gI().giakmgold) + " từ đổi coin ra vàng");
                     His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
-                    hisc.coin_change = (coin_exchange * 1_000) * Manager.gI().giakmgold;
+                    hisc.coin_change = coin_exchange;
                     hisc.Logger = "(TRỪ COIN) từ đổi coin sang vàng";
                     hisc.Flus();
                     //Log.gI().add_log(conn.p.name, "trừ " +coin_exchange+"coin từ đổi coin sang vàng");

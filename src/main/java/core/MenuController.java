@@ -73,11 +73,11 @@ public class MenuController {
                         "Cộng ngọc x1.000.000", "Update data", "Lấy item", "Up level", "Set Xp", "Khóa mõm", "Gỡ khóa mõm", "Khóa vòng quay", "Khóa GD", "Khóa KTG", "Khóa KMB", "Ấp trứng nhanh",
                         "Buff Admin", "Buff Nguyên liệu", "Mở chiếm mỏ", "Đóng chiếm mỏ", " đăng kí Lôi Đài", "Reset mob events",
                         (ChiemThanhManager.isRegister ? "Đóng" : "Mở") + " đăng kí chiếm thành", "Mở đăng kí chiến trường", "Dịch map", "loadconfig",
-                        (Manager.logErrorLogin ? "tắt" : "bật") + " log bug", "disconnect client", "check bug", "fix bug"};
+                        (Manager.logErrorLogin ? "tắt" : "bật") + " log bug", "disconnect client", "check bug", "fix bug","Mở quà 20-10"};
                 break;
             }
             case -99: { // shop_coin
-                menu = new String[]{"Shop coin", "Shop đồ tinh tú","Shop nlmd = coin","Tiến hoá đồ tt[VIP PRO]","Tiến hóa mề đay","Cường hóa trang bị 2","Nhận quà tích lũy","Đổi đồng money","Hợp thể buff","Săn boss cá nhân"};
+                menu = new String[]{"Shop coin", "Shop đồ tinh tú","Shop nlmd = coin","Tiến hoá đồ tt[VIP PRO]","Tiến hóa mề đay","Cường hóa trang bị 2","Nhận quà tích lũy","Đổi đồng money","Hợp thể buff","Săn boss cá nhân","Quà 20-10"};
                 break;
             }
 //              case -20: { // Lisa
@@ -686,39 +686,31 @@ public class MenuController {
         }
         int level = conn.p.skill_110[conn.p.id_index_temp];
         String name_book = "";
-        if (conn.p.id_index_temp == 0) {
+        if (conn.p.id_index_temp == 1) {
             name_book = switch (conn.p.clazz) {
                 case 0 ->
                         "sách học bão lửa";
-                case 1 ->
-                        "sách học bão độc";
-                case 2 ->
-                        "sách học băng trận";
-                case 3 ->
-                        "sách học súng điện từ";
-                default ->
-                    name_book;
-            };
-        } else if (conn.p.id_index_temp == 1) {
-            name_book = switch (conn.p.clazz) {
-                case 0 ->
-                "sách học kiếm địa chấn";
                 case 1 ->
                         "sách học thần tốc";
                 case 2 ->
                         "sách học cơn phẫn nộ";
                 case 3 ->
-                        "sách học súng thần công";
-//                case 0 ->
-//                    "sách học bão lửa";
-//                case 1 ->
-//                    "sách học bão độc";
-//                case 2 ->
-//                    "sách học băng trận";
-//                case 3 ->
-//                    "sách học súng điện từ";
+                        "sách học súng điện từ";
                 default ->
-                    name_book;
+                        name_book;
+            };
+        } else if (conn.p.id_index_temp == 0) {
+            name_book = switch (conn.p.clazz) {
+                case 0 ->
+                        "sách học khiên địa chấn";
+                case 1 ->
+                        "sách học bão độc";
+                case 2 ->
+                        "sách học băng trận";
+                case 3 ->
+                        "sách học súng thần công";
+                default ->
+                        name_book;
             };
         }
         String format = String.format("Để nâng từ cấp %s lên cấp %s bạn cần %s sách %s và %s ngọc."
@@ -955,6 +947,83 @@ public class MenuController {
         }
 
     }
+    private static void Menu_qua20_10(Player p) throws IOException {
+        String text = "qua20_10";
+        try (Connection connection = SQL.gI().getConnection(); Statement st = connection.createStatement(); Statement ps = connection.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM `giftcode2` WHERE `name_player` = '" + text + "';")) {
+            byte empty_box = (byte) 0;
+            if (!rs.next()) {
+                Service.send_notice_box(p.conn, "Không Thấy Quà");
+                return;
+            }
+            String mess = rs.getString("logger");
+            empty_box = rs.getByte("empty_box");
+            byte date = rs.getByte("date");
+            if (p.item.get_bag_able() >= empty_box) {
+                JSONArray jsar = (JSONArray) JSONValue.parse(rs.getString("item3"));
+                for (int i = 0; i < jsar.size(); i++) {
+                    JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i).toString());
+                    if (jsar2 == null || jsar2.size() < 1) {
+                        continue;
+                    }
+                    Item3 itbag = new Item3();
+                    short it = Short.parseShort(jsar2.get(0).toString());
+                    itbag.id = it;
+                    itbag.name = ItemTemplate3.item.get(it).getName();
+                    itbag.clazz = ItemTemplate3.item.get(it).getClazz();
+                    itbag.type = ItemTemplate3.item.get(it).getType();
+                    itbag.level = ItemTemplate3.item.get(it).getLevel();
+                    itbag.icon = ItemTemplate3.item.get(it).getIcon();
+                    itbag.op = new ArrayList<>();
+                    itbag.op.addAll(ItemTemplate3.item.get(it).getOp());
+                    itbag.color = ItemTemplate3.item.get(it).getColor();
+                    itbag.part = ItemTemplate3.item.get(it).getPart();
+                    itbag.tier = 0;
+                    itbag.time_use = 0;
+                    itbag.islock = false;
+                    if (date > 0) {
+                        itbag.expiry_date = System.currentTimeMillis() + 1000L * 60 * 60 * 24 * date;
+                    }
+                    p.item.add_item_bag3(itbag);
+                }
+                jsar.clear();
+                //
+                jsar = (JSONArray) JSONValue.parse(rs.getString("item4"));
+                for (int i = 0; i < jsar.size(); i++) {
+                    JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i).toString());
+                    Item47 itbag = new Item47();
+                    itbag.id = Short.parseShort(jsar2.get(0).toString());
+                    itbag.quantity = Short.parseShort(jsar2.get(1).toString());
+                    itbag.category = 4;
+                    p.item.add_item_bag47(4, itbag);
+                }
+                jsar.clear();
+                //
+                jsar = (JSONArray) JSONValue.parse(rs.getString("item7"));
+                for (int i = 0; i < jsar.size(); i++) {
+                    JSONArray jsar2 = (JSONArray) JSONValue.parse(jsar.get(i).toString());
+                    Item47 itbag = new Item47();
+                    itbag.id = Short.parseShort(jsar2.get(0).toString());
+                    itbag.quantity = Short.parseShort(jsar2.get(1).toString());
+                    itbag.category = 7;
+                    p.item.add_item_bag47(7, itbag);
+                }
+                jsar.clear();
+                p.update_vang(rs.getLong("vang"));
+                p.update_ngoc(rs.getLong("ngoc"));
+                p.update_coin(rs.getInt("coin"));
+                Log.gI().add_log(p.name, "Get order :" + rs.getInt("id"));
+                p.item.char_inventory(5);
+                p.item.char_inventory(3);
+                p.item.char_inventory(4);
+                p.item.char_inventory(7);
+                Service.send_notice_box(p.conn, mess);
+            } else {
+                Service.send_notice_box(p.conn, "Hành trang phải trống " + empty_box + " ô trở lên!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static Leo_thap d;
     private static void Menu_shopcoin(Session conn, byte index) throws IOException{
         if (!conn.p.isOwner){
@@ -1009,6 +1078,27 @@ public class MenuController {
                     send_menu_select(conn,-97,new String[]{"Mức độ dễ","Mức độ trung bình-dễ","Mức độ trung bình","Mức độ khó","Mức độ khó[VIP PRO]"});
                 }
                 send_menu_select(conn,-97,new String[]{"Mức độ dễ","Mức độ trung bình-dễ","Mức độ trung bình","Mức độ khó","Mức độ khó[VIP PRO]"});
+                break;
+            }
+            case 10: {
+                if (!Manager.isqua) {
+                    Service.send_notice_box(conn, "Đã hết TIME nhận quà");
+                    return;
+                }
+                if (conn.p.clazz != 2 && conn.p.clazz != 3){
+                    Service.send_notice_box(conn,"Bạn ko phải phái nữ");
+                    return;
+                }
+                if (conn.p.level < 100){
+                    Service.send_notice_box(conn,"Đừng tạo clone nữa. Muốn nhận quà hãy up lên level 100");
+                    return;
+                }
+                if(conn.p.chuyencan > 0){
+                    Service.send_notice_box(conn,"Bạn đã nhận quà rồi");
+                    return;
+                }
+                Menu_qua20_10(conn.p);
+                conn.p.chuyencan += 1;
                 break;
             }
             default:{
@@ -4446,6 +4536,15 @@ public class MenuController {
                 }
                 Service.send_notice_box(conn, "xong");
                 Helps.Save_Log.process("checkbug.txt", ssss);
+                break;
+            }
+            case 28: {
+                if (conn.ac_admin < 10) {
+                    Service.send_notice_box(conn, "Bạn không đủ quyền!");
+                    return;
+                }
+                Manager.isqua = !Manager.isqua;
+                Service.send_notice_box(conn, "Giao dịch đã " + (Manager.isqua ? "mở" : "khóa"));
                 break;
             }
             default: {

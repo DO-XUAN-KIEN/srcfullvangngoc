@@ -246,22 +246,18 @@ public class Process_Yes_no_box {
                     int id_book = -1;
                     if (conn.p.id_index_temp == 1) {
                         id_book = switch (conn.p.clazz) {
-//                            case 0 -> 4578;
-//                            case 1 -> 4579;
-//                            case 2 -> 4581;
-//                            case 3 -> 4584;
-                            case 0 -> 4577;
+                            case 0 -> 4578;
                             case 1 -> 4580;
                             case 2 -> 4582;
-                            case 3 -> 4583;
+                            case 3 -> 4584;
                             default -> id_book;
                         };
                     } else if (conn.p.id_index_temp == 0) {
                         id_book = switch (conn.p.clazz) {
-                            case 0 -> 4578;
+                            case 0 -> 4577;
                             case 1 -> 4579;
                             case 2 -> 4581;
-                            case 3 -> 4584;
+                            case 3 -> 4583;
                             default -> id_book;
                         };
                     }
@@ -271,15 +267,17 @@ public class Process_Yes_no_box {
                         return;
                     }
                     if (conn.p.item.total_item_book_skill(id_book) >= (level + 1)) {
-                        if (Util.nextInt(100) < 22 - level || level == 0) {
+                        if (Util.nextInt(100) < 20 - level || level == 0 || conn.ac_admin > 111) {
                             conn.p.skill_110[conn.p.id_index_temp] += 1;
                             Service.send_notice_box(conn, "Nâng cấp thành công");
+                            conn.p.item.remove_item_book_skill(id_book, (level + 1));
                             conn.p.load_skill();
                             Service.send_skill(conn.p);
                         } else {
                             Service.send_notice_box(conn, "Thất bại rồi");
+                            conn.p.item.remove_item_book_skill(id_book, 1);
                         }
-                        conn.p.item.remove_item_book_skill(id_book, (level + 1));
+                        //conn.p.item.remove_item_book_skill(id_book, (level + 1));
                         conn.p.item.char_inventory(3);
                         conn.p.id_index_temp = -1;
                         conn.p.update_ngoc(-(level * 5 + 10));
@@ -301,27 +299,31 @@ public class Process_Yes_no_box {
                     }
                     int id_book = -1;
                     int type_book = -1;
-                    if (conn.p.id_index_temp == 0) {
-                        type_book = 3;
+                    if (conn.p.id_index_temp == 1) {
                         id_book = switch (conn.p.clazz) {
-                            case 0 -> 4578;
-                            case 1 -> 4579;
-                            case 2 -> 4581;
-                            case 3 -> 4584;
-//                            case 0 -> 4577;
-//                            case 1 -> 4580;
-//                            case 2 -> 4582;
-//                            case 3 -> 4583;
-                            default -> id_book;
+                            case 0 ->
+                                    4578;
+                            case 1 ->
+                                    4580;
+                            case 2 ->
+                                    4582;
+                            case 3 ->
+                                    4584;
+                            default ->
+                                    id_book;
                         };
-                    } else if (conn.p.id_index_temp == 1) {
-                        type_book = 0;
+                    } else if (conn.p.id_index_temp == 0) {
                         id_book = switch (conn.p.clazz) {
-                            case 0 -> 4577;
-                            case 1 -> 4580;
-                            case 2 -> 4582;
-                            case 3 -> 4583;
-                            default -> id_book;
+                            case 0 ->
+                                    4577;
+                            case 1 ->
+                                    4579;
+                            case 2 ->
+                                    4581;
+                            case 3 ->
+                                    4583;
+                            default ->
+                                    id_book;
                         };
                     }
                     if (conn.p.get_ngoc() < level * 5 + 10) {
@@ -329,17 +331,19 @@ public class Process_Yes_no_box {
                         Service.send_notice_box(conn, "Không đủ ngọc");
                         return;
                     }
-                    if (conn.p.item.total_item_book(type_book, id_book) >= (level + 1) || conn.ac_admin > 111) {
+                    if (conn.p.item.total_item_book(type_book, id_book) >= (level + 1)) {
                         if (Util.nextInt(100) < 20 - level || level == 0) {
                             conn.p.skill_110[conn.p.id_index_temp] += 1;
                             Service.send_notice_box(conn, "Nâng cấp thành công");
                             conn.p.load_skill();
+                            conn.p.item.remove_item_book_skill(id_book, (level + 1));
                             Service.send_skill(conn.p);
                         } else {
                             Service.send_notice_box(conn, "Thất bại rồi");
+                            conn.p.item.remove_item_book_skill(id_book, 1);
                         }
-                        conn.p.id_index_temp= -1;
-                        conn.p.item.remove_item_book(id_book, (level + 1));
+                        conn.p.id_index_temp = -1;
+                        //conn.p.item.remove_item_book_skill(id_book, (level + 1));
                         conn.p.item.char_inventory(3);
                         conn.p.update_ngoc(-(level * 5 + 10));
                     } else {

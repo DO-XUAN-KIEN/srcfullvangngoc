@@ -98,6 +98,7 @@ public class Manager {
     public List<NhanBan> list_nhanban;
     public static boolean isLockVX = false;
     public static boolean isGiaoDich = false;
+    public static boolean isqua = false;
     public static boolean isKmb = true;
     public static boolean isKTG = true;
     public static boolean isServerTest;
