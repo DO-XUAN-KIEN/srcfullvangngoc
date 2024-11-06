@@ -201,10 +201,11 @@ public class KingCupManager {
 
         switch (p.type_reward_king_cup) {
             case 1, 5, 9, 13 -> {
-                id_reward_7 = new short[]{14, (short) Util.random(8, 10), 11, 349};
-                quantity_reward_7 = new short[]{5, 15, 15, 2};
-                id_reward_4 = new short[]{53, 54};
-                quantity_reward_4 = new short[]{1, 1};
+                id_reward_7 = new short[]{14, (short) Util.random(8, 10), 11, 349,494};
+                quantity_reward_7 = new short[]{5, 15, 15, 2,3};
+                id_reward_4 = new short[]{53, 54, (short) Util.random(328,334)};
+                quantity_reward_4 = new short[]{1, 1, 5};
+                isHaveBook = true;
                 coin = 30_000;
                 p.update_coin(coin);
                 His_COIN hisc = new His_COIN(p.conn.user ,p.name);
@@ -214,10 +215,10 @@ public class KingCupManager {
                 //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 17, 21, 25 -> {
-                id_reward_7 = new short[]{14, (short) Util.random(8, 10), 11, 349};
-                quantity_reward_7 = new short[]{5, 20, 20, 2};
-                id_reward_4 = new short[]{10, 53, 54};
-                quantity_reward_4 = new short[]{1, 1, 1};
+                id_reward_7 = new short[]{14, (short) Util.random(8, 10), 11, 349,494};
+                quantity_reward_7 = new short[]{5, 20, 20, 2, 5};
+                id_reward_4 = new short[]{10, 53, 54, (short) Util.random(328,334)};
+                quantity_reward_4 = new short[]{1, 1, 1,10};
                 coin = 40_000;
                 p.update_coin(coin);
                 isHaveBook = true;
@@ -228,10 +229,10 @@ public class KingCupManager {
                 //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 2, 6, 10, 14 -> {
-                id_reward_7 = new short[]{(short) Util.random(8, 10), 11};
-                quantity_reward_7 = new short[]{10, 10};
-                id_reward_4 = new short[]{53, 54};
-                quantity_reward_4 = new short[]{1, 1};
+                id_reward_7 = new short[]{(short) Util.random(8, 10), 11,494};
+                quantity_reward_7 = new short[]{10, 10, 2};
+                id_reward_4 = new short[]{53, 54, (short) Util.random(328,334)};
+                quantity_reward_4 = new short[]{1, 1, 4};
                 coin = 20_000;
                 p.update_coin(coin);
                 His_COIN hisc = new His_COIN(p.conn.user ,p.name);
@@ -241,10 +242,10 @@ public class KingCupManager {
                 //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 18, 22, 26 -> {
-                id_reward_7 = new short[]{14};
-                quantity_reward_7 = new short[]{7};
-                id_reward_4 = new short[]{10};
-                quantity_reward_4 = new short[]{5};
+                id_reward_7 = new short[]{14, (short) Util.random(8, 10), 11, 349,494};
+                quantity_reward_7 = new short[]{5, 15, 15, 2, 3};
+                id_reward_4 = new short[]{10, (short) Util.random(328,334)};
+                quantity_reward_4 = new short[]{5, 8};
                 coin = 30_000;
                 p.update_coin(coin);
                 His_COIN hisc = new His_COIN(p.conn.user ,p.name);
@@ -254,10 +255,10 @@ public class KingCupManager {
                 //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 3, 7, 11, 15 -> {
-                id_reward_7 = new short[]{(short) Util.random(8, 10), 11};
-                quantity_reward_7 = new short[]{6, 6};
-                id_reward_4 = new short[]{53};
-                quantity_reward_4 = new short[]{3};
+                id_reward_7 = new short[]{(short) Util.random(8, 10), 11, 494};
+                quantity_reward_7 = new short[]{6, 6, 1};
+                id_reward_4 = new short[]{53, (short) Util.random(328,334)};
+                quantity_reward_4 = new short[]{3,3};
                 coin = 10_000;
                 p.update_coin(coin);
                 His_COIN hisc = new His_COIN(p.conn.user ,p.name);
@@ -267,10 +268,10 @@ public class KingCupManager {
                 //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
             }
             case 19, 23, 27 -> {
-                id_reward_7 = new short[]{14};
-                quantity_reward_7 = new short[]{1};
-                id_reward_4 = new short[]{10, 53, 54};
-                quantity_reward_4 = new short[]{1, 1, 1};
+                id_reward_7 = new short[]{14, (short) Util.random(8, 10), 11, 349,494};
+                quantity_reward_7 = new short[]{5, 10, 10, 2, 1};
+                id_reward_4 = new short[]{10, 53, 54, (short) Util.random(328,334)};
+                quantity_reward_4 = new short[]{1, 1, 1, 5};
                 coin = 20_000;
                 p.update_coin(coin);
                 His_COIN hisc = new His_COIN(p.conn.user ,p.name);

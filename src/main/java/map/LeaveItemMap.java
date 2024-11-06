@@ -1,21 +1,19 @@
 package map;
 
+import Helps.ItemStar;
+import core.Service;
 import event.EventManager;
 import event.Event_1;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import client.Player;
 import core.Manager;
 import core.Util;
 import io.Message;
-import template.EffTemplate;
-import template.ItemTemplate3;
-import template.ItemTemplate4;
-import template.ItemTemplate7;
-import template.MainObject;
-import template.Medal_Material;
-import template.Option;
+import io.Session;
+import template.*;
 
 public class LeaveItemMap {
 
@@ -317,7 +315,7 @@ public class LeaveItemMap {
                     if(Manager.gI().event == 11){
                         id_item_hongio = new short[]{336};
                     }
-                    id_item_leave_boss = new short[]{138,(short) Util.random(473,480)};
+                    id_item_leave_boss = new short[]{138,(short) Util.random(472,480)};
                     sizeRandomMedal = (short) (30);
                     break;
                 }
@@ -329,7 +327,7 @@ public class LeaveItemMap {
                     if(Manager.gI().event == 11){
                         id_item_hongio = new short[]{336};
                     }
-                    id_item_leave_boss = new short[]{139,(short) Util.random(473,480)};
+                    id_item_leave_boss = new short[]{139,(short) Util.random(472,480)};
                     sizeRandomMedal = (short) (35);
 
                     break;
@@ -342,7 +340,7 @@ public class LeaveItemMap {
                     if(Manager.gI().event == 11){
                         id_item_hongio = new short[]{336};
                     }
-                    id_item_leave_boss = new short[]{141,(short) Util.random(473,480)};
+                    id_item_leave_boss = new short[]{141,(short) Util.random(472,480)};
                     sizeRandomMedal = (short) (45);
                     break;
                 }
@@ -354,7 +352,7 @@ public class LeaveItemMap {
                     if(Manager.gI().event == 11){
                         id_item_hongio = new short[]{336};
                     }
-                    id_item_leave_boss = new short[]{136,(short) Util.random(473,480)};
+                    id_item_leave_boss = new short[]{136,(short) Util.random(472,480)};
                     sizeRandomMedal = (short) (20);
                     break;
                 }
@@ -366,7 +364,7 @@ public class LeaveItemMap {
                     if(Manager.gI().event == 11){
                         id_item_hongio = new short[]{336};
                     }
-                    id_item_leave_boss = new short[]{137,(short) Util.random(473,480)};
+                    id_item_leave_boss = new short[]{137,(short) Util.random(472,480)};
                     sizeRandomMedal = (short) (25);
                     break;
                 }
@@ -378,7 +376,7 @@ public class LeaveItemMap {
                     if(Manager.gI().event == 11){
                         id_item_hongio = new short[]{336};
                     }
-                    id_item_leave_boss = new short[]{140,(short) Util.random(473,480)};
+                    id_item_leave_boss = new short[]{140,(short) Util.random(472,480)};
                     sizeRandomMedal = (short) (40);
                     break;
                 }
@@ -390,7 +388,7 @@ public class LeaveItemMap {
                     if(Manager.gI().event == 11){
                         id_item_hongio = new short[]{336};
                     }
-                    id_item_leave_boss = new short[]{142,(short) Util.random(473,480)};
+                    id_item_leave_boss = new short[]{142,(short) Util.random(472,480)};
                     sizeRandomMedal = (short) (50);
                     break;
                 }
@@ -402,7 +400,7 @@ public class LeaveItemMap {
                     if(Manager.gI().event == 11){
                         id_item_hongio = new short[]{336};
                     }
-                    id_item_leave_boss = new short[]{136,138,140,142,143,(short) Util.random(473,480)};
+                    id_item_leave_boss = new short[]{136,138,140,142,143,(short) Util.random(472,480)};
                     sizeRandomMedal = (short) (55);
                     break;
                 }
@@ -414,108 +412,33 @@ public class LeaveItemMap {
                     if(Manager.gI().event == 11){
                         id_item_hongio = new short[]{336};
                     }
-                    id_item_leave_boss = new short[]{144,145,137,139,141,(short) Util.random(473,480)};
+                    id_item_leave_boss = new short[]{144,145,137,139,141,(short) Util.random(472,480)};
                     sizeRandomMedal = (short) (60);
                     break;
                 }
-                    case 173: { //tho tuyet
-                        id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251, 319, 320, 321, 322};
-                        if(Util.random(100)<10){
-                            id_item_leave4 = new short[]{(short) Util.random(319,323)};
-                        }
-                        if(Manager.gI().event == 11){
-                            id_item_hongio = new short[]{336};
-                        }
-                        id_item_leave7 = new short[]{14};
-                       // sizeRandomMedal = (short) (60);
-                        break;
+                case 173, 195, 196, 197, 186, 187, 188: { //boss khu event
+                    id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251};
+                    if(Util.random(100)<10){
+                        id_item_leave4 = new short[]{(short) Util.random(319,323)};
                     }
-                    case 195: { // Godzila
-                        id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251, 319, 320, 321, 322};
-                        if(Util.random(100)<10){
-                            id_item_leave4 = new short[]{(short) Util.random(319,323)};
-                        }
-                        if(Manager.gI().event == 11){
-                            id_item_hongio = new short[]{336};
-                        }
-                        id_item_leave7 = new short[]{14};
-                       // sizeRandomMedal = (short) (60);
-                        break;
+                    if(Manager.gI().event == 11){
+                        id_item_hongio = new short[]{336};
                     }
-                    case 196: { // King kong
-                        id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251, 319, 320, 321, 322};
-                        if(Util.random(100)<10){
-                            id_item_leave4 = new short[]{(short) Util.random(319,323)};
-                        }
-                        if(Manager.gI().event == 11){
-                            id_item_hongio = new short[]{336};
-                        }
-                        id_item_leave7 = new short[]{14};
-                        if (Util.random(1) < 1) {
-                       //     id_item_leave3 = new short[]{(short) Util.random(4577, 4585)};
-                        }
-                       // sizeRandomMedal = (short) (60);
-                        break;
-                    }
-                    case 197: { // ga trong
-                        id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251, 319, 320, 321, 322};
-                        if(Util.random(100)<10){
-                            id_item_leave4 = new short[]{(short) Util.random(319,323)};
-                        }
-                        if(Manager.gI().event == 11){
-                            id_item_hongio = new short[]{336};
-                        }
-                        id_item_leave7 = new short[]{14};
-                       // sizeRandomMedal = (short) (60);
-                        break;
-                    }
-                    case 186: { // Người tuyết nhỏ
-                        id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251, 319, 320, 321, 322};
-                        if(Util.random(100)<10){
-                            id_item_leave4 = new short[]{(short) Util.random(319,323)};
-                        }
-                        if(Manager.gI().event == 11){
-                            id_item_hongio = new short[]{336};
-                        }
-                        id_item_leave7 = new short[]{14};
-                       // sizeRandomMedal = (short) (60);
-                        break;
-                    }
-                    case 187: { // Lính rìu nhỏ
-                        id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251, 319, 320, 321, 322};
-                        if(Util.random(100)<10){
-                            id_item_leave4 = new short[]{(short) Util.random(319,323)};
-                        }
-                        if(Manager.gI().event == 11){
-                            id_item_hongio = new short[]{336};
-                        }
-                        id_item_leave7 = new short[]{14};
-                       // sizeRandomMedal = (short) (60);
-                        break;
-                    }
-
-                    case 188: { //Lão trọc
-                        id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251, 319, 320, 321, 322};
-                        if(Util.random(100)<10){
-                            id_item_leave4 = new short[]{(short) Util.random(319,323)};
-                        }
-                        if(Manager.gI().event == 11){
-                            id_item_hongio = new short[]{336};
-                        }
-                        id_item_leave7 = new short[]{14};
-                       // sizeRandomMedal = (short) (60);
-                        break;
-                    }
-                    case 178: { //boss sk
-                        id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251, 319, 320, 321, 322};
-                        id_medal_material =new short[]{236,237,238,239,240,241,242,243,244,245};
-                        id_item_leave = new  short[]{471,349};
-                        id_sk = new short[]{470};
-                        // sizeRandomMedal = (short) (60);
-                        break;
-                    }
+                    id_item_leave = new short[]{(short) Util.random(481, 493)};
+                    id_item_leave7 = new short[]{14};
+                    // sizeRandomMedal = (short) (60);
+                    break;
+                }
+                case 178: { //boss sk
+                    id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251};
+                    id_medal_material =new short[]{236,237,238,239,240,241,242,243,244,245};
+                    id_item_leave = new  short[]{471,349};
+                    id_sk = new short[]{470};
+                    // sizeRandomMedal = (short) (60);
+                    break;
+                }
                 case 190: {
-                    id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251, 319, 320, 321, 322};
+                    id_item_leave4 = new short[]{-1, -1, -1, -1, -1, -1, 273, 274, 251};
                     if(Util.random(100)<10){
                         id_item_leave4 = new short[]{(short) Util.random(319,323)};
                     }
@@ -968,6 +891,81 @@ public class LeaveItemMap {
             mi.writer().writeShort(p_master.index); // id player
             MapService.send_msg_player_inside(map, p_master, mi, true);
             mi.cleanup();
+        }
+    }
+    public static void randomMD(Session conn) throws IOException {
+        try {
+            List<box_item_template> ids = new ArrayList<>();
+            byte tier = (byte) Util.random(0, 8);
+            short id_item = (short) Util.random(4587, 4591);
+            Item3 itbag = new Item3();
+            itbag.id = id_item;
+            itbag.name = ItemTemplate3.item.get(id_item).getName();
+            itbag.clazz = ItemTemplate3.item.get(id_item).getClazz();
+            itbag.type = ItemTemplate3.item.get(id_item).getType();
+            itbag.part = ItemTemplate3.item.get(id_item).getPart();
+            itbag.icon = ItemTemplate3.item.get(id_item).getIcon();
+            itbag.level = 1;
+            itbag.op = new ArrayList<>();
+            int[] st = {0,1, 2, 3, 4};
+            int[] stthem = {7, 8, 9, 10, 11};
+            int[] Khang = {16, 17, 18, 19, 20, 21, 22};
+            int[] point = {23, 24, 25, 26};
+            int[] donghe = {33, 34, 35, 36};
+            int[] hp_mp = {27, 28, 29, 30, 31, 32};
+            int[] phongthu = {14, 15};
+            int[] kntc_pt = {37, 38};
+            int[] dongan= {96};
+            int opidan = dongan[Util.nextInt(dongan.length)];
+            int opid0 = st[Util.nextInt(st.length)];
+            int opid1 = stthem[Util.nextInt(stthem.length)];
+            int opid2 = Khang[Util.nextInt(Khang.length)];
+            int opid3 = Khang[Util.nextInt(Khang.length)];
+            int opid4 = Khang[Util.nextInt(Khang.length)];
+            int opid5 = Khang[Util.nextInt(Khang.length)];
+            int opid6 = Khang[Util.nextInt(Khang.length)];
+            int opid7 = Khang[Util.nextInt(Khang.length)];
+            int opid8 = Khang[Util.nextInt(Khang.length)];
+            int opid9 = point[Util.nextInt(point.length)];
+            int opid10 = point[Util.nextInt(point.length)];
+            int opid11 = point[Util.nextInt(point.length)];
+            int opid12 = point[Util.nextInt(point.length)];
+            int opid13 = point[Util.nextInt(point.length)];
+            int opid14 = donghe[Util.nextInt(donghe.length)];
+            int opid15 = donghe[Util.nextInt(donghe.length)];
+            int opid16 = donghe[Util.nextInt(donghe.length)];
+            int opid17 = hp_mp[Util.nextInt(hp_mp.length)];
+            int opid18 = hp_mp[Util.nextInt(hp_mp.length)];
+            int opid19 = hp_mp[Util.nextInt(hp_mp.length)];
+            int opid20 = hp_mp[Util.nextInt(hp_mp.length)];
+            int opid21 = hp_mp[Util.nextInt(hp_mp.length)];
+            int opid22 = phongthu[Util.nextInt(phongthu.length)];
+            int opid23 = kntc_pt[Util.nextInt(kntc_pt.length)];
+            List<Integer> opidList = new ArrayList<>();
+            Collections.addAll(opidList, opid1, opid2, opid3, opid4, opid5, opid6, opid7, opid8,
+                    opid9, opid10, opid11, opid12, opid13, opid14, opid15, opid16, opid17, opid18, opid19,
+                    opid20, opid21, opid22, opid23);
+            Collections.shuffle(opidList);
+            if (tier == 0) {
+                itbag.op.add(Option.randomdongmd(opid0, itbag.id));
+                itbag.op.add(Option.randomdongmd(opidan, itbag.id));
+            } else if (tier >= 1) {
+                itbag.op.add(Option.randomdongmd(opid0, itbag.id));
+                itbag.op.add(Option.randomdongmd(opidan, itbag.id));
+                for (int i = 0; i < tier && i < opidList.size(); i++) {
+                    itbag.op.add(Option.randomdongmd(opidList.get(i), itbag.id));
+                }
+            }
+            itbag.color = 4;
+            itbag.tier = tier;
+            itbag.time_use = 0;
+            itbag.islock = true;
+            conn.p.item.add_item_bag3(itbag);
+            conn.p.item.char_inventory(3);
+            ids.add(new box_item_template(id_item, (short) 1, (byte) 3));
+            Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

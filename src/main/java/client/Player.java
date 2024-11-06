@@ -47,6 +47,7 @@ public class Player extends Body2 {
     public Date date;
     public byte diemdanh;
     public byte chucphuc;
+    public byte quatanthu;
     public byte mm_tt;
     public byte mm_md;
     public byte dokho;
@@ -391,6 +392,7 @@ public class Player extends Body2 {
                 date = Util.getDate(rs.getString("date"));
                 diemdanh = rs.getByte("diemdanh");
                 chucphuc = rs.getByte("chucphuc");
+                quatanthu = rs.getByte("quatanthu");
                 mm_tt = rs.getByte("mm_tt");
                 mm_md = rs.getByte("mm_md");
                 dokho = rs.getByte("dokho");
@@ -1368,6 +1370,7 @@ public class Player extends Body2 {
                 a += ",`kynang` = " + kynang;
                 a += ",`diemdanh` = " + diemdanh;
                 a += ",`chucphuc` = " + chucphuc;
+                a += ",`quatanthu` = " + quatanthu;
                 a += ",`mm_tt` = " + mm_tt;
                 a += ",`mm_md` = " + mm_md;
                 a += ",`dokho` = " + dokho;
@@ -1552,8 +1555,11 @@ public class Player extends Body2 {
             // diem danh
             diemdanh = 1;
             chucphuc = 1;
+            if(quatanthu > 1) {
+                quatanthu = 1;
+            }
             khu2 = 2;
-            point_active[0] = 10;
+            point_active[0] = 2;
             point_active[1] = 0;
             quest_daily = new int[]{-1, -1, 0, 0, 10};
             date = Date.from(Instant.now());

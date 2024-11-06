@@ -602,6 +602,8 @@ public class Dungeon {
                     Dungeon.leave_item_by_type7(map, (short)Util.random(417,464), p, mob.index);
                 if(5>Util.random(0,100))
                     Dungeon.leave_item_by_type7(map, Medal_Material.m_blue[Util.random(Medal_Material.m_blue.length)], p, mob.index);
+                if(5>Util.random(0, 500))
+                    Dungeon.leave_item_by_type7(map, (short) Util.random(126, 146),p,mob.index);
                 Message m2 = new Message(17);
                 m2.writer().writeShort(p.index);
                 m2.writer().writeShort(mob.index);

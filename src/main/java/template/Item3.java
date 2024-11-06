@@ -17,7 +17,6 @@ public class Item3 {
     public String name;
     public byte tier;
     public byte tierStar;
-    public byte dothan;
     public List<Option> op;
     public List<Option> opMedal;
     public long time_use;

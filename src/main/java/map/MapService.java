@@ -1522,6 +1522,12 @@ public class MapService {
             List<MainObject> objects = new ArrayList<>();
             objects.add(conn.p);
             Service.send_eff_auto(conn, objects, 138);
+        } else if (chat.equals("testmd") && conn.ac_admin > 111){
+            try {
+                LeaveItemMap.randomMD(conn);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         } else {
             SendChat(map, conn.p, chat, false);
 //            Message m = new Message(27);

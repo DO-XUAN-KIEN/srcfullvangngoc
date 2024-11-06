@@ -739,6 +739,19 @@ public class Process_Yes_no_box {
                     }
                     break;
                 }
+                case -117: {
+                    String notice = "Danh sách người chơi vào phó bản :\n1) " + conn.p.name + " : level " + conn.p.level;
+                    if (conn.p.party != null) {
+                        Service.send_notice_box(conn, "Phó bản hiện tại chỉ hỗ trợ chế độ solo");
+                        return;
+                    }
+                    notice += "\nĐộ khó: ??? \nHãy xác nhận." + (conn.p.point_active[0] != 10 ? " phí vào là 5000 coin." : "");
+//                conn.p.dungeon = null;
+                    conn.p.update_coin(-5000);
+                    conn.p.point_active[0] += 1;
+                    Service.send_box_input_yesno(conn, 119, notice);
+                    break;
+                }
                 case 119: {
                     if(conn.p.point_active[0] !=10)
                     {
@@ -757,7 +770,7 @@ public class Process_Yes_no_box {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        if(conn.p.point_active[0] <=0)
+                        if(conn.p.point_active[0] <= 0)
                             Service.send_notice_box(conn, "Hãy quay lại vào ngày hôm sau!");
                         else if (d != null) {
                             conn.p.point_active[0]--;

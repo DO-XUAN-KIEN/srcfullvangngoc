@@ -2,6 +2,9 @@ package template;
 
 import core.Util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Option {
 
     private static final int[] parafterupdate
@@ -24,7 +27,32 @@ public class Option {
         this.id = (byte) id;
         this.param = param;
     }
-
+    public static Option randomdongmd(int idOption, short idItem) {
+        Option newOP;
+        switch (idOption) {
+            case 0, 1, 2, 3, 4 ->
+                    newOP = new Option(idOption, 1000, idItem);
+            case 7, 8, 9, 10, 11 ->
+                    newOP = new Option(idOption, 255, idItem);
+            case 16, 17, 18, 19, 20, 21, 22 ->
+                    newOP = new Option(idOption, 100, idItem);
+            case 23, 24, 25, 26 ->
+                    newOP = new Option(idOption, 20, idItem);
+            case 33, 34, 35, 36 ->
+                    newOP = new Option(idOption, 121, idItem);
+            case 27, 28, 29, 30, 31, 32 ->
+                    newOP = new Option(idOption, 88, idItem);
+            case 14, 15 ->
+                    newOP = new Option(idOption, 99, idItem);
+            case 37, 38 ->
+                    newOP = new Option(idOption, 1, idItem);
+            case 96->
+                    newOP = new Option(idOption, 10, idItem);
+            default ->
+                    newOP = new Option(idOption, 1, idItem);
+        }
+        return newOP;
+    }
     public static Option createOpItemStar(int idOption, short idItem) {
         Option newOP;
         switch (idOption) {
