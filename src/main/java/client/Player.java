@@ -133,6 +133,7 @@ public class Player extends Body2 {
     public long time_eff_22;
     public int[] point_active;
     public short id_horse;
+    public short id_ngua = -1;
     public boolean is_create_wing;
     public short id_remove_time_use;
     public byte id_wing_split;
@@ -1031,7 +1032,6 @@ public class Player extends Body2 {
         if (isSquire) {
             return;
         }
-
         try (Connection connection = SQL.gI().getConnection(); Statement ps = connection.createStatement()) {
             if (isOwner) {
                 String a = "`level` = " + level;
@@ -1890,6 +1890,17 @@ public class Player extends Body2 {
         try ( Connection connection = SQL.gI().getConnection();  Statement ps = connection.createStatement();  ResultSet rs = ps.executeQuery(query)) {
             rs.next();
             result = rs.getInt("tichdiem");
+        } catch (SQLException e) {
+            result = 0;
+        }
+        return result;
+    }
+    public synchronized int checkvip() {
+        int result = 0;
+        String query = "SELECT `Vip` FROM `account` WHERE `user` = '" + conn.user + "' LIMIT 1;";
+        try ( Connection connection = SQL.gI().getConnection();  Statement ps = connection.createStatement();  ResultSet rs = ps.executeQuery(query)) {
+            rs.next();
+            result = rs.getByte("Vip");
         } catch (SQLException e) {
             result = 0;
         }

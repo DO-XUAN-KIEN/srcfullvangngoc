@@ -1804,7 +1804,12 @@ public class GameSrc {
                                 Service.send_notice_box(conn, "Số lượng không hợp lệ!");
                                 return;
                             }
-                            if (p_store.it_type == 4 && (Helps.CheckItem.item4CanTrade(p_store.it_id) || p_store.it_id == 135 || p_store.it_id == 52 || p_store.it_id == 56 || p_store.it_id == 143 || p_store.it_id == 226 || p_store.it_id == 318 || p_store.it_id == 327 || p_store.it_id == 328 || p_store.it_id == 329 || p_store.it_id == 330 || p_store.it_id == 342  || p_store.it_id == 343 || p_store.it_id == 346 || p_store.it_id == 347 || (p_store.it_id >= 339 && p_store.it_id <=341))) {
+                            if (p_store.it_type == 4 && (Helps.CheckItem.item4CanTrade(p_store.it_id) || p_store.it_id == 135 ||
+                                    p_store.it_id == 52 || p_store.it_id == 56 || p_store.it_id == 143 || p_store.it_id == 226 ||
+                                    p_store.it_id == 318 || p_store.it_id == 327 || p_store.it_id == 328 || p_store.it_id == 329 ||
+                                    p_store.it_id == 330 || p_store.it_id == 342  || p_store.it_id == 343 || p_store.it_id == 346 ||
+                                    p_store.it_id == 347 || (p_store.it_id >= 339 && p_store.it_id <=341) || p_store.it_id == 348 ||
+                                    p_store.it_id == 349 || p_store.it_id == 350)) {
                                 Service.send_notice_box(conn, "Đồ bán không hợp lệ!");
                                 return;
                             }

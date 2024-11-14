@@ -38,7 +38,7 @@ public class DoSieucap {
                             return;
                         }
                         Item3 temp = conn.p.item.bag3[id];
-                        if (!(temp.id >= 4831 && temp.id <= 4873)) {
+                        if (!((temp.id >= 4831 && temp.id <= 4873) || temp.id == 4878)) {
                             Service.send_notice_box(conn, "Trang bị không phù hợp!");
                             return;
                         }
@@ -74,11 +74,11 @@ public class DoSieucap {
                         return;
                     }
                     Item3 temp = conn.p.item.bag3[id];
-                    if (temp == null && !(temp.id >= 4831 && temp.id <= 4873) && temp.color != 5 && temp.tierStar >= 15) {
+                    if (temp == null && !((temp.id >= 4831 && temp.id <= 4873) || temp.id == 4878) && temp.color != 5 && temp.tierStar >= 15) {
                         Service.send_notice_box(conn, "Trang bị không phù hợp!");
                         return;
                     }
-                    if (temp != null && temp.id >= 4831 && temp.id <= 4873 && temp.color == 5 && temp.tierStar <= 15) {
+                    if (temp != null && ((temp.id >= 4831 && temp.id <= 4873) || temp.id == 4878) && temp.color == 5 && temp.tierStar <= 15) {
                         conn.p.id_Upgrade_Medal_Star = id;
                         Upgrade_dothan(conn, tem);
                     } else {
@@ -102,7 +102,7 @@ public class DoSieucap {
                 return;
             }
             Item3 temp = conn.p.item.bag3[id];
-            if (temp == null && !(temp.id >= 4831 && temp.id <= 4873) && temp.color != 5 && temp.tierStar >= 15) {
+            if (temp == null && !((temp.id >= 4831 && temp.id <= 4873) || temp.id == 4878) && temp.color != 5 && temp.tierStar >= 15) {
                 Service.send_notice_box(conn, "Trang bị không phù hợp!");
                 return;
             }

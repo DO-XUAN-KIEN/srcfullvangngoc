@@ -1,5 +1,6 @@
 package core;
 
+import BossHDL.BossManager;
 import Helps._Time;
 import event.Event_1;
 import event.NauKeo;
@@ -15,8 +16,11 @@ import event_daily.KingCupManager;
 import io.Session;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Set;
 
 import map.Map;
+
+import static BossHDL.BossManager.callBossToMap;
 
 public class ServerManager implements Runnable {
 
@@ -147,6 +151,15 @@ public class ServerManager implements Runnable {
                 System.out.println("Started in " + (System.currentTimeMillis() - this.time) + "s");
                 System.out.println();
                 System.out.println("LISTEN PORT " + Manager.gI().server_port + "...");
+                int mapId;
+                Set<Integer> excludedMapIds = Set.of(1, 33, 34, 35, 46, 48, 50);
+                while ((mapId = Util.random(0, 52)) == -1 || excludedMapIds.contains(mapId));
+                Map[] map = Map.get_map_by_id(mapId);
+                if (map != null && map.length > 0) {
+                    short x = (short) ((map[0].mapW * 24) * 0.2 + (map[0].mapW * 24) * 0.6 / 2);
+                    short y = (short) ((map[0].mapH * 24) * 0.2 + (map[0].mapH * 24) * 0.6 / 2);
+                    callBossToMap(mapId, 193, x, y, 1_000_000_000, 139);
+                }
             } catch (Exception ee) {
                 ee.printStackTrace();
                 System.exit(0);

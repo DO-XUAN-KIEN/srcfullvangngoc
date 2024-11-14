@@ -2570,8 +2570,90 @@ public class TextFromClient {
                 Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", new short[]{ruong}, new int[]{quant}, new short[]{4});
                 break;
             }
+            case 60: {
+                String value = m2.reader().readUTF();
+                if (!(Util.isnumber(value))) { // kiểm tra điều kiện nhập là số
+                    Service.send_notice_box(conn, "Dữ liệu nhập không phải số!!");
+                    return;
+                }
+                int quant = Integer.parseInt(value);
+                if (quant > 100 || quant <= 0) { // điều kiện nhập ko quá 10  và  < 0
+                    Service.send_notice_box(conn, "Số lượng không hợp lệ!");
+                    return;
+                }
+                if (conn.p.item.get_bag_able() < 1) { // kiếm tra hành trang
+                    Service.send_notice_box(conn, "Hành trang đầy!");
+                    return;
+                }
+                short nl, ruong, chuyendoi;
+                nl = 348;
+                ruong = 349; // ruong thuong
+                chuyendoi = 5;
+                if (nl > (ItemTemplate4.item.size() - 1) || nl < 0 ||
+                        ruong > (ItemTemplate4.item.size() - 1) || ruong < 0) {
+                    Service.send_notice_box(conn, "Đã xảy ra lỗi...");
+                    return;
+                }
+                int quant_inbag = conn.p.item.total_item_by_id(4, nl);
+                int quant_real = quant_inbag / chuyendoi;
+                if (quant_real < quant) {
+                    Service.send_notice_box(conn, "Chỉ có thể đổi tối đa " + quant_real + " " + ItemTemplate4.item.get(ruong).getName());
+                    return;
+                }
+                Item47 itbag = new Item47();
+                itbag.id = ruong;
+                itbag.quantity = (short) quant;
+                itbag.category = 4;// loại type
+                conn.p.item.remove(4, nl, quant * chuyendoi);
+                conn.p.item.add_item_bag47(4, itbag);
+                conn.p.item.char_inventory(4);
+                conn.p.item.char_inventory(5);
+                Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", new short[]{ruong}, new int[]{quant}, new short[]{4});
+                break;
+            }
+            case 61: {
+                String value = m2.reader().readUTF();
+                if (!(Util.isnumber(value))) { // kiểm tra điều kiện nhập là số
+                    Service.send_notice_box(conn, "Dữ liệu nhập không phải số!!");
+                    return;
+                }
+                int quant = Integer.parseInt(value);
+                if (quant > 100 || quant <= 0) { // điều kiện nhập ko quá 10  và  < 0
+                    Service.send_notice_box(conn, "Số lượng không hợp lệ!");
+                    return;
+                }
+                if (conn.p.item.get_bag_able() < 1) { // kiếm tra hành trang
+                    Service.send_notice_box(conn, "Hành trang đầy!");
+                    return;
+                }
+                short nl, ruong, chuyendoi;
+                nl = 349;
+                ruong = 350; // ruong vip
+                chuyendoi = 10;
+                if (nl > (ItemTemplate4.item.size() - 1) || nl < 0 ||
+                        ruong > (ItemTemplate4.item.size() - 1) || ruong < 0) {
+                    Service.send_notice_box(conn, "Đã xảy ra lỗi...");
+                    return;
+                }
+                int quant_inbag = conn.p.item.total_item_by_id(4, nl);
+                int quant_real = quant_inbag / chuyendoi;
+                if (quant_real < quant) {
+                    Service.send_notice_box(conn, "Chỉ có thể đổi tối đa " + quant_real + " " + ItemTemplate4.item.get(ruong).getName());
+                    return;
+                }
+                Item47 itbag = new Item47();
+                itbag.id = ruong;
+                itbag.quantity = (short) quant;
+                itbag.category = 4;// loại type
+                conn.p.item.remove(4, nl, quant * chuyendoi);
+                conn.p.item.add_item_bag47(4, itbag);
+                conn.p.item.char_inventory(4);
+                conn.p.item.char_inventory(5);
+                Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", new short[]{ruong}, new int[]{quant}, new short[]{4});
+                break;
+            }
             default: {
-                Service.send_notice_box(conn, "Đã xảy ra lỗi-t1");
+                Service.send_notice_box(conn, "Đã xảy ra lỗi-sk12");
                 break;
             }
         } 

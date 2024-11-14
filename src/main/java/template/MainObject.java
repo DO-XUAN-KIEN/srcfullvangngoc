@@ -560,6 +560,9 @@ public class MainObject {
                 if (p.get_EffDefault(EffTemplate.buffdame) != null || p.get_EffDefault(EffTemplate.bufftatca) != null){
                     DamePlus += 0.2;
                 }
+                if (p.type_use_mount == Horse.SKELETON && p.id_ngua == 200){
+                    DamePlus += 0.3;
+                }
                 if (p.type_use_mount == Horse.NGUA_XICH_THO) {
                     DamePlus += 0.2;
                 } else if (p.type_use_mount == Horse.TUAN_LOC ) {
@@ -773,7 +776,9 @@ public class MainObject {
                     }
                 }
                 boolean check = (dame < 0
-                        || (focus.isBoss() && Math.abs(focus.level - ObjAtk.level) >= 5 && focus.level < 139 && focus.template.mob_id != 190 && focus.template.mob_id != 178 && !Map.is_map_cant_save_site(focus.map_id))
+                        || (focus.isBoss() && Math.abs(focus.level - ObjAtk.level) >= 5 && focus.level < 139 && focus.template.mob_id != 190
+                        && focus.template.mob_id != 178 && focus.template.mob_id != 23 && focus.template.mob_id != 51 && focus.template.mob_id != 52
+                        && focus.template.mob_id != 53 && focus.template.mob_id != 79 && !Map.is_map_cant_save_site(focus.map_id))
                         || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 0 && ObjAtk.level > 89)
                         || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 2 && !(ObjAtk.level >= 90 && ObjAtk.level < 110))
                         || (focus.isBoss() && focus.template.mob_id == 178 && map.zone_id == 3 && ObjAtk.level < 110)) && !(map.ismapkogioihan());
@@ -822,6 +827,9 @@ public class MainObject {
                     dame = 2_000_000_000;
                 }
                 ListEf.add(new Eff_TextFire(4, (int) dame));
+            }
+            if(ObjAtk.isPlayer() && focus.isMob() && (focus.template.mob_id == 23 || (focus.template.mob_id >= 51 && focus.template.mob_id <= 53)  || focus.template.mob_id == 79) && dame > 222222){
+                dame = 222222;
             }
 
             //<editor-fold defaultstate="collapsed" desc="Phản Dame       ...">

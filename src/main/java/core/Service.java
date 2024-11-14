@@ -143,7 +143,11 @@ public class Service {
         }
         Message m = new Message(3);
         m.writer().writeShort(p.index);
-        m.writer().writeUTF(p.name);
+        if(Manager.gI().event == 12){
+            m.writer().writeUTF(p.name+"-VIP: "+p.checkvip());
+        }else {
+            m.writer().writeUTF(p.name);
+        }
         m.writer().writeInt(p.hp);
         m.writer().writeInt(hpMax);
         m.writer().writeInt(p.mp);
@@ -889,7 +893,11 @@ public class Service {
                 send_notice_nobox_white(p0.conn, conn.p.name + " đang dòm ngó đồ đạc của bạn");
                 Message m2 = new Message(49);
                 m2.writer().writeShort(p0.index);
-                m2.writer().writeUTF(name);
+                if (Manager.gI().event == 12) {
+                    m2.writer().writeUTF(name + "-VIP: " + p0.checkvip());
+                }else {
+                    m2.writer().writeUTF(name);
+                }
                 m2.writer().writeByte(p0.clazz);
                 m2.writer().writeByte(p0.head);
                 m2.writer().writeByte(p0.eye);
@@ -1877,7 +1885,7 @@ public class Service {
                     }
                     Log.gI().add_log(p.name, "Trừ " + price + " mua đồ lisa");
                     p.update_vang(-price);
-                }else if (ItemTemplate4.item.get(idbuy).getPricetype() == 1 && idbuy == 343){
+                }else if (ItemTemplate4.item.get(idbuy).getPricetype() == 1 && (idbuy == 343 || idbuy == 350)){
                     if (p.checkcoin() < price) {
                         send_notice_box(p.conn, "Không đủ " + price + " coin");
                         return;

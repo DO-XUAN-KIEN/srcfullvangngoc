@@ -193,6 +193,18 @@ public class UseItem {
                 Quask.qua_sk_moi(conn, (byte) 1);
                 break;
             }
+            case 349: {
+                conn.p.item.remove(4,id_potion,1);
+                conn.p.item.char_inventory(4);
+                Quask.qua_sk_hallweeen(conn, (byte) 0);
+                break;
+            }
+            case 350: {
+                conn.p.item.remove(4,id_potion,1);
+                conn.p.item.char_inventory(4);
+                Quask.qua_sk_hallweeen(conn, (byte) 1);
+                break;
+            }
             case 84: {
                 if (conn.p.map.zone_id != conn.p.map.maxzone) {
                     Service.send_notice_box(conn, "Chỉ dùng được trong khu đi buôn");
@@ -1558,6 +1570,7 @@ public class UseItem {
     }
 
     private static void use_item_mount(Session conn, short id) throws IOException {
+        conn.p.id_ngua = -1;
         switch (id) {
             case 62:
             case 63:
@@ -1803,6 +1816,12 @@ public class UseItem {
                 conn.p.id_horse = 145;
                 MapService.update_in4_2_other_inside(conn.p.map, conn.p);
                 Service.send_char_main_in4(conn.p);
+                break;
+            }
+            case 351: {
+                conn.p.type_use_mount = Horse.SKELETON;
+                conn.p.id_ngua = 200;
+                conn.p.map.send_mount(conn.p);
                 break;
             }
         }

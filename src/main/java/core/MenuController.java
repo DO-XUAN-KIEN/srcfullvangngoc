@@ -266,6 +266,10 @@ public class MenuController {
                     menu = new String[]{"Ghép linh hồn 4 mùa thường","Ghép Linh Hồn 4 Mùa Trung Cấp","Ghép Linh Hồn 4 Mùa Cao Cấp", "Xem Top"};
                     send_menu_select(conn, -69, menu, (byte) Manager.gI().event);
                     return;
+                } else if (Manager.gI().event == 12) { // sự kiện hallveen
+                    menu = new String[]{"Ghép rương thường","Đổi quà rương đặc biệt","Ghép rương đặc biệt", "Xem Top"};
+                    send_menu_select(conn, -69, menu, (byte) Manager.gI().event);
+                    return;
                 } else {
                     Service.send_notice_box(conn, "Chưa có chức năng :(.");
                     return;
@@ -308,7 +312,7 @@ public class MenuController {
                 break;
             }
             case -53: {
-                menu = new String[]{" Đăng Ký Chiến trường", "Hướng dẫn", "Đổi đại bàng", "Vào Chiến Trường"};
+                menu = new String[]{" Đăng Ký Chiến trường", "Hướng dẫn", "Đổi Quà", "Vào Chiến Trường"};
                 break;
             }
             default: {
@@ -373,6 +377,10 @@ public class MenuController {
             }
             case 2: {
                 Menu_diemct(conn, index);
+                break;
+            }
+            case -122: {
+                Menu_doiruong(conn, index);
                 break;
             }
             case 4: {
@@ -640,6 +648,9 @@ public class MenuController {
                     Menu_MissSophia(conn, idnpc, idmenu, index);
                 }
                 if (Manager.gI().event == 11) { // hồn gió
+                    Menu_MissSophia(conn, idnpc, idmenu, index);
+                }
+                if (Manager.gI().event == 12) { // dell bik sk gi
                     Menu_MissSophia(conn, idnpc, idmenu, index);
                 }
                 break;
@@ -1040,6 +1051,197 @@ public class MenuController {
             //  }
         }
 
+    }
+    private static void Menu_doiruong(Session conn, byte index) throws IOException {
+        if(!conn.p.isOwner){
+            return;
+        }
+        switch (index){
+            case 0: {
+                short sl = 50;
+                int coin = 50000;
+                if (conn.p.item.total_item_by_id(4, 350) < sl) {
+                    Service.send_notice_box(conn, "Không đủ rương đặc biệt");
+                    return;
+                } else if (conn.p.checkcoin() < coin) {
+                    Service.send_notice_box(conn, "Không đủ coin");
+                    return;
+                } else {
+                    conn.p.update_coin(-coin);
+                    conn.p.item.remove(4, 350, sl);
+                    List<box_item_template> ids = new ArrayList<>();
+                    List<Integer> item3 = new ArrayList<>(java.util.Arrays.asList(4691, 4692, 4693, 4694));
+                    short id = Util.random(item3, new ArrayList<>()).shortValue();
+                    ids.add(new box_item_template(id, (short) 1, (byte) 3));
+                    conn.p.item.add_item_bag3_default(id, 0, true);
+                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
+                }
+                break;
+            }
+            case 1: {
+                short sl = 50;
+                int coin = 50000;
+                if(conn.p.item.total_item_by_id(4, 350) < sl) {
+                    Service.send_notice_box(conn, "Không đủ rương đặc biệt");
+                    return;
+                }else if (conn.p.checkcoin() < coin){
+                    Service.send_notice_box(conn,"Không đủ coin");
+                    return;
+                }else {
+                    conn.p.update_coin(-coin);
+                    conn.p.item.remove(4, 350, sl);
+                    short id = 496;
+                    short quant = 10;
+                    List<box_item_template> ids = new ArrayList<>();
+                    ids.add(new box_item_template(id, quant, (byte) 7));
+                    conn.p.item.add_item_bag47(id, quant, (byte) 7);
+                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
+                }
+                break;
+            }
+            case 2: {
+                short sl = 50;
+                int coin = 50000;
+                if(conn.p.item.total_item_by_id(4, 350) < sl) {
+                    Service.send_notice_box(conn, "Không đủ rương đặc biệt");
+                    return;
+                }else if (conn.p.checkcoin() < coin){
+                    Service.send_notice_box(conn,"Không đủ coin");
+                    return;
+                }else {
+                    conn.p.update_coin(-coin);
+                    conn.p.item.remove(4, 350, sl);
+                    short id = 497;
+                    short quant = 10;
+                    List<box_item_template> ids = new ArrayList<>();
+                    ids.add(new box_item_template(id, quant, (byte) 7));
+                    conn.p.item.add_item_bag47(id, quant, (byte) 7);
+                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
+                }
+                break;
+            }
+            case 3: {
+                short sl = 50;
+                int coin = 50000;
+                if(conn.p.item.total_item_by_id(4, 350) < sl) {
+                    Service.send_notice_box(conn, "Không đủ rương đặc biệt");
+                    return;
+                }else if (conn.p.checkcoin() < coin){
+                    Service.send_notice_box(conn,"Không đủ coin");
+                    return;
+                }else {
+                    conn.p.update_coin(-coin);
+                    conn.p.item.remove(4, 350, sl);
+                    short id = 498;
+                    short quant = 10;
+                    List<box_item_template> ids = new ArrayList<>();
+                    ids.add(new box_item_template(id, quant, (byte) 7));
+                    conn.p.item.add_item_bag47(id, quant, (byte) 7);
+                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
+                }
+                break;
+            }
+            case 4: {
+                short sl = 100;
+                int coin = 200000;
+                if(conn.p.item.total_item_by_id(4, 350) < sl) {
+                    Service.send_notice_box(conn, "Không đủ rương đặc biệt");
+                    return;
+                }else if (conn.p.checkcoin() < coin){
+                    Service.send_notice_box(conn,"Không đủ coin");
+                    return;
+                }else {
+                    conn.p.update_coin(-coin);
+                    conn.p.item.remove(4, 350, sl);
+                    short id = 4796;
+                    List<box_item_template> ids = new ArrayList<>();
+                    ids.add(new box_item_template(id, (short) 1, (byte) 3));
+                    conn.p.item.add_item_bag3_default(id, 0, true);
+                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
+                }
+                break;
+            }
+            case 5: {
+                short sl = 150;
+                int coin = 200000;
+                if(conn.p.item.total_item_by_id(4, 350) < sl) {
+                    Service.send_notice_box(conn, "Không đủ rương đặc biệt");
+                    return;
+                }else if (conn.p.checkcoin() < coin){
+                    Service.send_notice_box(conn,"Không đủ coin");
+                    return;
+                }else {
+                    conn.p.update_coin(-coin);
+                    conn.p.item.remove(4, 350, sl);
+                    short iditem = 4748;
+                    List<box_item_template> ids = new ArrayList<>();
+                    ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
+                    conn.p.item.add_item_bag3_default(iditem,0, true);
+                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
+                }
+                break;
+            }
+            case 6: {
+                short sl = 200;
+                int coin = 200000;
+                if(conn.p.item.total_item_by_id(4, 350) < sl) {
+                    Service.send_notice_box(conn, "Không đủ rương đặc biệt");
+                    return;
+                }else if (conn.p.checkcoin() < coin){
+                    Service.send_notice_box(conn,"Không đủ coin");
+                    return;
+                }else {
+                    conn.p.update_coin(-coin);
+                    conn.p.item.remove(4, 350, sl);
+                    short id = 4617;
+                    List<box_item_template> ids = new ArrayList<>();
+                    ids.add(new box_item_template(id, (short) 1, (byte) 3));
+                    conn.p.item.add_item_bag3_default(id, 0, true);
+                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
+                }
+                break;
+            }
+            case 7: {
+                short sl = 250;
+                int coin = 200000;
+                if(conn.p.item.total_item_by_id(4, 350) < sl) {
+                    Service.send_notice_box(conn, "Không đủ rương đặc biệt");
+                    return;
+                }else if (conn.p.checkcoin() < coin){
+                    Service.send_notice_box(conn,"Không đủ coin");
+                    return;
+                }else {
+                    conn.p.update_coin(-coin);
+                    conn.p.item.remove(4, 350, sl);
+                    short id = 4626;
+                    List<box_item_template> ids = new ArrayList<>();
+                    ids.add(new box_item_template(id, (short) 1, (byte) 3));
+                    conn.p.item.add_item_bag3_default(id, 0, true);
+                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
+                }
+                break;
+            }
+            case 8: {
+                short sl = 300;
+                int coin = 500000;
+                List<box_item_template> ids = new ArrayList<>();
+                if(conn.p.item.total_item_by_id(4, 350) < sl) {
+                    Service.send_notice_box(conn, "Không đủ rương đặc biệt");
+                    return;
+                }else if (conn.p.checkcoin() < coin){
+                    Service.send_notice_box(conn,"Không đủ coin");
+                    return;
+                }else {
+                    conn.p.update_coin(-coin);
+                    conn.p.item.remove(4, 350, sl);
+                    short id = 4708;
+                    ids.add(new box_item_template(id, (short) 1, (byte) 3));
+                    conn.p.item.add_item_bag3_default(id, 0, true);
+                    Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", ids);
+                }
+                break;
+            }
+        }
     }
     private static void Menu_qua20_10(Player p) throws IOException {
         String text = "qua20_10";
@@ -1999,6 +2201,29 @@ public class MenuController {
                 }
                 default:
                     Service.send_notice_box(conn, "Chưa có chức năng ev11!");
+                    break;
+            }
+        } else if (idmenu == 12 && Manager.gI().event == 12) { // sự kiện halloween
+            switch (index) {
+                case 0: {
+                    Service.send_box_input_text(conn, 60, "Rương thường", new String[]{"5 Nguyên liệu"});
+                    break;
+                }
+                case 1: {
+                    send_menu_select(conn,-122, new String[]{"Đổi vũ khí trang bị 2","Đổi ngọc xuyên tim","Đổi ngọc châu bò","Đổi ngọc cuồng bạo"
+                            ,"Đổi cánh v4 vĩnh viễn","Đổi áo choàng đại gia","Đổi pet phượng rồng lửa","Đổi pet phượng hoàng băng","Đổi pet dê con"});
+                    break;
+                }
+                case 2: {
+                    Service.send_box_input_text(conn, 61, "Rương đặc biệt", new String[]{"10 rương thường"});
+                    break;
+                }
+                case 3: {
+                    BXH.send1(conn,1);
+                    break;  
+                }
+                default:
+                    Service.send_notice_box(conn, "Chưa có chức năng ev12!");
                     break;
             }
         } else {
@@ -4783,6 +5008,29 @@ public class MenuController {
                     itbag.quantity = 5;
                     itbag.category = 4;
                     conn.p.item.add_item_bag47(4, itbag);
+                    if(Manager.gI().event == 12){
+                        if (conn.p.checkvip() == 0){
+                            itbag.id = 350;
+                            itbag.quantity = 1;
+                        }else if (conn.p.checkvip() == 1){
+                            itbag.id = 350;
+                            itbag.quantity = 2;
+                        }else if (conn.p.checkvip() == 2){
+                            itbag.id = 350;
+                            itbag.quantity = 4;
+                        }else if (conn.p.checkvip() == 3){
+                            itbag.id = 350;
+                            itbag.quantity = 6;
+                        }else if (conn.p.checkvip() == 4){
+                            itbag.id = 350;
+                            itbag.quantity = 8;
+                        }else if (conn.p.checkvip() == 5){
+                            itbag.id = 350;
+                            itbag.quantity = 10;
+                        }
+                        itbag.category = 4;
+                        conn.p.item.add_item_bag47(4, itbag);
+                    }
                     His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                     hisc.coin_change = coin_;
                     hisc.Logger = "(NHẬN) từ điểm danh";
@@ -4902,7 +5150,7 @@ public class MenuController {
                         ids.add(new box_item_template(iditem, (short) 1, (byte) 3));
                     }
                 }
-                conn.p.doiqua++;
+                //conn.p.doiqua++;
                 conn.p.item.char_inventory(3);
                 conn.p.item.char_inventory(4);
                 conn.p.item.char_inventory(5);
@@ -6454,7 +6702,7 @@ public class MenuController {
                 }
             }
         } else {
-            conn.p.veLang();
+            //conn.p.veLang();
         }
     }
 }

@@ -7,9 +7,7 @@ import ai.NhanBan;
 import ai.Player_Nhan_Ban;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import client.Party;
 import client.Pet;
@@ -121,7 +119,6 @@ public class Map implements Runnable {
             bots = new ArrayList<>();
         }
     }
-
     @Override
     public void run() {
         this.running = true;
@@ -186,7 +183,6 @@ public class Map implements Runnable {
             }
         }
     }
-
     private void auto_chat_npc() {
         try {
             switch (this.map_id) {

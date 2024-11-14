@@ -533,6 +533,16 @@ public class Manager {
                             item_sell.get(Service.SHOP_POTION).add((short) 338);
                             break;
                         }
+                        case 12: {
+                            itempoitionsell = new short[jsar.size() + 1];
+                            for (int i = 0; i < jsar.size(); i++) {
+                                itempoitionsell[i] = Short.parseShort(jsar.get(i).toString());
+                                item_sell.get(Service.SHOP_POTION).add(itempoitionsell[i]);
+                            }
+                            itempoitionsell[itempoitionsell.length - 1] = 350;
+                            item_sell.get(Service.SHOP_POTION).add((short) 350);
+                            break;
+                        }
                         default: {
                             itempoitionsell = new short[jsar.size()];
                             for (int i = 0; i < itempoitionsell.length; i++) {
