@@ -165,7 +165,7 @@ public class BossManager {
                             mob.hp = 0;
                             map[mob.zone_id].Boss_entrys.remove(mob);
                             entrys.remove(mob);
-                            System.out.println("[" + time + "] Boss ID 220 đã bị xóa khỏi map: " + map[mob.zone_id].name);
+                            System.out.println("[" + time + "] Boss ID 193 đã bị xóa khỏi map: " + map[mob.zone_id].name);
                             lastMapId = mob.map_id;
                             break;
                         }

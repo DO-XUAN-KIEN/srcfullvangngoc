@@ -2004,6 +2004,14 @@ public class MapService {
                 }
                 return;
             }
+            if(conn.p.get_EffDefault(StrucEff.DongBang) != null){
+                Service.send_notice_nobox_white(conn, "Bạn đang bị đóng băng trong 5s");
+                return;
+            }
+            if (conn.p.get_EffDefault(StrucEff.ChongMat) != null && Util.random(0,100) > 40){
+                Service.send_notice_nobox_white(conn, "Bạn đang bị Chóng mặt trong 5s");
+                return;
+            }
             // bắt đầu tính dame
             conn.p.mp -= _skill.mpLost;
             n = (_skill.nTarget < n) ? _skill.nTarget : n;

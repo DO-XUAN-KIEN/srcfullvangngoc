@@ -142,6 +142,9 @@ public class MainObject {
         if (MainEff == null) {
             return;
         }
+
+
+
         synchronized (MainEff) {
             if (param1 == 0) {
                 return;
@@ -200,6 +203,9 @@ public class MainObject {
             return false;
         }
         long time = System.currentTimeMillis();
+        if (get_EffDefault(145) != null){
+            return false;
+        }
         synchronized (MainEff) {
             for (EffTemplate e : MainEff) {
                 if (e.id >= -124 && e.id <= -121 && (!isAtk || e.id != -123) && e.time > time) {
@@ -831,7 +837,9 @@ public class MainObject {
             if(ObjAtk.isPlayer() && focus.isMob() && (focus.template.mob_id == 23 || (focus.template.mob_id >= 51 && focus.template.mob_id <= 53)  || focus.template.mob_id == 79) && dame > 222222){
                 dame = 222222;
             }
-
+            if (focus.get_EffDefault(StrucEff.GoiSet) != null){
+                dame *= 0.7;
+            }
             //<editor-fold defaultstate="collapsed" desc="Phản Dame       ...">
             if (ObjAtk.isPlayer() && focus.get_PhanDame() > Util.random(10_000)) {
                 int DAMEpst = (int) (dame * 0.5);
@@ -1095,6 +1103,44 @@ public class MainObject {
                 focus.hp += p_focus.hp_max * (Util.nextInt(20, 25) / 100);
                 Service.send_notice_nobox_white(p_focus.conn, "Giáp cốt");
             }
+            if (focus.isPlayer() && p != null &&
+                    p.total_item_param((byte) 67) > Util.nextInt(10000)) {
+                p_focus.add_EffDefault(StrucEff.TE_CONG, 1, 5000);
+                Service.send_notice_nobox_white(p_focus.conn, "Bạn bị tê cóng");
+            }
+            if (focus.isPlayer() && p != null &&
+                    p.total_item_param((byte) 66) > Util.nextInt(10000)) {
+                p_focus.add_EffDefault(StrucEff.DongBang, 1, 5000);
+                Service.send_notice_nobox_white(p_focus.conn, "Bạn bị đóng băng");
+            }
+            if (focus.isPlayer() && p != null &&
+                    p.total_item_param((byte) 180) > Util.nextInt(10000)) {
+                p_focus.add_EffDefault(StrucEff.ChongMat, 1, 5000);
+                Service.send_notice_nobox_white(p_focus.conn, "Bạn bị chóng mặt");
+            }
+            if (focus.isPlayer() && p != null &&
+                    p.total_item_param((byte) 184) > Util.nextInt(10000)) {
+                p_focus.add_EffDefault(StrucEff.GoiSet, 1, 5000);
+                Service.send_notice_nobox_white(p_focus.conn, "Bạn bị tê liệt");
+            }
+            if (focus.isPlayer() && p != null &&
+                    p.total_item_param((byte) 189) > Util.nextInt(10000)) {
+                p_focus.add_EffDefault(StrucEff.AoGiapLua, 1, 10000);
+                p.add_EffDefault(145,1,10000);
+                Service.send_notice_nobox_white(p_focus.conn, "Áo giáp lửa");
+            }
+            if (focus.isPlayer() && p != null &&
+                    p.total_item_param((byte) 161) > Util.nextInt(10000)) {
+                p.add_EffDefault(StrucEff.LuaHoaNguc, 1, 5000);
+                p_focus.add_EffDefault(146,1,5000);
+                Service.send_notice_nobox_white(p_focus.conn, "Bạn bị Lửa hỏa ngục");
+            }
+            if (focus.isPlayer() && p != null &&
+                    p.total_item_param((byte) 160) > Util.nextInt(10000)) {
+                p.add_EffDefault(StrucEff.LoiPhat, 1, 5000);
+                p_focus.add_EffDefault(147,1,5000);
+                Service.send_notice_nobox_white(p_focus.conn, "Bạn bị Lôi phạt");
+            }
             if (focus.isPlayer() && p != null && p.total_item_param((byte) 177) > Util.nextInt(10000)) {
                 p.add_EffDefault(141,1,5*1000);
                 p_focus.add_EffDefault(140,1,5*1000);
@@ -1319,6 +1365,7 @@ public class MainObject {
                             }
                             if (focus.isPlayer() && my_pet.get_id() == 4626 && Util.nextInt(100) < 5) {
                                 p_focus.add_EffDefault(StrucEff.TE_CONG, 1, 5000);
+                                Service.usepotion(p_focus, 0, (int) -(p_focus.hp * Util.random(5, 10) * 0.01));
                                 Service.send_notice_nobox_white(p_focus.conn, "Bạn bị tê cóng");
                             }
                             if (focus.isPlayer() && my_pet.get_id() == 3616 && Util.nextInt(100) < 5){

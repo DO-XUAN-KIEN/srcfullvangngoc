@@ -446,6 +446,12 @@ public class Map implements Runnable {
                     }else {
                         mapsk = false;
                     }
+                    if (p.get_EffDefault(StrucEff.TE_CONG) != null || p.get_EffDefault(StrucEff.AoGiapLua) != null){
+                        Service.usepotion(p, 0, (int) -(p.hp * Util.random(5, 10) * 0.01));
+                    }
+                    if (p.get_EffDefault(146) != null || p.get_EffDefault(147) != null) {
+                        Service.usepotion(p, 0, (int) -(p.hp * 0.1)); // Giảm 10% HP
+                    }
                     if (this.map_id == 50) { // pet_manager
                         long now_time = System.currentTimeMillis();
                         for (Pet temp : p.mypet) {

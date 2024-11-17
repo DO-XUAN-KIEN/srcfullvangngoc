@@ -1,6 +1,5 @@
 package core;
 
-import BossHDL.BossManager;
 import Helps._Time;
 import event.Event_1;
 import event.NauKeo;
@@ -16,11 +15,8 @@ import event_daily.KingCupManager;
 import io.Session;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Set;
 
 import map.Map;
-
-import static BossHDL.BossManager.callBossToMap;
 
 public class ServerManager implements Runnable {
 
@@ -131,7 +127,7 @@ public class ServerManager implements Runnable {
             }
         }
     }
-    
+
 //    public static void maintance(){
 //       try {
 //           Manager.gI().chatKTGprocess ( "Máy chủ bảo trì sau 5 phút, vui lòng thoát game để tránh mất dữ liệu. Nếu cố tình không thoát chúng tôi không chịu trách nhiệm!");
@@ -151,15 +147,6 @@ public class ServerManager implements Runnable {
                 System.out.println("Started in " + (System.currentTimeMillis() - this.time) + "s");
                 System.out.println();
                 System.out.println("LISTEN PORT " + Manager.gI().server_port + "...");
-                int mapId;
-                Set<Integer> excludedMapIds = Set.of(1, 33, 34, 35, 46, 48, 50);
-                while ((mapId = Util.random(0, 52)) == -1 || excludedMapIds.contains(mapId));
-                Map[] map = Map.get_map_by_id(mapId);
-                if (map != null && map.length > 0) {
-                    short x = (short) ((map[0].mapW * 24) * 0.2 + (map[0].mapW * 24) * 0.6 / 2);
-                    short y = (short) ((map[0].mapH * 24) * 0.2 + (map[0].mapH * 24) * 0.6 / 2);
-                    callBossToMap(mapId, 193, x, y, 1_000_000_000, 139);
-                }
             } catch (Exception ee) {
                 ee.printStackTrace();
                 System.exit(0);
@@ -252,13 +239,13 @@ public class ServerManager implements Runnable {
                         Manager.gI().chatKTGprocess("Bạn Đang Chơi Server" + " Hiệp Sĩ Mango " + "Chúc Bạn Chơi Game Vui Vẻ.");
                     }
 //                    checkError = 5;
-//                    if (min % 4 == 0 && sec == 0) {
-//                        Manager.gI().chatKTGprocess("Lưu Ý Không Để Cho Hành Trang Đầy Chừa 30 Ô Trong Hành Trang Để Tránh Gây Ra Lỗi Mất Đồ! Mua Túi Hành Trang Npc Lisa.");
-//                    }
-                   //  checkError = 5;
-                   // if (min % 2 == 0 && sec == 0) {
-                     //   Manager.gI().chatKTGprocess("Code Test: 1-10.  Nguyên liệu Trắng Cấp 3 Mua Ở Npc Pháp Sư");
-                  //  }
+                    if (min % 4 == 0 && sec == 0) {
+                        Manager.gI().chatKTGprocess("Lưu Ý Không Để Cho Hành Trang Đầy Chừa 30 Ô Trong Hành Trang Để Tránh Gây Ra Lỗi Mất Đồ! Mua Túi Hành Trang Npc Lisa.");
+                    }
+                    //  checkError = 5;
+                    // if (min % 2 == 0 && sec == 0) {
+                    //   Manager.gI().chatKTGprocess("Code Test: 1-10.  Nguyên liệu Trắng Cấp 3 Mua Ở Npc Pháp Sư");
+                    //  }
                     checkError = 3;
                     if (min % 11 == 0 && sec == 0) {
                         Manager.gI().chatKTGprocess("#Tips: Đến zulu để nhận điểm danh hàng ngày, Chơi vòng xoay, mở ly từ xa, hoặc thoát kẹt map hãy vào chức năng -> khác! ");
@@ -316,7 +303,7 @@ public class ServerManager implements Runnable {
                     }
                     if (DayOfWeek % 2 !=0 && hour == 20 && min ==45 && sec == 0) {
                         ChienTruong.gI().open_register();
-                         Manager.gI().chatKTGprocess("Chiến Trường Đã Bắt Đầu Nhanh Tay Lẹ Chân Lên");
+                        Manager.gI().chatKTGprocess("Chiến Trường Đã Bắt Đầu Nhanh Tay Lẹ Chân Lên");
                     }
                     ChienTruong.gI().update();
                     if(DayOfWeek % 2==0 && hour >= 20 && hour <= 23){

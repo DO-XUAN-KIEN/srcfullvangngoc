@@ -225,6 +225,10 @@ public class Body2 extends MainObject {
             hpm *= 0.05;
             hp *= 0.05;
         }
+        if (p.get_EffDefault(StrucEff.GoiSet) != null){
+            hpm *= 0.9;
+            hp *= 0.9;
+        }
         return (int) (hpm * Manager.ratio_hp);
     }
 
@@ -669,6 +673,9 @@ public class Body2 extends MainObject {
                     break;
                 }
             }
+            if (p.get_EffDefault(StrucEff.LoiPhat) != null){
+                dame *= 1.3;
+            }
             dame += ((dame * (get_PercentDameProp(0) / 100)) / 100);
             if (dame > 2_000_000_000) {
                 dame = 2_000_000_000;
@@ -705,6 +712,9 @@ public class Body2 extends MainObject {
                 }
                 break;
             }
+        }
+        if (p.get_EffDefault(StrucEff.LuaHoaNguc) != null){
+            dprop *= 1.15;
         }
         dprop += ((dprop * (get_PercentDameProp(type) / 100)) / 100);
         if (dprop > 2_000_000_000) {

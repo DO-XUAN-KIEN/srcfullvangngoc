@@ -1593,7 +1593,6 @@ public class Player extends Body2 {
 
     public void add_EffDefault(int id, int param, int time) {
         this.body.add_EffDefault(id, param, System.currentTimeMillis() + time);
-
     }
 
     public int getlevelpercent() {

@@ -39,16 +39,16 @@ public class SaveData {
             for (Clan clan : Clan.get_all_clan()) {
                 BXH.BXH_clan.add(clan);
             }
-            Collections.sort(BXH.BXH_clan, new Comparator<Clan>() {
-                @Override
-                public int compare(Clan o1, Clan o2) {
-                    int com1 = (o1.level == o2.level) ? 0 : (o1.level > o2.level) ? -1 : 1;
-                    if (com1 != 0) {
-                        return com1;
-                    }
-                    return (o1.exp >= o2.exp) ? -1 : 1;
-                }
-            });
+//            Collections.sort(BXH.BXH_clan, new Comparator<Clan>() {
+//                @Override
+//                public int compare(Clan o1, Clan o2) {
+//                    int com1 = (o1.level == o2.level) ? 0 : (o1.level > o2.level) ? -1 : 1;
+//                    if (com1 != 0) {
+//                        return com1;
+//                    }
+//                    return (o1.exp >= o2.exp) ? -1 : 1;
+//                }
+//            });
             PreparedStatement ps = conn.prepareStatement(
                     "UPDATE `clan` SET `level` = ?, `exp` = ?, `slogan` = ?, `rule` = ?, `mems` = ?, `item` = ?, `notice` = ?, `vang` = ?, `kimcuong` = ?, `icon` = ?, `max_mem` = ? WHERE `name` = ?;");
             // clan

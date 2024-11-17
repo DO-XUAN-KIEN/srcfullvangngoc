@@ -38,4 +38,10 @@ public class StrucEff {
     public static int VET_THUONG_SAU = 999;
     public static int Quà_noel = 997;
     public static int TE_CONG = 998;
+    public static int GoiSet = 996;
+    public static int DongBang = 995;
+    public static int ChongMat = 994;
+    public static int AoGiapLua = 993;
+    public static int LuaHoaNguc = 992;
+    public static int LoiPhat = 991;
 }
