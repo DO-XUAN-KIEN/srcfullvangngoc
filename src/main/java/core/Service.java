@@ -1885,7 +1885,7 @@ public class Service {
                     }
                     Log.gI().add_log(p.name, "Trừ " + price + " mua đồ lisa");
                     p.update_vang(-price);
-                }else if (ItemTemplate4.item.get(idbuy).getPricetype() == 1 && (idbuy == 343 || idbuy == 350)){
+                }else if (ItemTemplate4.item.get(idbuy).getPricetype() == 1 && (idbuy == 343 || idbuy == 350 || idbuy == 183)){
                     if (p.checkcoin() < price) {
                         send_notice_box(p.conn, "Không đủ " + price + " coin");
                         return;
@@ -1893,6 +1893,7 @@ public class Service {
                     p.update_coin((int) -price);
                     His_COIN hisc = new His_COIN(p.conn.user ,p.name);
                     hisc.coin_change = (int) price;
+                    hisc.coin_last = p.checkcoin();
                     hisc.Logger = "(TRỪ COIN) từ mua do1";
                     hisc.Flus();
                     //Log.gI().add_log(p.name, "trừ "+price+" coin từ mua do1");
@@ -1978,6 +1979,7 @@ public class Service {
                             send_notice_box(p.conn, "Mua thành công trang bị " + itbag.name);
                             His_COIN hisc = new His_COIN(p.conn.user ,p.name);
                             hisc.coin_change = itsell3.price;
+                            hisc.coin_last = p.checkcoin();
                             hisc.Logger = "(TRỪ COIN) từ mua do2";
                             hisc.Flus();
                             return;
@@ -2071,6 +2073,7 @@ public class Service {
                                     p.item.char_inventory(3);
                                     His_COIN hisc = new His_COIN(p.conn.user ,p.name);
                                     hisc.coin_change = itemsellcoin.price;
+                                    hisc.coin_last = p.checkcoin();
                                     hisc.Logger = "(TRỪ COIN) từ mua do3";
                                     hisc.Flus();
                                     send_notice_box(p.conn, "Mua thành công " + ItemTemplate3.item.get(idbuy).getName());
@@ -2110,6 +2113,7 @@ public class Service {
                                     p.item.char_inventory(3);
                                     His_COIN hisc = new His_COIN(p.conn.user ,p.name);
                                     hisc.coin_change = (int) itemshoptt.price;
+                                    hisc.coin_last = p.checkcoin();
                                     hisc.Logger = "(TRỪ COIN) từ mua do4";
                                     hisc.Flus();
                                     send_notice_box(p.conn, "Mua thành công " + ItemTemplate3.item.get(idbuy).getName());
@@ -2201,6 +2205,7 @@ public class Service {
                     p.update_coin((int) -price);
                     His_COIN hisc = new His_COIN(p.conn.user ,p.name);
                     hisc.coin_change = (int) price;
+                    hisc.coin_last = p.checkcoin();
                     hisc.Logger = "(TRỪ COIN) từ mua do5";
                     hisc.Flus();
                     //Log.gI().add_log(p.name, "trừ "+price+" coin từ mua do2");

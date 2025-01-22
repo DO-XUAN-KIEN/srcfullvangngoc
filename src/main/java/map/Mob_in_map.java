@@ -148,7 +148,7 @@ public class Mob_in_map extends MainObject {
                 p.danhvong += 1;
                 p.item.char_inventory(5);
                 if (mainAtk.isPlayer()) {
-                    if ((Math.abs(mob.level - mainAtk.level) <= 10 || map.map_id == 136) && !check_mob_roi_ngoc_kham) {
+                    if ((Math.abs(mob.level - mainAtk.level) <= 10 || map.map_id == 136 || map.map_id == 137) && !check_mob_roi_ngoc_kham) {
                         if (map.isMapLangPhuSuong()) {
                             int percent = 20;
                             if (percent > Util.random(0, 300)) {

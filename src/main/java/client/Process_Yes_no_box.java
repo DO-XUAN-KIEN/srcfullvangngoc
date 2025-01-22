@@ -97,6 +97,7 @@ public class Process_Yes_no_box {
                         conn.p.update_coin(-100_000);
                         His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                         hisc.coin_change = 100000;
+                        hisc.coin_last = conn.p.checkcoin();
                         hisc.Logger = "(TRỪ COIN) từ đệ tử";
                         hisc.Flus();
                         //Log.gI().add_log(conn.p.name, "trừ 100k coin từ đệ tử");
@@ -137,6 +138,7 @@ public class Process_Yes_no_box {
                     conn.p.update_coin(-5_000);
                     His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                     hisc.coin_change = 5000;
+                    hisc.coin_last = conn.p.checkcoin();
                     hisc.Logger = "(TRỪ COIN) từ làng phủ sương";
                     hisc.Flus();
                     //Log.gI().add_log(conn.p.name, "trừ 5k coin từ làng phủ sương");

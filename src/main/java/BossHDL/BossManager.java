@@ -5,6 +5,7 @@ import core.Manager;
 import core.Util;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -105,7 +106,7 @@ public class BossManager {
                 if (id == 190){
                     if(Manager.gI().event != 7) continue;
                 }
-                if (id == 23 || id == 51 || id == 52 || id == 53 || id == 79 ||id == 193){
+                if (id == 23 || id == 51 || id == 52 || id == 53 || id == 79){
                     if (Manager.gI().event != 12) continue;
                 }
                 Mob m = Mob.entrys.get(id);
@@ -153,38 +154,6 @@ public class BossManager {
     public static void Update() {
         try {
             long time = System.currentTimeMillis();
-            // Chỉnh lại time boss
-            if (time - lastBossSpawnTime >= 1000 * 60 * 60 * 3) {
-                // Xóa boss cũ
-                for (Mob_in_map mob : entrys) {
-                    if (mob.template.mob_id == 193 && mob.is_boss_active) {
-                        Map[] map = Map.get_map_by_id(mob.map_id);
-                        if (map != null && map.length > mob.zone_id) {
-                            mob.is_boss_active = false;
-                            mob.isDie = true;
-                            mob.hp = 0;
-                            map[mob.zone_id].Boss_entrys.remove(mob);
-                            entrys.remove(mob);
-                            System.out.println("[" + time + "] Boss ID 193 đã bị xóa khỏi map: " + map[mob.zone_id].name);
-                            lastMapId = mob.map_id;
-                            break;
-                        }
-                    }
-                }
-                // xuất hiện từ map 0 đến 52, trừ map 1,46 ,48, 50, còn mấy máp nữa tự thêm
-                int mapId;
-                Set<Integer> excludedMapIds = Set.of(1, 33, 34, 35, 46, 48, 50);
-                while ((mapId = Util.random(0, 52)) == lastMapId || excludedMapIds.contains(mapId));
-
-                Map[] map = Map.get_map_by_id(mapId);
-                if (map != null && map.length > 0) {
-                    short x = (short) ((map[0].mapW * 24) * 0.2 + (map[0].mapW * 24) * 0.6 / 2);
-                    short y = (short) ((map[0].mapH * 24) * 0.2 + (map[0].mapH * 24) * 0.6 / 2);
-                    callBossToMap(mapId, 193, x, y, 1_000_000_000, 139);
-                }
-                lastBossSpawnTime = time;
-            }
-            // code gốc k đụng vào
             for(Mob_in_map mob : entrys){
                 if((!mob.is_boss_active || mob.isDie) && time > mob.time_back){
                     Map[] map = Map.get_map_by_id(mob.map_id);
@@ -195,10 +164,10 @@ public class BossManager {
                     if(map[mob.zone_id].Boss_entrys.contains(mob))
                         map[mob.zone_id].Boss_entrys.remove(mob);
                     map[mob.zone_id].Boss_entrys.add(mob);
-                    if (mob.template.mob_id == 193) {
-                        Manager.gI().chatKTGprocess(""+mob.template.name+" đã xuất hiện tại "+map[mob.zone_id].name);
-                        System.out.println(map[mob.zone_id].name+" "+mob.zone_id+1);
-                    }
+//                    if (mob.template.mob_id == 193) {
+//                        Manager.gI().chatKTGprocess(""+mob.template.name+" đã xuất hiện tại "+map[mob.zone_id].name);
+//                        System.out.println(map[mob.zone_id].name+" "+mob.zone_id+1);
+//                    }
                     //System.out.println("Boss "+mob.template.name+" Acctive "+map[mob.zone_id].name+ " khu "+(mob.zone_id+1));
                 }
             }

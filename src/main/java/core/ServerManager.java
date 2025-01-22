@@ -1,5 +1,6 @@
 package core;
 
+import BossHDL.BossTG;
 import Helps._Time;
 import event.Event_1;
 import event.NauKeo;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import map.Map;
+import template.MainObject;
 
 public class ServerManager implements Runnable {
 
@@ -28,6 +30,7 @@ public class ServerManager implements Runnable {
     private final long time;
     public long time_l;
     private long time2;
+    public BossTG bossTG;
     private byte checkError;
     private static final int HOUR_START_KING_CUP = 18;
     private static final int MIN_START_KING_CUP = 30;
@@ -324,18 +327,30 @@ public class ServerManager implements Runnable {
                         Manager.gI().chatKTGprocess(" Thời gian chiếm mỏ đã đóng!");
                     }
                     checkError = 11;
+                    checkError = 12;
                     if (min % 1 == 0 && sec == 4) {
                         Manager.gI().chiem_mo.harvest_all();
                     }
-                    checkError = 12;
+                    checkError = 13;
                     if (sec % 10 == 0) {
                         BossHDL.BossManager.Update();
                     }
-                    checkError = 13;
+                    checkError = 14;
                     if (Manager.gI().event == 2) {
                         ev_he.Event_2.Update();
                         if (min % 5 == 0 && sec == 0) {
                             ev_he.Event_2.sort_bxh();
+                        }
+                    }
+                    if (Manager.gI().event == 8) {
+                        ev_he.Event_8.Update();
+                        if (sec == 1 && min == 0 && hour == 19){
+                            Manager.gI().bossTG.refresh();
+                        }else if (sec == 0 && min == 30 && hour == 19){
+                            Manager.gI().bossTG.finish();
+                        }
+                        if (min % 5 == 0 && sec == 0) {
+                            ev_he.Event_8.sort_bxh();
                         }
                     }
                     if (Manager.gI().event == 3 && min % 5 == 0 && sec == 0) {
@@ -350,9 +365,9 @@ public class ServerManager implements Runnable {
                     if (Manager.gI().event == 6 && min % 5 == 0 && sec == 0) {
                         ev_he.Event_6.sort_bxh();
                     }
-                    checkError = 14;
+                    checkError = 15;
                     _Time.timeDay = _Time.GetTime();
-                    checkError = 21;
+                    checkError = 16;
                     long time_sleep = 1000 - millis;
                     if (time_sleep > 0) {
                         if (time_sleep < 100) {
@@ -360,7 +375,7 @@ public class ServerManager implements Runnable {
                         }
                         Thread.sleep(time_sleep);
                     }
-                    checkError = 22;
+                    checkError = 17;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

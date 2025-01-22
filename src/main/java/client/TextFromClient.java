@@ -103,6 +103,7 @@ public class TextFromClient {
                             conn.p.update_coin(-100_000);
                             His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                             hisc.coin_change = 100_000;
+                            hisc.coin_last = conn.p.checkcoin();
                             hisc.Logger = "(TRỪ COIN) từ kết hôn";
                             hisc.Flus();
                             //Log.gI().add_log(conn.p.name, "trừ 100k coin từ kết hôn");
@@ -359,6 +360,7 @@ public class TextFromClient {
                             if(coin_up > 0) {
                                 His_COIN hisc = new His_COIN(conn.user, conn.p.name);
                                 hisc.coin_change = coin_up;
+                                hisc.coin_last = conn.p.checkcoin();
                                 hisc.Logger = "(NHẬN) từ gitcode";
                                 hisc.Flus();
                             }
@@ -600,6 +602,7 @@ public class TextFromClient {
                     Service.send_notice_box(conn, "Đổi thành công" + coin_exchange * 3 * Manager.gI().giakmngoc + "ngọc");
                     His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                     hisc.coin_change = coin_exchange * 3 * Manager.gI().giakmngoc;
+                    hisc.coin_last = conn.p.checkcoin();
                     hisc.Logger = "(TRỪ COIN) từ đổi coin sang ngọc";
                     hisc.Flus();
                     //Log.gI().add_log(conn.p.name, "trừ" +coin_exchange+ "coin từ đổi coin sang vàng");
@@ -916,6 +919,7 @@ public class TextFromClient {
                     Log.gI().add_log(conn.p.name, "Nhận " + ((coin_exchange * 1_000) * Manager.gI().giakmgold) + " từ đổi coin ra vàng");
                     His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                     hisc.coin_change = coin_exchange;
+                    hisc.coin_last = conn.p.checkcoin();
                     hisc.Logger = "(TRỪ COIN) từ đổi coin sang vàng";
                     hisc.Flus();
                     //Log.gI().add_log(conn.p.name, "trừ " +coin_exchange+"coin từ đổi coin sang vàng");
@@ -2080,6 +2084,7 @@ public class TextFromClient {
                     Service.send_notice_box(conn, "Đổi thành công" + dong_money * Util.random(0,2000) + "coin");
                     His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                     hisc.coin_change = dong_money * Util.random(500,2000);
+                    hisc.coin_last = conn.p.checkcoin();
                     hisc.Logger = "(NHẬN) từ đồng money";
                     hisc.Flus();
                     //Log.gI().add_log(conn.p.name, "Nhận " + dong_money * Util.random(500,2000) + " từ đổi đồng money ra coin");
@@ -2171,6 +2176,7 @@ public class TextFromClient {
                 conn.p.update_coin(-coin);
                 His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                 hisc.coin_change = coin;
+                hisc.coin_last = conn.p.checkcoin();
                 hisc.Logger = "(TRỪ COIN) từ sk1";
                 hisc.Flus();
                 //Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk1");
@@ -2332,6 +2338,7 @@ public class TextFromClient {
                 conn.p.update_coin(-coin);
                 His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                 hisc.coin_change = coin;
+                hisc.coin_last = conn.p.checkcoin();
                 hisc.Logger = "(TRỪ COIN) từ sk2";
                 hisc.Flus();
                 //Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk2");
@@ -2420,6 +2427,7 @@ public class TextFromClient {
                 conn.p.update_coin(-coin);
                 His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                 hisc.coin_change = coin;
+                hisc.coin_last = conn.p.checkcoin();
                 hisc.Logger = "(TRỪ COIN) từ sk3";
                 hisc.Flus();
                 //Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk3");
@@ -2485,6 +2493,7 @@ public class TextFromClient {
                 conn.p.update_vang(-vag);
                 His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                 hisc.coin_change = coin;
+                hisc.coin_last = conn.p.checkcoin();
                 hisc.Logger = "(TRỪ COIN) từ sk4";
                 hisc.Flus();
                 //Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk4");
@@ -2554,6 +2563,7 @@ public class TextFromClient {
                 conn.p.update_vang(-vag);
                 His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                 hisc.coin_change = coin;
+                hisc.coin_last = conn.p.checkcoin();
                 hisc.Logger = "(TRỪ COIN) từ sk5";
                 hisc.Flus();
                 //Log.gI().add_log(conn.p.name, "trừ "+coin+" coin từ sk5");

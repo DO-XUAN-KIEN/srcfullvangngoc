@@ -417,6 +417,72 @@ public class Quask {
             }
         }
     }
+    public static void Menu_noel(Session conn, byte index) throws IOException{
+        switch (index){
+            case 0: {// Đồng money
+                short id = 494;
+                short quant = (short) Util.random(1, 10);
+                conn.p.item.add_item_bag47(id, quant, (byte) 7);
+                Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", new short[]{id}, new int[]{quant}, new short[]{7});
+                break;
+            }
+            case 1: {// ngọc khảm
+                short id = (short) Util.random(352, 382);
+                short quant = (short) Util.random(1, 10);
+                conn.p.item.add_item_bag47(id, quant, (byte) 7);
+                Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", new short[]{id}, new int[]{quant}, new short[]{7});
+                break;
+            }
+            case 2: {// hồ quang
+                short id = (short) Util.random(481, 493);
+                short quant = (short) Util.random(1, 50);
+                conn.p.item.add_item_bag47(id, quant, (byte) 7);
+                Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", new short[]{id}, new int[]{quant}, new short[]{7});
+                break;
+            }
+            case 3: {// thú cưỡi thường
+                List<Integer> thucuoithuong = new ArrayList<>(java.util.Arrays.asList(Util.random(62, 67), 124, 222, 246, 251, 269, 271, 275, 279, 281, 294, 299, 301, 323));
+                short id = Util.random(thucuoithuong, new ArrayList<>()).shortValue();
+                short quant = (short) Util.random(1, 10);
+                conn.p.item.add_item_bag47(id, quant, (byte) 4);
+                Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", new short[]{id}, new int[]{quant}, new short[]{4});
+                break;
+            }
+            case 4: {// thú cưỡi vv
+                List<Integer> thucuoivv = new ArrayList<>(java.util.Arrays.asList(248, 250, 268, 296, 313, 314, 315, 316, 317));
+                short id = Util.random(thucuoivv, new ArrayList<>()).shortValue();
+                short quant = 1;
+                conn.p.item.add_item_bag47(id, quant, (byte) 4);
+                Service.Show_open_box_notice_item(conn.p, "Bạn nhận được", new short[]{id}, new int[]{quant}, new short[]{4});
+                break;
+            }
+            case 5: { // tuần lộc vip
+                short id = 352;
+                short quant = 1;
+                conn.p.item.add_item_bag47(id, quant, (byte) 4);
+                Service.Show_open_box_notice_item(conn.p,"Bạn nhận được", new short[]{id},new int[]{quant}, new short[]{4});
+                break;
+            }
+            case 6: { // dây chuyền vip
+                short id = 4880;
+                conn.p.item.add_item_bag3_default(id, 0, true);
+                Service.Show_open_box_notice_item(conn.p,"Bạn nhận được", new short[]{id},new int[]{1}, new short[]{3});
+                break;
+            }
+            case 7: { // Găng vip
+                short id = 4881;
+                conn.p.item.add_item_bag3_default(id, 0, true);
+                Service.Show_open_box_notice_item(conn.p,"Bạn nhận được", new short[]{id},new int[]{1}, new short[]{3});
+                break;
+            }
+            case 8: { // Giày vip
+                short id = 4882;
+                conn.p.item.add_item_bag3_default(id, 0, true);
+                Service.Show_open_box_notice_item(conn.p,"Bạn nhận được", new short[]{id},new int[]{1}, new short[]{3});
+                break;
+            }
+        }
+    }
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="sk mới...">

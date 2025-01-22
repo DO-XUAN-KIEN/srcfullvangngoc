@@ -1,9 +1,0 @@
-[10:28:24 PM]  Login : [Vàng] : 5.922.536.478 : [Ngọc] : 1.999.946.667
-[10:28:57 PM]  Nhận 0 từ gitcode
-[10:28:57 PM]  Nhận giftcode codett : 0 vàng
-[10:28:57 PM]  Nhận giftcode codett : 0 ngọc
-[10:30:21 PM]  Login : [Vàng] : 5.922.536.478 : [Ngọc] : 1.999.946.667
-[10:31:14 PM]  Nhận 20000 từ lôi đài
-[10:31:40 PM]  Nhận 20000 từ lôi đài
-[10:51:07 PM]  Login : [Vàng] : 5.922.536.478 : [Ngọc] : 1.999.945.167
-[10:56:52 PM]  Login : [Vàng] : 5.922.536.478 : [Ngọc] : 1.999.945.167

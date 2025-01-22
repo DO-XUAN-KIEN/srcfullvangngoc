@@ -277,6 +277,17 @@ public class MessageHandler {
             }
             case 12: {
                 conn.p.is_changemap = false;
+                if (conn.p.map.equals(Manager.gI().bossTG.map)) {
+                    Message m3 = new Message(4);
+                    m3.writer().writeByte(0);
+                    m3.writer().writeShort(0);
+                    m3.writer().writeShort(Manager.gI().bossTG.id);
+                    m3.writer().writeShort(Manager.gI().bossTG.p.x);
+                    m3.writer().writeShort(Manager.gI().bossTG.p.y);
+                    m3.writer().writeByte(-1);
+                    conn.addmsg(m3);
+                    m3.cleanup();
+                }
                 if (Map.is_map_chien_truong(conn.p.map.map_id)) {
                     ChienTruong.gI().send_info(conn.p);
                     //
@@ -304,6 +315,14 @@ public class MessageHandler {
                     // weather map dungeon
                     Message mw = new Message(76);
                     mw.writer().writeByte(4);
+                    mw.writer().writeShort(-1);
+                    mw.writer().writeShort(-1);
+                    conn.addmsg(mw);
+                    mw.cleanup();
+                }
+                if (Manager.gI().event == 8){
+                    Message mw = new Message(76);
+                    mw.writer().writeByte(2);
                     mw.writer().writeShort(-1);
                     mw.writer().writeShort(-1);
                     conn.addmsg(mw);
@@ -341,37 +360,41 @@ public class MessageHandler {
                 }
 
                 Player p0 = null;
-                for (int i = 0; i < conn.p.map.players.size(); i++) {
-                    Player p01 = conn.p.map.players.get(i);
-                    if (p01.index == id) {
-                        p0 = p01;
-                        break;
-                    }
-                }
-                if (p0 != null) {
-                    MapService.send_in4_other_char(conn.p.map, conn.p, p0);
-                } else if (Map.is_map_chiem_mo(conn.p.map, true)) {
-                    NhanBan temp = null;
-                    for (int i = 0; i < Manager.gI().list_nhanban.size(); i++) {
-                        NhanBan temp2 = Manager.gI().list_nhanban.get(i);
-                        if (temp2.index == id) {
-                            temp = temp2;
+                if (id ==  Short.toUnsignedInt((short) 2)) { // boss tg
+                    Manager.gI().bossTG.send_in4(conn.p);
+                } else {
+                    for (int i = 0; i < conn.p.map.players.size(); i++) {
+                        Player p01 = conn.p.map.players.get(i);
+                        if (p01.index == id) {
+                            p0 = p01;
                             break;
                         }
                     }
-                    if (temp != null) {
-                        try {
-                            temp.send_in4(conn.p);
-                        } catch (Exception e) {
+                    if (p0 != null) {
+                        MapService.send_in4_other_char(conn.p.map, conn.p, p0);
+                    } else if (Map.is_map_chiem_mo(conn.p.map, true)) {
+                        NhanBan temp = null;
+                        for (int i = 0; i < Manager.gI().list_nhanban.size(); i++) {
+                            NhanBan temp2 = Manager.gI().list_nhanban.get(i);
+                            if (temp2.index == id) {
+                                temp = temp2;
+                                break;
+                            }
                         }
+                        if (temp != null) {
+                            try {
+                                temp.send_in4(conn.p);
+                            } catch (Exception e) {
+                            }
+                        }
+                    } else if (Map.is_map_chien_truong(conn.p.map.map_id)) {
+                        ChienTruong.gI().get_ai(conn.p, id);
+                    } else {
+                        Message m3 = new Message(8);
+                        m3.writer().writeShort(id);
+                        conn.addmsg(m3);
+                        m3.cleanup();
                     }
-                } else if (Map.is_map_chien_truong(conn.p.map.map_id)) {
-                    ChienTruong.gI().get_ai(conn.p, id);
-                } else {
-                    Message m3 = new Message(8);
-                    m3.writer().writeShort(id);
-                    conn.addmsg(m3);
-                    m3.cleanup();
                 }
                 break;
             }
@@ -470,8 +493,13 @@ public class MessageHandler {
                 if (b != 0) {
                     break;
                 }
-                short id = (short) (m.reader().readShort() - 1000);
-                MenuController.send_menu_select(conn, id, new String[]{"Hái quả"}, (byte) Manager.gI().event);
+                if (Manager.gI().event == 8) {
+                    short id = (short) (m.reader().readShort() - 1000);
+                    MenuController.send_menu_select(conn, id, new String[]{"Nhận quà"}, (byte) Manager.gI().event);
+                }else {
+                    short id = (short) (m.reader().readShort() - 1000);
+                    MenuController.send_menu_select(conn, id, new String[]{"Hái quả"}, (byte) Manager.gI().event);
+                }
                 break;
             }
             default: {

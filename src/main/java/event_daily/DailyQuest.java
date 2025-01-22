@@ -141,6 +141,7 @@ public class DailyQuest {
             p.update_coin(ngoc);
             His_COIN hisc = new His_COIN(p.conn.user ,p.name);
             hisc.coin_change = ngoc;
+            hisc.coin_last = p.checkcoin();
             hisc.Logger = "(NHẬN) từ nhiệm vụ hàng ngày";
             hisc.Flus();
             //Log.gI().add_log(p.name, "Nhận " + ngoc + " từ điểm danh hàng ngày");

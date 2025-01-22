@@ -1,6 +1,5 @@
 package map;
 
-import History.His_DelItem;
 import ai.Bot;
 import ai.MobAi;
 import ai.NhanBan;
@@ -18,6 +17,7 @@ import core.Service;
 import core.Util;
 import ev_he.MobCay;
 //import event_daily.LoiDai;
+import ev_he.MobNoel;
 import event_daily.KingCup;
 import event_daily.UseItemArena;
 import event_daily.ChienTruong;
@@ -75,6 +75,7 @@ public class Map implements Runnable {
     public long time_ct;
     public long time_chat;
     public CopyOnWriteArrayList<MobCay> mobEvens = new CopyOnWriteArrayList<>();
+    public CopyOnWriteArrayList<MobNoel> mobnoel = new CopyOnWriteArrayList<>();
     public final CopyOnWriteArrayList<Mob_in_map> Boss_entrys = new CopyOnWriteArrayList<>();
     public final CopyOnWriteArrayList<MobAi> Ai_entrys;
     public List<Bot> bots;
@@ -538,6 +539,7 @@ public class Map implements Runnable {
                     }
                     if (p.squire != null && !p.isSquire) {
                         Squire.update(p);
+
                     }
                     p.update_wings_time();
                     for (Pet pet : p.mypet) {
@@ -798,6 +800,9 @@ public class Map implements Runnable {
         if (Manager.gI().event == 1 && this.map_id == 1) {
             path = "data/npc/event" + Manager.gI().event + "/";
             Service.send_msg_data(p.conn, -49, "event1_1");
+        }else if (Manager.gI().event == 8 && this.map_id == 1){
+            path = "data/npc/event1/";
+            Service.send_msg_data(p.conn, -49, "event1_1");
         } else if (Manager.gI().event == 3 && this.map_id == 1) {
             path = "data/npc/event4/";
             Service.eff_map(this, p, -65, 60, 648, 360, 4, 2, 95);
@@ -914,8 +919,13 @@ public class Map implements Runnable {
             m.writer().writeUTF("Giao Tiếp");
             m.writer().writeByte(-99);// id npc
             m.writer().writeByte(56);   // icon
-            m.writer().writeShort(423); // x
-            m.writer().writeShort(234); // y
+            if (Manager.gI().event == 8){
+                m.writer().writeShort(598); // x
+                m.writer().writeShort(246); // y
+            }else {
+                m.writer().writeShort(423); // x
+                m.writer().writeShort(234); // y
+            }
             m.writer().writeByte(1);
             m.writer().writeByte(1);
             m.writer().writeByte(2);
@@ -1062,6 +1072,14 @@ public class Map implements Runnable {
         return null;
     }
     public static Map get_Leo_thap(int id) {
+        for (Map[] temp : entrys) {
+            if (temp[0].map_id == id) {
+                return temp[0];
+            }
+        }
+        return null;
+    }
+    public static Map get_id(int id) {
         for (Map[] temp : entrys) {
             if (temp[0].map_id == id) {
                 return temp[0];

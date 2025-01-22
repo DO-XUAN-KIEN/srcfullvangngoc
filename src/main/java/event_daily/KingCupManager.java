@@ -210,6 +210,7 @@ public class KingCupManager {
                 p.update_coin(coin);
                 His_COIN hisc = new His_COIN(p.conn.user ,p.name);
                 hisc.coin_change = coin;
+                hisc.coin_last = p.checkcoin();
                 hisc.Logger = "(NHẬN) từ lôi đài";
                 hisc.Flus();
                 //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
@@ -224,6 +225,7 @@ public class KingCupManager {
                 isHaveBook = true;
                 His_COIN hisc = new His_COIN(p.conn.user ,p.name);
                 hisc.coin_change = coin;
+                hisc.coin_last = p.checkcoin();
                 hisc.Logger = "(NHẬN) từ lôi đài";
                 hisc.Flus();
                 //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
@@ -237,6 +239,7 @@ public class KingCupManager {
                 p.update_coin(coin);
                 His_COIN hisc = new His_COIN(p.conn.user ,p.name);
                 hisc.coin_change = coin;
+                hisc.coin_last = p.checkcoin();
                 hisc.Logger = "(NHẬN) từ lôi đài";
                 hisc.Flus();
                 //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
@@ -250,6 +253,7 @@ public class KingCupManager {
                 p.update_coin(coin);
                 His_COIN hisc = new His_COIN(p.conn.user ,p.name);
                 hisc.coin_change = coin;
+                hisc.coin_last = p.checkcoin();
                 hisc.Logger = "(NHẬN) từ lôi đài";
                 hisc.Flus();
                 //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
@@ -263,6 +267,7 @@ public class KingCupManager {
                 p.update_coin(coin);
                 His_COIN hisc = new His_COIN(p.conn.user ,p.name);
                 hisc.coin_change = coin;
+                hisc.coin_last = p.checkcoin();
                 hisc.Logger = "(NHẬN) từ lôi đài";
                 hisc.Flus();
                 //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");
@@ -276,6 +281,7 @@ public class KingCupManager {
                 p.update_coin(coin);
                 His_COIN hisc = new His_COIN(p.conn.user ,p.name);
                 hisc.coin_change = coin;
+                hisc.coin_last = p.checkcoin();
                 hisc.Logger = "(NHẬN) từ lôi đài";
                 hisc.Flus();
                 //Log.gI().add_log(p.name, "Nhận " + coin + " từ lôi đài");

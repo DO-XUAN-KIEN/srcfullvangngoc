@@ -1,5 +1,0 @@
-[09:19:33 AM]  Login : [Vàng] : 2.073.197.542 : [Ngọc] : 1.999.958.470
-[09:20:45 AM]  Logout : [Vàng] : 2.073.197.542 : [Ngọc] : 1.999.958.470
-[09:20:47 AM]  Login : [Vàng] : 2.073.197.542 : [Ngọc] : 1.999.958.470
-[09:20:57 AM]  Nhận giftcode codemd : 0 vàng
-[09:20:57 AM]  Nhận giftcode codemd : 0 ngọc

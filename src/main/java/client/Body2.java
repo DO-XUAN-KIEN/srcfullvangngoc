@@ -200,6 +200,9 @@ public class Body2 extends MainObject {
         if(p.type_use_mount == Horse.SKELETON && p.id_ngua == 200){
             percent += 3000;
         }
+        if(p.type_use_mount == Horse.TUAN_LOC && p.id_ngua == 100){
+            percent += 3000;
+        }
         if (p.type_use_mount == Horse.HEO_RUNG || p.type_use_mount == Horse.CON_LAN || p.type_use_mount == Horse.SKELETON
                 || p.type_use_mount == Horse.CHUOT_TUYET || p.type_use_mount == Horse.VOI_MA_MUT
                 || p.type_use_mount == Horse.MA_TOC_DO || p.type_use_mount == Horse.RONG_BANG) {
@@ -313,6 +316,9 @@ public class Body2 extends MainObject {
         if (p.type_use_mount == Horse.SKELETON && p.id_ngua == 200){
             pie += 2000;
         }
+        if (p.type_use_mount == Horse.TUAN_LOC && p.id_ngua == 100){
+            pie += 2000;
+        }
         return (int) (pie / 2.1);
     }
     @Override
@@ -338,6 +344,9 @@ public class Body2 extends MainObject {
         if (p.type_use_mount == Horse.SKELETON && p.id_ngua == 200){
             param += 2000;
         }
+        if (p.type_use_mount == Horse.TUAN_LOC && p.id_ngua == 100){
+            param += 2000;
+        }
         return (int) (param / 2.1);
     }
     @Override
@@ -357,6 +366,9 @@ public class Body2 extends MainObject {
             param *= 0.05;
         }
         if (p.type_use_mount == Horse.SKELETON && p.id_ngua == 200){
+            param += 2000;
+        }
+        if (p.type_use_mount == Horse.TUAN_LOC && p.id_ngua == 100){
             param += 2000;
         }
         if (p.get_EffDefault(142) != null) {
@@ -391,6 +403,9 @@ public class Body2 extends MainObject {
         if (p.type_use_mount == Horse.SKELETON && p.id_ngua == 200){
             crit += 2000;
         }
+        if (p.type_use_mount == Horse.TUAN_LOC && p.id_ngua == 100){
+            crit += 2000;
+        }
         return (int) (crit / 2.1);
     }
 
@@ -421,6 +436,9 @@ public class Body2 extends MainObject {
             def += 2000;
         }
         if (p.type_use_mount == Horse.SKELETON && p.id_ngua == 200){
+            def += 2000;
+        }
+        if (p.type_use_mount == Horse.TUAN_LOC && p.id_ngua == 100){
             def += 2000;
         }
         if (p.type_use_mount == Horse.NGUA_CHIEN_GIAP || p.type_use_mount == Horse.VOI_MA_MUT) {
@@ -636,6 +654,9 @@ public class Body2 extends MainObject {
         }
         //<editor-fold defaultstate="collapsed" desc="ngựa...">
         if (p.type_use_mount == Horse.SKELETON && p.id_ngua == 200){
+            perct += 3500;
+        }
+        if (p.type_use_mount == Horse.TUAN_LOC && p.id_ngua == 100){
             perct += 3500;
         }
         if (p.type_use_mount == Horse.NGUA_XICH_THO) {

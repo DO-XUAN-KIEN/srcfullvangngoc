@@ -205,6 +205,34 @@ public class UseItem {
                 Quask.qua_sk_hallweeen(conn, (byte) 1);
                 break;
             }
+            case 353: {// rương đồng money
+                conn.p.item.remove(4,id_potion,1);
+                conn.p.item.char_inventory(4);
+                Quask.Menu_noel(conn, (byte) 0);
+                break;
+            }
+            case 354: {// rương ngọc khảm
+                conn.p.item.remove(4,id_potion,1);
+                conn.p.item.char_inventory(4);
+                Quask.Menu_noel(conn, (byte) 1);
+                break;
+            }
+            case 355: {// rương thú cưỡi
+                conn.p.item.remove(4,id_potion,1);
+                conn.p.item.char_inventory(4);
+                if (Util.random(100)< 5){
+                    Quask.Menu_noel(conn,(byte) 4);
+                }else {
+                    Quask.Menu_noel(conn,(byte) 3);
+                }
+                break;
+            }
+            case 356: {// rương hồ quang
+                conn.p.item.remove(4,id_potion,1);
+                conn.p.item.char_inventory(4);
+                Quask.Menu_noel(conn, (byte) 2);
+                break;
+            }
             case 84: {
                 if (conn.p.map.zone_id != conn.p.map.maxzone) {
                     Service.send_notice_box(conn, "Chỉ dùng được trong khu đi buôn");
@@ -1821,6 +1849,12 @@ public class UseItem {
             case 351: {
                 conn.p.type_use_mount = Horse.SKELETON;
                 conn.p.id_ngua = 200;
+                conn.p.map.send_mount(conn.p);
+                break;
+            }
+            case 352: {
+                conn.p.type_use_mount = Horse.TUAN_LOC;
+                conn.p.id_ngua = 100;
                 conn.p.map.send_mount(conn.p);
                 break;
             }

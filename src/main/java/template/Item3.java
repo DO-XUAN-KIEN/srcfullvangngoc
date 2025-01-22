@@ -62,7 +62,7 @@ public class Item3 {
         if (islock) {
             name += " [Khóa]";
         }
-        if (tierStar > 0 && (id >= 4587 && id <= 4590) || (id >= 4831 && id <= 4873)){
+        if (tierStar > 0 && (id >= 4587 && id <= 4590) || (id >= 4831 && id <= 4873) || (id >= 4878 && id <= 4886 && id != 4879)){
             name += "[Siêu cấp " + tierStar +"]";
         } else if (tierStar > 0) {
             name += " [Cấp " + tierStar + "]";

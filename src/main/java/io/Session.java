@@ -40,6 +40,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import map.Map;
 import map.MapService;
+import template.MainObject;
 import template.Part_player;
 
 public class Session implements Runnable {

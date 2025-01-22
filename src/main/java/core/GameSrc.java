@@ -1302,9 +1302,9 @@ public class GameSrc {
                     } else if (color_ == 3) {
                         _st = Util.random(400, 600);
                     } else if (color_ == 4) {
-                        _st = Util.random(600, 800);
+                        _st = Util.random(800, 1001);
                     } else if (color_ == 5) {
-                        _st = Util.random(800, 1000);
+                        _st = Util.random(1000, 1100);
                     }
                     it_temp.op.set(i, new Option(Util.random(0, 5), _st, it_temp.id));
                     Service.send_wear(conn.p);
@@ -1809,7 +1809,7 @@ public class GameSrc {
                                     p_store.it_id == 318 || p_store.it_id == 327 || p_store.it_id == 328 || p_store.it_id == 329 ||
                                     p_store.it_id == 330 || p_store.it_id == 342  || p_store.it_id == 343 || p_store.it_id == 346 ||
                                     p_store.it_id == 347 || (p_store.it_id >= 339 && p_store.it_id <=341) || p_store.it_id == 348 ||
-                                    p_store.it_id == 349 || p_store.it_id == 350)) {
+                                    p_store.it_id == 349 || p_store.it_id == 350 || p_store.it_id == 113 || p_store.it_id == 183 || p_store.it_id >= 353)) {
                                 Service.send_notice_box(conn, "Đồ bán không hợp lệ!");
                                 return;
                             }

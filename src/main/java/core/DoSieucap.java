@@ -38,8 +38,12 @@ public class DoSieucap {
                             return;
                         }
                         Item3 temp = conn.p.item.bag3[id];
-                        if (!((temp.id >= 4831 && temp.id <= 4873) || temp.id == 4878)) {
+                        if (!((temp.id >= 4831 && temp.id <= 4873) || temp.id == 4878 || (temp.id >= 4880 && temp.id <= 4886))) {
                             Service.send_notice_box(conn, "Trang bị không phù hợp!");
+                            return;
+                        }
+                        if (temp.tierStar >= 15){
+                            Service.send_notice_box(conn, "Trang bị đã đạt cấp tối đa!");
                             return;
                         }
                         if (temp.tierStar < 15) {
@@ -74,11 +78,11 @@ public class DoSieucap {
                         return;
                     }
                     Item3 temp = conn.p.item.bag3[id];
-                    if (temp == null && !((temp.id >= 4831 && temp.id <= 4873) || temp.id == 4878) && temp.color != 5 && temp.tierStar >= 15) {
+                    if (temp == null && !((temp.id >= 4831 && temp.id <= 4873) || temp.id == 4878 || (temp.id >= 4880 && temp.id <= 4886)) && temp.color != 5 && temp.tierStar >= 15) {
                         Service.send_notice_box(conn, "Trang bị không phù hợp!");
                         return;
                     }
-                    if (temp != null && ((temp.id >= 4831 && temp.id <= 4873) || temp.id == 4878) && temp.color == 5 && temp.tierStar <= 15) {
+                    if (temp != null && ((temp.id >= 4831 && temp.id <= 4873) || temp.id == 4878 || (temp.id >= 4880 && temp.id <= 4886)) && temp.color == 5 && temp.tierStar <= 15) {
                         conn.p.id_Upgrade_Medal_Star = id;
                         Upgrade_dothan(conn, tem);
                     } else {
@@ -93,7 +97,7 @@ public class DoSieucap {
         }
     }
 
-    public static short[] ti_le_nang_do = new short[]{1000, 800, 600, 500, 400, 300, 200, 100, 80, 70, 50, 30, 20, 1, 1,1};
+    public static short[] ti_le_nang_do = new short[]{1000, 800, 600, 500, 400, 300, 200, 100, 80, 70, 50, 30, 20, 1, 1};
 
     public static void Upgrade_dothan(Session conn, byte index) throws IOException { // nâng cấp tt
         try {
@@ -102,7 +106,7 @@ public class DoSieucap {
                 return;
             }
             Item3 temp = conn.p.item.bag3[id];
-            if (temp == null && !((temp.id >= 4831 && temp.id <= 4873) || temp.id == 4878) && temp.color != 5 && temp.tierStar >= 15) {
+            if (temp == null && !((temp.id >= 4831 && temp.id <= 4873) || temp.id == 4878 || (temp.id >= 4880 && temp.id <= 4886)) && temp.color != 5 && temp.tierStar >= 15) {
                 Service.send_notice_box(conn, "Trang bị không phù hợp!");
                 return;
             }
@@ -136,6 +140,7 @@ public class DoSieucap {
             conn.p.update_coin(-coin_req);
             His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
             hisc.coin_change = coin_req;
+            hisc.coin_last = conn.p.checkcoin();
             hisc.Logger = "(TRỪ COIN) từ nâng do1";
             hisc.Flus();
             //Log.gI().add_log(conn.p.name, "trừ "+coin_req+" coin từ nâng do1");
@@ -147,7 +152,7 @@ public class DoSieucap {
             }
             if (suc) {
                 List<Option> ops = ItemStar.GetOpsItemStarUpgrade(temp.clazz, temp.type, temp.id, temp.tierStar + 1, temp.op);
-                if (ops == null || ops.isEmpty()) {
+                if ((ops == null || ops.isEmpty()) && (temp.id >= 4831 && temp.id <= 4873)) {
                     Service.send_notice_box(conn, "Lỗi không tìm thấy chỉ số, hãy chụp lại chỉ số và báo ngay cho ad \"Nhắn riêng\"");
                     return;
                 }
@@ -353,6 +358,7 @@ public class DoSieucap {
                         conn.p.update_vang(-vang_req);
                         His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                         hisc.coin_change = coin_req;
+                        hisc.coin_last = conn.p.checkcoin();
                         hisc.Logger = "(TRỪ COIN) từ nâng do2";
                         hisc.Flus();
                         //Log.gI().add_log(conn.p.name, "trừ "+coin_req+" coin từ nâng do2");
@@ -525,6 +531,7 @@ public class DoSieucap {
                         conn.p.update_coin(-coin_req);
                         His_COIN hisc = new His_COIN(conn.user ,conn.p.name);
                         hisc.coin_change = coin_req;
+                        hisc.coin_last = conn.p.checkcoin();
                         hisc.Logger = "(TRỪ COIN) từ nâng do3";
                         hisc.Flus();
                         //Log.gI().add_log(conn.p.name, "trừ "+coin_req+" coin từ nâng do3");
@@ -565,10 +572,10 @@ public class DoSieucap {
                             for (int i = 0; i < item.op.size(); i++) {
                                 Option op = item.op.get(i);
                                 if (op.id >= 0 && op.id <= 7){
-                                    op.setParam(op.getParam(0)+1000);
+                                    op.setParam(op.getParam(0)+100);
                                 }
                                 else if (op.id >= 8 && op.id <= 99 && op.id != 37 && op.id != 38) {
-                                    op.setParam(op.getParam(4));
+                                    op.setParam(op.getParam(1));
                                 }
                             }
                         }

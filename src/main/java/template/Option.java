@@ -31,7 +31,7 @@ public class Option {
         Option newOP;
         switch (idOption) {
             case 0, 1, 2, 3, 4 ->
-                    newOP = new Option(idOption, 1000, idItem);
+                    newOP = new Option(idOption, 600, idItem);
             case 7, 8, 9, 10, 11 ->
                     newOP = new Option(idOption, 255, idItem);
             case 16, 17, 18, 19, 20, 21, 22 ->

@@ -49,6 +49,9 @@ public class MainObject {
     public Map map;
     public Kham_template kham;
     public int hieuchien;
+    public long offlineTime = 0;
+    public long fixedOfflineTime = 0;
+    public int expGained = -1;
 
     public int Set_hpMax(int hp_max) {
         return this.hp_max = hp_max;
@@ -61,6 +64,45 @@ public class MainObject {
     public List<EffTemplate> MainEff;
     protected List<EffTemplate> Eff_me_kham;
     protected List<EffTemplate> Eff_Tinh_Tu;
+    protected List<EffTemplate> Eff_Off_line;
+    public void update_timeoff(){
+        if (Eff_Off_line != null) {
+            synchronized (Eff_Off_line) {
+                long elapsedTime = 0;
+                System.out.println(offlineTime);
+                // Tính thời gian người chơi đã offline
+                if (isPlayer() && offlineTime > 0) {
+                    elapsedTime = System.currentTimeMillis() - offlineTime;
+                    offlineTime = 0; // Reset lại thời gian offline sau khi đã áp dụng
+                }
+                for (int i = Eff_Off_line.size() - 1; i >= 0; i--) {
+                    EffTemplate temp = Eff_Off_line.get(i);
+
+                    // Trừ thời gian offline vào thời gian còn lại của hiệu ứng
+                    if (elapsedTime > 0) {
+                        temp.time -= elapsedTime;
+                    }
+
+                    // Nếu là hiệu ứng nhận EXP offline (ID 101)
+                    if (temp.id == 101 && isPlayer() && elapsedTime > 0) {
+                        // Tính EXP nhận được
+                        long timeOfflineMinutes = elapsedTime / 60000; // Chuyển ms -> phút
+                        expGained = (int) (timeOfflineMinutes * temp.param); // param1 = tốc độ EXP/phút
+                        // Thưởng EXP cho người chơi
+                        ((Player) this).addExp(expGained);
+                        System.out.println("Bạn nhận được " + expGained + " EXP sau khi offline!");
+                        // Nếu hiệu ứng đã hết thời gian, loại bỏ nó
+                        if (temp.time <= System.currentTimeMillis()) {
+                            Eff_Off_line.remove(i);
+                        }
+                    } else if (temp.time <= System.currentTimeMillis()) {
+                        // Loại bỏ các hiệu ứng khác nếu đã hết thời gian
+                        Eff_Off_line.remove(i);
+                    }
+                }
+            }
+        }
+    }
 
     public void updateEff() {
         try {
@@ -137,14 +179,35 @@ public class MainObject {
         } catch (Exception e) {
         }
     }
-
+    public void setOfflineTime() {
+        this.offlineTime = System.currentTimeMillis();      // Thời gian bắt đầu offline
+        if (this.fixedOfflineTime == 0) {                  // Chỉ gắn giá trị khi nó chưa được gán
+            this.fixedOfflineTime = this.offlineTime;
+        }
+    }
+    public void resetOfflineTime() {
+        this.offlineTime = 0; // Reset thời gian offline
+    }
+    public void add_EffOffline(int id, int param1, long time_end) {
+        if (Eff_Off_line == null) {
+            return;
+        }
+        synchronized (Eff_Off_line) {
+            Eff_Off_line.add(new EffTemplate(id, param1, time_end));
+        }
+    }
+    public void addOfflineExpEffect(long durationMillis, int expRatePerMinute) {
+        long timeEnd = System.currentTimeMillis() + durationMillis;
+        add_EffOffline(101, expRatePerMinute, timeEnd);
+    }
+    public void addExp(int exp) {
+        this.exp += exp; // Cộng thêm EXP vào EXP hiện tại của người chơi
+        System.out.println("EXP hiện tại: " + this.exp);
+    }
     public void add_EffDefault(int id, int param1, long time_end) {
         if (MainEff == null) {
             return;
         }
-
-
-
         synchronized (MainEff) {
             if (param1 == 0) {
                 return;
@@ -167,7 +230,6 @@ public class MainObject {
             Eff_me_kham.add(new EffTemplate(id, param1, time_end));
         }
     }
-
     public EffTemplate get_EffDefault(int id) {
         if (MainEff == null) {
             return null;
@@ -182,6 +244,34 @@ public class MainObject {
         }
         return null;
     }
+    public EffTemplate get_OfflineTime(int id) {
+        if (Eff_Off_line == null) {
+            return null;
+        }
+
+        long currentTime = System.currentTimeMillis(); // Lấy thời gian hiện tại
+        long elapsedTime = 0;
+
+        // Kiểm tra nếu người chơi đã offline
+        if (offlineTime > 0) {
+            elapsedTime = currentTime - offlineTime; // Tính thời gian đã offline
+        }
+        synchronized (Eff_Off_line) {
+            for (EffTemplate e : Eff_Off_line) {
+                // Điều chỉnh thời gian hiệu ứng theo thời gian offline
+                long adjustedTime = e.time - elapsedTime;
+                // Kiểm tra điều kiện ID và thời gian hiệu lực
+                if (e.id == id && adjustedTime > currentTime) {
+                    // Cập nhật thời gian còn lại (nếu cần)
+                    e.time = adjustedTime;
+                    return e;
+                }
+            }
+        }
+
+        return null;
+    }
+
 
     public EffTemplate get_EffMe_Kham(int id) {
         if (Eff_me_kham == null) {
@@ -569,6 +659,9 @@ public class MainObject {
                 if (p.type_use_mount == Horse.SKELETON && p.id_ngua == 200){
                     DamePlus += 0.3;
                 }
+                if (p.type_use_mount == Horse.TUAN_LOC && p.id_ngua == 100){
+                    DamePlus += 0.3;
+                }
                 if (p.type_use_mount == Horse.NGUA_XICH_THO) {
                     DamePlus += 0.2;
                 } else if (p.type_use_mount == Horse.TUAN_LOC ) {
@@ -801,7 +894,12 @@ public class MainObject {
                     mo.nhanban.is_move = false;
                 }
             }
-
+            if (Manager.gI().bossTG.p.equals(focus)) {
+                Manager.gI().bossTG.update_dame(p.name, dame);
+//                if (Manager.gI().bossTG.p.hp < Manager.gI().bossTG.p.get_HpMax() / 2) {
+//                    Service.usepotion(Manager.gI().bossTG.p, 0, Manager.gI().bossTG.p.get_HpMax());
+//                }
+            }
             if (ObjAtk.isPlayer() && HoiHP > 0) {
                 Service.usepotion(p, 0, HoiHP);
             }
@@ -1141,6 +1239,19 @@ public class MainObject {
                 p_focus.add_EffDefault(147,1,5000);
                 Service.send_notice_nobox_white(p_focus.conn, "Bạn bị Lôi phạt");
             }
+            if(focus.isPlayer() && p != null &&
+                    p.total_item_param((byte) 188) > Util.nextInt(10000)){
+                int ran = Util.random(0,100);
+                if (ran < 30){
+                    p.qua_noel = 1;
+                }else if (ran < 66){
+                    p.qua_noel = 2;
+                }else {
+                    p.qua_noel = 3;
+                }
+                p.add_EffDefault(StrucEff.Quà_noel,1,5000);
+                Service.send_notice_nobox_white(p.conn, "Bạn nhận được quà");
+            }
             if (focus.isPlayer() && p != null && p.total_item_param((byte) 177) > Util.nextInt(10000)) {
                 p.add_EffDefault(141,1,5*1000);
                 p_focus.add_EffDefault(140,1,5*1000);
@@ -1238,6 +1349,9 @@ public class MainObject {
             //<editor-fold defaultstate="collapsed" desc="Tính exp       ...">
             if (focus.isMobDungeon()
                     && ObjAtk.isPlayer()) {
+                if (p.level >= 139){
+                    return;
+                }
                 int expup = 0;
                 expup = (int) dame; // tinh exp
                 ef = p.get_EffDefault(-125);
@@ -1302,6 +1416,8 @@ public class MainObject {
                         expup += (expup * (ef.param / 100)) / 100;
                     }
                     p.update_Exp(expup, true);
+                }else if (p.level >= 139 && map.map_id == 137){
+                    p.update_Exp(1000000,false);
                 } else if (expup > 0) {
                     p.update_Exp(2, false);
                 }

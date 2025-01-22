@@ -219,6 +219,15 @@ public class SaveData {
                 ps.executeUpdate();
                 ps.close();
             }
+            else if (Manager.gI().event == 8) {
+                ps = conn.prepareStatement("UPDATE `event` SET `data` = ? WHERE `id` = ?;");
+                ps.clearParameters();
+                //
+                ps.setNString(1, ev_he.Event_8.SaveData().toJSONString());
+                ps.setInt(2, 6);
+                ps.executeUpdate();
+                ps.close();
+            }
             // bxh
             BXH.BXH_level.clear();
             ps = conn.prepareStatement(

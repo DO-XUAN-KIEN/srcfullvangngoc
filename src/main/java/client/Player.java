@@ -51,6 +51,7 @@ public class Player extends Body2 {
     public byte mm_tt;
     public byte mm_md;
     public byte dokho;
+    public byte stt_level;
     public byte type_use_mount;
     // public int hieuchien;
     public int dibuon;
@@ -179,7 +180,6 @@ public class Player extends Body2 {
     public long time_die;
     public byte type_armor_create = -1;
     public byte id_armor_create = -1;
-    public byte id_than;
     public List<NpcTemplate> npcs;
 
     public void datatx() {
@@ -397,6 +397,7 @@ public class Player extends Body2 {
                 mm_tt = rs.getByte("mm_tt");
                 mm_md = rs.getByte("mm_md");
                 dokho = rs.getByte("dokho");
+                stt_level = rs.getByte("stt_level");
                 khu2 = rs.getByte("khu2");
                 hieuchien = rs.getInt("hieuchien");
                 dibuon = rs.getInt("dibuon");
@@ -1374,6 +1375,7 @@ public class Player extends Body2 {
                 a += ",`mm_tt` = " + mm_tt;
                 a += ",`mm_md` = " + mm_md;
                 a += ",`dokho` = " + dokho;
+                a += ",`stt_level` = " + stt_level;
                 a += ",`khu2` = " + khu2;
                 a += ",`hieuchien` = " + hieuchien;
                 a += ",`dibuon` = " + dibuon;
@@ -1558,6 +1560,9 @@ public class Player extends Body2 {
             if(quatanthu > 1) {
                 quatanthu = 1;
             }
+            if (Manager.gI().event == 8){
+                diemsukien = 0;
+            }
             khu2 = 2;
             point_active[0] = 2;
             point_active[1] = 0;
@@ -1707,6 +1712,14 @@ public class Player extends Body2 {
     }
     public void update_Exp(long expup, boolean expmulti) throws IOException {
         long dame_exp = expup;
+        if ((conn.p.level >= 140 && conn.p.stt_level < 1) || (conn.p.level >= 141 && conn.p.stt_level < 2) ||
+                (conn.p.level >= 142 && conn.p.stt_level < 3) || (conn.p.level >= 143 && conn.p.stt_level < 4) ||
+                (conn.p.level >= 144 && conn.p.stt_level < 5) || (conn.p.level >= 145 && conn.p.stt_level < 6) ||
+                (conn.p.level >= 146 && conn.p.stt_level < 7) || (conn.p.level >= 147 && conn.p.stt_level < 8) ||
+                (conn.p.level >= 148 && conn.p.stt_level < 9) || (conn.p.level >= 149 && conn.p.stt_level < 10) ||
+                (conn.p.level >= 150 && conn.p.stt_level < 11) && !(conn.p.map_id == 136)){
+            return;
+        }
         if (expmulti && this.getlevelpercent() >= 0) {
             dame_exp *= Manager.gI().exp;
         }

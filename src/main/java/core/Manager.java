@@ -1,6 +1,8 @@
 package core;
 
+import BossHDL.BossTG;
 import ai.NhanBan;
+import ev_he.*;
 import event.Event_1;
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,11 +17,6 @@ import event_daily.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 import client.Clan;
-import ev_he.Event_2;
-import ev_he.Event_3;
-import ev_he.Event_4;
-import ev_he.Event_5;
-import ev_he.Event_6;
 import gamble.VXKC2;
 import gamble.VXMM2;
 import io.Message;
@@ -107,13 +104,14 @@ public class Manager {
     public static int timeRemoveClient = 1000 * 60;
     public static boolean logErrorLogin = false;
      public static String BXH_level = "";
-   
+
 
     public static byte thue = 10;
     public static String nameClanThue;
     public static Clan ClanThue;
     public static final List<String> PlayersWinCThanh = new ArrayList<>();
     public static HashMap<Byte, List<Short>> item_sell;
+    public BossTG bossTG;
 
     public static void setClanThue() {
         if (nameClanThue == null || nameClanThue.isEmpty()) {
@@ -160,6 +158,10 @@ public class Manager {
             byte b = dis.readByte();
             if (id == 151 || id == 152) {
                 b = 17;
+            }
+            if (id == 129){
+                name = "Ông già noel";
+                b = 15;
             }
             ou.writeShort(id);
             ou.writeUTF(name);
@@ -230,6 +232,8 @@ public class Manager {
             System.out.println("cache loaded!");
             this.vxmm = new VXMM2();
             this.vxkc = new VXKC2();
+            bossTG = new BossTG();
+            bossTG.start_boss();
             Log.gI().start_log();
             for (Map[] temp : Map.entrys) {
                 for (Map temp2 : temp) {
@@ -515,6 +519,16 @@ public class Manager {
                             item_sell.get(Service.SHOP_POTION).add((short) 343);
                             item_sell.get(Service.SHOP_POTION).add((short) 344);
                             item_sell.get(Service.SHOP_POTION).add((short) 345);
+                            break;
+                        }
+                        case 8: {
+                            itempoitionsell = new short[jsar.size() + 1];
+                            for (int i = 0; i < jsar.size(); i++) {
+                                itempoitionsell[i] = Short.parseShort(jsar.get(i).toString());
+                                item_sell.get(Service.SHOP_POTION).add(itempoitionsell[i]);
+                            }
+                            itempoitionsell[itempoitionsell.length - 1] = 183;
+                            item_sell.get(Service.SHOP_POTION).add((short) 183);
                             break;
                         }
                         case 11: {
@@ -949,6 +963,15 @@ public class Manager {
                 Event_6.LoadDB(jsob);
             }
         }
+        else if (this.event == 8) {
+            query = "SELECT * FROM `event` WHERE `id` = 6;";
+            rs = ps.executeQuery(query);
+            long t_ = System.currentTimeMillis();
+            while (rs.next()) {
+                JSONObject jsob = (JSONObject) JSONValue.parse(rs.getString("data"));
+                Event_8.LoadDB(jsob);
+            }
+        }
         query = "SELECT * FROM `config_server`;";
         rs = ps.executeQuery(query);
         ChiemThanhManager.LoadData(rs);
@@ -1198,6 +1221,7 @@ public class Manager {
 
     public void close() {
         vxmm.close();
+        bossTG.stop_boss();
         Log.gI().close_log();
         //
         for (int i = 0; i < Map.entrys.size(); i++) {
