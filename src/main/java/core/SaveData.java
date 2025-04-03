@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import event.EventManager;
+import event.LunarNewYear;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import client.Clan;
 import client.Player;
@@ -193,10 +197,13 @@ public class SaveData {
                 ps.close();
             }
              else if (Manager.gI().event == 4) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("register", EventManager.save(EventManager.registerList));
+                jsonObject.put("receive", EventManager.save(LunarNewYear.list_nhan_banh));
                 ps = conn.prepareStatement("UPDATE `event` SET `data` = ? WHERE `id` = ?;");
                 ps.clearParameters();
                 //
-                ps.setNString(1, ev_he.Event_4.SaveData().toJSONString());
+                ps.setNString(1, jsonObject.toJSONString());
                 ps.setInt(2, 3);
                 ps.executeUpdate();
                 ps.close();

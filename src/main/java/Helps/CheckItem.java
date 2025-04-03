@@ -34,7 +34,7 @@ public class CheckItem {
     }
     public static boolean isBuyItemCoin(short id)
     {
-        List<Short> itemcoin = new ArrayList<>(java.util.Arrays.asList((short)4587, (short)4588, (short)4589, (short)4590, (short)4656, (short)4660, (short)4664, (short)4668, (short)4669, (short)4670, (short)4671, (short)4672, (short)4658, (short)4662, (short)4666, (short)4675, (short)4657, (short)4661, (short)4665, (short)4673, (short)4659, (short)4663, (short)4667, (short)4674, (short)4718, (short)4779));
+        List<Short> itemcoin = new ArrayList<>(java.util.Arrays.asList((short)4587, (short)4588, (short)4589, (short)4590, (short)4656, (short)4660, (short)4664, (short)4668, (short)4669, (short)4670, (short)4671, (short)4672, (short)4658, (short)4662, (short)4666, (short)4675, (short)4657, (short)4661, (short)4665, (short)4673, (short)4659, (short)4663, (short)4667, (short)4674, (short)4718, (short)4857));
         return itemcoin.contains(id);
     }
     

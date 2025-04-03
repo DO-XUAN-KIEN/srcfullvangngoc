@@ -2,6 +2,7 @@ package core;
 
 import BossHDL.BossTG;
 import Helps._Time;
+import event.EventManager;
 import event.Event_1;
 import event.NauKeo;
 import java.io.IOException;
@@ -302,6 +303,17 @@ public class ServerManager implements Runnable {
                         }
                         if (min % 5 == 0 && sec == 0) {
                             Event_1.sort_bxh();
+                        }
+                    }
+                    if (Manager.gI().event == 4) {
+                        if (EventManager.eventManager == null) {
+                            EventManager.eventManager = new EventManager();
+                        }
+                        if (hour == 17 && min == 00 && sec == 00) {
+                            EventManager.eventManager.start();
+                        }
+                        if (sec == 0 && min % 1 == 0) {
+                            EventManager.update(1);
                         }
                     }
                     if (DayOfWeek % 2 !=0 && hour == 20 && min ==45 && sec == 0) {

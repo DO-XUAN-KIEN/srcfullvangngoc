@@ -1885,7 +1885,7 @@ public class Service {
                     }
                     Log.gI().add_log(p.name, "Trừ " + price + " mua đồ lisa");
                     p.update_vang(-price);
-                }else if (ItemTemplate4.item.get(idbuy).getPricetype() == 1 && (idbuy == 343 || idbuy == 350 || idbuy == 183)){
+                }else if (ItemTemplate4.item.get(idbuy).getPricetype() == 1 && (idbuy == 343 || idbuy == 350 || idbuy == 183 || idbuy == 194)){
                     if (p.checkcoin() < price) {
                         send_notice_box(p.conn, "Không đủ " + price + " coin");
                         return;
@@ -1917,7 +1917,6 @@ public class Service {
             }
 
             case 1: {
-
                 if (idbuy > (ItemTemplate3.item.size() - 1)) {
                     return;
                 }

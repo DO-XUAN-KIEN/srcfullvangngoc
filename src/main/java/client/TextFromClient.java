@@ -2,6 +2,7 @@ package client;
 
 import History.His_COIN;
 import core.GameSrc;
+import event.EventManager;
 import event.Event_1;
 import java.io.IOException;
 import java.sql.Connection;
@@ -9,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.regex.Pattern;
+
+import event.LunarNewYear;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
 import core.Log;
@@ -45,7 +48,143 @@ public class TextFromClient {
             return;
         }
         switch (idnpc) {
-             case 30: {
+            case 29:
+            case 30:
+            case 31:
+            case 32: {
+                try {
+                    if (Manager.gI().event == 4) {
+                        if (size != 1) {
+                            return;
+                        }
+                        if (!EventManager.check(EventManager.registerList, conn.p.name)) {
+                            return;
+                        }
+                        if (LunarNewYear.runing == true) {
+                            Service.send_notice_box(conn, "Đang trong thời gian nấu");
+                            return;
+                        }
+                        String value = m2.reader().readUTF();
+                        if (!(Util.isnumber(value))) {
+                            Service.send_notice_box(conn, "Dữ liệu nhập không phải số!!");
+                            return;
+                        }
+                        int quant = Integer.parseInt(value);
+                        if (quant > 500 || quant <= 0) {
+                            Service.send_notice_box(conn, "Số lượng không hợp lệ!");
+                            return;
+                        }
+                        short id = EventManager.item_drop[0][idnpc - 29];
+                        if (conn.p.item.total_item_by_id(4, id) < quant && conn.ac_admin < 3) {
+                            Service.send_notice_box(conn, "Không đủ " + quant + " " + ItemTemplate4.item.get(id).getName());
+                            return;
+                        }
+                        LunarNewYear.add_material(conn.p.name, 1, idnpc - 29, quant);
+                        conn.p.item.remove(4, id, quant);
+                        conn.p.item.char_inventory(4);
+                        Service.send_notice_box(conn, "Đã góp " + quant + " " + ItemTemplate4.item.get(id).getName());
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case 33: {
+                if (Manager.gI().event == 4) {
+                    if (size != 1) {
+                        return;
+                    }
+                    String value = m2.reader().readUTF();
+                    if (!(Util.isnumber(value))) {
+                        Service.send_notice_box(conn, "Dữ liệu nhập không phải số!!");
+                        return;
+                    }
+                    int quant = Integer.parseInt(value);
+                    if (quant <= 0 || quant > 100) {
+                        Service.send_notice_box(conn, "Số lượng không hợp lệ!");
+                        return;
+                    }
+                    short gao = EventManager.item_drop[0][0];
+                    short dau_xanh = EventManager.item_drop[0][2];
+                    short la = EventManager.item_drop[0][3];
+                    if (conn.p.item.total_item_by_id(4, gao) < quant * 5 || conn.p.item.total_item_by_id(4, dau_xanh) < quant * 5
+                            || conn.p.item.total_item_by_id(4, la) < quant * 5) {
+                        Service.send_notice_box(conn, "Đổi bánh dày cần 5 Gạo nếp, 5 Đậu xanh, 5 Lá dong và 1.000.000 vàng");
+                        return;
+                    }
+                    if (conn.p.get_vang() < quant * 1_000_000) {
+                        Service.send_notice_box(conn, "Không đủ " + quant * 1_000_000 + " vàng");
+                        return;
+                    }
+                    Item47 it = new Item47();
+                    it.category = 4;
+                    it.id = 195;
+                    it.quantity = (short) quant;
+                    conn.p.item.add_item_bag47(4, it);
+                    conn.p.item.remove(4, gao, quant * 5);
+                    conn.p.item.remove(4, dau_xanh, quant * 5);
+                    conn.p.item.remove(4, la, quant * 5);
+                    conn.p.update_vang(-quant * 1_000_000);
+                    conn.p.item.char_inventory(4);
+                    Service.send_notice_box(conn, "Nhận được " + quant + " bánh dày");
+                }
+                break;
+            }
+            case 34: {
+                if (Manager.gI().event == 4) {
+                    if (size != 1) {
+                        return;
+                    }
+                    String value = m2.reader().readUTF();
+                    if (!(Util.isnumber(value))) {
+                        Service.send_notice_box(conn, "Dữ liệu nhập không phải số!!");
+                        return;
+                    }
+                    int quant = Integer.parseInt(value);
+                    if (quant <= 0) {
+                        Service.send_notice_box(conn, "Số lượng không hợp lệ!");
+                        return;
+                    }
+                    if (conn.p.item.total_item_by_id(4, 184) < quant
+                            || conn.p.item.total_item_by_id(4, 185) < quant * 2
+                            || conn.p.item.total_item_by_id(4, 186) < quant * 2
+                            || conn.p.item.total_item_by_id(4, 187) < quant * 2
+                            || conn.p.item.total_item_by_id(4, 188) < quant
+                            || conn.p.item.total_item_by_id(4, 189) < quant * 2
+                            || conn.p.item.total_item_by_id(4, 190) < quant
+                            || conn.p.item.total_item_by_id(4, 191) < quant) {
+                        Service.send_notice_box(conn, "Không đủ chữ");
+                        return;
+                    }
+                    if (conn.p.get_vang() < quant * 5_000_000) {
+                        Service.send_notice_box(conn, "Không đủ " + quant * 2_500_000 + " vàng");
+                        return;
+                    }
+                    if (conn.p.checkcoin() < quant * 20_000) {
+                        Service.send_notice_box(conn, "Không đủ " + quant * 5000 + " coin");
+                        return;
+                    }
+                    Item47 it = new Item47();
+                    it.category = 4;
+                    it.id = 194;
+                    it.quantity = (short) quant;
+                    conn.p.item.add_item_bag47(4, it);
+                    conn.p.item.remove(4, 184, quant);
+                    conn.p.item.remove(4, 185, quant * 2);
+                    conn.p.item.remove(4, 186, quant * 2);
+                    conn.p.item.remove(4, 187, quant * 2);
+                    conn.p.item.remove(4, 188, quant);
+                    conn.p.item.remove(4, 189, quant * 2);
+                    conn.p.item.remove(4, 190, quant);
+                    conn.p.item.remove(4, 191, quant);
+                    conn.p.update_vang(-quant * 5_000_000);
+                    conn.p.update_coin(-quant * 20_000);
+                    conn.p.item.char_inventory(4);
+                    Service.send_notice_box(conn, "Nhận được " + quant + " Hộp quà thọ");
+                }
+                break;
+            }
+             case 39: {
                 if (size != 3) {
                     return;
                 }

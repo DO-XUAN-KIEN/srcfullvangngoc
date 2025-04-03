@@ -1809,7 +1809,8 @@ public class GameSrc {
                                     p_store.it_id == 318 || p_store.it_id == 327 || p_store.it_id == 328 || p_store.it_id == 329 ||
                                     p_store.it_id == 330 || p_store.it_id == 342  || p_store.it_id == 343 || p_store.it_id == 346 ||
                                     p_store.it_id == 347 || (p_store.it_id >= 339 && p_store.it_id <=341) || p_store.it_id == 348 ||
-                                    p_store.it_id == 349 || p_store.it_id == 350 || p_store.it_id == 113 || p_store.it_id == 183 || p_store.it_id >= 353)) {
+                                    p_store.it_id == 349 || p_store.it_id == 350 || p_store.it_id == 113 ||  p_store.it_id == 194 ||
+                                    p_store.it_id == 195 || p_store.it_id == 183 || p_store.it_id >= 353|| (p_store.it_id >= 28 && p_store.it_id <=31) || p_store.it_id == 89 )) {
                                 Service.send_notice_box(conn, "Đồ bán không hợp lệ!");
                                 return;
                             }

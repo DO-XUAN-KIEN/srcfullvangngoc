@@ -212,7 +212,7 @@ public class Mob_in_map extends MainObject {
                             if (percent + 10 > Util.random(0, 300)) {
                                 LeaveItemMap.leave_material(map, mob, (Player) mainAtk);
                             }
-                            if (Manager.gI().event != 0 && 30 > Util.random(0, 100) && Math.abs(mob.level - mainAtk.level) <= 5) {
+                            if (Manager.gI().event != 0 && 10 > Util.random(0, 100) && Math.abs(mob.level - mainAtk.level) <= 5) {
                                 LeaveItemMap.leave_item_event(map, mob, (Player) mainAtk);
                             }
                         }

@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import event.LunarNewYear;
 import event_daily.ChiemThanhManager;
 import event_daily.Wedding;
 import event_daily.*;
@@ -687,6 +688,20 @@ public class Process_Yes_no_box {
 //                        }
                         Service.send_notice_box(conn, "Nâng bang lên cấp " + conn.p.myclan.level + " thành công");
                     }
+                    break;
+                }
+                case -111: {
+                    if (LunarNewYear.runing == true) {
+                        Service.send_notice_box(conn, "Không trong thời gian đăng ký!");
+                        return;
+                    }
+                    if (conn.p.get_ngoc() < 5) {
+                        Service.send_notice_box(conn, "Không đủ ngọc");
+                        return;
+                    }
+                    LunarNewYear.add_material(conn.p.name, 0, (short) 0, 0);
+                    conn.p.update_ngoc(-5);
+                    Service.send_notice_box(conn, "Đăng ký thành công");
                     break;
                 }
                 case -118: {

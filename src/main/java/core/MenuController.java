@@ -5,6 +5,7 @@ import Helps.CheckItem;
 import Helps.Save_Log;
 import History.His_COIN;
 import ev_he.*;
+import event.EventManager;
 import event.Event_1;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.util.*;
 import client.Clan;
 import client.Pet;
 import client.Player;
+import event.LunarNewYear;
 import event_daily.*;
 import event_daily.st.*;
 import event_daily.sc.*;
@@ -248,10 +250,10 @@ public class MenuController {
                     return;
                     //menu = new String[]{"Coming soon", infoServer.Website};
 
-                } else if (Manager.gI().event == 4) { // sự kiện tết
-                    menu = new String[]{"Làm bánh trưng", "Làm bánh trưng đặc biệt", "Làm bánh dày", "Ghép Chữ HAPPY NEW YEAR", "Làm Pháo Hoa", "Xem Top"};
-                    send_menu_select(conn, -69, menu, (byte) Manager.gI().event);
-                    return;
+//                } else if (Manager.gI().event == 4) { // sự kiện tết
+//                    menu = new String[]{"nhận bánh"};
+//                    send_menu_select(conn, -69, menu, (byte) Manager.gI().event);
+//                    return;
                     //menu = new String[]{"Coming soon", infoServer.Website};
                 } else if (Manager.gI().event == 5) { // sự kiện trung thu 
                     menu = new String[]{"Làm lồng đèn", "Làm bánh nướng", "Làm bánh dẻo", "Xem Top"};
@@ -278,7 +280,7 @@ public class MenuController {
                     send_menu_select(conn, -69, menu, (byte) Manager.gI().event);
                     return;
                 } else {
-                    Service.send_notice_box(conn, "Chưa có chức năng :(.");
+                    Service.send_notice_box(conn, "Chưa có chức năng :(..");
                     return;
                     //menu = new String[]{"Coming soon", infoServer.Website};
                 }
@@ -287,10 +289,19 @@ public class MenuController {
             case -62: {
                 if (Manager.gI().event == 1) {
                     menu = new String[]{"Tăng tốc nấu", "Hướng dẫn", "Thông tin", "Top Nguyên Liệu"};
+                }else if (Manager.gI().event == 4){
+                    menu = new String[]{"Thêm củi", "Thông tin"};
                 } else {
-                    Service.send_notice_box(conn, "Chưa có chức năng :(.");
+                    Service.send_notice_box(conn, "Chưa có chức năng :(...");
                     return;
                     //menu = new String[]{"Coming soon", infoServer.Website};
+                }
+                break;
+            }
+            case -63: {
+                menu = new String[]{""};
+                if (Manager.gI().event == 4) {
+                    menu = LunarNewYear.menu;
                 }
                 break;
             }
@@ -300,9 +311,17 @@ public class MenuController {
                 }
                 if (Manager.gI().event == 1) {
                     menu = new String[]{"Hoa tuyết", "Ngôi sao", "Quả châu", "Thiệp", "Top trang trí cây thông"};
+                }else if (Manager.gI().event == 4){
+                    menu = new String[]{"Top sự kiện pháo", "Top sự kiện mở quà"};
+                } else {
+                    menu = new String[]{""};
                 }
-                menu = new String[]{"Hoa tuyết", "Ngôi sao", "Quả châu", "Thiệp", "Top trang trí cây thông"};
+                //menu = new String[]{"Hoa tuyết", "Ngôi sao", "Quả châu", "Thiệp", "Top trang trí cây thông"};
                 //  menu = new String[]{"Coming soon", infoServer.Website};
+                break;
+            }
+            case -89: { //
+                menu = new String[]{"Bắn pháo"};
                 break;
             }
             case -57: {
@@ -327,7 +346,7 @@ public class MenuController {
             }
             default: {
                 //System.out.println("core.MenuController.request_menu()"+idnpc);
-                Service.send_notice_box(conn, "Chưa có chức năng :(.");
+                Service.send_notice_box(conn, "Chưa có chức năng :(");
                 return;
                 //menu = new String[]{"Coming soon", infoServer.Website};
                 //break;
@@ -656,9 +675,9 @@ public class MenuController {
                 if (Manager.gI().event == 3) { // vu lan
                     Menu_MissSophia(conn, idnpc, idmenu, index);
                 }
-                if (Manager.gI().event == 4) { // tết
-                    Menu_MissSophia(conn, idnpc, idmenu, index);
-                }
+//                if (Manager.gI().event == 4) { // tết
+//                    Menu_MissSophia(conn, idnpc, idmenu, index);
+//                }
                 if (Manager.gI().event == 5) { // trung thu
                     Menu_MissSophia(conn, idnpc, idmenu, index);
                 }
@@ -682,19 +701,57 @@ public class MenuController {
             case -62: {
                 if (Manager.gI().event == 1) {
                     Menu_NauKeo(conn, index);
+                }else if (Manager.gI().event == 4){
+                    if (index == 0) {
+                        if (LunarNewYear.runing == true) {
+                            if (conn.p.get_vang() < 5000000) {
+                                Service.send_notice_box(conn, "Không đủ 5,000,000 vàng");
+                                return;
+                            }
+                            if (EventManager.time < 30){
+                                Service.send_notice_box(conn, "Không thể tăng tốc nữa");
+                                return;
+                            }
+                            conn.p.update_vang(-5_000_000L);
+                            EventManager.update(1);
+                            Service.send_notice_box(conn, "Thời gian nấu còn lại " + EventManager.time + " phút");
+                        } else {
+                            Service.send_notice_box(conn, "Chưa đến thời gian nấu");
+                        }
+                    } else if (index == 1) {
+                        EventManager.send_info(conn);
+                    }
+                }
+                break;
+            }
+            case -63: {
+                if (Manager.gI().event == 4) {
+                    Menu_Ong_Do(conn, index);
                 }
                 break;
             }
             case -66: {
                 if (Manager.gI().event == 1) {
                     Menu_CayThong(conn, index);
+                }else if (Manager.gI().event == 4){
+                    Menu_CayLeu(conn,index);
                 }
                 if (Manager.gI().event == 8){
                     return;
                 }
                 break;
             }
+            case -89: {
+                LunarNewYear.ban_phao(conn);
+                break;
+            }
             case 120: {
+                break;
+            }
+            case -120: {
+                if (Manager.gI().event != -1 && idmenu == 0) {
+
+                }
                 break;
             }
             case -91: {
@@ -1942,6 +1999,9 @@ public class MenuController {
             }
         }
     }
+    private static void Menu_Ong_Do(Session conn, byte index) throws IOException {
+        LunarNewYear.Menu(conn,index);
+    }
     private static void Menu_MissSophia(Session conn, int idNPC, byte idmenu, byte index) throws IOException {
 //        System.out.println("core.MenuController.Menu_MissSophia() id: "+idmenu);
 //        System.out.println("core.MenuController.Menu_MissSophia() idx: "+index);
@@ -2226,27 +2286,7 @@ public class MenuController {
             try{
             switch (index) {
                 case 0: {
-                    Service.send_box_input_text(conn, 40, "Làm bánh Trưng", new String[]{"20 gạo nếp + 20 đậu xanh + 20 lá dong + 100k vàng"});
-                    break;
-                }
-                case 1: {
-                    Service.send_box_input_text(conn, 41, "Làm bánh Trưng V.I.P", new String[]{"20 gạo nếp + 20 đậu xanh + 20 lá dong + 50 ngọc"});
-                    break;
-                }
-                case 2: {
-                    Service.send_box_input_text(conn, 42, "Làm bánh Dày", new String[]{"20 gạo nếp + 20 đậu xanh + 20 lá dong + 100k vàng"});
-                    break;
-                }
-                case 3: {
-                    Service.send_box_input_text(conn, 43, " Ghép Chữ HAPPY NEW YEAR", new String[]{"Bộ chữ HAPPY NEW YEAR + 100.000 vàng "});
-                    break;
-                }
-                case 4: {
-                    Service.send_box_input_text(conn, 44, "Làm Pháo Hoa", new String[]{"5 giấy + 5 thuốc nổ + 30 ngọc "});
-                    break;
-                }
-                case 5: {
-                    send_menu_select(conn, 120, Event_4.get_top());
+                    send_menu_select(conn, idNPC, LunarNewYear.menu, (byte) 4);
                     break;
                 }
                 default:
@@ -5626,7 +5666,7 @@ public class MenuController {
                 if (!conn.p.isOwner){
                     return;
                 }
-                Service.send_box_input_text(conn, 30, "Đổi mật khẩu", new String[]{"nhập mật khẩu cũ",
+                Service.send_box_input_text(conn, 39, "Đổi mật khẩu", new String[]{"nhập mật khẩu cũ",
                     "nhập mật khẩu mới", "nhập lại mật khẩu mới"});
                 break;
             }
@@ -6868,7 +6908,18 @@ public class MenuController {
             }
         }
     }
-
+    private static void Menu_CayLeu(Session conn, byte index) throws IOException {
+        switch (index){
+            case 0: {
+                EventManager.top_event(conn);
+                break;
+            }
+            case 1: {
+                EventManager.top_event1(conn);
+                break;
+            }
+        }
+    }
     private static void Menu_CayThong(Session conn, byte index) throws IOException {
         if (Manager.gI().event == 1) {
             switch (index) {

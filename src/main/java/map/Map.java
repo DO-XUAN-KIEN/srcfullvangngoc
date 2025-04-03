@@ -803,8 +803,8 @@ public class Map implements Runnable {
         }else if (Manager.gI().event == 8 && this.map_id == 1){
             path = "data/npc/event1/";
             Service.send_msg_data(p.conn, -49, "event1_1");
-        } else if (Manager.gI().event == 3 && this.map_id == 1) {
-            path = "data/npc/event4/";
+        } else if (Manager.gI().event == 4 && this.map_id == 1) {
+            path = "data/npc/event" + Manager.gI().event + "/";
             Service.eff_map(this, p, -65, 60, 648, 360, 4, 2, 95);
             Service.eff_map(this, p, -64, 59, 408, 360, 4, 2, 95);
             Service.eff_map(this, p, -62, 61, 528, 360, 3, 2, 75);

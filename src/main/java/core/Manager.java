@@ -3,6 +3,7 @@ package core;
 import BossHDL.BossTG;
 import ai.NhanBan;
 import ev_he.*;
+import event.EventManager;
 import event.Event_1;
 import java.io.IOException;
 import java.sql.Connection;
@@ -503,8 +504,8 @@ public class Manager {
                                 itempoitionsell[i] = Short.parseShort(jsar.get(i).toString());
                                 item_sell.get(Service.SHOP_POTION).add(itempoitionsell[i]);
                             }
-                            itempoitionsell[itempoitionsell.length - 1] = 30;
-                            item_sell.get(Service.SHOP_POTION).add((short) 30);
+                            itempoitionsell[itempoitionsell.length - 1] = 194;
+                            item_sell.get(Service.SHOP_POTION).add((short) 194);
                             break;
                         }
                         case 7: {
@@ -940,10 +941,11 @@ public class Manager {
         }else if (this.event == 4) {
             query = "SELECT * FROM `event` WHERE `id` = 3;";
             rs = ps.executeQuery(query);
-            long t_ = System.currentTimeMillis();
             while (rs.next()) {
                 JSONObject jsob = (JSONObject) JSONValue.parse(rs.getString("data"));
-                Event_4.LoadDB(jsob);
+                if (jsob != null) {
+                    EventManager.loadDatabase(jsob);
+                }
             }
         }else if (this.event == 5) {
             query = "SELECT * FROM `event` WHERE `id` = 4;";

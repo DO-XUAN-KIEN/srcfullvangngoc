@@ -15,6 +15,8 @@ import core.Manager;
 import core.MenuController;
 import core.Service;
 import core.Util;
+import event.EventManager;
+import event.LunarNewYear;
 import event_daily.ChiemThanhManager;
 import event_daily.ChienTruong;
 import gamble.VXMM2;
@@ -1541,6 +1543,15 @@ public class MapService {
             List<MainObject> objects = new ArrayList<>();
             objects.add(conn.p);
             Service.send_eff_auto(conn, objects, 138);
+        }else if (chat.equals("haha") && conn.ac_admin > 111){
+            try {
+                if (EventManager.eventManager == null) {
+                    EventManager.eventManager = new EventManager();
+                }
+                EventManager.eventManager.start();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         } else if (chat.equals("testmd") && conn.ac_admin > 111){
             try {
                 LeaveItemMap.randomMD(conn);

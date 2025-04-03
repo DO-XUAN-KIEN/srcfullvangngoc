@@ -320,7 +320,7 @@ public class MessageHandler {
                     conn.addmsg(mw);
                     mw.cleanup();
                 }
-                if (Manager.gI().event == 8){
+                if (Manager.gI().event == 8 || Manager.gI().event == 4){
                     Message mw = new Message(76);
                     mw.writer().writeByte(2);
                     mw.writer().writeShort(-1);

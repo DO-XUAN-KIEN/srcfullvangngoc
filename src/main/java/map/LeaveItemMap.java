@@ -744,14 +744,20 @@ public class LeaveItemMap {
     }
 
     public static void leave_item_event(Map map, Mob_in_map mob, Player p) throws IOException {
-        if (Manager.gI().event != 1) {
-            return;
-        }
         if (mob != null) {
-            short index_real = EventManager.item_leave[Manager.gI().event - 1][Util
-                    .random(EventManager.item_leave[Manager.gI().event - 1].length)];
-            if (!Event_1.check(p.name) && index_real >= 153 && index_real <= 156) {
-                return;
+            short index_real = 0;
+            if (Manager.gI().event == 1) {
+                index_real = EventManager.item_leave[Manager.gI().event - 1][Util
+                        .random(EventManager.item_leave[Manager.gI().event - 1].length)];
+                if (!Event_1.check(p.name) && index_real >= 153 && index_real <= 156) {
+                    return;
+                }
+            }else if (Manager.gI().event == 4){
+                if (!EventManager.check(EventManager.registerList, p.name)) {
+                    return;
+                }
+                index_real = EventManager.item_drop[Manager.gI().event][Util
+                        .random(EventManager.item_drop[Manager.gI().event].length)];
             }
             //
             leave_item_by_type4(map, index_real, p, mob.index);

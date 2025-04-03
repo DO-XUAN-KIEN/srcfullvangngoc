@@ -24,10 +24,10 @@ import org.json.simple.JSONValue;
  */
 public class Event_4 {
     private static String name_event = "Event Lunar New Year"; // sự kiện tết
-    
+
     public static final List<BXH_DoiQua> list_NewYear = new ArrayList<>();
-    
-//    public static void LeaveItemMap(Map map, MainObject focus, MainObject objAtk)throws IOException{
+
+    //    public static void LeaveItemMap(Map map, MainObject focus, MainObject objAtk)throws IOException{
 //        if(!objAtk.isPlayer())return;
 //
 //        Player p = (Player)objAtk;
