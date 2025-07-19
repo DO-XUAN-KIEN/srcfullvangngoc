@@ -278,8 +278,8 @@ public class DoSieucap {
                         return;
                     }
                     Item3 item = conn.p.item.bag3[id];
-                    if (item == null || item.tier < 15 || item.color < 4) {
-                        Service.send_notice_box(conn, "Mề Đay Cam + 15 trở Lên!");
+                    if (item == null || item.color < 4) {
+                        Service.send_notice_box(conn, "Yêu Cầu Mề Đay Cam!");
                         return;
                     }
                     if (item != null) {

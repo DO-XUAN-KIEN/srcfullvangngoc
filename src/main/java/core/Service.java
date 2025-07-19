@@ -1940,7 +1940,9 @@ public class Service {
                             itbag.name = ItemTemplate3.item.get(idbuy).getName();
                             itbag.tier = 0;
                             itbag.op = new ArrayList<>();
-                            itbag.op.addAll(itsell3.op);
+                            for (Option option : itsell3.op) {
+                                itbag.op.add(new Option(option.id, option.param));
+                            }
                             itbag.time_use = 0;
                             p.item.add_item_bag3(itbag);
                             p.item.char_inventory(3);
@@ -1969,9 +1971,11 @@ public class Service {
                             itbag.part = ItemTemplate3.item.get(idbuy).getPart();
                             itbag.islock = true;
                             itbag.name = ItemTemplate3.item.get(idbuy).getName();
-                            itbag.tier = 15;
+                            itbag.tier = 0;
                             itbag.op = new ArrayList<>();
-                            itbag.op.addAll(itsell3.op);
+                            for (Option option : itsell3.op) {
+                                itbag.op.add(new Option(option.id, option.param));
+                            }
                             itbag.time_use = 0;
                             p.item.add_item_bag3(itbag);
                             p.item.char_inventory(3);
@@ -2102,7 +2106,7 @@ public class Service {
                                     itbag.part = ItemTemplate3.item.get(idbuy).getPart();
                                     itbag.islock = true;
                                     itbag.name = ItemTemplate3.item.get(idbuy).getName();
-                                    itbag.tier = 15;
+                                    itbag.tier = 0;
                                     itbag.op = new ArrayList<>();
                                     for (int i = 0; i < itemshoptt.op.size(); i++) {
                                         itbag.op.add(new Option(itemshoptt.op.get(i).id, itemshoptt.op.get(i).getParam(0)));

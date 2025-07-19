@@ -26,6 +26,11 @@ public class Itemshoptt {
                 + "[4834,[[1,2471],[35,850],[37,2],[40,2551],[-80,153000],[-101,2381],[-86,2441]],5,350000],"// vk băng
                 + "]";
         String tt = "["
+                // vk tinh tú ,[-80,153000],[-101,2381],[-86,2441]
+                + "[4831,[[2,2446],[33,900],[37,2],[40,2651],[-80,153000],[-101,2381],[-86,2441]],5,350000],"// vk lửa
+                + "[4832,[[4,2449],[34,900],[37,2],[40,2551],[-80,153000],[-101,2381],[-86,2441]],5,350000],"// vk độc
+                + "[4833,[[3,2471],[36,850],[37,2],[40,2551],[-80,153000],[-101,2381],[-86,2441]],5,350000],"// vk điện
+                + "[4834,[[1,2471],[35,850],[37,2],[40,2551],[-80,153000],[-101,2381],[-86,2441]],5,350000],"// vk băng
                 // nón tinh tú ,[-113,2415],[-105,2406],[-102,2352]
                 + "[4851,[[9,7500],[14,2222],[28,4950],[33,800],[-113,2415],[-105,2406],[-102,2352]],5,300000]"// mũ cb
                 + "[4854,[[11,7500],[14,1808],[27,4950],[34,800],[-113,2415],[-105,2406],[-102,2352]],5,300000]"// mũ st
@@ -70,7 +75,7 @@ public class Itemshoptt {
                 + "[4873,[[23,82],[33,900],[-105,2384],[-87,2424],[-103,2284]],5,300000]"// dây chuyền sm
                 + "]";
 
-        JSONArray js = (JSONArray) JSONValue.parse(medal);
+        JSONArray js = (JSONArray) JSONValue.parse(tt);
         for (int i = 0; i < js.size(); i++) {
             Itemshoptt temp = new Itemshoptt();
             JSONArray js2 = (JSONArray) JSONValue.parse(js.get(i).toString());
@@ -87,22 +92,22 @@ public class Itemshoptt {
             Itemshoptt.entry.add(temp);
         }
         //
-        js.clear();
-        js = (JSONArray) JSONValue.parse(tt);
-        for (int i = 0; i < js.size(); i++) {
-            Itemshoptt temp = new Itemshoptt();
-            JSONArray js2 = (JSONArray) JSONValue.parse(js.get(i).toString());
-            temp.id = Short.parseShort(js2.get(0).toString());
-            Manager.item_sell.get(Service.SHOP_ITEM).add(temp.id);
-            temp.op = new ArrayList<>();
-            JSONArray js3 = (JSONArray) JSONValue.parse(js2.get(1).toString());
-            for (int j = 0; j < js3.size(); j++) {
-                JSONArray js4 = (JSONArray) JSONValue.parse(js3.get(j).toString());
-                temp.op.add(new Option(Byte.parseByte(js4.get(0).toString()), Integer.parseInt(js4.get(1).toString())));
-            }
-            temp.color = Byte.parseByte(js2.get(2).toString());
-            temp.price = Integer.parseInt(js2.get(3).toString());
-            Itemshoptt.entry.add(temp);
-        }
+//        js.clear();
+//        js = (JSONArray) JSONValue.parse(tt);
+//        for (int i = 0; i < js.size(); i++) {
+//            Itemshoptt temp = new Itemshoptt();
+//            JSONArray js2 = (JSONArray) JSONValue.parse(js.get(i).toString());
+//            temp.id = Short.parseShort(js2.get(0).toString());
+//            Manager.item_sell.get(Service.SHOP_ITEM).add(temp.id);
+//            temp.op = new ArrayList<>();
+//            JSONArray js3 = (JSONArray) JSONValue.parse(js2.get(1).toString());
+//            for (int j = 0; j < js3.size(); j++) {
+//                JSONArray js4 = (JSONArray) JSONValue.parse(js3.get(j).toString());
+//                temp.op.add(new Option(Byte.parseByte(js4.get(0).toString()), Integer.parseInt(js4.get(1).toString())));
+//            }
+//            temp.color = Byte.parseByte(js2.get(2).toString());
+//            temp.price = Integer.parseInt(js2.get(3).toString());
+//            Itemshoptt.entry.add(temp);
+//        }
     }
 }
